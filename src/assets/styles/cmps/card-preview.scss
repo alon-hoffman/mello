@@ -1,0 +1,32 @@
+.card-preview{
+    min-height: em(32px);
+    background-color: $clr1;
+    margin: rem(9px);
+    margin-top: 0;
+    border-radius: 3px;
+    border-bottom:1px solid $clr3 ;
+    margin-bottom: rem(8px);
+    // padding: rem(5px) rem(10px) rem(5px) rem(10px);
+    h1{
+        margin: rem(5px) rem(10px) rem(5px) rem(10px);
+        padding-top:5px;
+        // margin-top: auto;
+        // margin-bottom: auto;
+        font-weight: unset;
+        font-size: rem(16px);
+    }
+
+    img{
+        width:100%;
+        border-radius: em(3px);
+        background-position: 50%;
+        object-fit: cover;
+        aspect-ratio:inherit;
+    }
+    textarea{
+        resize: none;
+        border:none;
+        outline: none;
+    }
+
+}

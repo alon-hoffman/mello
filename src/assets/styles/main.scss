@@ -1,0 +1,33 @@
+// Setup
+@import "setup/variables";
+@import "setup/functions";
+@import "setup/mixins";
+@import "setup/typography";
+
+// Basics
+@import "basics/helpers";
+@import "basics/layout";
+@import "basics/base";
+@import "basics/links";
+@import "basics/forms";
+
+
+
+
+// Components
+@import "cmps/app-header";
+@import "cmps/board-gallery";
+@import "cmps/card-preview";
+@import "cmps/group-list";
+@import "cmps/card-group";
+@import "cmps/sidebar";
+@import "cmps/card-edit";
+@import "cmps/modal-sidebar";
+
+//Views
+@import "views/board-details";
+@import "views/boards-page";
+@import "views/home-page";
+@import "views/login-signup";
+
+

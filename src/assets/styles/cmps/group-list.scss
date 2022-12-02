@@ -1,0 +1,75 @@
+.group-list{
+    margin-inline-end: rem(15px);
+    overflow-x: scroll;
+    flex-grow: 1;
+    ul{
+        display: flex;
+        gap: em(10px);
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin:0;
+        padding:0 0 0 20px;
+    }
+    .add-line-btn{
+        background-color: rgba(255, 255, 255, 0.2);
+        font-size: rem(18px);
+        border-radius: 5px;
+        height: rem(46px);
+        min-width:272px;
+        margin-inline-end: em(10px);
+        color: $clr1;
+        text-align: start;
+        padding:rem(4px) 0 rem(4px) rem(20px);
+        margin: rem(4px);
+        font-size:rem(16px);
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    &::before{
+        content:"\aa3";
+        padding-inline-end: rem(7px);
+    }
+
+    }
+    .add-list-section{
+        background-color: $clr2;
+        border-radius: 3px;
+        input{
+            width:rem(300px);
+            margin: rem(5px);
+            padding: rem(10px);
+            // padding: rem(10px) 0 rem(10px) 0;
+            border:2px solid $light-blue;
+        border-radius: 3px;
+
+        }
+        .buttons{
+            margin-bottom: 5px;
+        display:flex;
+        align-items: center;
+        img{
+            margin-inline-start: 10px;
+            width:rem(18px);
+            filter: invert(96%) sepia(9%) saturate(937%) hue-rotate(180deg) brightness(98%) contrast(86%);
+        }
+        button{
+            background-color: $light-blue;
+            color:#fff;
+            border-radius: 3px;
+            line-height: 20px;
+            padding-inline: 12px;
+            padding-block: 6px;
+            margin-top:0;
+            margin-bottom:0;
+            &:hover{
+                background-color: #026aa7;
+            }
+            &:active{
+                background-color: #055a8c;
+            }
+            img{
+                background-color: green;
+                width:rem(24px);
+            }
+        }
+    }
+    }
+}
