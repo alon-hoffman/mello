@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import cardGroup from "../cmps/card-group.vue";
+import cardGroup from "./card-group.vue";
 export default {
   props: {
     lists: Array,
