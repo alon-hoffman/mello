@@ -1,6 +1,6 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article class="modal" :class="isOn">
+    <article  v-click-outside="closeModal" class="modal" :class="isOn">
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
             <input class="header" type="text" v-model="demoCard.title">
@@ -58,10 +58,17 @@ export default {
             realTextArea: false
         }
     },
-    created() {
+    async created() {
         this.realTextArea = false
+        if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
+    // todo check if the param really is _id
+    const { _id } = this.$route.params
+    this.$store.commit({ type: "setBoardById"}, {_id });
     },
     methods: {
+        closeModal(){
+      this.$router.back()
+        },
         toggleTextArea() {
             this.realTextArea = true
             this.$refs.textarea.focus()
