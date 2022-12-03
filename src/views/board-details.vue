@@ -27,8 +27,8 @@
         </button>
       </div>
     </div>
-    <group-list @saveList="saveList"
-                @cardEdit="toggleEdit" 
+    <group-list @addCard="addCard"
+                @editCard="toggleEdit" 
                 v-if="board.groups" :lists="board.groups" />
   </section>
 </template>
@@ -61,11 +61,10 @@ export default {
   },
   methods: {
     toggleEdit(cardId) {
-      this.$store.commit({ type: "toggleScreen" });
+      this.$store.commit({ type: 'toggleScreen' });
     },
-    saveList(list){
-      this
-      this.$store.dispatch({ type: 'saveList', list})
+    addCard({card, groupId}){
+      this.$store.dispatch({ type: 'addCard', card, groupId})
     },
     updateCard(card){
       this.$store.dispatch({ type: 'saveCard', card})
