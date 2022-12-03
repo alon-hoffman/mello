@@ -22,8 +22,7 @@ const routes = [
     component: boardDetails,
     children: [
       {
-        path: 'card/',
-        // path: 'card/:id',
+        path: 'card/:id',
         name: 'card-edit',
         component: cardEdit,
       },

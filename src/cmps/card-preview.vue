@@ -16,19 +16,11 @@
     card:Object,
     newCard:Object,
         },
-    // data() {
-    //   return {
-    //    newCard: null
-    //   }
-    // },
     computed: {
       getCardURL(){
         return this.card.imgURL
       }
     },
-    // created() {
-    //  if(!this.card) this.newCard = {title: 'aaaaaaaaaaaaaa'} 
-    // },
     methods: {
       
     }

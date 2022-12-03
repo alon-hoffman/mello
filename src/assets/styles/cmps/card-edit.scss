@@ -1,17 +1,10 @@
 .modal-screen {
     transition: 0.2s;
-    opacity: 0;
+    opacity: 1;
     position: fixed;
     inset: 0;
     background-color: #000000a3;
-    pointer-events: none;
-
-    &.on {
-        opacity: 1;
-        pointer-events: all;
-    }
 }
-
 .edit-blocks {
     width: 576px;
 }
@@ -29,10 +22,10 @@
     color: $text-dark;
     padding: 1em;
 
-    &.on {
+   
         opacity: 1;
         pointer-events: all;
-    }
+    
 
     &>* {
         margin-top: 0.21em;

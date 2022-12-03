@@ -23,12 +23,14 @@ export const boardStore = {
     state: {
         boards: null,
         currBoard: null,
+        currCard: null
     },
     getters: {
         boards({ boards }) { return boards },
         getCurrBoard(state) { return state.currBoard },
         getMembersOfBoard(state) { return state.currBoard.members },
         getLabelsOfBoard(state) { return state.currBoard.labels },
+        getCard(state) { return state.currCard }
     },
     mutations: {
         setBoards(state, { boards }) {
@@ -49,6 +51,20 @@ export const boardStore = {
             const board = JSON.parse(JSON.stringify(state.boards))[0];
             // const board = state.boards.find(c => c.id === _id)
             state.currBoard = board
+        },
+        setCurrCard(state, { cardId }) {
+            console.log(state.currBoard)
+            state.currBoard.groups.forEach(group => {
+                if (group.cards) {
+
+                    group.cards.forEach(card => {
+                        if (card.id === cardId) {
+                            state.currCard = card
+                            return
+                        }
+                    })
+                }
+            })
         },
         // saveCard(state, { card }) {
         //     let cardIdx = 0
