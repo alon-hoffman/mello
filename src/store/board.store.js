@@ -151,9 +151,12 @@ export const boardStore = {
                 throw err
             }
         },
-        async saveCard({ dispatch, state }, { card }) {
-            console.log(card)
+        async saveCard({ dispatch, state }, { card, groupId }) {
             const board = JSON.parse(JSON.stringify(state.currBoard))
+
+            if (!card.id) {
+
+            }
 
             let cardIdx = 0
             let groupIdx = -1

@@ -91,7 +91,7 @@ export default {
        title:this.list.title,
        isCardEdited:false,
         check:true,
-        newCard: {title: ''}
+        newCard: {title: '',groupId:this.list.groupId}
       }
     },  
     methods: {
