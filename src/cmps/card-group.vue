@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <main>
     <div class="mt-5 container">
       <div class="row justify-content-center border py-5">
@@ -53,11 +53,11 @@ export default {
   background: #f44336;
   display: inline-block;
 }
-</style>
+</style> -->
 
 
 
-<!-- <template>
+<template>
     <section class="card-group">
       <div class="title-container">
       <input class="group-title" type="text" v-model="title" />
@@ -112,4 +112,4 @@ export default {
     
   }
   </script>
-   -->
+  
