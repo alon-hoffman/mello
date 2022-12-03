@@ -1,19 +1,19 @@
 <template>
     <section class="modal-add-menu">
         <h4>Add to card</h4>
-        <div @click="openMiniModal('Members')" class="fake-button add-option-div" value="hello"><img
-                class="add-option-img" src="../assets/icons/person.svg" alt="">Members</div>
-        <div @click="openMiniModal('Labels')" class="fake-button add-option-div"><img class="add-option-img"
-                src="../assets/icons/tags.svg" alt="">Labels
+        <div @click="openMiniModal('Members')" class="fake-button add-option-div" value="hello">
+            <span class="icon sm user"></span>Members</div>
+        <div @click="openMiniModal('Labels')" class="fake-button add-option-div">
+            <span class="icon sm label"></span>Labels
         </div>
-        <div @click="openMiniModal('Checklist')" class="fake-button add-option-div"><img class="add-option-img"
-                src="../assets/icons/check_box_marked.svg" alt="">Checklist</div>
-        <div @click="openMiniModal('Dates')" class="fake-button add-option-div"><img class="add-option-img"
-                src="../assets/icons/clock-regular.svg" alt="">Dates</div>
-        <div @click="openMiniModal('Attachment')" class="fake-button add-option-div"><img class="add-option-img"
-                src="../assets/icons/attach.svg" alt="">Attachment</div>
-        <div @click="openMiniModal('Cover')" class="fake-button add-option-div"><img class="add-option-img"
-                src="../assets/icons/cover.svg" alt="">Cover
+        <div @click="openMiniModal('Checklist')" class="fake-button add-option-div">
+            <span class="icon sm checklist-check"></span>Checklist</div>
+        <div @click="openMiniModal('Dates')" class="fake-button add-option-div">
+            <span class="icon sm time"></span>Dates</div>
+        <div @click="openMiniModal('Attachment')" class="fake-button add-option-div"> 
+            <span class="icon sm attach"></span>Attachment</div>
+        <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
+            <span class="icon sm cover"></span>Cover
         </div>
         <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="IsMiniModalOpen">
             <template #header>
@@ -39,7 +39,7 @@
                         <div class="members-checked-box-container">
                             <div class="user-and-img">
                                 <section class="img-container">
-                                    <img class="anonymous-user-img" src="../assets/icons/anonymous-user.svg">
+                                    <span class="icon lg user"></span>
                                 </section>
                                 {{ member.fullname }}
                             </div>

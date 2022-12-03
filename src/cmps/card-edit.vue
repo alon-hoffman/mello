@@ -2,27 +2,27 @@
             <div  class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
             <article class="modal" :class="isOn">
                 <header class="modal-header edit-block">
-                    <img class="icon" src="../assets/icons/dashboard.svg" alt="">
+                    <span class="icon lg card"></span>
                     <input class="header" type="text" v-model="demoCard.title">
                     <p class="content">in list <span class="move-card-link">traco</span></p>
                 </header>
                 <div class="modal-content flex">
                     <section class="edit-blocks">
                         <section class="edit-block">
-                            <img class="icon" src="../assets/icons/description.svg" alt="">
+                            <span class="icon lg description"></span>
                             <h3 class="header">Description</h3>
                             <div class="content fake-text-area fake-button" @click="toggleTextArea">Add a more detailed description…</div>
                             <!-- <textarea name="" id="" cols="30" rows="3" placeholder="Add a more detailed description…"></textarea> -->
                         </section>
                         <section class="edit-block">
-                            <img class="icon" src="../assets/icons/activities.svg" alt="activities">
+                            <span class="icon lg activity"></span>
                             <span class="header flex justify-between">
                                 <h3>Activity</h3>
                                 <button class="fake-button">Hide Details</button>
                             </span>
                             <ul class="content">
                                 <li class="edit-block">
-                                    <img src="../assets/icons/profile-confluence.svg" alt="EE" class="icon">
+                                    <span class="icon lg user"></span>
                                     <div class="comment-box">
                                         <textarea type="text" placeholder="Write a comment..."></textarea>
                                         <footer class="comment-options"></footer>

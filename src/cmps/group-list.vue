@@ -5,7 +5,7 @@
         v-for="list in lists"
         :list="list"
         :key="list.id"
-        @cardEdit="$emit('editCard', $event)"
+        @editCard="$emit('editCard', $event)"
         @addCard="$emit('addCard', $event)"
       />
       <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit=true">Add another list</button>

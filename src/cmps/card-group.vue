@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <section class="card-group">
   <div class="flex m-10">
     <draggable class="dragArea list-group w-full " :list="mutableList" @change="log">
@@ -39,12 +39,12 @@
       },
     },
   })
-</script>
+</script> -->
 
 
 
 
-<!-- <template>
+<template>
     <section class="card-group">
       <div class="title-container">
       <input class="group-title" type="text" v-model="title" />
@@ -99,4 +99,4 @@
     
   }
   </script>
-   -->
+  
