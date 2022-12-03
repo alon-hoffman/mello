@@ -122,32 +122,11 @@ import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
     emits: ['updateCard','updateLabels'],
-    props: {
-        card: {
-            type: Object
-        }
-    },
     data() {
         return {
             IsMiniModalOpen: false,
             miniModalTitle: null,
-            cardCopy: {
-                id:'c103',
-                title: "im new",
-                members: [
-                    {
-                        "_id": "u101",
-                        "fullname": "Alon Hoffman",
-                        "imgUrl": "https://www.google.com"
-                    },
-                    {
-                        "_id": "u102",
-                        "fullname": "Itai Morag",
-                        "imgUrl": "https://www.google.com"
-                    },
-                ],
-                labels: ["l102", "l104"]
-            },
+           card:this.$store.getters.getCard,
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "checklist",
@@ -173,26 +152,27 @@ export default {
 
         },
         toggleMembers(member) {
-            const idx = this.cardCopy.members.findIndex((m) => m._id === member._id)
-            if (idx !== -1) this.cardCopy.members.splice(idx, 1)
-            else this.cardCopy.members.push(member)
+            const idx = this.card.members.findIndex((m) => m._id === member._id)
+            if (idx !== -1) this.card.members.splice(idx, 1)
+            else this.card.members.push(member)
             this.updateCard()
         },
         toggleLabels(label) {
             console.log(`label = `, label)
-            const idx = this.cardCopy.labels.findIndex((l) => l === label._id)
-            if (idx !== -1) this.cardCopy.labels.splice(idx, 1)
-            else this.cardCopy.labels.push(label._id)
+            const idx = this.card.labels.findIndex((l) => l === label._id)
+            if (idx !== -1) this.card.labels.splice(idx, 1)
+            else this.card.labels.push(label._id)
             this.updateCard()
         },
         checkIfInMemberList(member) {
-            return this.cardCopy.members.filter((currMember) => currMember._id === member._id).length
+            if(!this.card.members) return
+            return this.card.members.filter((currMember) => currMember._id === member._id).length
         },
         checkIfInLabelList(label) {
-            return this.cardCopy.labels.includes(label._id)
+            return this.card.labels.includes(label._id)
         },
         updateCard() {
-            this.$emit('updateCard', this.cardCopy)
+            this.$emit('updateCard', this.card)
             // this.$emit('updateCard', this.card)
         },
         addChecklist(){
@@ -200,8 +180,8 @@ export default {
                 title: `${this.checklist}`,
                 id:utilService.makeId()
             }
-            if(!this.cardCopy.checklists) this.cardCopy.checklists=[]
-            this.cardCopy.checklists.push(newChecklist)
+            if(!this.card.checklists) this.card.checklists=[]
+            this.card.checklists.push(newChecklist)
             this.IsMiniModalOpen = false
             this.checklist="checklist"
             this.updateCard()

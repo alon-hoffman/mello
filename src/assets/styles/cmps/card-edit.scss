@@ -1,19 +1,15 @@
-.modal-screen{
+.modal-screen {
     transition: 0.2s;
-    opacity: 0;
+    opacity: 1;
     position: fixed;
     inset: 0;
-    background-color:#000000a3;
-    pointer-events: none;
-    &.on{
-        opacity: 1;
-        pointer-events: all;
-    }
+    background-color: #000000a3;
 }
-.edit-blocks{
+.edit-blocks {
     width: 576px;
 }
-.modal{
+
+.modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -22,20 +18,23 @@
     pointer-events: none;
     background-color: $clr2;
     width: 768px;
-    border-radius:3px;
+    border-radius: 3px;
     color: $text-dark;
     padding: 1em;
-    &.on{
+
+   
         opacity: 1;
         pointer-events: all;
+    
+
+    &>* {
+        margin-top: 0.21em;
     }
-    & > * {
-        margin-top:0.21em;
-    }
-    &-header{
-        & input{
+
+    &-header {
+        & input {
             background-color: transparent;
-            border:none;
+            border: none;
             background: #0000;
             border-radius: 3px;
             font-size: 20px;
@@ -43,9 +42,10 @@
             height: 32px;
             // line-height: 26px;
             min-height: 24px;
-            padding-block-end:7px;
+            padding-block-end: 7px;
             color: $text-dark;
-            &:focus{
+
+            &:focus {
                 background-color: #fff;
                 box-shadow: inset 0 0 0 2px #0079bf;
                 outline: none;
@@ -53,16 +53,41 @@
         }
     }
 
-    & .fake-text-area{
+    & .fake-text-area {
         min-height: 40px;
         margin-top: 1.2em;
-        margin-inline-start:0.7em;
+        margin-inline-start: 6px;
         padding-bottom: 2em;
-        }
+    }
+
+    .save-description-btn {
+        background-color: #0079bf;
+        width: 52px;
+        height: 32px;
+        border: none;
+        border-radius: 3px;
+        margin: 0;
+        cursor: pointer;
+    }
+    .cancel-description-btn{
+        display: inline;
+    }
+    .real-text-area{
+        display: block;
+        overflow: hidden;
+    overflow-wrap: break-word;
+    resize: none;
+    height: 108px;
+    width: 100%;
+    min-height: 40px;
+    margin-top: 1.2em;
+    padding-bottom: 2em;
+    outline: #0079bf;
+    }
 
 }
 
-.move-card-link{
+.move-card-link {
     text-decoration: underline;
     cursor: pointer;
 }
@@ -76,30 +101,34 @@
     padding: 8px 12px;
     user-select: none;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         background-color: #091e4214;
     }
-    &:active{
-            background-color:#e4f0f6;
-            color:#0079bf;
-            img {
-                filter: invert(34%) sepia(96%) saturate(2808%) hue-rotate(181deg) brightness(87%) contrast(101%);
-            }
+
+    &:active {
+        background-color: #e4f0f6;
+        color: #0079bf;
+
+        img {
+            filter: invert(34%) sepia(96%) saturate(2808%) hue-rotate(181deg) brightness(87%) contrast(101%);
+        }
 
     }
 
 }
 
 
-.edit-block{
+.edit-block {
     display: grid;
     grid-template-columns: 36px 1fr;
-    grid-template-rows:  36px 1fr;
+    grid-template-rows: 36px 1fr;
     // padding-inline-start: 0.28em;
-    grid-template-areas: 
-    "icon header"
-    ". content";
-    .icon{
+    grid-template-areas:
+        "icon header"
+        ". content";
+
+    .icon {
         grid-area: icon;
         align-self: center;
         justify-self: center;
@@ -108,7 +137,8 @@
         position: relative;
         top: 6px;
     }
-    .header{
+
+    .header {
         grid-area: header;
         padding-inline-start: 6px;
         padding-top: 0.6rem;
@@ -118,40 +148,41 @@
         line-height: 26px;
         letter-spacing: -0.2px;
 
-        > * {
+        >* {
             margin: 0;
         }
 
-        
+
     }
-    
-    .content{
+
+    .content {
         grid-area: content;
         padding-inline-start: 0.55rem;
     }
 }
 
 
-.comment-box{
+.comment-box {
     background-color: #fff;
     border-radius: 3px;
     line-height: 20px;
-   
+
     // height: 20px;
     // margin: -8px -12px;
     // margin-bottom: 12px;
     // padding: 8px 12px;
     transition-duration: 85ms;
-    transition-property: background-color,border-color,box-shadow;
+    transition-property: background-color, border-color, box-shadow;
     transition-timing-function: ease;
-    box-shadow:0 0 0 1px #091e4214;
+    box-shadow: 0 0 0 1px #091e4214;
 
-    &:has(textarea:focus){
-        padding-bottom:4em;
+    &:has(textarea:focus) {
+        padding-bottom: 4em;
         box-shadow: 0 4px 8px -2px #091e4240,
             0 0 0 1px #091e4214;
     }
-    & textarea{
+
+    & textarea {
         border-radius: 3px;
         min-height: 20px;
         resize: none;
@@ -160,13 +191,15 @@
         width: 100%;
         height: 100%;
         border: none;
-        &:hover{
+
+        &:hover {
             background-color: #091e4214;
             cursor: pointer;
         }
-        &:focus{
-        outline: none;
-        
+
+        &:focus {
+            outline: none;
+
         }
     }
 }

@@ -5,7 +5,7 @@
         v-for="list in lists"
         :list="list"
         :key="list.id"
-        @editCard="$emit('editCard', $event)"
+        @editCard="editCard"
         @addCard="$emit('addCard', $event)"
       />
       <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit=true">Add another list</button>
@@ -48,6 +48,9 @@ console.log(`this.lists = `, this.lists)
     },
     closeEdit(){
       this.isNewListEdit=false
+    },
+    editCard(cardId){
+      this.$emit("editCard",cardId)
     }
   },
 };

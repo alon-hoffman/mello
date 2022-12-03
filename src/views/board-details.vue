@@ -1,7 +1,8 @@
 <template>
+  <router-view></router-view>
   <section class="board-details" v-if="board">
     <!-- <sidebar/> -->
-    <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/>
+    <!-- <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/> -->
     <div class="board-header">
       <div class="board-header-left">
         <h1 class="editable board-details-title">Traco</h1>
@@ -57,16 +58,19 @@ export default {
     if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
     // todo check if the param really is _id
     const { _id } = this.$route.params
-    await this.$store.commit({ type: "setBoardById"}, {_id });
+    this.$store.commit({ type: "setBoardById"}, {_id });
   },
   methods: {
     toggleEdit(cardId) {
-      this.$store.commit({ type: 'toggleScreen' });
+      this.$store.commit({ type: "setCurrCard",cardId} );
+      const { _id } = this.$route.params
+      this.$router.push(`/board/${_id}/card/${cardId}`)
     },
     addCard({card, groupId}){
       this.$store.dispatch({ type: 'addCard', card, groupId})
     },
     updateCard(card){
+      console.log("🚀 ~ file: board-details.vue:73 ~ updateCard ~ card", card)
       this.$store.dispatch({ type: 'saveCard', card})
     },
     updateLabels(labels){
