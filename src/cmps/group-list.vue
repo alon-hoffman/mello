@@ -1,12 +1,12 @@
 <template>
   <section v-if="lists" class="group-list">
     <ul class="clean-list">
-      <task-group @edit="$emit('edit')"
+      <card-group @edit="$emit('edit')"
         v-for="list in lists"
         :list="list"
         :key="list.id"
-        @taskEdit="$emit('editTask', $event)"
-        @addTask="$emit('addTask', $event)"
+        @cardEdit="$emit('editCard', $event)"
+        @addCard="$emit('addCard', $event)"
       />
       <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit=true">Add another list</button>
       <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import taskGroup from "../cmps/task-group.vue";
+import cardGroup from "./card-group.vue";
 export default {
   props: {
     lists: Array,
@@ -36,7 +36,7 @@ export default {
 console.log(`this.lists = `, this.lists)
   },
   components: {
-    taskGroup,
+    cardGroup,
   },
   computed: {},
   created() {},

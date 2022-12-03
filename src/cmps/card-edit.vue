@@ -3,8 +3,8 @@
             <article class="modal" :class="isOn">
                 <header class="modal-header edit-block">
                     <img class="icon" src="../assets/icons/dashboard.svg" alt="">
-                    <input class="header" type="text" v-model="demoTask.title">
-                    <p class="content">in list <span class="move-task-link">traco</span></p>
+                    <input class="header" type="text" v-model="demoCard.title">
+                    <p class="content">in list <span class="move-card-link">traco</span></p>
                 </header>
                 <div class="modal-content flex">
                     <section class="edit-blocks">
@@ -31,7 +31,7 @@
                             </ul>
                         </section>
                     </section>
-                    <modal-sidebar @updateTask="updateTask" @updateLabels="updateLabels"/>
+                    <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels"/>
                 </div>
             </article>
 </template>
@@ -42,10 +42,10 @@ export default{
     props:{
         isScreen : Boolean
     },
-    emits: ['toggleEdit','updateTask','updateLabels'],
+    emits: ['toggleEdit','updateCard','updateLabels'],
     data(){
         return {
-            demoTask: {
+            demoCard: {
                 title: 'Make logo',
                 content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }
@@ -55,8 +55,8 @@ export default{
         toggleTextArea(){
             console.log('toggle between real and fake textarea')
         },
-        updateTask(task){
-            this.$emit('updateTask',task)
+        updateCard(card){
+            this.$emit('updateCard',card)
         },
         updateLabels(labels){
             this.$emit('updateLabels',labels)

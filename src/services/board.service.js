@@ -73,11 +73,11 @@ const startingBoard = [
                 "id": "g101",
                 "title": "BackLog",
                 "archivedAt": 1589983468418,
-                "tasks": [
+                "cards": [
                     {
                         "id": "c101",
                         "title": "Make Logo",
-                        "imgURL": "https://trello.com/1/tasks/63860d3af434df009e75619b/attachments/638622d97e03e4019f8c5399/previews/638622d97e03e4019f8c53b9/download/%D7%94%D7%95%D7%A8%D7%93%D7%94.png"
+                        "imgURL": "https://trello.com/1/cards/63860d3af434df009e75619b/attachments/638622d97e03e4019f8c5399/previews/638622d97e03e4019f8c53b9/download/%D7%94%D7%95%D7%A8%D7%93%D7%94.png"
 
                     },
                     {
@@ -101,7 +101,7 @@ const startingBoard = [
             {
                 "id": "g102",
                 "title": "ToDo",
-                "tasks": [
+                "cards": [
                     {
                         "id": "c103",
                         "title": "Research for prime locations and peak hours",
@@ -147,11 +147,11 @@ const startingBoard = [
                 "id": "g123",
                 "title": "Doing",
                 "archivedAt": 1589983468418,
-                "tasks": [
+                "cards": [
                     {
                         "id": "c1534",
                         "title": "Look for taco truck",
-                        "imgURL": "https://trello.com/1/tasks/63860ca5644759011faa16a2/attachments/63860d602444d1006e32080a/previews/63860d612444d1006e320814/download/IMG_5708__1_.jpg",
+                        "imgURL": "https://trello.com/1/cards/63860ca5644759011faa16a2/attachments/63860d602444d1006e32080a/previews/63860d612444d1006e320814/download/IMG_5708__1_.jpg",
                         "labels": ["important"],
                         "members": [
                             {
@@ -172,7 +172,7 @@ const startingBoard = [
                 "id": "g1asd",
                 "title": "Blocked",
                 "archivedAt": 1589983468418,
-                "tasks": [
+                "cards": [
                     {
                         "id": "c15skdj",
                         "title": "Pass Safety Inspection",
@@ -196,7 +196,7 @@ const startingBoard = [
                 "id": "bjkhlk44",
                 "title": "QA",
                 "archivedAt": 1589984468418,
-                "tasks": [
+                "cards": [
                     {
                         "id": "jvlvhlv",
                         "title": "Stress test employees",
@@ -220,11 +220,11 @@ const startingBoard = [
                 "id": "ssvx3",
                 "title": "Done",
                 "archivedAt": 1589984468418,
-                "tasks": [
+                "cards": [
                     {
                         "id": "79ucjxzi",
                         "title": "Learn taco recipe",
-                        "imgURL": "https://trello.com/1/tasks/63860b4384db8b03aaa58f70/attachments/6386149eb4143f0070807dc6/previews/6386149eb4143f0070807ddf/download/AU-T-10001064-Taco-Recipe_ver_2.jpg",
+                        "imgURL": "https://trello.com/1/cards/63860b4384db8b03aaa58f70/attachments/6386149eb4143f0070807dc6/previews/6386149eb4143f0070807ddf/download/AU-T-10001064-Taco-Recipe_ver_2.jpg",
                         "createdBy": {
                             "_id": "u102",
                             "fullname": "Itai Morag",
@@ -244,7 +244,7 @@ const startingBoard = [
                     "fullname": "Abi Abambi",
                     "imgUrl": "http://some-img"
                 },
-                "task": {
+                "card": {
                     "id": "c101",
                     "title": "Replace Logo"
                 }
