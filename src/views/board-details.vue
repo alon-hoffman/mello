@@ -6,7 +6,8 @@
       <div class="board-header-left">
         <h1 class="editable board-details-title">Traco</h1>
         <button class="star-board-details-btn">
-          <img class="star-img-board" src="../assets/icons/star-regular-2.png" alt="" />
+          <!-- <img class="star-img-board" src="../assets/icons/star-regular-2.png" alt="" /> -->
+          <button class="icon lg star-empty"></button>
         </button>
       </div>
       <div class="board-header-right">

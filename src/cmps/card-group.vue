@@ -1,5 +1,4 @@
 <template>
-  //comment
   <section class="card-group">
   <div class="flex m-10">
     <draggable class="dragArea list-group w-full " :list="mutableList" @change="log">

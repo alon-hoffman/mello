@@ -46,3 +46,7 @@ textarea{
         color: $text-dark;
     }
 }
+
+::after, ::before{
+    font-family:icons;
+}
