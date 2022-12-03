@@ -1,7 +1,8 @@
 <template>
+  <router-view></router-view>
   <section class="board-details" v-if="board">
     <!-- <sidebar/> -->
-    <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/>
+    <!-- <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/> -->
     <div class="board-header">
       <div class="board-header-left">
         <h1 class="editable board-details-title">Traco</h1>
@@ -62,6 +63,8 @@ export default {
   methods: {
     toggleEdit(cardId) {
       this.$store.commit({ type: 'toggleScreen' });
+      this.$router.push("/board/taco/card/")
+      // this.$router.push("/board/taco/card/22")
     },
     addCard({card, groupId}){
       this.$store.dispatch({ type: 'addCard', card, groupId})

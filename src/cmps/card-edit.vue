@@ -1,6 +1,7 @@
 <template>
-            <div  class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-            <article class="modal" :class="isOn">
+            <div  class="modal-screen on" :class="isOn" @click="$emit('toggleEdit')"></div>
+            <article class="modal on" >
+            <!-- <article class="modal" :class="isOn"> -->
                 <header class="modal-header edit-block">
                     <span class="icon lg card"></span>
                     <input class="header" type="text" v-model="demoCard.title">
@@ -50,6 +51,9 @@ export default{
                 content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
             }
         }
+    },
+    created(){
+         console.log( "card-edit")
     },
     methods:{
         toggleTextArea(){
