@@ -33,4 +33,34 @@
     &.star-empty::before{
         content: '\E966'
     }
+    &.filter::before{
+        content: '\E92E'
+    }
+    &.share::before{
+        content: '\E902'
+    }
+    &.card::before{
+        content: '\E912'
+    }
+    &.description::before{
+        content: '\E922'
+    }
+    &.activity::before{
+        content: '\E900'
+    }
+    &.user::before{
+        content: '\E946'
+    }
+    &.label::before{
+        content: '\E93F'
+    }
+    &.checklist-check::before{
+        content: '\E91A'
+    }
+    &.attach::before{
+        content: '\E908'
+    }
+    &.cover::before{
+        content: '\E914'
+    }
 }

@@ -40,7 +40,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
+              <span class="icon sm star-empty"></span>
             </div>
           </div>
         </li>
@@ -48,7 +48,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
+              <span class="icon sm star-empty"></span>
             </div>
           </div>
         </li>
@@ -56,7 +56,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
+              <span class="icon sm star-empty"></span>
             </div>
           </div>
         </li>
@@ -64,7 +64,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
+              <span class="icon sm star-empty"></span>
             </div>
           </div>
         </li>
