@@ -8,15 +8,17 @@
         </header>
         <div class="modal-content flex">
             <section class="edit-blocks">
-                <section class="edit-block">
+                <section v-click-outside="closeTextArea" class="edit-block">
                     <span class="icon lg description"></span>
                     <h3 class="header">Description</h3>
                     <div v-if="!realTextArea" class="content fake-text-area fake-button" @click="toggleTextArea">Add a
                         more detailed description…</div>
-                    <textarea v-if="realTextArea" name="" id="" cols="30" rows="3"
-                        placeholder="Add a more detailed description…"></textarea>
-                    <button @click="addDescription" class="save-description-btn">Save</button>
-                    <button @click="closeTextArea" class="fake-button">Cancel</button>
+                        <div class="content" v-if="realTextArea">
+                            <textarea ref="textarea" class="real-text-area"  name="" id="" cols="30" rows="3"
+                            placeholder="Add a more detailed description…"></textarea>
+                            <button @click="addDescription" class="save-description-btn">Save</button>
+                            <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
+                        </div>
                 </section>
                 <section class="edit-block">
                     <span class="icon lg activity"></span>
@@ -62,9 +64,11 @@ export default {
     methods: {
         toggleTextArea() {
             this.realTextArea = true
-            console.log('toggle between real and fake textarea')
+            this.$refs.textarea.focus()
+            // console.log('toggle between real and fake textarea')
         },
         closeTextArea() {
+            // console.log(`foo = `)
             this.realTextArea = false
         },
         addDescription(){
@@ -81,6 +85,9 @@ export default {
         isOn() {
             return { on: this.isScreen === true }
         },
+    },
+    unmounted(){
+        this.realTextArea = false
     },
     components: {
         modalSidebar
