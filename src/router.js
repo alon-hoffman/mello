@@ -7,6 +7,7 @@ import boardDetails from './views/board-details.vue'
 import reviewApp from './views/review-app.vue'
 import loginSignup from './views/login-signup.vue'
 import userDetails from './views/user-details.vue'
+import taskEdit from './cmps/task-edit.vue'
 
 const routes = [
   {
@@ -18,7 +19,15 @@ const routes = [
     // path: '/boards',
     path: '/board/:id',
     name: 'board-details',
-    component: boardDetails
+    component: boardDetails,
+    children: [
+      {
+          path: 'task/:id',
+          name: 'task-edit',
+          component: taskEdit,
+      },                
+                   
+  ]
   },
   {
     path: '/board',

@@ -1,6 +1,6 @@
 <template>
     <section class="modal-add-menu">
-        <h4>Add to card</h4>
+        <h4>Add to task</h4>
         <div @click="openMiniModal('Members')" class="fake-button add-option-div" value="hello"><img
                 class="add-option-img" src="../assets/icons/person.svg" alt="">Members</div>
         <div @click="openMiniModal('Labels')" class="fake-button add-option-div"><img class="add-option-img"
@@ -104,7 +104,7 @@
                     <span>Attachments</span>
                     <label class="cover-img-label">
                         <div class="fake-button cover-img-btn">Upload a cover image </div><input
-                            @input="setBackgroundCard" class="cover-img-input" type="file">
+                            @input="setBackgroundTask" class="cover-img-input" type="file">
                     </label>
                 </section>
             </template>
@@ -117,9 +117,9 @@
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
-    emits: ['updateCard','updateLabels'],
+    emits: ['updateTask','updateLabels'],
     props: {
-        card: {
+        task: {
             type: Object
         }
     },
@@ -127,7 +127,7 @@ export default {
         return {
             IsMiniModalOpen: false,
             miniModalTitle: null,
-            cardCopy: {
+            taskCopy: {
                 id:'c103',
                 title: "im new",
                 members: [
@@ -165,42 +165,42 @@ export default {
         closeMiniModal() {
             this.IsMiniModalOpen = false
         },
-        setBackgroundCard() {
+        setBackgroundTask() {
 
         },
         toggleMembers(member) {
-            const idx = this.cardCopy.members.findIndex((m) => m._id === member._id)
-            if (idx !== -1) this.cardCopy.members.splice(idx, 1)
-            else this.cardCopy.members.push(member)
-            this.updateCard()
+            const idx = this.taskCopy.members.findIndex((m) => m._id === member._id)
+            if (idx !== -1) this.taskCopy.members.splice(idx, 1)
+            else this.taskCopy.members.push(member)
+            this.updateTask()
         },
         toggleLabels(label) {
             console.log(`label = `, label)
-            const idx = this.cardCopy.labels.findIndex((l) => l === label._id)
-            if (idx !== -1) this.cardCopy.labels.splice(idx, 1)
-            else this.cardCopy.labels.push(label._id)
-            this.updateCard()
+            const idx = this.taskCopy.labels.findIndex((l) => l === label._id)
+            if (idx !== -1) this.taskCopy.labels.splice(idx, 1)
+            else this.taskCopy.labels.push(label._id)
+            this.updateTask()
         },
         checkIfInMemberList(member) {
-            return this.cardCopy.members.filter((currMember) => currMember._id === member._id).length
+            return this.taskCopy.members.filter((currMember) => currMember._id === member._id).length
         },
         checkIfInLabelList(label) {
-            return this.cardCopy.labels.includes(label._id)
+            return this.taskCopy.labels.includes(label._id)
         },
-        updateCard() {
-            this.$emit('updateCard', this.cardCopy)
-            // this.$emit('updateCard', this.card)
+        updateTask() {
+            this.$emit('updateTask', this.taskCopy)
+            // this.$emit('updateTask', this.task)
         },
         addChecklist(){
             const newChecklist={
                 title: `${this.checklist}`,
                 id:utilService.makeId()
             }
-            if(!this.cardCopy.checklists) this.cardCopy.checklists=[]
-            this.cardCopy.checklists.push(newChecklist)
+            if(!this.taskCopy.checklists) this.taskCopy.checklists=[]
+            this.taskCopy.checklists.push(newChecklist)
             this.IsMiniModalOpen = false
             this.checklist="checklist"
-            this.updateCard()
+            this.updateTask()
         },
         updateLabels(){
             this.$emit('updateLabels', this.boardLabels)

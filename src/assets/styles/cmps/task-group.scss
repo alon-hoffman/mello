@@ -1,4 +1,4 @@
-.card-group{
+.task-group{
     min-width: 272px;
     max-width: 272px;
     min-height:em(80px);
@@ -27,7 +27,7 @@
 
     }
 
-    .add-card{
+    .add-task{
         display: flex;
         align-items: center;
         gap: 3px;
@@ -46,7 +46,7 @@
         }
     }
 
-    .add-card-section{
+    .add-task-section{
         .buttons{
         display:flex;
         justify-content: space-between;
