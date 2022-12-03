@@ -1,0 +1,99 @@
+.board-details {
+    background-image: url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg");
+    height: calc(100vh - 44px);
+    background-size: cover;
+    display:flex;
+    flex-direction: column;
+}
+
+.board-header {
+    color: white;
+    margin-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: em(48px);
+
+    >* {
+        display: flex;
+        align-items: center;
+
+        h1 {
+            margin: 0;
+            font-size: rem(18px);
+            
+        }
+
+    }
+
+    .board-header-right {
+        button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            
+        }
+        .add-user-btn{
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            width: 75px;
+            height: 32px;
+            background-color:#fff;
+        }
+        .more-btn{
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .add-user-img{
+            width: 17px;
+        }
+        .filter-btn{
+            display: flex;
+            align-items: center;
+            width: 78px;
+            height: 32px;
+        }
+        .filter-img-board{
+            width: 20px;
+        }
+    }
+    .board-header-left{
+        // gap: 10px;
+        
+        button {
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .star-board-details-btn{
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .star-img-board{
+            
+            width: 16px;
+        }
+        .board-details-title{
+            width: 70px;
+            height: 32px;
+            text-align: center;
+            font-size: 18px;
+        }
+    }
+    
+    .transparent-btn {
+        // color: aliceblue;
+    }
+
+    // button{
+    //     background-color: ;
+    // }
+}

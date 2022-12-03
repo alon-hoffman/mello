@@ -1,0 +1,45 @@
+.login-signup{
+    background-color: rgb(192, 188, 188);
+    text-align: center;
+    height: 100vh;
+
+    .change-login-btn{
+        background: rgb(164, 164, 164);
+        color:#0052CC ;
+        padding: 4px 10px;
+        border-radius: 3px;
+        line-height: 40px;
+    }
+    .login-signup-form{
+        text-align: -webkit-center;
+        .login-signup-btn{
+            background:#0052CC;
+            padding: 4px 10px;
+            border-radius: 3px;
+            line-height: 30px;
+        }
+    }
+    .logo-login-page{
+        text-align: center;
+        display: block;
+        margin: 40px auto;
+
+        width: 14%;
+    }
+    .login-section{
+        box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+        background-color: #fff;
+        width: 25%;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 4px;
+    }
+    .signup-section{
+        box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+        background-color: #fff;
+        width: 25%;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 4px;
+    }
+}

@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+::selection {
+    background-color: $clr1;
+    color: $clr3;
+}
+
+html {
+    font-family: montserrat;
+    line-height: 1.6;
+    color: $clr2;
+    font-size: 14px;
+}
+
+body {
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color: $clr4;
+    margin: 0;
+}
+
+
+p {
+    margin: 0 0 1em;
+    // max-width: 40ch;
+}
+
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+button{
+    svg{
+    background-color: none;
+    }
+
+}
+
+textarea{
+    color: $text-dark;
+    ::placeholder{
+        color: $text-dark;
+    }
+}
