@@ -42,10 +42,9 @@ export const boardStore = {
         addBoard(state, { board }) {
             state.boards.push(board)
         },
-        updateBoard({ boards, currBoard }) {
-            const idx = boards.findIndex(c => c.id === currBoard._id)
-            boards.splice(idx, 1, currBoard)
-            currBoard = boardService.save(currBoard)
+        updateBoard(state, { board }) {
+            state.currBoard = board
+            // console.log("🚀 ~ file: board.store.js:47 ~ updateBoard ~ state.currBoard", state.currBoard)
         },
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
@@ -69,31 +68,31 @@ export const boardStore = {
                 }
             })
         },
-        // saveCard(state, { card }) {
-        //     let cardIdx = 0
-        //     let groupIdx = -1
-        //     state.currBoard.groups.forEach((group, idx1) => {
-        //         group.cards.forEach((currCard, idx) => {
-        //             if (currCard.id === card.id) {
-        //                 cardIdx = idx
-        //                 groupIdx = idx1
-        //             }
-        //         })
-        //         if (groupIdx >= 0) state.currBoard.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
-        //     })
-        //     const boardIdx = state.boards.findIndex(c => c.id === state.currBoard._id)
-        //     state.boards.splice(boardIdx, 1, state.currBoard)
-        //     boardService.save(state.currBoard)
-        // },
-        saveCard(state, { card, groupId }) {
-            const group = boardService.findGroupById(groupId, state.currBoard)
-            if (card.id) {
-                const cardIdx = group.cards.findIndex(c => c.id === card.id)
-                group.cards[cardIdx] = JSON.parse(JSON.stringify(card))
-            } else {
-                group.cards.push(JSON.parse(JSON.stringify(card)))
-            }
+        saveCard(state, { card }) {
+            let cardIdx = 0
+            let groupIdx = -1
+            state.currBoard.groups.forEach((group, idx1) => {
+                group.cards.forEach((currCard, idx) => {
+                    if (currCard.id === card.id) {
+                        cardIdx = idx
+                        groupIdx = idx1
+                    }
+                })
+                if (groupIdx >= 0) state.currBoard.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+            })
+            const boardIdx = state.boards.findIndex(c => c.id === state.currBoard._id)
+            state.boards.splice(boardIdx, 1, state.currBoard)
+            boardService.save(state.currBoard)
         },
+        // saveCard(state, { card, groupId }) {
+        //     const group = boardService.findGroupById(groupId, state.currBoard)
+        //     if (card.id) {
+        //         const cardIdx = group.cards.findIndex(c => c.id === card.id)
+        //         group.cards[cardIdx] = JSON.parse(JSON.stringify(card))
+        //     } else {
+        //         group.cards.push(JSON.parse(JSON.stringify(card)))
+        //     }
+        // },
         updateLabels(state, { labels }) {
             const newLabels = JSON.parse(JSON.stringify(labels))
             state.currBoard.labels = newLabels
@@ -113,13 +112,12 @@ export const boardStore = {
                 throw err
             }
         },
-        async updateBoard({ commit, state }, { list }) {
+        async updateBoard({ commit, state }, { board }) {
             try {
-                // const board = boardService.saveListToBoard(list, state.currBoard)
+
+                board = await boardService.save(board)
                 commit({ type: 'updateBoard', board })
-                console.log(list)
-                // board = await boardService.save(board)
-                // return board
+
             } catch (err) {
                 console.log('boardStore: Error in updateBoard', err)
                 throw err
@@ -143,7 +141,7 @@ export const boardStore = {
                 throw err
             }
         },
-        async addCard({ commit, dispatch }, { card, groupId }) {
+        async addCard({ commit }, { card, groupId }) {
             try {
                 // console.log('boardStore:', card, groupId)
                 commit({ type: 'saveCard', card, groupId })
@@ -153,6 +151,26 @@ export const boardStore = {
                 throw err
             }
         },
+        async saveCard({ dispatch, state }, { card }) {
+            console.log(card)
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+
+            let cardIdx = 0
+            let groupIdx = -1
+            board.groups.forEach((group, idx1) => {
+                group.cards.forEach((currCard, idx) => {
+                    if (currCard.id === card.id) {
+                        cardIdx = idx
+                        groupIdx = idx1
+                    }
+                })
+                if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+            })
+            console.log("🚀 ~ file: board.store.js:163 ~ saveCard ~ potentialCard", board)
+            dispatch({ type: "updateBoard", board })
+
+
+        }
 
     }
 }

@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             //XXX find solution for getting to modal not through board details
-           card:this.$store.getters.getCard,
+           card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
             realTextArea: false
         }
     },
@@ -65,11 +65,6 @@ export default {
     // },
     created(){
          console.log( this.$store.getters.getCard)
-    },
-    computed:{
-        card(){
-           return this.$store.getters.getCard
-        }
     },
     methods: {
         closeModal(){
@@ -87,9 +82,10 @@ export default {
         addDescription(){
 //need to add description to card
         },
-        updateCard(card) {
-            this.$emit('updateCard', card)
+        updateCard() {
+            this.$store.dispatch({ type:"saveCard", card:this.card})
         },
+        
         updateLabels(labels) {
             this.$emit('updateLabels', labels)
         },
@@ -105,5 +101,13 @@ export default {
     components: {
         modalSidebar
     },
+    watch:{
+        card:{
+            handler(newVal, oldVal){
+                this.updateCard()
+            },
+            deep:true
+        }
+}
 }
 </script>

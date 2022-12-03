@@ -70,6 +70,7 @@ export default {
       this.$store.dispatch({ type: 'addCard', card, groupId})
     },
     updateCard(card){
+      console.log("🚀 ~ file: board-details.vue:73 ~ updateCard ~ card", card)
       this.$store.dispatch({ type: 'saveCard', card})
     },
     updateLabels(labels){
