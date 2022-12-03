@@ -10,21 +10,16 @@
     &-sidebar{
         width: 272px;
         padding-inline: 1.2em;
-
-        & img{
-            width: 0.9em;
-            position: relative;
-            margin-inline-end: 0.3em;
-            object-fit: cover;
-        }
-
         & > nav{
             border-bottom: 1px solid  rgba(0, 0, 0, 0.1);
             // background-color: transparent;
+            margin-top: 16px;
             & > button{
-                padding-block: 0.6em;
-                padding-inline-end: 0.6em;
+                margin-bottom: 1px;
+                // letter-spacing: 0.5px;
+                font-size: 14px;
                 background-color: transparent;
+                // padding-block: 0.6em;
                 width: 100%;
                 font-weight: 700;
                 color: rgb(23, 43, 77);
@@ -43,20 +38,11 @@
     }
 
     &-header{
-        font-size: 17px;
-        margin-inline-start: 2.9em;
-        letter-spacing: 0.5px;
-        vertical-align: bottom;
+        font-size: 16px;
+        // letter-spacing: 0.2px;
+        // vertical-align: bottom;
         // margin: 0;
         color: $text-dark;
-        & img{
-            position: relative;
-            top: 0.4em;
-            left: -0.4em;
-            filter: invert(10%) sepia(26%) saturate(4768%) hue-rotate(204deg) brightness(90%) contrast(87%);
-            width: 1.7rem;
-            height: 1.7rem;
-        }
     }
     &-list{
     list-style-type:none;
@@ -82,7 +68,6 @@
                 & .board-preview-options{
                     transform: translateX(-150%);
                     opacity: 1;
-
                 }
             }
     
@@ -100,12 +85,12 @@
                     right: -10%;
                     opacity: 0;
                     transition: 0.1s;
-                    & > .icon{
+                    & > span{
                         // transform: scale(0.45);
-                        height: 1.125em;
-                        width: 1.125em;
-                        filter: invert(98%) sepia(2%) saturate(2%) hue-rotate(214deg) brightness(115%) contrast(100%);
+                        font-size: 14px;
+                        color: #fff;
                         &:hover{
+                            // font-size: 19.2px;
                             transform: scale(1.2);
                         }
                     }

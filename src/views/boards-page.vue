@@ -3,35 +3,35 @@
       <article class="gallery flex">
       <aside class="gallery-sidebar">
         <nav class="flex column">
-          <button class="gallery-nav-btn flex">
-              <img src="../assets/icons/trello.svg" alt="">
+          <button class="gallery-nav-btn">
+              <span class="icon sm board"></span>
               Boards
             </button>
-          <button class="gallery-nav-btn flex">
-            <img src="../assets/icons/trello.svg" alt="">
+          <button class="gallery-nav-btn">
+              <span class="icon sm template"></span>
             Templates</button>
           <button class="gallery-nav-btn">
-            <img src="../assets/icons/home.svg" alt="hm">
+              <span class="icon sm pulse"></span>
             Home</button>
         </nav>
         <div class="flex justify-between">
           Workspaces
-          <img src="../assets/icons/add.svg" alt="">
+          <!-- <img src="../assets/icons/add.svg" alt=""> -->
         </div>
       </aside>
       
       <section class="full">
-      <h3 class="gallery-header">
-          <img src="../assets/icons/time.png" alt="">
-        Recently viewed
-      </h3>
+        <h3 class="gallery-header">
+          <span class="icon lg time"></span>
+          Recently viewed
+        </h3>
       <ul class="gallery-list flex wrap">
         <li class="gallery-item">
             <router-link :to="'/board/' + 'taco'">
             <div class="board-preview">
               Traco
               <div class="board-preview-options">
-                <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular">
+                <span class="icon sm star-empty"></span>
               </div>
             </div>
           </router-link>
@@ -40,7 +40,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular">
+              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
             </div>
           </div>
         </li>
@@ -48,7 +48,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular">
+              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
             </div>
           </div>
         </li>
@@ -56,7 +56,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular">
+              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
             </div>
           </div>
         </li>
@@ -64,7 +64,7 @@
           <div class="board-preview">
             Dummy board
             <div class="board-preview-options">
-              <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular">
+              <!-- <img class="icon" src="../assets/icons/star-regular.svg" alt="star-regular"> -->
             </div>
           </div>
         </li>
