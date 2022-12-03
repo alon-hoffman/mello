@@ -66,7 +66,7 @@
             url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg");
                 
                 & .board-preview-options{
-                    transform: translateX(-150%);
+                    transform: translateX(-100%);
                     opacity: 1;
                 }
             }
@@ -86,12 +86,11 @@
                     opacity: 0;
                     transition: 0.1s;
                     & > span{
-                        // transform: scale(0.45);
                         font-size: 14px;
                         color: #fff;
+                        transition: 0.1s;
                         &:hover{
-                            // font-size: 19.2px;
-                            transform: scale(1.2);
+                            font-size: 19.2px;
                         }
                     }
                 }
