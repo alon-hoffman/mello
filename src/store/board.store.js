@@ -30,7 +30,10 @@ export const boardStore = {
         getCurrBoard(state) { return state.currBoard },
         getMembersOfBoard(state) { return state.currBoard.members },
         getLabelsOfBoard(state) { return state.currBoard.labels },
-        getCard(state) { return state.currCard }
+        getCard(state) {
+            console.log(state.currCard)
+            return state.currCard
+        }
     },
     mutations: {
         setBoards(state, { boards }) {
@@ -53,13 +56,13 @@ export const boardStore = {
             state.currBoard = board
         },
         setCurrCard(state, { cardId }) {
-            console.log(state.currBoard)
             state.currBoard.groups.forEach(group => {
                 if (group.cards) {
 
                     group.cards.forEach(card => {
                         if (card.id === cardId) {
                             state.currCard = card
+                            console.log("🚀 ~ file: board.store.js:65 ~ setCurrCard ~ state.currCard", state.currCard.title)
                             return
                         }
                     })

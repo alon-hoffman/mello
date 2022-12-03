@@ -3,7 +3,7 @@
     <article  v-click-outside="closeModal" class="modal" :class="isOn">
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
-            <input class="header" type="text" v-model="demoCard.title">
+            <input class="header" type="text" v-model="card.title">
             <p class="content">in list <span class="move-card-link">traco</span></p>
         </header>
         <div class="modal-content flex">
@@ -51,19 +51,25 @@ export default {
     emits: ['toggleEdit', 'updateCard', 'updateLabels'],
     data() {
         return {
-            demoCard: {
-                title: 'Make logo',
-                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-            },
+            //XXX find solution for getting to modal not through board details
+           card:this.$store.getters.getCard,
             realTextArea: false
         }
     },
-    async created() {
-        this.realTextArea = false
-        if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
-    // todo check if the param really is _id
-    const { _id } = this.$route.params
-    this.$store.commit({ type: "setBoardById"}, {_id });
+    // async created() {
+    //     this.realTextArea = false
+    //     if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
+    // // todo check if the param really is _id
+    // const { _id } = this.$route.params
+    // this.$store.commit({ type: "setBoardById"}, {_id });
+    // },
+    created(){
+         console.log( this.$store.getters.getCard)
+    },
+    computed:{
+        card(){
+           return this.$store.getters.getCard
+        }
     },
     methods: {
         closeModal(){
