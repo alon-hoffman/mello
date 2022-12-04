@@ -5,12 +5,15 @@
     top: 0px;
     transition: background-color 0.5s ease 0s, box-shadow 0.5s ease 0s;
     width: 100vw;
+    
+   
+    height: 60px;
     z-index: 100;
     background-color: #fff;
     padding: 10px;
 
     .logo-img-home {
-        width: rem(120px);
+        width: rem(135px);
         // height: 50px;
     }
 
@@ -24,7 +27,7 @@
         align-self: stretch;
         color: rgb(23, 43, 77);
         display: flex;
-        font-size: 1.2rem;
+        font-size: 19px;
         height: 100%;
         padding: 0.5rem 1.5rem;
         text-decoration: none;
@@ -32,6 +35,8 @@
     }
 
     nav {
+        max-width: 1320px;
+        margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
