@@ -33,7 +33,6 @@ export default {
     };
   },
   created(){
-console.log(`this.lists = `, this.lists)
   },
   components: {
     cardGroup,
@@ -46,7 +45,6 @@ console.log(`this.lists = `, this.lists)
       this.$emit('saveList', {title:this.newTitle, cards:[]})
     },
     addCard(card){
-      console.log("🚀 ~ file: group-list.vue:50 ~ addCard ~ card", card)
       this.$emit("addCard", card)
     },
     closeEdit(){

@@ -57,7 +57,6 @@ export default {
         }
     },
     async created() {
-         console.log(this.$route.params )
         this.realTextArea = false
         if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
     // todo check if the param really is _id
@@ -71,10 +70,8 @@ export default {
         toggleTextArea() {
             this.realTextArea = true
             this.$refs.textarea.focus()
-            // console.log('toggle between real and fake textarea')
         },
         closeTextArea() {
-            // console.log(`foo = `)
             this.realTextArea = false
         },
         addDescription(){

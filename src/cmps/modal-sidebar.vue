@@ -154,19 +154,16 @@ export default {
 
         },
         toggleMembers(member) {
-            console.log("🚀 ~ file: modal-sidebar.vue:158 ~ toggleMembers ~ member", member)
             if(this.card.members?.length){
             const idx = this.card.members.findIndex((m) => m._id === member._id)
             if (idx !== -1) this.card.members.splice(idx, 1)
             else this.card.members.push(member)
             }
             else this.card.members=[member]
-            console.log("🚀 ~ file: modal-sidebar.vue:164 ~ toggleMembers ~ this.card.members", this.card.members)
 
             // this.updateCard()
         },
         toggleLabels(label) {
-            console.log(`label = `, label)
             const idx = this.card.labels.findIndex((l) => l === label._id)
             if (idx !== -1) this.card.labels.splice(idx, 1)
             else this.card.labels.push(label._id)
@@ -197,7 +194,6 @@ export default {
         },
         updateLabels(){
             this.$emit('updateLabels', this.boardLabels)
-            // console.log(`this.boardLabels = `, this.boardLabels)
         },
     },
     computed: {

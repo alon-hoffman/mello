@@ -32,7 +32,6 @@ export const boardStore = {
         getMembersOfBoard(state) { return state.currBoard.members },
         getLabelsOfBoard(state) { return state.currBoard.labels },
         getCard(state) {
-            console.log(state.currCard)
             return state.currCard
         }
     },
@@ -45,7 +44,6 @@ export const boardStore = {
         },
         updateBoard(state, { board }) {
             state.currBoard = board
-            // console.log("🚀 ~ file: board.store.js:47 ~ updateBoard ~ state.currBoard", state.currBoard)
         },
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
@@ -62,7 +60,6 @@ export const boardStore = {
                     group.cards.forEach(card => {
                         if (card.id === cardId) {
                             state.currCard = card
-                            console.log("🚀 ~ file: board.store.js:65 ~ setCurrCard ~ state.currCard", state.currCard.title)
                             return
                         }
                     })
@@ -161,7 +158,6 @@ export const boardStore = {
         async addList({ dispatch, state }, { list }) {
             list.id = utilService.makeId()
             const board = JSON.parse(JSON.stringify(state.currBoard))
-            console.log("🚀 ~ file: board.store.js:163 ~ addList ~ board", board)
             board.groups.push(list)
             dispatch({ type: "updateBoard", board })
         },
