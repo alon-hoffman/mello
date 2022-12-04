@@ -15,6 +15,9 @@
         <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
             <span class="icon sm cover"></span>Cover
         </div>
+        <div @click="$emit('removeCard' ,card.id)" class="fake-button add-option-div">
+            <span class="icon sm archive"></span>Archive
+        </div>
         <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="IsMiniModalOpen">
             <template #header>
                 <section class="mini-modal-header">

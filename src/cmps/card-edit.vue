@@ -37,7 +37,7 @@
                     </ul>
                 </section>
             </section>
-            <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels" />
+            <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" />
         </div>
     </article>
 </template>
@@ -89,6 +89,9 @@ export default {
         },
         changCard(card){
             console.log("🚀 ~ file: card-edit.vue:91 ~ changCard ~ card", card)
+        },
+        removeCard(cardId){
+            this.$store.dispatch({ type: "removeCard",cardId });
         }
     },
     computed: {

@@ -45,12 +45,8 @@
             margin-bottom: 5px;
         display:flex;
         align-items: center;
-        img{
-            margin-inline-start: 10px;
-            width:rem(18px);
-            filter: invert(96%) sepia(9%) saturate(937%) hue-rotate(180deg) brightness(98%) contrast(86%);
-        }
-        button{
+       
+        .add-list{
             background-color: $light-blue;
             color:#fff;
             border-radius: 3px;
@@ -65,10 +61,10 @@
             &:active{
                 background-color: #055a8c;
             }
-            img{
-                background-color: green;
-                width:rem(24px);
-            }
+        }
+        .close-modal{
+            background-color: unset;
+            color: unset;
         }
     }
     }
