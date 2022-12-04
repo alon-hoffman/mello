@@ -2,7 +2,7 @@
     <section v-if="!newCard" class="card-preview">
      <template v-if="newLabels">
         <pre   v-for="label in newLabels"
-      :style="{color:label.color}">{{label}}</pre>
+      :style="{'color':label.color}">{{label}}</pre>
      </template> 
       <img v-if="card.imgURL" :src="getCardURL">
       <h1>{{card.title}}</h1>
@@ -41,6 +41,7 @@
          this.newLabels= this.card.labels?.map(label=>{
           const idx= boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
           if(idx>-1)  return {color:boardLabels[idx].color}
+          return "red"
         })
       },
   
