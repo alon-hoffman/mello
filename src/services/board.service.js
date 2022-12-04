@@ -75,12 +75,14 @@ const startingBoard = [
                 "archivedAt": 1589983468418,
                 "cards": [
                     {
+                        "groupId": "g101",
                         "id": "c101",
                         "title": "Make Logo",
                         "imgURL": "https://trello.com/1/cards/63860d3af434df009e75619b/attachments/638622d97e03e4019f8c5399/previews/638622d97e03e4019f8c53b9/download/%D7%94%D7%95%D7%A8%D7%93%D7%94.png"
 
                     },
                     {
+                        "groupId": "g101",
                         "id": "c102",
                         "title": "Find employees",
                         "members": [
@@ -104,11 +106,13 @@ const startingBoard = [
                 "cards": [
                     {
                         "id": "c103",
+                        "groupId": "g102",
                         "title": "Research for prime locations and peak hours",
                         "labels": ["l102", "l104"]
                     },
                     {
                         "id": "c104",
+                        "groupId": "g102",
                         "title": "Buy taco truck",
                         "priority": "high",
                         "createdBy": {
@@ -150,6 +154,7 @@ const startingBoard = [
                 "cards": [
                     {
                         "id": "c1534",
+                        "groupId": "g123",
                         "title": "Look for taco truck",
                         "imgURL": "https://trello.com/1/cards/63860ca5644759011faa16a2/attachments/63860d602444d1006e32080a/previews/63860d612444d1006e320814/download/IMG_5708__1_.jpg",
                         "labels": ["important"],
@@ -174,6 +179,7 @@ const startingBoard = [
                 "archivedAt": 1589983468418,
                 "cards": [
                     {
+                        "groupId": "g1asd",
                         "id": "c15skdj",
                         "title": "Pass Safety Inspection",
                         "createdBy": {
@@ -182,6 +188,7 @@ const startingBoard = [
                         }
                     },
                     {
+                        "groupId": "g1asd",
                         "id": "askjdkj",
                         "title": "Convince mom to cook in the truck",
                         "imgURL": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/960x720/de20062beee58da62ee47ad12f309837/photo-1442458370899-ae20e367c5d8.jpg",
@@ -199,6 +206,7 @@ const startingBoard = [
                 "cards": [
                     {
                         "id": "jvlvhlv",
+                        "groupId": "bjkhlk44",
                         "title": "Stress test employees",
                         "imgURL": "https://trello-backgrounds.s3.amazonaws.com/Shared…eba801f64257/photo-1604208485423-f19bc2aaae2d.jpg",
                         "createdBy": {
@@ -208,6 +216,7 @@ const startingBoard = [
                     },
                     {
                         "id": "nalksjdl",
+                        "groupId": "bjkhlk44",
                         "title": "Check spiciness",
                         "createdBy": {
                             "_id": "u102",
@@ -223,6 +232,7 @@ const startingBoard = [
                 "cards": [
                     {
                         "id": "79ucjxzi",
+                        "groupId": "ssvx3",
                         "title": "Learn taco recipe",
                         "imgURL": "https://trello.com/1/cards/63860b4384db8b03aaa58f70/attachments/6386149eb4143f0070807dc6/previews/6386149eb4143f0070807ddf/download/AU-T-10001064-Taco-Recipe_ver_2.jpg",
                         "createdBy": {
