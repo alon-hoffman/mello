@@ -1,6 +1,6 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article  v-click-outside="closeModal" class="modal" :class="isOn">
+    <article  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <header class="modal-header edit-block">
@@ -39,7 +39,7 @@
                     </ul>
                 </section>
             </section>
-            <modal-sidebar :card="getCurrCard" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @sideModalChange="changeCard"/>
+            <modal-sidebar :isInMiniModal="isInMiniModal" :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @openMiniModal="openMiniModal" @sideModalChange="changeCard"/>
         </div>
     </article>
 </template>
@@ -57,7 +57,9 @@ export default {
         return {
             //XXX find solution for getting to modal not through board details
            card:null,
-            realTextArea: false
+            realTextArea: false,
+            isMiniModalOpen: false,
+            isInMiniModal:false,
         }
     },
     async created() {
@@ -76,11 +78,28 @@ export default {
         })
     },
     methods: {
-        closeModal(){
+        checkCloseModal(){
     //   this.$router.back()
+if(this.isMiniModalOpen ) this.isMiniModalOpen=false 
+else{
     const url= this.$route.path
-            const route= url.substring(0, url.indexOf('card'))
-            this.$router.push(route)
+        const route= url.substring(0, url.indexOf('card'))
+        this.$router.push(route)
+}
+    // if(!this.isInMiniModal&&!this.isMiniModalOpen){
+    //     const url= this.$route.path
+    //     const route= url.substring(0, url.indexOf('card'))
+    //     this.$router.push(route)
+    // }
+    // else if(this.isMiniModalOpen&&!this.isInMiniModal){
+    //     this.isMiniModalOpen=false 
+    // } 
+        
+        },
+        closeModal(){
+            const url= this.$route.path
+        const route= url.substring(0, url.indexOf('card'))
+        this.$router.push(route)
         },
         toggleTextArea() {
             this.realTextArea = true
@@ -106,7 +125,15 @@ export default {
         removeCard(cardId){
             this.$store.dispatch({ type: "removeCard",cardId });
             this.closeModal()
-        }
+        },
+        openMiniModal(){
+            this.isInMiniModal=false
+            this.isMiniModalOpen = true
+        },
+        closeMiniModal(){
+            this.isInMiniModal=true
+            this.isMiniModalOpen = false
+        },
     },
     computed: {
         isOn() {
@@ -116,7 +143,6 @@ export default {
             return this.$store.getters.getGroupTitle
         },
         getCurrCard(){
-            console.log('foo')
             return this.card
         },
     },

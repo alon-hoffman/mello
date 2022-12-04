@@ -59,7 +59,7 @@
                     <section class="labels-checked-section" v-for="label in boardLabels">
                         <label class="clickable labels-checked-box">
                             <div class=" label-container">
-                                <img  class="checked-img" v-if="checkIfInLabelList(label)"
+                                <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
                                     src="../assets/icons/checkbox-try.svg">
                                 <img @click="toggleLabels(label)" class="box-img" v-else src="../assets/icons/gray-square.svg" alt=""> 
                                 <!-- <el-checkbox v-model="checked1" size="large" /> -->
@@ -124,12 +124,14 @@ import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
     props:{
-        card:Object
+        card:Object,
+        isMiniModalOpen:Boolean,
+        isInMiniModal:Boolean,
     },
-    emits: ['updateCard','updateLabels','sideModalChange'],
+    emits: ['updateCard','updateLabels','sideModalChange','openMiniModal','closeMiniModal'],
     data() {
         return {
-            isMiniModalOpen: false,
+            
             miniModalTitle: null,
             filterMembersBy: '',
             filterLabelsBy: '',
@@ -149,10 +151,14 @@ export default {
     methods: {
         openMiniModal(value) {
             this.miniModalTitle = value
-            this.isMiniModalOpen = true
+
+            this.$emit('openMiniModal')
+            // this.isMiniModalOpen = true
         },
         closeMiniModal() {
-            this.isMiniModalOpen = false
+            
+            this.$emit('closeMiniModal')
+            // this.isMiniModalOpen = false
         },
         setBackgroundCard() {
 

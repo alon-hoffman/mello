@@ -1,7 +1,7 @@
 <template>
     <section v-if="!newCard" class="card-preview">
      <div v-if="newLabels" class="labels-container flex">
-        <div   v-for="label in newLabels"
+        <div   v-for="label in getLabels"
       :style="{'background-color':label.color}" class="label-preview"></div>
      </div> 
       <img v-if="card.imgURL" :src="getCardURL">
@@ -29,21 +29,30 @@
         },
         data(){
           return{
-            newLabels:null
+            newLabels:null,
+            boardLabels:null
           }
         },
     computed: {
       getCardURL(){
         return this.card.imgURL
       },
+      getLabels(){
+        return this.card.labels?.map(label=>{
+         const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
+         if(idx>-1)  return {color:this.boardLabels[idx].color}
+         return "red"
+        })
+      },
     },
       created(){
-        const boardLabels= this.$store.getters.getCurrBoard.labels
-         this.newLabels= this.card.labels?.map(label=>{
-          const idx= boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
-          if(idx>-1)  return {color:boardLabels[idx].color}
-          return "red"
+        this.boardLabels= this.$store.getters.getCurrBoard.labels
+        this.newLabels= this.card.labels?.map(label=>{
+         const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
+         if(idx>-1)  return {color:this.boardLabels[idx].color}
+         return "red"
         })
+       
       },
   
   
