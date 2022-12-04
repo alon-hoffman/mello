@@ -49,6 +49,7 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
+            console.log(`board = `, board)
             state.currBoard = board
         },
         removeBoard(state, { boardId }) {
@@ -176,20 +177,21 @@ export const boardStore = {
 
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
-            const board = JSON.parse(JSON.stringify(state.currBoard))
-            let cardIdx = 0
-            let groupIdx = -1
-            board.groups.forEach((group, idx1) => {
-                if (group.cards) {
-                    group.cards.forEach((currCard, idx) => {
-                        if (currCard.id === card.id) {
-                            cardIdx = idx
-                            groupIdx = idx1
-                        }
-                    })
-                    if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
-                }
-            })
+            const board = JSON.parse(JSON.stringify(state.currBoard))      
+           const groupIdx= board.groups.findIndex((group)=>group.id===card.groupId)
+           const cardIdx= board.groups[groupIdx].cards.findIndex((currCard)=>currCard.id===card.id)
+           board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+            // board.groups.forEach((group, idx1) => {
+            //     if (group.cards) {
+            //         group.cards.forEach((currCard, idx) => {
+            //             if (currCard.id === card.id) {
+            //                 cardIdx = idx
+            //                 groupIdx = idx1
+            //             }
+            //         })
+            //         if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+            //     }
+            // })
             dispatch({ type: "updateBoard", board })
         },
         async removeCard({ dispatch, state }, { cardId }) {
