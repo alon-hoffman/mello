@@ -89,6 +89,7 @@
 </template>
   
   <script>
+
   export default {
     name: 'boards-page',
     data() {
@@ -100,6 +101,7 @@
     },
    async created() {
     this.boards=await this.$store.dispatch({ type: "loadBoards" });
+    
     },
     methods: {
     }

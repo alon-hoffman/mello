@@ -37,7 +37,14 @@
             font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             font-size: 14px;
         }
+        
     }
+
+    &-cover{
+        border-radius: 3px 3px 0 0;
+        height: 32px;
+    }
+
     .labels-container{
         margin: rem(5px) rem(10px) rem(2px) rem(10px);
         padding-top:rem(12px);
