@@ -164,6 +164,10 @@ export const boardStore = {
             board.groups.push(list)
             dispatch({ type: "updateBoard", board })
         },
+        async removeList({ dispatch, state }, { id }) {
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+
+        },
         async saveCard({ dispatch, state }, { card, groupId }) {
             const board = JSON.parse(JSON.stringify(state.currBoard))
             let cardIdx = 0
