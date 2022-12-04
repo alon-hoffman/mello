@@ -96,6 +96,9 @@ export default {
         isOn() {
             return { on: this.isScreen === true }
         },
+        groupTitle(){
+            return this.$store.getters.getGroupTitle
+        }
     },
     unmounted(){
         this.realTextArea = false
