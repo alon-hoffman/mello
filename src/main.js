@@ -5,6 +5,7 @@ import { store } from './store/store.js'
 import { editable, clickOutsideDirective, clickOnEscDirective, clickOnSlashDirective } from './directives'
 import ElementPlus from 'element-plus'
 import { VueDraggableNext } from 'vue-draggable-next'
+
 import 'element-plus/dist/index.css'
 import './assets/styles/main.scss'
 import rootCmp from './root-cmp.vue'

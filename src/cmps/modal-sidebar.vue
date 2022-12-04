@@ -22,7 +22,7 @@
             <template #header>
                 <section class="mini-modal-header">
                     <span> {{ miniModalTitle }} </span>
-                    <button class="clickable close-mini-modal-btn" @click="closeMiniModal">X</button>
+                    <button class="clickable close-mini-modal-btn" @click="closeMiniModal"></button>
                 </section>
             </template>
 
@@ -94,18 +94,18 @@
                 <section class="mini-modal-body">
                     <span>Colors</span>
                     <div class="first-colors-row">
-                        <button class="green-btn"></button>
-                        <button class="yellow-btn"></button>
-                        <button class="orange-btn"></button>
-                        <button class="red-btn"></button>
-                        <button class="purple-btn"></button>
+                        <button class="green-btn" value="#7BC86C" @click="setCover"></button>
+                        <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
+                        <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
+                        <button class="red-btn" value="#EF7564" @click="setCover"></button>
+                        <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
                     </div>
                     <div class="second-colors-row">
-                        <button class="blue-btn"></button>
-                        <button class="bright-blue-btn"></button>
-                        <button class="bright-green-btn"></button>
-                        <button class="pink-btn"></button>
-                        <button class="dark-blue-btn"></button>
+                        <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
+                        <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
+                        <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
+                        <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
+                        <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
                     </div>
                     <span>Attachments</span>
                     <label class="cover-img-label">
@@ -195,7 +195,10 @@ export default {
         updateLabels(){
             this.$emit('updateLabels', this.boardLabels)
         },
-    },
+        setCover(e){
+            this.card.coverColor = e.target.value
+        }
+    },  
     computed: {
         getFilterMembers() {
             const regex = new RegExp(this.filterMembersBy, 'i')
