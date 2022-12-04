@@ -91,17 +91,18 @@ export default {
        title:this.list.title,
        isCardEdited:false,
         check:true,
-        newCard: {title: '', groupId: this.list.group.id}
+        newCard: {title: '',groupId:this.list.id}
       }
     },  
     methods: {
       closeNewCard(){
-        this.newCard = {title: ''}
+        this.newCard = {title: '',groupId:this.list.id}
         this.isCardEdited=false
       },
       addCard(){
         // this.list.cards.push(this.newCard)
-        this.$emit('saveList', this.list)
+        this.$emit('addCard', this.newCard)
+        // this.$emit('saveList', this.list)
         this.closeNewCard()
       },
     },

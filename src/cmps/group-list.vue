@@ -6,14 +6,14 @@
         :list="list"
         :key="list.id"
         @editCard="editCard"
-        @addCard="$emit('addCard', $event)"
+        @addCard="addCard"
       />
       <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit=true">Add another list</button>
       <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
         <input type="text" v-model="newTitle"  placeholder="Enter list title..."/>
         <div class="buttons">
-        <button @click="addList" class="clickable">Add list</button>
-        <img @click="isNewListEdit=false" class="clickable" src='../assets/icons/close.png'>
+        <button @click="addList" class="clickable add-list">Add list</button>
+        <button @click="isNewListEdit=false" class="icon ex clickable close-modal"></button>
       </div>
       </div>
     </ul>
@@ -42,9 +42,12 @@ console.log(`this.lists = `, this.lists)
   created() {},
   methods: {
     addList(){
-       console.log("addlist group-list")
       this.isNewListEdit=false
-      this.$emit('saveList', this.newTitle)
+      this.$emit('saveList', {title:this.newTitle, cards:[]})
+    },
+    addCard(card){
+      console.log("🚀 ~ file: group-list.vue:50 ~ addCard ~ card", card)
+      this.$emit("addCard", card)
     },
     closeEdit(){
       this.isNewListEdit=false

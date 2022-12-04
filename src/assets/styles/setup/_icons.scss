@@ -66,4 +66,10 @@
     &.edit::before{
         content: '\E928'
     }
+    &.ex::before{
+        content:'\E91C'
+    }
+    &.archive::before{
+        content:'\E907'
+    }
 }
