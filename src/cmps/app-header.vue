@@ -36,6 +36,8 @@
   </header>
 </template>
 <script>
+  import { FastAverageColor } from 'fast-average-color';
+
 export default {
   data() {
     return {
@@ -60,6 +62,16 @@ export default {
     },
     params() {
       return this.$route.path
+    },
+    avgColor(){
+      const fac = new FastAverageColor();
+      fac.getColorAsync(this.$store.getters.getBoardImg)
+        .then(color => {
+            console.log(color)
+        })
+        .catch(e => {
+            console.log(e);
+        });
     },
   }
 }

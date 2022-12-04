@@ -5,6 +5,7 @@
       :style="{'background-color':label.color}" class="label-preview"></div>
      </div> 
       <img v-if="card.imgURL" :src="getCardURL">
+      <div v-else-if="card.coverColor" class="card-preview-cover" :style="{'background-color' : card.coverColor}"></div>
       <h1>{{card.title}}</h1>
       <div class="icons flex">
         <div class="left-icons">
