@@ -212,8 +212,8 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                 this.$emit("sideModalChange")
-                //  this.$emit("sideModalChange",this.card)
+                //  this.$emit("sideModalChange")
+                 this.$emit("sideModalChange",this.card)
             },
             deep:true
         }
