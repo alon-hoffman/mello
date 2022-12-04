@@ -91,7 +91,7 @@ export default {
        title:this.list.title,
        isCardEdited:false,
         check:true,
-        newCard: {title: '',groupId:this.list.groupId}
+        newCard: {title: '', groupId: this.list.group.id}
       }
     },  
     methods: {
@@ -100,7 +100,7 @@ export default {
         this.isCardEdited=false
       },
       addCard(){
-        this.list.cards.push(this.newCard)
+        // this.list.cards.push(this.newCard)
         this.$emit('saveList', this.list)
         this.closeNewCard()
       },
