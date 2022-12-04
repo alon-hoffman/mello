@@ -1,6 +1,15 @@
 .gallery-container{
     background-color: #fbfbff;
-    height: 100vh;
+    height: 95vh;
+    width: 100%;
+    margin: 0 auto;
+    .main-container-boards{
+margin: 0 auto;
+    }
+    .workspace-div{
+        padding: 5px 10px;
+        margin: 5px;
+    }
 }
 
 .gallery{
