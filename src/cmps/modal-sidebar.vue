@@ -124,7 +124,7 @@
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
-    emits: ['updateCard','updateLabels'],
+    emits: ['updateCard','updateLabels','sideModalChange'],
     data() {
         return {
             IsMiniModalOpen: false,
@@ -212,7 +212,6 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                //  this.$emit("sideModalChange")
                  this.$emit("sideModalChange",this.card)
             },
             deep:true
