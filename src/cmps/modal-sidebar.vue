@@ -154,12 +154,14 @@ export default {
 
         },
         toggleMembers(member) {
-            if(this.card.members){
-            const idx = this.card.members.findIndex((m) => m.id === member.id)
+            console.log("🚀 ~ file: modal-sidebar.vue:158 ~ toggleMembers ~ member", member)
+            if(this.card.members?.length){
+            const idx = this.card.members.findIndex((m) => m._id === member._id)
             if (idx !== -1) this.card.members.splice(idx, 1)
             else this.card.members.push(member)
             }
             else this.card.members=[member]
+            console.log("🚀 ~ file: modal-sidebar.vue:164 ~ toggleMembers ~ this.card.members", this.card.members)
 
             // this.updateCard()
         },
