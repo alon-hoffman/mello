@@ -104,6 +104,10 @@ export const boardStore = {
             const idx = state.boards.findIndex(c => c.id === state.currBoard._id)
             state.boards.splice(idx, 1, state.currBoard)
             boardService.save(state.currBoard)
+        },
+        updateGroup(state, { group }){
+            const groupIdx= state.currBoard.groups.findIndex(currGroup=>currGroup.id === group.id)
+            state.currBoard.groups.splice(groupIdx,1,group)
         }
     },
     actions: {
@@ -202,7 +206,27 @@ export const boardStore = {
                 if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1)
             })
             dispatch({ type: "updateBoard", board })
-
-        }
-    }
+        },
+        async saveList({ commit,dispatch, state }, { list }) {
+            // const board = JSON.parse(JSON.stringify(state.currBoard))
+            // board.groups.forEach((group, idx1) => {
+            //     if (group.id===list.id) {
+            //         board.groups.splice(idx1, 1, JSON.parse(JSON.stringify(list)))
+            //     }
+            // })
+            const group = state.currBoard.groups.find(group=>group.id === list.id)
+            
+            commit({ type: 'updateGroup', group:list })
+            const board=JSON.parse(JSON.stringify(state.currBoard))
+            dispatch({ type: "updateBoard", board })
+        },
+        async saveLists({ dispatch, state }, { lists }) {
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            board.groups=lists
+           dispatch({ type: "updateBoard", board })
+        },
+   
+    },
+ 
+      
 }

@@ -1,20 +1,23 @@
 <template>
   <section v-if="lists" class="group-list">
     <ul class="clean-list">
-      <card-group @edit="$emit('edit')"
-        v-for="list in lists"
-        :list="list"
-        :key="list.id"
-        @editCard="editCard"
-        @addCard="addCard"
-      />
-      <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit=true">Add another list</button>
+
+      <Container orientation="horizontal" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
+        :drop-placeholder="upperDropPlaceholderOptions">
+        <Draggable v-for="list in lists" :key="list.id">
+          <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"
+            @addCard="addCard" />
+        </Draggable>
+      </Container>
+
+      <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit = true">Add another
+        list</button>
       <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
-        <input type="text" v-model="newTitle"  placeholder="Enter list title..."/>
+        <input type="text" v-model="newTitle" placeholder="Enter list title..." />
         <div class="buttons">
-        <button @click="addList" class="clickable add-list">Add list</button>
-        <button @click="isNewListEdit=false" class="icon ex clickable close-modal"></button>
-      </div>
+          <button @click="addList" class="clickable add-list">Add list</button>
+          <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>
+        </div>
       </div>
     </ul>
   </section>
@@ -22,37 +25,80 @@
 
 <script>
 import cardGroup from "./card-group.vue";
+import { boardService } from '../services/board.service'
+import { Container, Draggable } from "vue3-smooth-dnd";
 export default {
   props: {
     lists: Array,
   },
   data() {
     return {
-      isNewListEdit:false,
-      newTitle:''
+      isNewListEdit: false,
+      newTitle: '',
+      upperDropPlaceholderOptions: {
+        className: 'cards-drop-preview',
+        animationDuration: '150',
+        showOnTop: true
+      },
+      dropPlaceholderOptions: {
+        className: 'drop-preview',
+        animationDuration: '150',
+        showOnTop: true
+      }
     };
   },
-  created(){
+  created() {
   },
   components: {
     cardGroup,
+    Container,
+    Draggable,
   },
   computed: {},
-  created() {},
+  created() { },
   methods: {
-    addList(){
-      this.isNewListEdit=false
-      this.$emit('saveList', {title:this.newTitle, cards:[]})
+    addList() {
+      this.isNewListEdit = false
+      this.$emit('saveList', { title: this.newTitle, cards: [] })
     },
-    addCard(card){
+    addCard(card) {
       this.$emit("addCard", card)
     },
-    closeEdit(){
-      this.isNewListEdit=false
+    closeEdit() {
+      this.isNewListEdit = false
     },
-    editCard(cardId){
-      this.$emit("editCard",cardId)
-    }
+    editCard(cardId) {
+      this.$emit("editCard", cardId)
+    },
+    onColumnDrop(dropResult) {
+      let lists = JSON.parse(JSON.stringify(this.lists))
+      lists = boardService.applyDrag(lists, dropResult)
+      this.$store.dispatch({ type: "saveLists", lists })
+      // this.list = scene
+    },
+    // onCardDrop(columnId, dropResult) {
+    //   if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+    //     const lists = JSON.parse(JSON.stringify(this.lists))
+    //     console.log(`lists = `, lists)
+    //     console.log(`columnId = `, columnId)
+    //     const column = lists.filter((l) => l.id === columnId)[0]
+    //     const columnIndex = list.findIndex((c) => c.id === list.id)
+    //     const newColumn = Object.assign({}, column)
+    //     newColumn = boardService.applyDrag(newColumn.cards, dropResult)
+    //     lists.splice(columnIndex, 1, newColumn)
+    //     this.lists = lists
+    //     this.$store.dispatch({ type: "saveLists", lists })
+    //   }
+    // }
   },
+  watch: {
+    lists: {
+      handler(newVal, oldVal) {
+
+        // dispatch({ type: "updateBoard", board:currBoard })
+      },
+      deep: true
+    }
+  }
 };
 </script>

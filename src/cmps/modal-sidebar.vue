@@ -18,7 +18,7 @@
         <div @click="$emit('removeCard' ,card.id)" class="fake-button add-option-div">
             <span class="icon sm archive"></span>Archive
         </div>
-        <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="IsMiniModalOpen">
+        <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
             <template #header>
                 <section class="mini-modal-header">
                     <span> {{ miniModalTitle }} </span>
@@ -38,7 +38,7 @@
                     <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
                     <span>Board members</span>
                     <label class="members-checked-box" v-for="member in getFilterMembers"
-                        @click="toggleMembers(member)">
+                        @click="toggleMember(member)">
                         <div class="members-checked-box-container">
                             <div class="user-and-img">
                                 <section class="img-container">
@@ -126,7 +126,7 @@ export default {
     emits: ['updateCard','updateLabels','sideModalChange'],
     data() {
         return {
-            IsMiniModalOpen: false,
+            isMiniModalOpen: false,
             miniModalTitle: null,
             card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
             filterMembersBy: '',
@@ -145,19 +145,19 @@ export default {
     methods: {
         openMiniModal(value) {
             this.miniModalTitle = value
-            this.IsMiniModalOpen = true
+            this.isMiniModalOpen = true
         },
         closeMiniModal() {
-            this.IsMiniModalOpen = false
+            this.isMiniModalOpen = false
         },
         setBackgroundCard() {
 
         },
-        toggleMembers(member) {
+        toggleMember(member) {
             if(this.card.members?.length){
-            const idx = this.card.members.findIndex((m) => m._id === member._id)
-            if (idx !== -1) this.card.members.splice(idx, 1)
-            else this.card.members.push(member)
+                const idx = this.card.members.findIndex((m) => m._id === member._id)
+                if (idx !== -1) this.card.members.splice(idx, 1)
+                else this.card.members.push(member)
             }
             else this.card.members=[member]
 
@@ -171,7 +171,7 @@ export default {
         },
         checkIfInMemberList(member) {
             if(!this.card.members) return
-            return this.card.members.filter((currMember) => currMember._id === member._id).length
+            return this.card.members.filter((currMember) => currMember._id === member._id).length > 0
         },
         checkIfInLabelList(label) {
             if(!this.card.labels) return false
