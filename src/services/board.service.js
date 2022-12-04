@@ -21,32 +21,32 @@ const startingBoard = [
         "style": {},
         "labels": [
             {
-                "_id": "l101",
+                "id": "l101",
                 "title": "When possible",
                 "color": "#d6ecd2"
             },
             {
-                "_id": "l102",
+                "id": "l102",
                 "title": "Important",
                 "color": "#faf3c0"
             },
             {
-                "_id": "l103",
+                "id": "l103",
                 "title": "",
                 "color": "#fce6c6"
             },
             {
-                "_id": "l104",
+                "id": "l104",
                 "title": "Urgent",
                 "color": "#f5d3ce"
             },
             {
-                "_id": "l105",
+                "id": "l105",
                 "title": "",
                 "color": "#eddbf4"
             },
             {
-                "_id": "l106",
+                "id": "l106",
                 "title": "",
                 "color": "#bcd9ea"
             },
