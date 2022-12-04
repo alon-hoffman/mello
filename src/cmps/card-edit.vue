@@ -16,7 +16,7 @@
                     <div v-if="!realTextArea" class="content fake-text-area fake-button" @click="toggleTextArea">Add a
                         more detailed description…</div>
                         <div class="content" v-if="realTextArea">
-                            <textarea ref="textarea" v-modal="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
+                            <textarea ref="textarea" v-model="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
                             placeholder="Add a more detailed description…"></textarea>
                             <button @click="addDescription" class="save-description-btn">Save</button>
                             <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>

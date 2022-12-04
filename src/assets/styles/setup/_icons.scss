@@ -75,4 +75,7 @@
     &.close::before{
         content: '\E91C'
     }
+    &.more::before{
+        content: '\E952'
+    }
 }

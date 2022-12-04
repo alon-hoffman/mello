@@ -1,21 +1,33 @@
 <template>
     <article class="board-creator">
-        <header></header>
+        <header>Create board
+                <span class="icon sm close clickable"></span>
+
+        </header>
         <div class="preview-display"></div>
+        <span class="label">backgrounds</span>
         <section class="background-selection">
             <ul class="custom-images-list">
-                <li class="modal-add-menu blue-btn clickable"></li>
-                <li class="modal-add-menu yellow-btn clickable"></li>
-                <li class="modal-add-menu green-btn clickable"></li>
-                <li class="modal-add-menu red-btn clickable"></li>
+                <li>img</li>
+                <li>img</li>
+                <li>img</li>
+                <li>img</li>
             </ul>
-            <ul class="color-list"></ul>
+            <ul class="color-list flex justify-between">
+                <li class="blue-btn clickable"></li>
+                <li class="yellow-btn clickable"></li>
+                <li class="green-btn clickable"></li>
+                <li class="red-btn clickable"></li>
+                <li class="purple-btn clickable"></li>
+                <li class="more-btn clickable"></li>
+
+            </ul>
         </section>
-        <input type="text" v-model="newBoard.title" placeholder="title">
+        <span class="label">backgrounds</span>
+        <input type="text" v-model="newBoard.title" placeholder="title" required>
 
     </article>
 </template>
-<!-- rgb(0, 121, 191) -->
 
 <script>
 export default{
