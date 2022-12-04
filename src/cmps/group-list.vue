@@ -2,23 +2,23 @@
   <section v-if="lists" class="group-list">
     <ul class="clean-list">
 
-      <Container orientation="horizontal" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
+      <Container orientation="horizontal" class="list-containers" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
         :drop-placeholder="upperDropPlaceholderOptions">
         <Draggable v-for="list in lists" :key="list.id">
           <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"
             @addCard="addCard" />
         </Draggable>
+        <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit = true">Add another
+          list</button>
+        <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
+          <input type="text" v-model="newTitle" placeholder="Enter list title..." />
+          <div class="buttons">
+            <button @click="addList" class="clickable add-list">Add list</button>
+            <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>
+          </div>
+        </div>
       </Container>
 
-      <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit = true">Add another
-        list</button>
-      <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
-        <input type="text" v-model="newTitle" placeholder="Enter list title..." />
-        <div class="buttons">
-          <button @click="addList" class="clickable add-list">Add list</button>
-          <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>
-        </div>
-      </div>
     </ul>
   </section>
 </template>

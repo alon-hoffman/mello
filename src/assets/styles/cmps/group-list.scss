@@ -11,7 +11,12 @@
         padding:0 0 0 20px;
     }
     .list-containers{
-        display: contents;
+        display: flex;
+    gap: 0.625em;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0;
+    z-index: 0;
     }
     .add-line-btn{
         background-color: rgba(255, 255, 255, 0.2);

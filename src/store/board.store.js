@@ -190,7 +190,6 @@ export const boardStore = {
                     if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
                 }
             })
-
             dispatch({ type: "updateBoard", board })
         },
         async removeCard({ dispatch, state }, { cardId }) {
@@ -211,14 +210,7 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async saveList({ commit,dispatch, state }, { list }) {
-            // const board = JSON.parse(JSON.stringify(state.currBoard))
-            // board.groups.forEach((group, idx1) => {
-            //     if (group.id===list.id) {
-            //         board.groups.splice(idx1, 1, JSON.parse(JSON.stringify(list)))
-            //     }
-            // })
             const group = state.currBoard.groups.find(group=>group.id === list.id)
-            
             commit({ type: 'updateGroup', group:list })
             const board=JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })

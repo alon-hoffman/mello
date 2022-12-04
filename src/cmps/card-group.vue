@@ -86,37 +86,13 @@ export default {
       const list = Object.assign({}, this.list)
       list.cards = boardService.applyDrag(list.cards, dropResult)
       this.$store.dispatch({ type: "saveList", list })
-      // this.list = scene
     },
     onCardDrop(columnId, dropResult) {
-      console.log(`dropResult = `, dropResult)
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        console.log(' this.dragLists', this.dragLists)
-        // const lists =  JSON.parse(JSON.stringify(this.lists))
-        // console.log(`this.lists = `, lists)
-   
         const column = this.lists.filter((l) => l.id === columnId)[0]
-        // const columnIndex = lists.findIndex((l) => l.id === column.id)
-        // const newColumn = Object.assign({}, column)
         const list = JSON.parse(JSON.stringify(column))
         list.cards = boardService.applyDrag(list.cards, dropResult)
-        
-        // console.log(`lists = `, lists)
-
-        // this.lists = lists
-        // if(dropResult.removedIndex !== null && dropResult.addedIndex !== null)
-       
           this.$store.dispatch({ type: "saveList", list })
-      
-        
-       
-
-          
-     
-          // else if(dropResult.addedIndex !== null) 
-          
-        
-       
       }
     },
     getCardPayload(columnId) {
