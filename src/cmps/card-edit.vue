@@ -4,7 +4,7 @@
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
             <input v-if="card" class="header" type="text" v-model="card.title">
-            <p class="content">in list <span class="move-card-link">traco</span></p>
+            <p class="content">in list <span class="move-card-link">{{groupTitle}}</span></p>
         </header>
         <div class="modal-content flex">
             <section class="edit-blocks">

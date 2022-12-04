@@ -34,8 +34,8 @@ export const boardStore = {
         getCard(state) {
             return state.currCard
         },
-        getGroupTitle({ currBoard }, id) {
-            return boardService.findGroupById(currBoard, id).title
+        getGroupTitle(state) {
+            return boardService.findGroupById(state.currCard.groupId, state.currBoard).title
         }
     },
     mutations: {
