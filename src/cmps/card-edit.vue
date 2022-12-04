@@ -1,9 +1,9 @@
 <template>
-    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
+    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')" @sideModalChange="changCard"></div>
     <article  v-click-outside="closeModal" class="modal" :class="isOn">
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
-            <input class="header" type="text" v-model="card.title">
+            <input v-if="card" class="header" type="text" v-model="card.title">
             <p class="content">in list <span class="move-card-link">traco</span></p>
         </header>
         <div class="modal-content flex">
@@ -56,15 +56,13 @@ export default {
             realTextArea: false
         }
     },
-    // async created() {
-    //     this.realTextArea = false
-    //     if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
-    // // todo check if the param really is _id
-    // const { _id } = this.$route.params
-    // this.$store.commit({ type: "setBoardById"}, {_id });
-    // },
-    created(){
-         console.log( this.$store.getters.getCard)
+    async created() {
+         console.log(this.$route.params )
+        this.realTextArea = false
+        if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
+    // todo check if the param really is _id
+    const { _id } = this.$route.params
+    this.$store.commit({ type: "setBoardById"}, {_id });
     },
     methods: {
         closeModal(){
@@ -89,6 +87,9 @@ export default {
         updateLabels(labels) {
             this.$emit('updateLabels', labels)
         },
+        changCard(card){
+            console.log("🚀 ~ file: card-edit.vue:91 ~ changCard ~ card", card)
+        }
     },
     computed: {
         isOn() {

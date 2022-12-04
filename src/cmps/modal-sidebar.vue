@@ -126,7 +126,7 @@ export default {
         return {
             IsMiniModalOpen: false,
             miniModalTitle: null,
-           card:this.$store.getters.getCard,
+            card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "checklist",
@@ -152,10 +152,14 @@ export default {
 
         },
         toggleMembers(member) {
-            const idx = this.card.members.findIndex((m) => m._id === member._id)
+            if(this.card.members){
+            const idx = this.card.members.findIndex((m) => m.id === member.id)
             if (idx !== -1) this.card.members.splice(idx, 1)
             else this.card.members.push(member)
-            this.updateCard()
+            }
+            else this.card.members=[member]
+
+            // this.updateCard()
         },
         toggleLabels(label) {
             console.log(`label = `, label)
@@ -188,7 +192,7 @@ export default {
         },
         updateLabels(){
             this.$emit('updateLabels', this.boardLabels)
-            console.log(`this.boardLabels = `, this.boardLabels)
+            // console.log(`this.boardLabels = `, this.boardLabels)
         },
     },
     computed: {
@@ -202,5 +206,14 @@ export default {
     components: {
         customCard,
     },
+    watch:{
+        card:{
+            handler(newVal, oldVal){
+                 this.$emit("sideModalChange")
+                //  this.$emit("sideModalChange",this.card)
+            },
+            deep:true
+        }
+}
 }
 </script>

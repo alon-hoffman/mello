@@ -1,4 +1,5 @@
 import { boardService } from '../services/board.service'
+import { utilService } from '../services/util.service'
 
 export function getActionRemoveBoard(boardId) {
     return {
@@ -141,15 +142,27 @@ export const boardStore = {
                 throw err
             }
         },
-        async addCard({ commit }, { card, groupId }) {
+        async addCard({ dispatch, state }, { card }) {
+            card.id = utilService.makeId()
+            console.log("🚀 ~ file: board.store.js:147 ~ addCard ~ card.id", card.id)
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            const group = boardService.findGroupById(card.groupId, board)
+            group.cards.push(card)
             try {
                 // console.log('boardStore:', card, groupId)
-                commit({ type: 'saveCard', card, groupId })
-                commit({ type: 'updateBoard' })
+                // commit({ type: 'saveCard', card, groupId })
+                dispatch({ type: "updateBoard", board })
             } catch (err) {
                 console.log('Error, could not Add or update list')
                 throw err
             }
+        },
+        async addList({ dispatch, state }, { list }) {
+            list.id = utilService.makeId()
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            console.log("🚀 ~ file: board.store.js:163 ~ addList ~ board", board)
+            board.groups.push(list)
+            dispatch({ type: "updateBoard", board })
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
             const board = JSON.parse(JSON.stringify(state.currBoard))
@@ -169,7 +182,6 @@ export const boardStore = {
                 })
                 if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
             })
-            console.log("🚀 ~ file: board.store.js:163 ~ saveCard ~ potentialCard", board)
             dispatch({ type: "updateBoard", board })
 
 

@@ -30,6 +30,7 @@
     </div>
     <group-list @addCard="addCard"
                 @editCard="toggleEdit" 
+                @saveList="saveList"
                 v-if="board.groups" :lists="board.groups" />
   </section>
 </template>
@@ -66,8 +67,8 @@ export default {
       const { _id } = this.$route.params
       this.$router.push(`/board/${_id}/card/${cardId}`)
     },
-    addCard({card, groupId}){
-      this.$store.dispatch({ type: 'addCard', card, groupId})
+    addCard(card){
+      this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){
       console.log("🚀 ~ file: board-details.vue:73 ~ updateCard ~ card", card)
@@ -75,12 +76,11 @@ export default {
     },
     updateLabels(labels){
       this.$store.commit({ type: "updateLabels",labels });
-    }
-    // saveList(list) {
-    //   console.log("🚀 ~ file: board-details.vue:84 ~ updateList:", list)
-    //   // this.board.groups.push({ title })
-    //   this.$store.dispatch({ type: "updateBoard", list });
-    // },
+    },
+    saveList(list) {
+      // this.board.groups.push({ title })
+      this.$store.dispatch({ type: "addList", list });
+    },
   },
 };
 </script>
