@@ -53,7 +53,7 @@
 
 
   <script>
-import boardCreator from '../cmps/bo'
+import boardCreator from '../cmps/board-creator.vue'
   export default {
     name: 'boards-page',
     data() {
