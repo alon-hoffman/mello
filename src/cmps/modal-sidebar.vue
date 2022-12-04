@@ -58,8 +58,8 @@
                     <span>Labels</span>
                     <section class="labels-checked-section" v-for="label in boardLabels">
                         <label class="clickable labels-checked-box">
-                            <div class=" label-container" @click="toggleLabels(label)">
-                                <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
+                            <div class=" label-container">
+                                <img  class="checked-img" v-if="checkIfInLabelList(label)"
                                     src="../assets/icons/checkbox-try.svg">
                                 <img @click="toggleLabels(label)" class="box-img" v-else src="../assets/icons/gray-square.svg" alt=""> 
                                 <!-- <el-checkbox v-model="checked1" size="large" /> -->
@@ -158,7 +158,6 @@ export default {
 
         },
         toggleMembers(member) {
-            console.log("🚀 ~ file: modal-sidebar.vue:161 ~ toggleMembers ~ member", member)
             if(this.card.members?.length){
             const idx = this.card.members.findIndex((m) => m._id === member._id)
             if (idx !== -1) this.card.members.splice(idx, 1)
@@ -169,14 +168,16 @@ export default {
             // this.updateCard()
         },
         toggleLabels(label) {
-            console.log("🚀 ~ file: modal-sidebar.vue:167 ~ toggleLabels ~ label", label)
             if(this.card.labels?.length){
-            const idx = this.card.labels.findIndex((l) => l === label._id)
+            const idx = this.card.labels.findIndex((l) => l === label.id)
             if (idx !== -1) this.card.labels.splice(idx, 1)
-            else this.card.labels.push(label._id)
+            else this.card.labels.push(label.id)
             }
-            else this.card.labels=[label]
-            this.updateCard()
+            else this.card.labels=[label.id]
+            console.log("🚀 ~ file: modal-sidebar.vue:177 ~ toggleLabels ~ this.card.labels", this.card.labels)
+
+            
+            // this.updateCard()
         },
         checkIfInMemberList(member) {
             if(!this.card.members) return
@@ -184,7 +185,7 @@ export default {
         },
         checkIfInLabelList(label) {
             if(!this.card.labels) return false
-            return this.card.labels.includes(label._id)
+            return this.card.labels.includes(label.id)
         },
         updateCard() {
             this.$emit('updateCard', this.card)
@@ -222,7 +223,7 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                // this.$emit('updateCard', this.card)
+                 console.log( "change")
                  this.$emit("sideModalChange",this.card)
             },
             deep:true

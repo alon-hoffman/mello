@@ -62,9 +62,6 @@ export default {
     },
     async created() {
         this.realTextArea = false
-        if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
-        
-        if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
         board.groups.forEach(group=>{
@@ -72,10 +69,8 @@ export default {
 
                 if (card.id=== id) 
                 {
-                    console.log('hi',card)
                     this.card=JSON.parse(JSON.stringify(card))
-                    
-                return
+                    return
                 }
             })
         })
@@ -104,6 +99,8 @@ export default {
             this.$emit('updateLabels', labels)
         },
         changeCard(card){
+            console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
+            
            this.card= card
         },
         removeCard(cardId){
