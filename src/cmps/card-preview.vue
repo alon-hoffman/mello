@@ -1,9 +1,9 @@
 <template>
     <section v-if="!newCard" class="card-preview">
-     <template v-if="newLabels">
-        <pre   v-for="label in newLabels"
-      :style="{'color':label.color}">{{label}}</pre>
-     </template> 
+     <div v-if="newLabels" class="labels-container flex">
+        <div   v-for="label in newLabels"
+      :style="{'background-color':label.color}" class="label-preview"></div>
+     </div> 
       <img v-if="card.imgURL" :src="getCardURL">
       <h1>{{card.title}}</h1>
       <div class="icons flex">
