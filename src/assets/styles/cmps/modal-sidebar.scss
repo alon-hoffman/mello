@@ -40,9 +40,15 @@
     .close-mini-modal-btn {
         color: #5e6c84;
         position: absolute;
-        // top: 0;
         background-color: transparent;
+        font-size: 16px;
         right: 0;
+        &::before{
+            content: '\E91C';
+        }
+        &:hover{
+            color: #172b4d;
+        }
     }
 
     .option-custom-card {

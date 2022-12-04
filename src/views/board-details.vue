@@ -64,14 +64,16 @@ export default {
   methods: {
     toggleEdit(cardId) {
       this.$store.commit({ type: "setCurrCard",cardId} );
-      const { _id } = this.$route.params
-      this.$router.push(`/board/${_id}/card/${cardId}`)
+      //XXX for multiple boards
+      // const { _id } = this.$route.params
+
+      const id= this.$store.getters.getCurrBoard._id
+      this.$router.push(`/board/${id}/card/${cardId}`)
     },
     addCard(card){
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){
-      console.log("🚀 ~ file: board-details.vue:73 ~ updateCard ~ card", card)
       this.$store.dispatch({ type: 'saveCard', card})
     },
     updateLabels(labels){

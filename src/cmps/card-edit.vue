@@ -1,6 +1,8 @@
 <template>
-    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')" ></div>
+    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
     <article  v-click-outside="closeModal" class="modal" :class="isOn">
+        <span class="icon lg close modal-close" @click="closeModal"></span>
+        <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
             <input v-if="card" class="header" type="text" v-model="card.title">
@@ -14,7 +16,7 @@
                     <div v-if="!realTextArea" class="content fake-text-area fake-button" @click="toggleTextArea">Add a
                         more detailed description…</div>
                         <div class="content" v-if="realTextArea">
-                            <textarea ref="textarea" class="real-text-area"  name="" id="" cols="30" rows="3"
+                            <textarea ref="textarea" v-modal="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
                             placeholder="Add a more detailed description…"></textarea>
                             <button @click="addDescription" class="save-description-btn">Save</button>
                             <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
@@ -37,13 +39,15 @@
                     </ul>
                 </section>
             </section>
-            <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @sideModalChange="changeCard"/>
+            <modal-sidebar :card="getCurrCard" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @sideModalChange="changeCard"/>
         </div>
     </article>
 </template>
 
 <script>
 import modalSidebar from './modal-sidebar.vue'
+import { FastAverageColor } from 'fast-average-color';
+
 export default {
     props: {
         isScreen: Boolean
@@ -52,20 +56,31 @@ export default {
     data() {
         return {
             //XXX find solution for getting to modal not through board details
-           card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
+           card:null,
             realTextArea: false
         }
     },
     async created() {
         this.realTextArea = false
-        if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
-    // todo check if the param really is _id
-    const { _id } = this.$route.params
-    this.$store.commit({ type: "setBoardById"}, {_id });
+        const {id}= this.$route.params
+        const board = this.$store.getters.getCurrBoard
+        board.groups.forEach(group=>{
+            group.cards.forEach(card=>{
+
+                if (card.id=== id) 
+                {
+                    this.card=JSON.parse(JSON.stringify(card))
+                    return
+                }
+            })
+        })
     },
     methods: {
         closeModal(){
-      this.$router.back()
+    //   this.$router.back()
+    const url= this.$route.path
+            const route= url.substring(0, url.indexOf('card'))
+            this.$router.push(route)
         },
         toggleTextArea() {
             this.realTextArea = true
@@ -80,11 +95,12 @@ export default {
         updateCard() {
             this.$store.dispatch({ type:"saveCard", card:this.card})
         },
-        
         updateLabels(labels) {
             this.$emit('updateLabels', labels)
         },
         changeCard(card){
+            console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
+            
            this.card= card
         },
         removeCard(cardId){
@@ -98,7 +114,11 @@ export default {
         },
         groupTitle(){
             return this.$store.getters.getGroupTitle
-        }
+        },
+        getCurrCard(){
+            console.log('foo')
+            return this.card
+        },
     },
     unmounted(){
         this.realTextArea = false

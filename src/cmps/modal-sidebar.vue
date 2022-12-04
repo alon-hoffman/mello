@@ -22,7 +22,7 @@
             <template #header>
                 <section class="mini-modal-header">
                     <span> {{ miniModalTitle }} </span>
-                    <button class="clickable close-mini-modal-btn" @click="closeMiniModal">X</button>
+                    <button class="clickable close-mini-modal-btn" @click="closeMiniModal"></button>
                 </section>
             </template>
 
@@ -58,8 +58,8 @@
                     <span>Labels</span>
                     <section class="labels-checked-section" v-for="label in boardLabels">
                         <label class="clickable labels-checked-box">
-                            <div class=" label-container" @click="toggleLabels(label)">
-                                <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
+                            <div class=" label-container">
+                                <img  class="checked-img" v-if="checkIfInLabelList(label)"
                                     src="../assets/icons/checkbox-try.svg">
                                 <img @click="toggleLabels(label)" class="box-img" v-else src="../assets/icons/gray-square.svg" alt=""> 
                                 <!-- <el-checkbox v-model="checked1" size="large" /> -->
@@ -94,18 +94,18 @@
                 <section class="mini-modal-body">
                     <span>Colors</span>
                     <div class="first-colors-row">
-                        <button class="green-btn"></button>
-                        <button class="yellow-btn"></button>
-                        <button class="orange-btn"></button>
-                        <button class="red-btn"></button>
-                        <button class="purple-btn"></button>
+                        <button class="green-btn" value="#7BC86C" @click="setCover"></button>
+                        <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
+                        <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
+                        <button class="red-btn" value="#EF7564" @click="setCover"></button>
+                        <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
                     </div>
                     <div class="second-colors-row">
-                        <button class="blue-btn"></button>
-                        <button class="bright-blue-btn"></button>
-                        <button class="bright-green-btn"></button>
-                        <button class="pink-btn"></button>
-                        <button class="dark-blue-btn"></button>
+                        <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
+                        <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
+                        <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
+                        <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
+                        <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
                     </div>
                     <span>Attachments</span>
                     <label class="cover-img-label">
@@ -123,12 +123,14 @@
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
+    props:{
+        card:Object
+    },
     emits: ['updateCard','updateLabels','sideModalChange'],
     data() {
         return {
             isMiniModalOpen: false,
             miniModalTitle: null,
-            card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "checklist",
@@ -139,6 +141,8 @@ export default {
     },
     async created() {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+         console.log( this.card)
+        
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
     },
@@ -164,10 +168,16 @@ export default {
             // this.updateCard()
         },
         toggleLabels(label) {
-            const idx = this.card.labels.findIndex((l) => l === label._id)
+            if(this.card.labels?.length){
+            const idx = this.card.labels.findIndex((l) => l === label.id)
             if (idx !== -1) this.card.labels.splice(idx, 1)
-            else this.card.labels.push(label._id)
-            this.updateCard()
+            else this.card.labels.push(label.id)
+            }
+            else this.card.labels=[label.id]
+            console.log("🚀 ~ file: modal-sidebar.vue:177 ~ toggleLabels ~ this.card.labels", this.card.labels)
+
+            
+            // this.updateCard()
         },
         checkIfInMemberList(member) {
             if(!this.card.members) return
@@ -175,7 +185,7 @@ export default {
         },
         checkIfInLabelList(label) {
             if(!this.card.labels) return false
-            return this.card.labels.includes(label._id)
+            return this.card.labels.includes(label.id)
         },
         updateCard() {
             this.$emit('updateCard', this.card)
@@ -195,7 +205,10 @@ export default {
         updateLabels(){
             this.$emit('updateLabels', this.boardLabels)
         },
-    },
+        setCover(e){
+            this.card.coverColor = e.target.value
+        }
+    },  
     computed: {
         getFilterMembers() {
             const regex = new RegExp(this.filterMembersBy, 'i')
@@ -210,7 +223,7 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                // this.$emit('updateCard', this.card)
+                 console.log( "change")
                  this.$emit("sideModalChange",this.card)
             },
             deep:true

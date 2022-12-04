@@ -4,6 +4,7 @@
 
         <article class="gallery flex">
           <aside class="gallery-sidebar">
+            
             <nav class="flex column">
               <button class="gallery-nav-btn">
                 <span class="icon sm board"></span>
@@ -22,86 +23,64 @@
                 </div>
               </aside>
       
-              <section class="full">
+              <section class="boards full">
         <h3 class="gallery-header">
           <span class="icon lg time"></span>
           Recently viewed
         </h3>
       <ul class="gallery-list flex wrap">
-        <li class="gallery-item">
-            <router-link :to="'/board/' + 'taco'">
+        <li class="gallery-item" v-for="board in boards">
+            <router-link :to="('/board/' + board._id)">
             <div class="board-preview">
-              Traco
+              {{board.title}}
               <div class="board-preview-options">
-                <span class="icon sm star-empty"></span>
+                <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
               </div>
             </div>
           </router-link>
         </li>
-        <li class="gallery-item">
-          <div class="board-preview">
-            Dummy board
-            <div class="board-preview-options">
-              <span class="icon sm star-empty"></span>
-            </div>
-          </div>
+         <li class="fake-board-preview clickable flex align-center justify-center"
+         @click="(boardCreateMode = true)">
+            Create new board
         </li>
-        <li class="gallery-item">
-          <div class="board-preview">
-            Dummy board
-            <div class="board-preview-options">
-              <span class="icon sm star-empty"></span>
-            </div>
-          </div>
-        </li>
-        <li class="gallery-item">
-          <div class="board-preview">
-            Dummy board
-            <div class="board-preview-options">
-              <span class="icon sm star-empty"></span>
-            </div>
-          </div>
-        </li>
-        <li class="gallery-item">
-          <div class="board-preview">
-            Dummy board
-            <div class="board-preview-options">
-              <span class="icon sm star-empty"></span>
-            </div>
-          </div>
-        </li>
-        <!-- <li class="board-preview">Dummy board</li>
-          <li class="board-preview">Dummy board</li>
-          <li class="board-preview">Dummy board</li>
-        <li class="board-preview">Dummy board</li> -->
-        
-        <!-- <li class="board-preview" v-for="board in boards">
-          Dummy board
-        </li> -->
       </ul>
+
     </section>
-    
+    <board-creator v-if="boardCreateMode"/>
   </article>
 </section>
 </main>
-
-    
 </template>
   
+
+
   <script>
+import boardCreator from '../cmps/board-creator.vue'
   export default {
     name: 'boards-page',
     data() {
       return {
-        boards:null,
+        boardCreateMode:false,
       }
     },
     computed: {
+      boards(){
+        return this.$store.getters.boards
+      }
     },
    async created() {
-    this.boards=await this.$store.dispatch({ type: "loadBoards" });
+    await this.$store.dispatch({ type: "loadBoards" });
     },
     methods: {
+      toggleStarred(boardId){
+        // this.$store.commit({ type: 'toggleStarred', boardId });
+      },
+      closeCreateMode(){
+        this.boardCreateMode = false
+      }
+    },
+    components:{
+      boardCreator
     }
     
   }

@@ -21,6 +21,12 @@
   padding: 2em;
   border: 1px solid black;
   border-radius: 5px;
+
+}
+.custom-card .create-board{
+ top: 50%;
+ left: 50%;
+
 }
 
 .custom-card header {
