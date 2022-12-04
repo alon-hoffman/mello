@@ -177,14 +177,17 @@ export const boardStore = {
             let cardIdx = 0
             let groupIdx = -1
             board.groups.forEach((group, idx1) => {
-                group.cards.forEach((currCard, idx) => {
-                    if (currCard.id === card.id) {
-                        cardIdx = idx
-                        groupIdx = idx1
-                    }
-                })
-                if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+                if (group.cards) {
+                    group.cards.forEach((currCard, idx) => {
+                        if (currCard.id === card.id) {
+                            cardIdx = idx
+                            groupIdx = idx1
+                        }
+                    })
+                    if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+                }
             })
+
             dispatch({ type: "updateBoard", board })
         },
         async removeCard({ dispatch, state }, { cardId }) {

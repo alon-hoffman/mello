@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')" @sideModalChange="changCard"></div>
+    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')" ></div>
     <article  v-click-outside="closeModal" class="modal" :class="isOn">
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
@@ -37,7 +37,7 @@
                     </ul>
                 </section>
             </section>
-            <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" />
+            <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @sideModalChange="changeCard"/>
         </div>
     </article>
 </template>
@@ -87,11 +87,12 @@ export default {
         updateLabels(labels) {
             this.$emit('updateLabels', labels)
         },
-        changCard(card){
-            console.log("🚀 ~ file: card-edit.vue:91 ~ changCard ~ card", card)
+        changeCard(card){
+           this.card= card
         },
         removeCard(cardId){
             this.$store.dispatch({ type: "removeCard",cardId });
+            updateCard()
         }
     },
     computed: {

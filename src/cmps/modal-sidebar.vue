@@ -42,12 +42,12 @@
                         <div class="members-checked-box-container">
                             <div class="user-and-img">
                                 <section class="img-container">
-                                    <!-- <span class="icon lg user"></span> -->
+                                    <span class="icon lg user"></span>
                                 </section>
                                 {{ member.fullname }}
                             </div>
-                            <!-- <img class="check-img" v-if="checkIfInMemberList(member)"
-                                src="../assets/icons/gray-check.svg"> -->
+                            <img class="check-img" v-if="checkIfInMemberList(member)"
+                                src="../assets/icons/gray-check.svg">
                         </div>
                     </label>
                 </section>
@@ -124,7 +124,7 @@
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
-    emits: ['updateCard','updateLabels'],
+    emits: ['updateCard','updateLabels','sideModalChange'],
     data() {
         return {
             IsMiniModalOpen: false,
@@ -212,8 +212,7 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                 this.$emit("sideModalChange")
-                //  this.$emit("sideModalChange",this.card)
+                 this.$emit("sideModalChange",this.card)
             },
             deep:true
         }
