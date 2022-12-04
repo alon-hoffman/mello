@@ -22,7 +22,7 @@
                 </div>
               </aside>
       
-              <section class="full">
+              <section class="boards full">
         <h3 class="gallery-header">
           <span class="icon lg time"></span>
           Recently viewed
