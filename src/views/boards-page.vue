@@ -44,7 +44,7 @@
         </li>
       </ul>
     </section>
-    
+    <board-creator v-if="boardCreateMode"/>
   </article>
 </section>
 </main>
@@ -53,7 +53,7 @@
 
 
   <script>
-import customCard from '../cmps/custom-card.vue'
+import boardCreator from '../cmps/board-creator.vue'
   export default {
     name: 'boards-page',
     data() {
@@ -78,7 +78,7 @@ import customCard from '../cmps/custom-card.vue'
       }
     },
     components:{
-      customCard
+      boardCreator
     }
     
   }
