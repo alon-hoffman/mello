@@ -72,4 +72,7 @@
     &.archive::before{
         content:'\E907'
     }
+    &.close::before{
+        content: '\E91C'
+    }
 }
