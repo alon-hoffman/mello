@@ -177,6 +177,7 @@ export default {
             return this.card.members.filter((currMember) => currMember._id === member._id).length
         },
         checkIfInLabelList(label) {
+            if(!this.card.labels) return false
             return this.card.labels.includes(label._id)
         },
         updateCard() {
