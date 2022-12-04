@@ -4,6 +4,7 @@
 
         <article class="gallery flex">
           <aside class="gallery-sidebar">
+            
             <nav class="flex column">
               <button class="gallery-nav-btn">
                 <span class="icon sm board"></span>
@@ -43,6 +44,7 @@
             Create new board
         </li>
       </ul>
+
     </section>
     <board-creator v-if="boardCreateMode"/>
   </article>
