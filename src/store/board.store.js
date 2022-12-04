@@ -148,14 +148,11 @@ export const boardStore = {
         },
         async addCard({ dispatch, state }, { card }) {
             card.id = utilService.makeId()
-            console.log("🚀 ~ file: board.store.js:147 ~ addCard ~ card.id", card.id)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
             group.cards.push(card)
             try {
-                // console.log('boardStore:', card, groupId)
-                commit({ type: 'saveCard', card, groupId })
-                commit({ type: 'updateBoard' })
+                dispatch({ type: "updateBoard", board })
             } catch (err) {
                 console.log('Error, could not Add or update list')
                 throw err

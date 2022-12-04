@@ -92,7 +92,7 @@ export default {
         },
         removeCard(cardId){
             this.$store.dispatch({ type: "removeCard",cardId });
-            updateCard()
+            // updateCard()
         }
     },
     computed: {
