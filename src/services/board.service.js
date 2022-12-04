@@ -17,9 +17,11 @@ const startingBoard = [
         "createdBy": {
             "_id": "u101",
             "fullname": "Alon",
-            "imgUrl": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg"
         },
-        "style": {},
+        "style": {
+            "imgUrl": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg",
+            "coverColor": "#FFFFFF",
+        },
         "labels": [
             {
                 "id": "l101",
