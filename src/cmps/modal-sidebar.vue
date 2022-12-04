@@ -123,12 +123,14 @@
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 export default {
+    props:{
+        card:Object
+    },
     emits: ['updateCard','updateLabels','sideModalChange'],
     data() {
         return {
             IsMiniModalOpen: false,
             miniModalTitle: null,
-            card:null,
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "checklist",
@@ -138,15 +140,9 @@ export default {
         }
     },
     async created() {
-        // const id= this.$route.params
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-        const board = this.$store.getters.getCurrBoard
-        board.groups.forEach(group=>{
-            group.cards.forEach(card=>{
-                if (card.id=== id) this.card=card
-                return
-            })
-        })
+         console.log( this.card)
+        
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
     },
@@ -162,6 +158,7 @@ export default {
 
         },
         toggleMembers(member) {
+            console.log("🚀 ~ file: modal-sidebar.vue:161 ~ toggleMembers ~ member", member)
             if(this.card.members?.length){
             const idx = this.card.members.findIndex((m) => m._id === member._id)
             if (idx !== -1) this.card.members.splice(idx, 1)

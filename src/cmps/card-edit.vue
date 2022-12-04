@@ -39,7 +39,7 @@
                     </ul>
                 </section>
             </section>
-            <modal-sidebar @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @sideModalChange="changeCard"/>
+            <modal-sidebar :card="getCurrCard" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @sideModalChange="changeCard"/>
         </div>
     </article>
 </template>
@@ -56,7 +56,7 @@ export default {
     data() {
         return {
             //XXX find solution for getting to modal not through board details
-           card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
+           card:null,
             realTextArea: false
         }
     },
@@ -64,12 +64,17 @@ export default {
         this.realTextArea = false
         if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
         
-        const {id}= this.$route.params
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+        const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
         board.groups.forEach(group=>{
             group.cards.forEach(card=>{
-                if (card.id=== id) {this.card=card
+
+                if (card.id=== id) 
+                {
+                    console.log('hi',card)
+                    this.card=JSON.parse(JSON.stringify(card))
+                    
                 return
                 }
             })
@@ -112,7 +117,11 @@ export default {
         },
         groupTitle(){
             return this.$store.getters.getGroupTitle
-        }
+        },
+        getCurrCard(){
+            console.log('foo')
+            return this.card
+        },
     },
     unmounted(){
         this.realTextArea = false
