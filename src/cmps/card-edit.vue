@@ -2,7 +2,7 @@
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
     <article  v-click-outside="closeModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
-        <div class="card-cover" v-if="card.coverColor" :style="{'background-color' : card.coverColor}"></div>
+        <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <header class="modal-header edit-block">
             <span class="icon lg card"></span>
             <input v-if="card" class="header" type="text" v-model="card.title">
@@ -63,21 +63,24 @@ export default {
     async created() {
         this.realTextArea = false
         if(!this.$store.getters.getCard) await this.$store.dispatch({ type: "loadBoards" });
-    // todo check if the param really is _id
-    const { _id } = this.$route.params
-    this.$store.commit({ type: "setBoardById"}, {_id })
-    // const fac = new FastAverageColor();
-    // fac.getColorAsync('../assets/icons/user-solid.png')
-    //     .then(color => {
-    //         console.log(color)
-    //     })
-    //     .catch(e => {
-    //         console.log(e);
-    //     });
+        
+        const {id}= this.$route.params
+        if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+        const board = this.$store.getters.getCurrBoard
+        board.groups.forEach(group=>{
+            group.cards.forEach(card=>{
+                if (card.id=== id) {this.card=card
+                return
+                }
+            })
+        })
     },
     methods: {
         closeModal(){
-      this.$router.back()
+    //   this.$router.back()
+    const url= this.$route.path
+            const route= url.substring(0, url.indexOf('card'))
+            this.$router.push(route)
         },
         toggleTextArea() {
             this.realTextArea = true

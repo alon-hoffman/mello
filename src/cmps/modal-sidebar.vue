@@ -128,7 +128,7 @@ export default {
         return {
             IsMiniModalOpen: false,
             miniModalTitle: null,
-            card:JSON.parse(JSON.stringify(this.$store.getters.getCard)),
+            card:null,
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "checklist",
@@ -138,7 +138,15 @@ export default {
         }
     },
     async created() {
+        // const id= this.$route.params
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+        const board = this.$store.getters.getCurrBoard
+        board.groups.forEach(group=>{
+            group.cards.forEach(card=>{
+                if (card.id=== id) this.card=card
+                return
+            })
+        })
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
     },
@@ -164,9 +172,13 @@ export default {
             // this.updateCard()
         },
         toggleLabels(label) {
+            console.log("🚀 ~ file: modal-sidebar.vue:167 ~ toggleLabels ~ label", label)
+            if(this.card.labels?.length){
             const idx = this.card.labels.findIndex((l) => l === label._id)
             if (idx !== -1) this.card.labels.splice(idx, 1)
             else this.card.labels.push(label._id)
+            }
+            else this.card.labels=[label]
             this.updateCard()
         },
         checkIfInMemberList(member) {

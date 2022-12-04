@@ -10,6 +10,7 @@ import { store } from '../store/store'
 
 const startingBoard = [
     {
+        "_id": "lajsd12",
         "title": "traco",
         "isStarred": false,
         "archivedAt": 1589983468418,
