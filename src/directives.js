@@ -84,7 +84,6 @@ export const clickOutsideDirective = {
           clientY > top &&
           clientY < top + height)
           ) {
-        console.log(`out = `)
         cb()
       } else {
       }
