@@ -264,3 +264,22 @@
         left: 1px;
     }
 }
+
+
+.card-detail-item{
+    &-header{
+        color: var(--ds-text-subtle,#5e6c84);
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
+        line-height: 20px;
+        margin: 0 8px 4px 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    &-content{
+
+    }
+}
