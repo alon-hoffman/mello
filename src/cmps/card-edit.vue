@@ -30,7 +30,7 @@
                                 <button class="label-avatar flex align-center add clickable"></button>
                             </div>
                         </div>
-                        <div class="detail-item" v-if="card.dueDate.time">
+                        <div class="detail-item" v-if="card.dueDate">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
                                 <div class="checkbox" :class="isCompleted" @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></div>
@@ -69,17 +69,29 @@
                         </div>
                         
                         <ul class="dynamic-content todo-list flex column">
-                                <li class="todo-item flex">
-                                    <div class="checkbox"></div>
-                                    <span>Has a fridge</span>
+                                <li class="todo-item-container flex justify-between">
+                                    <div class="todo-item flex">
+                                        <div class="checkbox"></div>
+                                        <span>Has a fridge</span>
+                                    </div>
+                                    <div class="todo-item-options flex">
+                                        <span class="icon sm time"></span>
+                                        <span class="icon sm share"></span>
+                                        <span class="icon sm more"></span>
+                                    </div>
+
                                 </li>
-                                <li class="flex">
-                                    <div class="checkbox"></div>
-                                    <span>Working wheels</span>
-                                </li>
-                                <li class="flex">
-                                    <div class="checkbox"></div>
-                                    <span>todo</span>
+                                <li class="todo-item-container flex justify-between">
+                                    <div class="todo-item flex">
+                                        <div class="checkbox"></div>
+                                        <span>Has a fridge</span>
+                                    </div>
+                                    <div class="todo-item-options flex">
+                                        <span class="icon sm time"></span>
+                                        <span class="icon sm share"></span>
+                                        <span class="icon sm more"></span>
+                                    </div>
+
                                 </li>
                             </ul>
                     </section>
