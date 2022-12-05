@@ -26,7 +26,7 @@
       <div class="right-header">
         <div class="search-boards">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
-          <input ref="search" type="text" placeholder=" Search"
+          <input ref="search" type="text" placeholder="Search"
             style="font-family:Arial, FontAwesome">
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>

@@ -34,8 +34,8 @@
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
                                 <!-- @click="(card.isCompleted != card.isCompleted)" -->
-                                <div class="checkbox" :class="isCompleted"></div>
-                                <div class="date-display">{{formattedDueDate}}</div>
+                                <div class="checkbox" :class="isCompleted" @click="(card.isCompleted = !card.isCompleted)"></div>
+                                <div class="date-display">{{formattedDueDate}} <span>completed</span></div>
                             </div>
                         </div>
                     </section>
@@ -124,12 +124,12 @@ export default {
     methods: {
         checkCloseModal(){
     //   this.$router.back()
-if(this.isMiniModalOpen ) return
-else{
-    const url= this.$route.path
-        const route= url.substring(0, url.indexOf('card'))
-        this.$router.push(route)
-}      
+            if(this.isMiniModalOpen ) return
+            else{
+                const url= this.$route.path
+                    const route= url.substring(0, url.indexOf('card'))
+                    this.$router.push(route)
+            }      
         },
         closeModal(){
             const url= this.$route.path
@@ -174,7 +174,6 @@ else{
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
         },
-        
     },
     computed: {
         isOn() {
@@ -200,6 +199,9 @@ else{
             const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
             const hours = (dateToFormat.getHours() % 12) + ':' + dateToFormat.getMinutes() + ' ' + ampm
             return (date + ' at ' + hours)
+        },
+        isCompleted(){
+            return {checked: this.card.isCompleted}
         }
         
        

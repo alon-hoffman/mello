@@ -256,6 +256,7 @@ export default {
         updateDate() {
             this.card.dueDate= +new Date(this.newDate).getTime()
             console.log(`this.card.dueDate = `, this.card.dueDate)
+            this.card.isCompleted = false
             this.$emit('closeMiniModal')
         },
     

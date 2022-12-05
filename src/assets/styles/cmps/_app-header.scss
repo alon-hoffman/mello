@@ -125,18 +125,39 @@
             background-color: #55a1cd;
         }
     }
-
+    
+    
+        .magnifying-glass {
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     input {
         padding: 0px 12px 0px 30px;
         border: none;
         font-size: 14px;
+        width: 200px;
+        height: 32px;
+        background-color: transparent;
         &::placeholder {
             color: #fff;
             position: relative;
             top: 3px;
         }
         &:focus {
-            width: 780px;
+            ::placeholder {
+                color: black;
+                position: relative;
+                top: 3px;
+            }
+            width: 100%;
+            background-color: #fff;
             border: none;
             outline: none;
             line-height: 20px;
@@ -146,29 +167,15 @@
                 background-color: #fff;
                 width: 780px;
                 line-height: 20px;
+                color: black;
             border-radius: 3px;
+            border: 2px solid #388bff;
             }
             .magnifying-glass{
                 color: rgb(0, 0, 0);
             }
-            border: 2px solid #388bff;
 
         }
-        width: 200px;
-        height: 32px;
-        background-color: transparent;
-    }
-
-    .magnifying-glass {
-        width: 16px;
-        height: 16px;
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        font-size: 14px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .user-img-header {
