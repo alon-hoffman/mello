@@ -52,7 +52,7 @@
          if(idx>-1)  return {color:this.boardLabels[idx].color}
          return "red"
         })
-       
+
       },
   
   
