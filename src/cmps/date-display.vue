@@ -1,6 +1,6 @@
 <template>
     <section class="date-display">
-<span><span class="icon sm time" :class="urgency"></span>{{formattedDate.date}}</span>
+<span class="flex align-items" :class="formattedDate.class" ><span class="icon sm time" ></span>{{formattedDate.date}}</span>
     </section>
     
   </template>
@@ -28,13 +28,25 @@
             const options =  {month: 'short', day: 'numeric'}
 
         const timeLeft= this.date- Date.now()
-        if(timeLeft>2*day){ 
+        if(timeLeft<0){
           const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
-          return  {"class":"good","date":prettyDate}
-          }
-        if(timeLeft>day) return "today"
-        return "over-due"
-
+          return  {"class":"over-due","date":prettyDate}
+        }
+        if(timeLeft<day){
+          const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          return  {"class":"today","date":prettyDate}
+        }
+        if(timeLeft<2*day){
+          const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          return  {"class":"","date":prettyDate}
+        }
+        if(timeLeft<month){
+          const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          return  {"class":"","date":prettyDate}
+        }
+        options.year= 'numeric'
+        const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          return  {"class":"","date":prettyDate}
     },
   }
 }

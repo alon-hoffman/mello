@@ -79,5 +79,13 @@
         align-items: center;
       
     }
-
+    .date-display{
+        .over-due{
+            background-color: $red;
+            color:white;
+            padding: rem(10px) rem(10px) rem(10px) rem(10px);
+            border-radius: 3px;
+            
+        }
+    }
 }

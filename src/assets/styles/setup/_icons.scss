@@ -90,4 +90,7 @@
     &.done::before{
         content: '\E916'
     }
+    &.expand-down::before{
+        content: '\E924'
+    }
 }

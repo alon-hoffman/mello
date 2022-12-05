@@ -33,8 +33,9 @@
                         <div class="detail-item" v-if="card.dueDate">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
-                                <div class="checkbox"></div>
-                                <div class="date-display" @click="formattedDueDate">Formatted Date</div>
+                                <!-- @click="(card.isCompleted != card.isCompleted)" -->
+                                <div class="checkbox" :class="isCompleted" @click="(card.isCompleted = !card.isCompleted)"></div>
+                                <div class="date-display">{{formattedDueDate}} <span>completed</span></div>
                             </div>
                         </div>
                     </section>
@@ -115,12 +116,12 @@ export default {
     methods: {
         checkCloseModal(){
     //   this.$router.back()
-if(this.isMiniModalOpen ) return
-else{
-    const url= this.$route.path
-        const route= url.substring(0, url.indexOf('card'))
-        this.$router.push(route)
-}      
+            if(this.isMiniModalOpen ) return
+            else{
+                const url= this.$route.path
+                    const route= url.substring(0, url.indexOf('card'))
+                    this.$router.push(route)
+            }      
         },
         closeModal(){
             const url= this.$route.path
@@ -165,11 +166,6 @@ else{
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
         },
-        formattedDueDate(){
-            const dateToFormat= new Date(this.card.dueDate)
-            const options =  {year: 'numeric', month: 'short', day: 'numeric'}
-            console.log(dateToFormat.toLocaleDateString(undefined, options))
-        }
     },
     computed: {
         isOn() {
@@ -188,6 +184,17 @@ else{
             const labels = [...this.$store.getters.getCurrBoard.labels]
             return labels.filter(label => this.card.labels.includes(label.id))
         },
+        formattedDueDate(){
+            const dateToFormat= new Date(this.card.dueDate)
+            const options =  {year: 'numeric', month: 'short', day: 'numeric'}
+            const date = dateToFormat.toLocaleDateString(undefined, options)
+            const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
+            const hours = (dateToFormat.getHours() % 12) + ':' + dateToFormat.getMinutes() + ' ' + ampm
+            return (date + ' at ' + hours)
+        },
+        isCompleted(){
+            return {checked: this.card.isCompleted}
+        }
         
        
     },

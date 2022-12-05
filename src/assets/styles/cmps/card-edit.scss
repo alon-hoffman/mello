@@ -375,6 +375,23 @@
                 background-color: #e4f0f6;
                 color: #0079bf;
             }
+
+            &::after{
+                font-size: 16px;
+                font-family:icons;
+                content: '\E924'
+            }
+
+            & span{
+               background-color: #61BD4F;
+               border-radius: 2px;
+               color: #fff;
+               display: none;
+
+               &.checked{
+                display:inline;
+               }
+            }
         }
     }
 }
