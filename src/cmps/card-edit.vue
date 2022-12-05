@@ -112,10 +112,9 @@ export default {
     async created() {
         if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
 
-        var boardId= this.$route.path
-        //XXX
-        const finale= boardId.substring(7, boardId.indexOf('/card'))
-        this.$store.commit({ type: 'setBoardById',  id:finale });        
+        const { boardId } = this.$route.params
+
+        this.$store.commit({ type: 'setBoardById',  id:boardId });        
 
 
         this.realTextArea = false
