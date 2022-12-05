@@ -165,9 +165,15 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 0 0 4px 4px;
                 cursor: pointer;
+                padding: 0 0 4px 4px;
             }
+
+            .labels-checked-section-container {
+                padding: 4px 0 8px;
+
+            }
+
             .label-container {
                 display: flex;
                 justify-content: space-between;
@@ -180,6 +186,22 @@
                     border: none;
                     border-radius: 3px;
                 }
+            }
+.attachment-imgs-container{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+            .attachment-img {
+                margin: 0;
+                border-radius: 3px;
+                background-repeat: no-repeat;
+                background-position: center;
+                box-shadow: none;
+                height: 48px;
+                width: 88px;
+                background-color: transparent;
+                background-size: contain;
             }
 
             .check-img {
@@ -212,7 +234,8 @@
                 align-items: center;
                 border-radius: 50%;
             }
-            .member-list-initials{
+
+            .member-list-initials {
                 font-weight: 700;
                 color: #fff;
             }
@@ -390,7 +413,30 @@
         align-items: center;
         margin: 10px auto;
     }
-    .label-color-container{
+
+    .go-to-create-label-btn {
+        margin: 4px 0;
+        width: 100%;
+    }
+
+    .add-label-btn {
+        background-color: #0079bf;
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 6px 12px;
+        text-decoration: none;
+        white-space: normal;
+    }
+
+    .label-color-container {
         opacity: 1;
         display: inline-block;
         position: relative;
@@ -409,13 +455,15 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        
+
     }
-    .label-title-area{
+
+    .label-title-area {
         padding: 0 12px;
         padding-left: 32px;
     }
-    .label-circle{
+
+    .label-circle {
         content: '';
         position: absolute;
         top: 8px;

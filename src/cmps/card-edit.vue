@@ -218,7 +218,8 @@ export default {
             return { on: this.isScreen === true }
         },
         groupTitle(){
-            return this.card?.groupId
+            const board= this.$store.getters.getCurrBoard
+            return board.groups.find(group => group.id === this.card.groupId).title
         },
         getCurrCard(){
             return this.card

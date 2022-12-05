@@ -3,7 +3,7 @@
     
       <img v-if="card.imgURL" :src="cardUrl">
       <div v-else-if="card.coverColor" class="card-preview-cover" :style="{'background-color' : card.coverColor}"></div>
-      <div v-if="dynamicCard.labels" class="labels-container flex">
+      <div v-if="dynamicCard.labels?.length" class="labels-container flex">
         <div   v-for="label in labels"
       :style="{'background-color':label.color}" class="label-preview"></div>
      </div> 

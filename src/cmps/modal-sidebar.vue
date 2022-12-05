@@ -66,14 +66,15 @@
                 <section class="mini-modal-body">
                     <input v-model="filterLabelsBy" type="text" name="" id="" placeholder="Search labels">
                     <span class="mini-head">Labels</span>
-                    <section class="labels-checked-section" v-for="label in boardLabels">
-                        <label class="clickable labels-checked-box">
-                            <div class=" label-container">
-                                <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
+                    <div class="labels-checked-section-container">
+                        <section class="labels-checked-section" v-for="label in boardLabels">
+                            <label class="clickable labels-checked-box">
+                                <div class=" label-container">
+                                    <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
                                     src="../assets/icons/checkbox-try.svg">
-                                <img @click="toggleLabels(label)" class="box-img" v-else
+                                    <img @click="toggleLabels(label)" class="box-img" v-else
                                     src="../assets/icons/gray-square.svg" alt="">
-                                <div class="label-color-container" @click="toggleLabels(label)"
+                                    <div class="label-color-container" @click="toggleLabels(label)"
                                     :style="{ backgroundColor: label.color }">
                                     <!-- {{label.title}} -->
                                     <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
@@ -83,6 +84,8 @@
                             </div>
                         </label>
                     </section>
+                </div>
+                    <div @click="openCreateLabelModal" class="fake-button go-to-create-label-btn">Create a new label</div>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Edit label')">
@@ -108,6 +111,31 @@
                     <div class="save-delete-btn-container">
                         <div class="save-label-btn" @click="updateChosenLabel('save')">Save</div>
                         <div class="delete-label-btn" @click="updateChosenLabel('delete')">Delete</div>
+                    </div>
+                </section>
+            </template>
+            <template v-if="(miniModalTitle === 'Create label')">
+                <section class="mini-modal-body edit-label-section">
+                    <div class="chosen-label-space">
+                        <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color }">{{ chosenLabel.title
+                        }}
+                        </div>
+                    </div>
+                    <span class="mini-head">Title</span>
+                    <input v-model="chosenLabel.title" type="text">
+                    <span class="mini-head">Select a color</span>
+                    <div class="colors-palette">
+                        <div class="color-box-container" v-for="color in possibleColors">
+                            <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                :style="{ backgroundColor: color }">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="remove-color-btn-container">
+                        <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
+                    </div>
+                    <div class="save-delete-btn-container">
+                        <div class="add-label-btn" @click="addChosenLabel">Create</div>
                     </div>
                 </section>
             </template>
@@ -155,11 +183,15 @@
                         <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
                         <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
                     </div>
-                    <span>Attachments</span>
+                    <span class="mini-head">Attachments</span>
+                    <div v-if="card.attachments?.length" class="attachment-imgs-container">
+                        <img class="attachment-img" v-for="image in getImageAttachments" :src="image.href" @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
+                    </div>
                     <label class="cover-img-label">
                         <div class="fake-button cover-img-btn">Upload a cover image </div><input
                             @input="setBackgroundCard" class="cover-img-input" type="file">
                     </label>
+                    <span class="mini-head">Photos from unsplash</span>
                 </section>
             </template>
         </custom-card>
@@ -224,14 +256,16 @@ export default {
             this.chosenLabel = JSON.parse(JSON.stringify(label))
             this.miniModalTitle = 'Edit label'
         },
-        openCreateLabelModal(){
-            this.isCreateLabel=true
-
+        openCreateLabelModal() {
+            this.chosenLabel = {
+                color: "#7bc86c",
+                title: ""
+            },
+                this.miniModalTitle = 'Create label'
 
         },
         closeMiniModal() {
             this.$emit('closeMiniModal')
-            // this.isMiniModalOpen = false
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');
@@ -283,6 +317,9 @@ export default {
         setCover(e) {
             this.card.coverColor = e.target.value
         },
+        setCoverImg(url){
+            this.card.imgURL=url
+        },
         addAttachment() {
             if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
             if (!this.attachment.type) return;
@@ -300,13 +337,20 @@ export default {
             if (action === 'save') this.boardLabels.splice(labelIdx, 1, this.chosenLabel)
             else this.boardLabels.splice(labelIdx, 1)
             this.$emit('updateLabels', this.boardLabels)
-            this.closeMiniModal()
+            this.miniModalTitle = 'Labels'
+            // this.closeMiniModal()
+        },
+        addChosenLabel() {
+            this.chosenLabel.id=utilService.makeId()
+            this.boardLabels.push(this.chosenLabel)
+            this.$emit('updateLabels', this.boardLabels)
+            this.miniModalTitle = 'Labels'
         },
         updateDate() {
-            const time= +new Date(this.newDate).getTime()
-            this.card.dueDate= {time,isCompleted:false}
+            const time = +new Date(this.newDate).getTime()
+            this.card.dueDate = { time, isCompleted: false }
 
-            this.card.isCompleted = false
+            this.card.dueDate.isCompleted = false
             this.$emit('closeMiniModal')
         },
 
@@ -331,6 +375,9 @@ export default {
         },
         getRandomColor() {
             return utilService.getRandomColor()
+        },
+        getImageAttachments(){
+         return this.card.attachments.filter((attachment)=>attachment.type==="img")   
         }
     },
     components: {

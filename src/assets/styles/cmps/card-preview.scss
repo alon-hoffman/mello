@@ -98,14 +98,13 @@
         .over-due{
             background-color: $red;
             color:white;
-
         }
         .today{
             background-color: $yellow;
             color:white;
         }
-        // .done{
-        //     background-color: $green;
-        // }
+        .done{
+            background-color: $green;
+        }
     }
 }
