@@ -390,6 +390,22 @@
         align-items: center;
         margin: 10px auto;
     }
+    .add-label-btn{
+        background-color: #0079bf;
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 6px 12px;
+        text-decoration: none;
+        white-space: normal;
+    }
     .label-color-container{
         opacity: 1;
         display: inline-block;

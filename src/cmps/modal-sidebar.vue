@@ -111,6 +111,31 @@
                     </div>
                 </section>
             </template>
+            <template v-if="(miniModalTitle === 'Create label')">
+                <section class="mini-modal-body edit-label-section">
+                    <div class="chosen-label-space">
+                        <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color }">{{ chosenLabel.title
+                        }}
+                        </div>
+                    </div>
+                    <span class="mini-head">Title</span>
+                    <input v-model="chosenLabel.title" type="text">
+                    <span class="mini-head">Select a color</span>
+                    <div class="colors-palette">
+                        <div class="color-box-container" v-for="color in possibleColors">
+                            <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                :style="{ backgroundColor: color }">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="remove-color-btn-container">
+                        <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
+                    </div>
+                    <div class="save-delete-btn-container">
+                        <div class="add-label-btn" @click="addChosenLabel">Create</div>
+                    </div>
+                </section>
+            </template>
             <template v-if="(miniModalTitle === 'Add checklist')">
                 <section class="mini-modal-body">
                     <span class="mini-head">Title</span>
@@ -224,14 +249,16 @@ export default {
             this.chosenLabel = JSON.parse(JSON.stringify(label))
             this.miniModalTitle = 'Edit label'
         },
-        openCreateLabelModal(){
-            this.isCreateLabel=true
-
+        openCreateLabelModal() {
+            this.chosenLabel = {
+                color: "#7bc86c",
+                title: ""
+            },
+                this.miniModalTitle = 'Create label'
 
         },
         closeMiniModal() {
             this.$emit('closeMiniModal')
-            // this.isMiniModalOpen = false
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');
@@ -300,11 +327,18 @@ export default {
             if (action === 'save') this.boardLabels.splice(labelIdx, 1, this.chosenLabel)
             else this.boardLabels.splice(labelIdx, 1)
             this.$emit('updateLabels', this.boardLabels)
-            this.closeMiniModal()
+            this.miniModalTitle = 'Labels'
+            // this.closeMiniModal()
+        },
+        addChosenLabel() {
+            this.chosenLabel.id=utilService.makeId()
+            this.boardLabels.push(this.chosenLabel)
+            this.$emit('updateLabels', this.boardLabels)
+            this.miniModalTitle = 'Labels'
         },
         updateDate() {
-            const time= +new Date(this.newDate).getTime()
-            this.card.dueDate= {time,isCompleted:false}
+            const time = +new Date(this.newDate).getTime()
+            this.card.dueDate = { time, isCompleted: false }
 
             this.card.isCompleted = false
             this.$emit('closeMiniModal')
