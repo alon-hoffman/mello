@@ -126,10 +126,9 @@ export default {
     async created() {
         if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
 
-        var boardId= this.$route.path
-        //XXX
-        const finale= boardId.substring(7, boardId.indexOf('/card'))
-        this.$store.commit({ type: 'setBoardById',  id:finale });        
+        const { boardId } = this.$route.params
+
+        this.$store.commit({ type: 'setBoardById',  id:boardId });        
 
 
         this.realTextArea = false
@@ -178,7 +177,7 @@ export default {
             this.$store.dispatch({ type:"saveCard", card:this.card})
         },
         updateLabels(labels) {
-            this.$emit('updateLabels', labels)
+            this.$store.commit({type: "updateLabels", labels})
         },
         changeCard(card){
             

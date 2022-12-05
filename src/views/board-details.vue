@@ -61,8 +61,8 @@ export default {
   async created() {
     if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
     // todo check if the param really is _id
-    const { id } = this.$route.params
-    this.$store.commit({ type: 'setBoardById',  id });
+    const { boardId } = this.$route.params
+    this.$store.commit({ type: 'setBoardById',  id:boardId });
   },
   methods: {
     toggleEdit(cardId) {

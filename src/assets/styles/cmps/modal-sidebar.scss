@@ -5,6 +5,17 @@
     width: 192px;
     z-index: 10;
 
+    .options-head {
+        font-size: 12px;
+        display: flex;
+        padding: 0 1px;
+        line-height: 16px;
+        color: #5e6c84;
+        font-weight: 600;
+        margin-top: 12px;
+        margin-bottom: 8px;
+    }
+
     .add-option-img {
         width: 16px;
         margin: 0 6px 0 -6px;
@@ -154,8 +165,9 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                padding: 0 0 4px 4px;
+                cursor: pointer;
             }
-
             .label-container {
                 display: flex;
                 justify-content: space-between;
@@ -192,13 +204,17 @@
                 //       @include random-bgr();
                 //     }
                 //   }
-                @include random-bgr();
+                // @include random-bgr();
                 width: 32px;
                 height: 32px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 border-radius: 50%;
+            }
+            .member-list-initials{
+                font-weight: 700;
+                color: #fff;
             }
 
             .anonymous-user-img {
@@ -373,6 +389,40 @@
         justify-content: center;
         align-items: center;
         margin: 10px auto;
+    }
+    .label-color-container{
+        opacity: 1;
+        display: inline-block;
+        position: relative;
+        margin-bottom: 0;
+        border-radius: 3px;
+        // padding: 0 12px;
+        max-width: 100%;
+        min-width: 48px;
+        width: 212px;
+        height: 32px;
+        box-sizing: border-box;
+        line-height: 32px;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        
+    }
+    .label-title-area{
+        padding: 0 12px;
+        padding-left: 32px;
+    }
+    .label-circle{
+        content: '';
+        position: absolute;
+        top: 8px;
+        bottom: 8px;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
     }
 
     .chosen-label-space {
