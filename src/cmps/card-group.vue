@@ -39,7 +39,7 @@
       </div>
     </div>
   </section>
-    <!-- <listActions list="list"/> -->
+    <listActions list="list"/>
 
 </template>
   

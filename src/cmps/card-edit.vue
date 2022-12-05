@@ -30,11 +30,10 @@
                                 <button class="label-avatar flex align-center add clickable"></button>
                             </div>
                         </div>
-                        <div class="detail-item" v-if="card.dueDate">
+                        <div class="detail-item" v-if="card.dueDate.time">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
-                                <!-- @click="(card.isCompleted != card.isCompleted)" -->
-                                <div class="checkbox" :class="isCompleted" @click="(card.isCompleted = !card.isCompleted)"></div>
+                                <div class="checkbox" :class="isCompleted" @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></div>
                                 <div class="date-display">{{formattedDueDate}} <span :class="isCompleted">complete</span></div>
                             </div>
                         </div>
@@ -112,16 +111,14 @@ export default {
     async created() {
         if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
 
-        var boardId= this.$route.path
-        //XXX
-        const finale= boardId.substring(7, boardId.indexOf('/card'))
-        this.$store.commit({ type: 'setBoardById',  id:finale });        
+        const { boardId } = this.$route.params
+
+        this.$store.commit({ type: 'setBoardById',  id:boardId });        
 
 
         this.realTextArea = false
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
-        console.log("🚀 ~ file: card-edit.vue:110 ~ created ~ board", board)
         board.groups.forEach(group=>{
             group.cards.forEach(card=>{
 
@@ -168,7 +165,6 @@ export default {
             this.$store.commit({type: "updateLabels", labels})
         },
         changeCard(card){
-            // console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
             
            this.card= card
         },
@@ -208,7 +204,7 @@ export default {
             return labels.filter(label => this.card.labels.includes(label.id))
         },
         formattedDueDate(){
-            const dateToFormat= new Date(this.card.dueDate)
+            const dateToFormat= new Date(this.card.dueDate.time)
             const options =  {month: 'short', day: 'numeric'}
             const date = dateToFormat.toLocaleDateString(undefined, options)
             const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
@@ -216,7 +212,7 @@ export default {
             return (date + ' at ' + hours)
         },
         isCompleted(){
-            return {checked: this.card.isCompleted}
+            return {checked: this.card.dueDate.isCompleted}
         }
         
        
@@ -230,8 +226,6 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                console.log("🚀 ~ file: card-edit.vue:233 ~ handler ~ newVal", newVal)
-                
                 this.updateCard()
             },
             deep:true

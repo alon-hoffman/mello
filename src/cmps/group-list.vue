@@ -81,7 +81,6 @@ export default {
     },
      openEditArea(){
       this.isNewListEdit=true
-      // console.log( this.$refs)
       setTimeout(()=>{
         this.$refs.newTitle.focus()
       },)

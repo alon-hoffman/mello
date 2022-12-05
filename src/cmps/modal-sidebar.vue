@@ -226,7 +226,6 @@ export default {
         },
         closeMiniModal() {
             this.$emit('closeMiniModal')
-            // this.isMiniModalOpen = false
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');
@@ -298,8 +297,13 @@ export default {
             this.closeMiniModal()
         },
         updateDate() {
+<<<<<<< HEAD
             this.card.dueDate = +new Date(this.newDate).getTime()
             console.log(`this.card.dueDate = `, this.card.dueDate)
+=======
+            const time= +new Date(this.newDate).getTime()
+            this.card.dueDate= {time,isCompleted:null}
+>>>>>>> 9be9e59f82d585a1b83a1f46f5d39df3c57cc6b7
             this.card.isCompleted = false
             this.$emit('closeMiniModal')
         },

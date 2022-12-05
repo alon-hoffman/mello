@@ -1,6 +1,7 @@
 <template>
     <section class="date-display">
-<span class="flex align-items" :class="formattedDate.class" ><span class="icon sm time" ></span>{{formattedDate.date}}</span>
+<span @click.stop="toggleIsCompleted " class="flex align-items" :class="formattedDate.class"
+:style="{backgroundColor: completed}" ><span class="icon sm time" ></span>{{formattedDate.date}}</span>
     </section>
     
   </template>
@@ -9,7 +10,7 @@
 
   export default {
     props:{
-        date:Number
+        date:Object
     },
     data() {
       return {
@@ -18,16 +19,17 @@
     },
     computed: {
     formattedDate(){
+       console.log( this.date)
       const second= 1000
         const minute= 60*second
         const hour= 60*minute
         const day= 24*hour
         const month= 30*day
 
-        const dateToFormat= new Date(this.date)
+        const dateToFormat= new Date(this.date.time)
             const options =  {month: 'short', day: 'numeric'}
 
-        const timeLeft= this.date- Date.now()
+        const timeLeft= this.date.time- Date.now()
         if(timeLeft<0){
           const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
           return  {"class":"over-due","date":prettyDate}
@@ -48,6 +50,15 @@
         const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
           return  {"class":"","date":prettyDate}
     },
+    completed(){
+      return {green:this.date.isCompleted}
+      // return this.isCompleted
+    },
+    methods:{
+      toggleIsCompleted(){
+        this.date.isCompleted=!this.date.isCompleted
+      }
+    }
   }
 }
   </script>
