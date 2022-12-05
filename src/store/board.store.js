@@ -39,6 +39,9 @@ export const boardStore = {
         // },
         getBoardImg(state) {
             return state.currBoard.coverImg
+        },
+        getListById({ currBoard }, { groupId }) {
+            return currBoard.groups.find(group => group.id === groupId)
         }
     },
     mutations: {
