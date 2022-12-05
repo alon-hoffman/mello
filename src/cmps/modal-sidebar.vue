@@ -173,7 +173,6 @@ export default {
     async created() {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         // console.log(this.card)
-
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
     },
@@ -253,9 +252,9 @@ export default {
             }
         },
         updateDate() {
-            console.log(`this.newDate = `, this.newDate)
-            this.$emit("updateDate", this.newDate);
-            this.newDate = "";
+            this.card.dueDate= +new Date(this.newDate).getTime()
+            console.log(`this.card.dueDate = `, this.card.dueDate)
+            this.$emit('closeMiniModal')
         },
         async uploadImgToCloud(ev) {
             const res = await uploadService.uploadImg(ev);
