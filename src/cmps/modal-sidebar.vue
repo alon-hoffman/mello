@@ -66,14 +66,15 @@
                 <section class="mini-modal-body">
                     <input v-model="filterLabelsBy" type="text" name="" id="" placeholder="Search labels">
                     <span class="mini-head">Labels</span>
-                    <section class="labels-checked-section" v-for="label in boardLabels">
-                        <label class="clickable labels-checked-box">
-                            <div class=" label-container">
-                                <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
+                    <div class="labels-checked-section-container">
+                        <section class="labels-checked-section" v-for="label in boardLabels">
+                            <label class="clickable labels-checked-box">
+                                <div class=" label-container">
+                                    <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
                                     src="../assets/icons/checkbox-try.svg">
-                                <img @click="toggleLabels(label)" class="box-img" v-else
+                                    <img @click="toggleLabels(label)" class="box-img" v-else
                                     src="../assets/icons/gray-square.svg" alt="">
-                                <div class="label-color-container" @click="toggleLabels(label)"
+                                    <div class="label-color-container" @click="toggleLabels(label)"
                                     :style="{ backgroundColor: label.color }">
                                     <!-- {{label.title}} -->
                                     <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
@@ -83,6 +84,8 @@
                             </div>
                         </label>
                     </section>
+                </div>
+                    <div @click="openCreateLabelModal" class="fake-button go-to-create-label-btn">Create a new label</div>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Edit label')">
@@ -180,11 +183,15 @@
                         <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
                         <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
                     </div>
-                    <span>Attachments</span>
+                    <span class="mini-head">Attachments</span>
+                    <div v-if="card.attachments?.length" class="attachment-imgs-container">
+                        <img class="attachment-img" v-for="image in getImageAttachments" :src="image.href" @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
+                    </div>
                     <label class="cover-img-label">
                         <div class="fake-button cover-img-btn">Upload a cover image </div><input
                             @input="setBackgroundCard" class="cover-img-input" type="file">
                     </label>
+                    <span class="mini-head">Photos from unsplash</span>
                 </section>
             </template>
         </custom-card>
@@ -310,6 +317,9 @@ export default {
         setCover(e) {
             this.card.coverColor = e.target.value
         },
+        setCoverImg(url){
+            this.card.imgURL=url
+        },
         addAttachment() {
             if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
             if (!this.attachment.type) return;
@@ -365,6 +375,9 @@ export default {
         },
         getRandomColor() {
             return utilService.getRandomColor()
+        },
+        getImageAttachments(){
+         return this.card.attachments.filter((attachment)=>attachment.type==="img")   
         }
     },
     components: {
