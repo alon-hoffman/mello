@@ -78,4 +78,13 @@
     &.more::before{
         content: '\E952'
     }
+    &.description::before{
+        content: '\E922'
+    }
+    &.add::before{
+       content: '\E901'
+    }
+    &.checkList::before{
+       content: '\E918'
+    }
 }

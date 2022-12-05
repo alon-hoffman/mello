@@ -10,11 +10,34 @@
         </header>
         <div class="modal-content flex">
             <section class="edit-blocks">
+                <section class="detail-items flex wrap">
+                    <div class="detail-item" v-if="card.members?.length">
+                        <div class="card-detail-item-header">Members</div>
+                        <div class="card-detail-item-content flex" >
+                            <div class="member-avatar" v-for="member in card.members">{{memberInitials(member)}}</div>
+                            <div class="member-avatar fake"></div>
+                        </div>
+                    </div>
+                    <div class="detail-item" v-if="card.labels?.length">
+                        <div class="card-detail-item-header">Labels</div>
+                        <div class="card-detail-item-content flex">
+                            <button class="label-avatar flex align-center clickable" 
+                            v-for="label in labelsDisplay"
+                            :style="{'background-color': label.color}">
+                            <div class="bullet"></div>
+                            {{label.title}}</button>
+                        </div>
+                    </div>
+                </section>
                 <section v-click-outside="closeTextArea" class="edit-block">
                     <span class="icon lg description"></span>
                     <h3 class="header">Description</h3>
-                    <div v-if="!realTextArea" class="content fake-text-area fake-button" @click="toggleTextArea">Add a
-                        more detailed description…</div>
+                    <div v-if="!realTextArea" class="content fake-text-area fake-button" :class="isDescription"
+                     @click="toggleTextArea">
+                        <template v-if="card.description" >{{card.description}}</template>
+                        <template v-else>Add a more detailed description...</template>
+
+                    </div>
                         <div class="content" v-if="realTextArea">
                             <textarea ref="textarea" v-model="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
                             placeholder="Add a more detailed description…"></textarea>
@@ -108,7 +131,7 @@ else{
             this.$emit('updateLabels', labels)
         },
         changeCard(card){
-            console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
+            // console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
             
            this.card= card
         },
@@ -124,6 +147,11 @@ else{
                 this.isMiniModalOpen = false
             },0)
         },
+        memberInitials(member){
+            const fullName = member.fullname.split(' ');
+            const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
+            return initials.toUpperCase();
+        }
     },
     computed: {
         isOn() {
@@ -135,6 +163,14 @@ else{
         getCurrCard(){
             return this.card
         },
+        isDescription(){
+            return {"written-description":!!this.card.description}
+        },
+        labelsDisplay(){
+            const labels = [...this.$store.getters.getCurrBoard.labels]
+            return labels.filter(label => this.card.labels.includes(label.id))
+        }
+       
     },
     unmounted(){
         this.realTextArea = false

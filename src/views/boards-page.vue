@@ -46,7 +46,11 @@
       </ul>
 
     </section>
-    <board-creator v-if="boardCreateMode"/>
+    <board-creator v-if="boardCreateMode" 
+    @saveBoard="saveBoard"
+    @close="closeCreator"
+    v-click-outside="closeCreator"
+    />
   </article>
 </section>
 </main>
@@ -54,7 +58,7 @@
   
 
 
-  <script>
+<script>
 import boardCreator from '../cmps/board-creator.vue'
   export default {
     name: 'boards-page',
@@ -75,8 +79,11 @@ import boardCreator from '../cmps/board-creator.vue'
       toggleStarred(boardId){
         // this.$store.commit({ type: 'toggleStarred', boardId });
       },
-      closeCreateMode(){
+      closeCreator(){
         this.boardCreateMode = false
+      },
+      saveBoard(board){
+        this.$store.dispatch({ type: "addBoard", board });
       }
     },
     components:{

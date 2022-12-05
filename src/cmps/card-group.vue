@@ -14,7 +14,7 @@
     <Container group-name="col" @drop="(e) => onCardDrop(list.id, e)" :get-child-payload="getCardPayload(list.id)"
       drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
       <Draggable v-for="card in list.cards" :key="card.id">
-        <card-preview :card="card" @click="$emit('editCard', card.id)" />
+        <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable"/>
       </Draggable>
 
     </Container>
@@ -23,8 +23,8 @@
     <button v-if="!isCardEdited" class="add-card clickable" @click="isCardEdited = true">
       <span>+</span> Add a card
     </button>
-    <div v-click-outside="closeNewCard" class="add-card-section" v-else>
-      <card-preview :newCard="newCard" />
+    <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-else>
+      <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
       <div class="buttons">
         <div class="left-buttons">
           <button @click="addCard" class="clickable">Add card</button>
@@ -56,7 +56,7 @@ export default {
       title: this.list.title,
       isCardEdited: false,
       check: true,
-      newCard: { title: '', groupId: this.list.id },
+      newTitle:'',
       upperDropPlaceholderOptions: {
         className: 'cards-drop-preview',
         animationDuration: '150',
@@ -77,10 +77,11 @@ export default {
       this.isCardEdited = false
     },
     addCard() {
-      // this.list.cards.push(this.newCard)
-      this.$emit('addCard', this.newCard)
-      // this.$emit('saveList', this.list)
-      this.closeNewCard()
+      //XXX
+      
+      const newCard= {title:this.newTitle, groupId: this.list.id}
+      this.$emit('addCard', newCard)
+      this.newTitle=""
     },
     onColumnDrop(dropResult) {
       const list = Object.assign({}, this.list)

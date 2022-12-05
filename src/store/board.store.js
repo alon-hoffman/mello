@@ -54,10 +54,11 @@ export const boardStore = {
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
         },
-        setBoardById(state, { _id }) {
-            const board = JSON.parse(JSON.stringify(state.boards))[0];
-            // const board = state.boards.find(c => c.id === _id)
+        setBoardById(state, { id }) {
+            // const board = JSON.parse(JSON.stringify(state.boards))[0];
+            const board = state.boards.find(b => b._id === id)
             state.currBoard = board
+
         },
         setCurrCard(state, { cardId }) {
             state.currBoard.groups.forEach(group => {
@@ -108,9 +109,9 @@ export const boardStore = {
             state.boards.splice(idx, 1, state.currBoard)
             boardService.save(state.currBoard)
         },
-        updateGroup(state, { group }){
-            const groupIdx= state.currBoard.groups.findIndex(currGroup=>currGroup.id === group.id)
-            state.currBoard.groups.splice(groupIdx,1,group)
+        updateGroup(state, { group }) {
+            const groupIdx = state.currBoard.groups.findIndex(currGroup => currGroup.id === group.id)
+            state.currBoard.groups.splice(groupIdx, 1, group)
         }
     },
     actions: {
@@ -154,6 +155,7 @@ export const boardStore = {
             }
         },
         async addCard({ dispatch, state }, { card }) {
+            console.log("🚀 ~ file: board.store.js:159 ~ addCard ~ card", card)
             card.id = utilService.makeId()
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
@@ -176,10 +178,10 @@ export const boardStore = {
 
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
-            const board = JSON.parse(JSON.stringify(state.currBoard))      
-           const groupIdx= board.groups.findIndex((group)=>group.id===card.groupId)
-           const cardIdx= board.groups[groupIdx].cards.findIndex((currCard)=>currCard.id===card.id)
-           board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            const groupIdx = board.groups.findIndex((group) => group.id === card.groupId)
+            const cardIdx = board.groups[groupIdx].cards.findIndex((currCard) => currCard.id === card.id)
+            board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
             // board.groups.forEach((group, idx1) => {
             //     if (group.cards) {
             //         group.cards.forEach((currCard, idx) => {
@@ -210,19 +212,19 @@ export const boardStore = {
             })
             dispatch({ type: "updateBoard", board })
         },
-        async saveList({ commit,dispatch, state }, { list }) {
-            const group = state.currBoard.groups.find(group=>group.id === list.id)
-            commit({ type: 'updateGroup', group:list })
-            const board=JSON.parse(JSON.stringify(state.currBoard))
+        async saveList({ commit, dispatch, state }, { list }) {
+            const group = state.currBoard.groups.find(group => group.id === list.id)
+            commit({ type: 'updateGroup', group: list })
+            const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })
         },
         async saveLists({ dispatch, state }, { lists }) {
             const board = JSON.parse(JSON.stringify(state.currBoard))
-            board.groups=lists
-           dispatch({ type: "updateBoard", board })
+            board.groups = lists
+            dispatch({ type: "updateBoard", board })
         },
-   
+
     },
- 
-      
+
+
 }
