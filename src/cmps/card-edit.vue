@@ -30,7 +30,7 @@
                                 <button class="label-avatar flex align-center add clickable"></button>
                             </div>
                         </div>
-                        <div class="detail-item" v-if="card.dueDate.time">
+                        <div class="detail-item" v-if="card.dueDate">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
                                 <div class="checkbox" :class="isCompleted" @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></div>
