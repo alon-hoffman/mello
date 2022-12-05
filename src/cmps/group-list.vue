@@ -8,12 +8,12 @@
           <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"
             @addCard="addCard" />
         </Draggable>
-        <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="isNewListEdit = true">Add another
+        <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="openEditArea">Add another
           list</button>
         <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
-          <input type="text" v-model="newTitle" placeholder="Enter list title..." />
+          <input type="text" v-model="newTitle" ref="newTitle" placeholder="Enter list title..." />
           <div class="buttons">
-            <button @click="addList" class="clickable add-list">Add list</button>
+            <button @click="addList" @keyup.enter="addCard" class="clickable add-list">Add list</button>
             <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>
           </div>
         </div>
@@ -58,7 +58,6 @@ export default {
   created() { },
   methods: {
     addList() {
-      this.isNewListEdit = false
       this.$emit('saveList', { title: this.newTitle, cards: [] })
     },
     addCard(card) {
@@ -76,6 +75,13 @@ export default {
       this.$store.dispatch({ type: "saveLists", lists })
       // this.list = scene
     },
+     openEditArea(){
+      this.isNewListEdit=true
+      // console.log( this.$refs)
+      setTimeout(()=>{
+        this.$refs.newTitle.focus()
+      },)
+    }
     // onCardDrop(columnId, dropResult) {
     //   if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
     //     const lists = JSON.parse(JSON.stringify(this.lists))

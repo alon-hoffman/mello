@@ -3,66 +3,76 @@
     <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
-        <header class="modal-header edit-block">
-            <span class="icon lg card"></span>
-            <input v-if="card" class="header" type="text" v-model="card.title">
-            <p class="content">in list <span class="move-card-link">{{groupTitle}}</span></p>
-        </header>
-        <div class="modal-content flex">
-            <section class="edit-blocks">
-                <section class="detail-items flex wrap">
-                    <div class="detail-item" v-if="card.members?.length">
-                        <div class="card-detail-item-header">Members</div>
-                        <div class="card-detail-item-content flex" >
-                            <div class="member-avatar" v-for="member in card.members">{{memberInitials(member)}}</div>
-                            <div class="member-avatar fake"></div>
-                        </div>
-                    </div>
-                    <div class="detail-item" v-if="card.labels?.length">
-                        <div class="card-detail-item-header">Labels</div>
-                        <div class="card-detail-item-content flex">
-                            <button class="label-avatar flex align-center clickable" 
-                            v-for="label in labelsDisplay"
-                            :style="{'background-color': label.color}">
-                            <div class="bullet"></div>
-                            {{label.title}}</button>
-                        </div>
-                    </div>
-                </section>
-                <section v-click-outside="closeTextArea" class="edit-block">
-                    <span class="icon lg description"></span>
-                    <h3 class="header">Description</h3>
-                    <div v-if="!realTextArea" class="content fake-text-area fake-button" :class="isDescription"
-                     @click="toggleTextArea">
-                        <template v-if="card.description" >{{card.description}}</template>
-                        <template v-else>Add a more detailed description...</template>
-
-                    </div>
-                        <div class="content" v-if="realTextArea">
-                            <textarea ref="textarea" v-model="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
-                            placeholder="Add a more detailed description…"></textarea>
-                            <button @click="addDescription" class="save-description-btn">Save</button>
-                            <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
-                        </div>
-                </section>
-                <section class="edit-block">
-                    <span class="icon lg activity"></span>
-                    <span class="header flex justify-between">
-                        <h3>Activity</h3>
-                        <button class="fake-button">Hide Details</button>
-                    </span>
-                    <ul class="content">
-                        <li class="edit-block">
-                            <span class="icon lg user"></span>
-                            <div class="comment-box">
-                                <textarea type="text" placeholder="Write a comment..."></textarea>
-                                <footer class="comment-options"></footer>
+        <div class="modal-container">
+            <header class="modal-header edit-block">
+                <span class="icon lg card"></span>
+                <input v-if="card" class="header" type="text" v-model="card.title">
+                <p class="content">in list <span class="move-card-link">{{groupTitle}}</span></p>
+            </header>
+            <div class="modal-content flex">
+                <section class="edit-blocks">
+                    <section class="detail-items flex wrap">
+                        <div class="detail-item" v-if="card.members?.length">
+                            <div class="detail-item-header">Members</div>
+                            <div class="detail-item-content flex" >
+                                <div class="member-avatar clickable" v-for="member in card.members">{{memberInitials(member)}}</div>
+                                <div class="member-avatar add clickable"></div>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <div class="detail-item" v-if="card.labels?.length">
+                            <div class="detail-item-header">Labels</div>
+                            <div class="detail-item-content flex">
+                                <button class="label-avatar flex align-center clickable" 
+                                v-for="label in labelsDisplay"
+                                :style="{'background-color': label.color}">
+                                <div class="bullet"></div>
+                                {{label.title}}</button>
+                                <button class="label-avatar flex align-center add clickable"></button>
+                            </div>
+                        </div>
+                        <div class="detail-item" v-if="card.dueDate">
+                            <div class="detail-item-header">Due date</div>
+                            <div class="detail-item-content flex align-center">
+                                <div class="checkbox"></div>
+                                <div class="date-display" @click="formattedDueDate">Formatted Date</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section v-click-outside="closeTextArea" class="edit-block">
+                        <span class="icon lg description"></span>
+                        <h3 class="header">Description</h3>
+                        <div v-if="!realTextArea" class="content fake-text-area fake-button" :class="isDescription"
+                         @click="toggleTextArea">
+                            <template v-if="card.description" >{{card.description}}</template>
+                            <template v-else>Add a more detailed description...</template>
+    
+                        </div>
+                            <div class="content" v-if="realTextArea">
+                                <textarea ref="textarea" v-model="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
+                                placeholder="Add a more detailed description…"></textarea>
+                                <button @click="addDescription" class="save-description-btn">Save</button>
+                                <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
+                            </div>
+                    </section>
+                    <section class="edit-block">
+                        <span class="icon lg activity"></span>
+                        <span class="header flex justify-between">
+                            <h3>Activity</h3>
+                            <button class="fake-button">Hide Details</button>
+                        </span>
+                        <ul class="content">
+                            <li class="edit-block">
+                                <span class="icon lg user"></span>
+                                <div class="comment-box">
+                                    <textarea type="text" placeholder="Write a comment..."></textarea>
+                                    <footer class="comment-options"></footer>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
                 </section>
-            </section>
-            <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @openMiniModal="openMiniModal" @sideModalChange="changeCard"/>
+                <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @openMiniModal="openMiniModal" @sideModalChange="changeCard"/>
+            </div>
         </div>
     </article>
 </template>
@@ -154,6 +164,11 @@ else{
             const fullName = member.fullname.split(' ');
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
+        },
+        formattedDueDate(){
+            const dateToFormat= new Date(this.card.dueDate)
+            const options =  {year: 'numeric', month: 'short', day: 'numeric'}
+            console.log(dateToFormat.toLocaleDateString(undefined, options))
         }
     },
     computed: {
@@ -172,7 +187,8 @@ else{
         labelsDisplay(){
             const labels = [...this.$store.getters.getCurrBoard.labels]
             return labels.filter(label => this.card.labels.includes(label.id))
-        }
+        },
+        
        
     },
     unmounted(){
