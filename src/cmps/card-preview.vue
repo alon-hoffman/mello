@@ -1,11 +1,12 @@
 <template>
-    <section v-if="!newCard" class="card-preview">
-     <div v-if="newLabels" class="labels-container flex">
+    <section v-if="card" class="card-preview">
+    
+      <img v-if="card.imgURL" :src="cardUrl">
+      <div v-else-if="card.coverColor" class="card-preview-cover" :style="{'background-color' : card.coverColor}"></div>
+      <div v-if="newLabels" class="labels-container flex">
         <div   v-for="label in labels"
       :style="{'background-color':label.color}" class="label-preview"></div>
      </div> 
-      <img v-if="card.imgURL" :src="cardUrl">
-      <div v-else-if="card.coverColor" class="card-preview-cover" :style="{'background-color' : card.coverColor}"></div>
       <h1>{{card.title}}</h1>
       <div class="icons flex">
         <div class="left-icons">
@@ -16,9 +17,9 @@
         </div>
       </div>
     </section>
-    <section v-else class="card-preview" >
-      <textarea v-model="newCard.title" placeholder="Enter a title for this card..." ></textarea>
-    </section>
+    <!-- <section v-else class="card-preview" >
+      <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
+    </section> -->
     
   </template>
   
@@ -27,13 +28,12 @@
   export default {
     props:{
     card:Object,
-    newCard:Object,
         },
         data(){
           return{
             newLabels:null,
             boardLabels:null,
-            newCard:false
+            newCard:null,
           }
         },
     computed: {
@@ -52,6 +52,7 @@
       }
     },
       created(){
+         console.log( this.newCard)
         this.boardLabels= this.$store.getters.getCurrBoard.labels
         this.newLabels= this.card?.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)

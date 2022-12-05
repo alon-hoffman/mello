@@ -68,17 +68,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-bottom:rem(4px);
 
             >* {
                 display: flex;
                 align-items: center;
-
+                span{
+                    margin-bottom:3px;
+                    margin-left:4px;
+                }
                 img {
                     width: rem(18px);
                     filter: invert(46%) sepia(9%) saturate(937%) hue-rotate(180deg) brightness(98%) contrast(86%);
                 }
 
                 button {
+                    margin-inline-start: rem(10px);
+                    margin-top:0;
                     background-color: $light-blue;
                     color: #fff;
                     border-radius: 3px;
@@ -98,8 +104,33 @@
                         width: rem(24px);
                     }
                 }
+                
+            }
+            svg{
+                margin-bottom:3px;
             }
         }
+    }
+    textarea{
+        width: 93.5%;
+        height:rem(75px);
+        margin: 0 rem(10px) 0 rem(10px);
+        border-radius: em(3px);
+        resize: none;
+        border:none;
+        outline: none;
+        padding-inline: 8px;
+        padding-top: 6px;
+         border-bottom:1px solid $clr3 ;
+
+
+        &::placeholder{
+            color: $dark-blue;
+            opacity: 0.7;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+        }
+        
     }
 }
 .card-ghost {
