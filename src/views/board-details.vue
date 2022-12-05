@@ -55,6 +55,7 @@ export default {
       return this.$store.getters.isScreen;
     },
     board() {
+       console.log(this.$store.getters.getCurrBoard)
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
     },
   },

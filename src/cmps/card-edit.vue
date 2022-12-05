@@ -35,13 +35,13 @@
                             <div class="detail-item-content flex align-center">
                                 <!-- @click="(card.isCompleted != card.isCompleted)" -->
                                 <div class="checkbox" :class="isCompleted" @click="(card.isCompleted = !card.isCompleted)"></div>
-                                <div class="date-display">{{formattedDueDate}} <span>completed</span></div>
+                                <div class="date-display">{{formattedDueDate}} <span :class="isCompleted">complete</span></div>
                             </div>
                         </div>
                     </section>
-                    <section v-click-outside="closeTextArea" class="edit-block">
+                    <section class="edit-block">
                         <span class="icon lg description"></span>
-                        <h3 class="header">Description</h3>
+                        <h3 class="header">Description <button class="modal-btn" v-if="(card.description && !realTextArea)" @click="toggleTextArea">Edit</button></h3>
                         <div v-if="!realTextArea" class="content fake-text-area fake-button" :class="isDescription"
                          @click="toggleTextArea">
                             <template v-if="card.description" >{{card.description}}</template>
@@ -50,10 +50,24 @@
                         </div>
                             <div class="content" v-if="realTextArea">
                                 <textarea ref="textarea" v-model="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
-                                placeholder="Add a more detailed description…"></textarea>
+                                placeholder="Add a more detailed description…" v-click-outside="closeTextArea"></textarea>
                                 <button @click="addDescription" class="save-description-btn">Save</button>
                                 <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                             </div>
+                    </section>
+                    <section class="edit-block">
+                        <span class="icon lg checkList"></span>
+                        <span class="header flex justify-between">
+                            <h3>Checklist</h3>
+                            <div class="checklist-options">
+                                <button class="modal-btn">Hide Checked items</button>
+                                <button class="modal-btn">Delete</button>
+                            </div>
+                        </span>
+                        <span class="sub-icon">50%</span>
+                        <div class="content">
+                            <progress value="32" max="100"> 32% </progress>
+                        </div>
                     </section>
                     <section class="edit-block">
                         <span class="icon lg activity"></span>
@@ -97,9 +111,17 @@ export default {
     },
     async created() {
         if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+
+        var boardId= this.$route.path
+        //XXX
+        const finale= boardId.substring(7, boardId.indexOf('/card'))
+        this.$store.commit({ type: 'setBoardById',  id:finale });        
+
+
         this.realTextArea = false
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
+        console.log("🚀 ~ file: card-edit.vue:110 ~ created ~ board", board)
         board.groups.forEach(group=>{
             group.cards.forEach(card=>{
 
@@ -130,7 +152,8 @@ export default {
         },
         toggleTextArea() {
             this.realTextArea = true
-            this.$refs.textarea.focus()
+            setTimeout(() => this.$refs.textarea.focus(), 0)
+            
         },
         closeTextArea() {
             this.realTextArea = false
@@ -186,7 +209,7 @@ export default {
         },
         formattedDueDate(){
             const dateToFormat= new Date(this.card.dueDate)
-            const options =  {year: 'numeric', month: 'short', day: 'numeric'}
+            const options =  {month: 'short', day: 'numeric'}
             const date = dateToFormat.toLocaleDateString(undefined, options)
             const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
             const hours = (dateToFormat.getHours() % 12) + ':' + dateToFormat.getMinutes() + ' ' + ampm
