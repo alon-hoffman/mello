@@ -1,6 +1,6 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
+    <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <header class="modal-header edit-block">
@@ -85,6 +85,7 @@ export default {
         }
     },
     async created() {
+        if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         this.realTextArea = false
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
@@ -94,6 +95,8 @@ export default {
                 if (card.id=== id) 
                 {
                     this.card=JSON.parse(JSON.stringify(card))
+
+                    // setCurrCard(state, { cardId })
                     return
                 }
             })
@@ -158,7 +161,7 @@ else{
             return { on: this.isScreen === true }
         },
         groupTitle(){
-            return this.$store.getters.getGroupTitle
+            return this.card?.groupId
         },
         getCurrCard(){
             return this.card

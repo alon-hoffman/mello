@@ -5,9 +5,9 @@
         <!-- <img class="logo-img-home"
           src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
           alt=""> -->
-          <img class="logo-img-home" src="../assets/icons/logo.png" alt="">
-        </router-link>
-        <router-link to="/login">
+        <img class="logo-img-home" src="../assets/icons/logo.png" alt="">
+      </router-link>
+      <router-link to="/login">
         <button class="login-button">Log in</button>
       </router-link>
     </nav>
@@ -16,7 +16,7 @@
     <nav>
       <div class="left-header">
         <router-link to="/" class="home-logo-page">
-         <img class="logo-img-board" src="../assets/icons/logo-white.svg" alt="">
+          <img class="logo-img-board" src="../assets/icons/logo-white.svg" alt="">
         </router-link>
         <router-link to="/board">
           <button class="boards-header-btn">Boards</button>
@@ -24,7 +24,11 @@
         <button class="create-board-btn" @click="toggleCreateModal">Create </button>
       </div>
       <div class="right-header">
-        <input ref="search" class="search-boards" type="text" placeholder="   &#xF002;  Search" style="font-family:Arial, FontAwesome">
+        <div class="search-boards">
+          <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+          <input ref="search" type="text" placeholder=" Search"
+            style="font-family:Arial, FontAwesome">
+        </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
         <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
         <button><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
@@ -36,7 +40,7 @@
   </header>
 </template>
 <script>
-  import { FastAverageColor } from 'fast-average-color';
+import { FastAverageColor } from 'fast-average-color';
 
 export default {
   data() {
@@ -52,7 +56,7 @@ export default {
     toggleCreateModal() {
       this.isCreateModalOpen = !this.isCreateModalOpen
     },
-    focusInput(){
+    focusInput() {
       this.$refs.search.focus()
     },
   },
@@ -63,14 +67,14 @@ export default {
     params() {
       return this.$route.path
     },
-    avgColor(){
+    avgColor() {
       const fac = new FastAverageColor();
       fac.getColorAsync(this.$store.getters.getBoardImg)
         .then(color => {
-            console.log(color)
+          console.log(color)
         })
         .catch(e => {
-            console.log(e);
+          console.log(e);
         });
     },
   }
