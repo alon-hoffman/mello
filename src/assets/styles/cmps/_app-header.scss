@@ -5,8 +5,8 @@
     top: 0px;
     transition: background-color 0.5s ease 0s, box-shadow 0.5s ease 0s;
     width: 100vw;
-    
-   
+
+
     height: 60px;
     z-index: 100;
     background-color: #fff;
@@ -20,6 +20,7 @@
     .home-logo-page {
         display: contents;
     }
+
 
     .login-button {
         -webkit-box-align: center;
@@ -89,59 +90,97 @@
         border-radius: 5px;
         // opacity: 1;
         height: 32px;
+        position: relative;
+        max-width: 100%;
         width: 200px;
-        &::placeholder {
-            color: #fff;
-        }
-&:focus{
-    background-color: #fff;
-    width: 780px;
-    border: none;
-    outline: none;
-    line-height: 20px;
-    border: 2px solid #388bff;
-    
-        &::before{
-            color: black;
-            content: 'hello';
-        }
-    
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(23, 43, 77, 0.16);
+
+     
+
+    }
 }
+
+.left-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-header {
+    display: flex;
+    gap: 5px;
+
+    button {
+        background-color: transparent;
+        color: #fff;
+        border-radius: 3px;
+        padding: 2px 5px;
+        margin: 2px;
+
+        &:hover {
+            background-color: #55a1cd;
+        }
     }
 
-    .left-header {
+    input {
+        padding: 0px 12px 0px 30px;
+        border: none;
+        font-size: 14px;
+        &::placeholder {
+            color: #fff;
+            position: relative;
+            top: 3px;
+        }
+        &:focus {
+            width: 780px;
+            border: none;
+            outline: none;
+            line-height: 20px;
+            border-radius: 3px;
+            color: rgb(0, 0, 0);
+            .search-boards {
+                background-color: #fff;
+                width: 780px;
+                line-height: 20px;
+            border-radius: 3px;
+            }
+            .magnifying-glass{
+                color: rgb(0, 0, 0);
+            }
+            border: 2px solid #388bff;
+
+        }
+        width: 200px;
+        height: 32px;
+        background-color: transparent;
+    }
+
+    .magnifying-glass {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        font-size: 14px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .right-header {
-        display: flex;
-        gap: 5px;
+    .user-img-header {
+        width: rem(20px);
+    }
 
-        button {
-            background-color: transparent;
-            color: #fff;
-            border-radius: 3px;
-            padding: 2px 5px;
-            margin: 2px;
+    .bell-img-header {
+        width: rem(20px);
+    }
 
-            &:hover {
-                background-color: #55a1cd;
-            }
-        }
+    .circle-img-header {
+        width: rem(20px);
 
-        .user-img-header {
-            width: rem(20px);
-        }
-
-        .bell-img-header {
-            width: rem(20px);
-        }
-
-        .circle-img-header {
-            width: rem(20px);
-
-        }
     }
 }
