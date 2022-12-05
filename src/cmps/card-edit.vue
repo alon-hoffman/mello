@@ -13,8 +13,12 @@
                 <section v-click-outside="closeTextArea" class="edit-block">
                     <span class="icon lg description"></span>
                     <h3 class="header">Description</h3>
-                    <div v-if="!realTextArea" class="content fake-text-area fake-button" @click="toggleTextArea">Add a
-                        more detailed description…</div>
+                    <div v-if="!realTextArea" class="content fake-text-area fake-button" :class="isDescription"
+                     @click="toggleTextArea">
+                        <template v-if="card.description" >{{card.description}}</template>
+                        <template v-else>Add a more detailed description...</template>
+
+                    </div>
                         <div class="content" v-if="realTextArea">
                             <textarea ref="textarea" v-model="card.description" class="real-text-area"  name="" id="" cols="30" rows="3"
                             placeholder="Add a more detailed description…"></textarea>
@@ -145,6 +149,9 @@ else{
         getCurrCard(){
             return this.card
         },
+        isDescription(){
+            return {"written-description":!!this.card.description}
+        }
     },
     unmounted(){
         this.realTextArea = false
