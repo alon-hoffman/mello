@@ -57,7 +57,7 @@ export const boardStore = {
         setBoardById(state, { id }) {
             // const board = JSON.parse(JSON.stringify(state.boards))[0];
             const board = state.boards.find(b => b._id === id)
-            console.log(board)
+            // console.log(board)
             state.currBoard = board
 
         },
@@ -140,7 +140,7 @@ export const boardStore = {
         async loadBoards(context) {
             try {
                 const boards = await boardService.query()
-                console.log("🚀 ~ file: board.store.js:143 ~ loadBoards ~ boards", boards)
+                // console.log("🚀 ~ file: board.store.js:143 ~ loadBoards ~ boards", boards)
                 context.commit({ type: 'setBoards', boards })
             } catch (err) {
                 console.log('boardStore: Error in loadBoards', err)

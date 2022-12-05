@@ -145,7 +145,10 @@ const startingBoard = [
                             "fullname": "Itai Morag",
                         }],
                         "labels": ["l102"],
-                        "dueDate": 16156215211,
+                        "dueDate": {
+                            time:16156215211,
+                            isCompleted:false
+                        },
                     }
                 ],
 

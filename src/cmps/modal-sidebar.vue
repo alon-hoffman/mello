@@ -340,7 +340,7 @@ export default {
             const time = +new Date(this.newDate).getTime()
             this.card.dueDate = { time, isCompleted: false }
 
-            this.card.isCompleted = false
+            this.card.dueDate.isCompleted = false
             this.$emit('closeMiniModal')
         },
 

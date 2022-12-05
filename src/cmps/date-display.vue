@@ -19,7 +19,7 @@
     },
     computed: {
     formattedDate(){
-       console.log( this.date)
+      //  console.log( this.date)
       const second= 1000
         const minute= 60*second
         const hour= 60*minute
@@ -29,7 +29,7 @@
         const dateToFormat= new Date(this.date.time)
             const options =  {month: 'short', day: 'numeric'}
 
-        if(this.isCompleted){
+        if(this.date.isCompleted){
           const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
           return  {"class":"done","date":prettyDate}
         }
@@ -58,12 +58,13 @@
       return {green:this.date.isCompleted}
       // return this.isCompleted
     },
+  },
     methods:{
       toggleIsCompleted(){
         this.date.isCompleted=!this.date.isCompleted
       }
     }
   }
-}
+
   </script>
   
