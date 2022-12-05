@@ -10,11 +10,13 @@
       <h1>{{card.title}}</h1>
       <div class="icons flex">
         <div class="left-icons">
-          <span v-if="dynamicCard.description" class="icons description"></span>
-          <span v-if="dynamicCard.dueDate">description</span>
-          <span v-if="dynamicCard.checkList">checkList</span>
-          <span v-if="dynamicCard.attachment">checkList</span>
+          <span v-if="dynamicCard.description" class="icon description"></span>
+          <span v-if="dynamicCard.dueDate">Due date</span>
+          <span v-if="dynamicCard.checklists" class="icon sm checklist-check"></span>
+          <span v-if="dynamicCard.attachment" class="icon sm attach"></span>
         </div>
+        <div v-if="dynamicCard.members" class="members"></div>
+        
       </div>
     </section>
     <!-- <section v-else class="card-preview" >

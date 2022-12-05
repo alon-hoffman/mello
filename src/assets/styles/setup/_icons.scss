@@ -84,4 +84,7 @@
     &.add::before{
        content: '\E901'
     }
+    &.checkList::before{
+       content: '\E918'
+    }
 }
