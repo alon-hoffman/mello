@@ -121,7 +121,6 @@ export default {
         this.realTextArea = false
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
-        console.log("🚀 ~ file: card-edit.vue:110 ~ created ~ board", board)
         board.groups.forEach(group=>{
             group.cards.forEach(card=>{
 
@@ -168,7 +167,6 @@ export default {
             this.$emit('updateLabels', labels)
         },
         changeCard(card){
-            // console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
             
            this.card= card
         },
@@ -230,8 +228,6 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
-                console.log("🚀 ~ file: card-edit.vue:233 ~ handler ~ newVal", newVal)
-                
                 this.updateCard()
             },
             deep:true

@@ -218,9 +218,7 @@ chosenLabel:null
             this.miniModalTitle = 'Edit label'
         },
         closeMiniModal() {
-console.log(`foo = `)
             this.$emit('closeMiniModal')
-            // this.isMiniModalOpen = false
         },
         setBackgroundCard() {
 
@@ -283,8 +281,8 @@ console.log(`foo = `)
             }
         },
         updateDate() {
-            this.card.dueDate= +new Date(this.newDate).getTime()
-            console.log(`this.card.dueDate = `, this.card.dueDate)
+            const time= +new Date(this.newDate).getTime()
+            this.card.dueDate= {time,completedAt:null}
             this.card.isCompleted = false
             this.$emit('closeMiniModal')
         },
