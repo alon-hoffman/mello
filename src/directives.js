@@ -59,7 +59,6 @@ export const clickOnEscDirective = {
 export const clickOnSlashDirective = {
   mounted(el, { value: cb }) {
     el.clickEsc = (el) => {
-      console.log(`el = `, el)
       if (el.key === '/') {
         cb()
       } else {
