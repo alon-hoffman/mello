@@ -282,7 +282,7 @@ chosenLabel:null
         },
         updateDate() {
             const time= +new Date(this.newDate).getTime()
-            this.card.dueDate= {time,completedAt:null}
+            this.card.dueDate= {time,isCompleted:null}
             this.card.isCompleted = false
             this.$emit('closeMiniModal')
         },
