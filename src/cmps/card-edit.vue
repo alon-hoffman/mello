@@ -1,6 +1,6 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
+    <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <div class="modal-container">
@@ -33,8 +33,9 @@
                         <div class="detail-item" v-if="card.dueDate">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
-                                <div class="checkbox"></div>
-                                <div class="date-display" @click="formattedDueDate">Formatted Date</div>
+                                <!-- @click="(card.isCompleted != card.isCompleted)" -->
+                                <div class="checkbox" :class="isCompleted"></div>
+                                <div class="date-display">{{formattedDueDate}}</div>
                             </div>
                         </div>
                     </section>
@@ -95,6 +96,7 @@ export default {
         }
     },
     async created() {
+        if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         this.realTextArea = false
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
@@ -104,6 +106,8 @@ export default {
                 if (card.id=== id) 
                 {
                     this.card=JSON.parse(JSON.stringify(card))
+
+                    // setCurrCard(state, { cardId })
                     return
                 }
             })
@@ -162,18 +166,14 @@ else{
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
         },
-        formattedDueDate(){
-            const dateToFormat= new Date(this.card.dueDate)
-            const options =  {year: 'numeric', month: 'short', day: 'numeric'}
-            console.log(dateToFormat.toLocaleDateString(undefined, options))
-        }
+        
     },
     computed: {
         isOn() {
             return { on: this.isScreen === true }
         },
         groupTitle(){
-            return this.$store.getters.getGroupTitle
+            return this.card?.groupId
         },
         getCurrCard(){
             return this.card
@@ -185,6 +185,14 @@ else{
             const labels = [...this.$store.getters.getCurrBoard.labels]
             return labels.filter(label => this.card.labels.includes(label.id))
         },
+        formattedDueDate(){
+            const dateToFormat= new Date(this.card.dueDate)
+            const options =  {year: 'numeric', month: 'short', day: 'numeric'}
+            const date = dateToFormat.toLocaleDateString(undefined, options)
+            const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
+            const hours = (dateToFormat.getHours() % 12) + ':' + dateToFormat.getMinutes() + ' ' + ampm
+            return (date + ' at ' + hours)
+        }
         
        
     },

@@ -34,9 +34,9 @@ export const boardStore = {
         getCard(state) {
             return state.currCard
         },
-        getGroupTitle(state) {
-            return boardService.findGroupById(state.currCard.groupId, state.currBoard).title
-        },
+        // getGroupTitle(state) {
+        //     return boardService.findGroupById(state.currCard.groupId, state.currBoard).title
+        // },
         getBoardImg(state) {
             return state.currBoard.coverImg
         }

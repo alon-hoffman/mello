@@ -361,6 +361,14 @@
         align-items: center;
 
     }
+    .save-date-btn{
+        width: 60px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px auto;
+    }
 }
 
 .modal-add-menu .option-custom-card .mini-modal-body .mini-head {
@@ -377,5 +385,11 @@
     box-shadow: none;
 }
 .vpd-dir-ltr .vpd-content {
-    width: 500px;
+    width: 440px;
+}
+.vpd-input-group{
+    margin-bottom: 10px;
+}
+.vpd-dir-ltr .vpd-actions{
+    text-align: center;
 }

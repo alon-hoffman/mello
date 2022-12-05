@@ -35,10 +35,11 @@
                 <!-- <div class="el-picker-panel__body"></div> -->
                 <section class="mini-modal-body date-section">
                     <date-picker @click="dateOpen" locale="en" type="datetime" class="custom-input" label-class="icon-sm icon-clock"
-                        ref="date" v-model="newDate" format="YYYY-MM-DD HH:mm:ss" color="#0079bf"
+                        ref="date" v-model="newDate" placeholder="Enter due date" format="YYYY-MM-DD HH:mm:ss" color="#0079bf"
                          value></date-picker>
-                         <input v-model="newDate" type="text">
-                         <div @click="updateDate" class="fake-button">Save</div>
+                    
+                         <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
+                         <div @click="updateDate" class="fake-button save-date-btn">Save</div>
                 </section>
             </template>
 
@@ -138,6 +139,7 @@
 
 <script>
 import customCard from './custom-card.vue';
+import datePicker2 from "../cmps/date-picker2.vue";
 import { utilService } from '../services/util.service';
 import DatePicker from 'vue3-persian-datetime-picker';
 import { uploadService } from '../services/upload.service.js';
@@ -159,7 +161,7 @@ export default {
             boardLabels: null,
             currMember: null,
             isDatePickerOpen:false,
-            newDate: '',
+            newDate: this.card.dueDate,
             // date: '2020-10-10',
             attachment: {
                 href: '',
@@ -256,8 +258,10 @@ export default {
             console.log(`this.card.dueDate = `, this.card.dueDate)
             this.$emit('closeMiniModal')
         },
+    
         async uploadImgToCloud(ev) {
             const res = await uploadService.uploadImg(ev);
+            console.log(`res = `, res)
             this.attachment.href = res.url;
             this.attachment.type = 'img';
             this.addAttachment()
@@ -278,9 +282,17 @@ this.isDatePickerOpen=true
     components: {
         customCard,
         DatePicker,
+        datePicker2,
     },
     watch: {
         card: {
+            handler(newVal, oldVal) {
+                console.log("change")
+                this.$emit("sideModalChange", this.card)
+            },
+            deep: true
+        },
+        newDate:{
             handler(newVal, oldVal) {
                 console.log("change")
                 this.$emit("sideModalChange", this.card)
