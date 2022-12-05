@@ -26,32 +26,32 @@ const startingBoard = [
             {
                 "id": "l101",
                 "title": "When possible",
-                "color": "#d6ecd2"
+                "color": "#7bc86c"
             },
             {
                 "id": "l102",
                 "title": "Important",
-                "color": "#faf3c0"
+                "color": "#f5dd29"
             },
             {
                 "id": "l103",
                 "title": "",
-                "color": "#fce6c6"
+                "color": "#ffaf3f"
             },
             {
                 "id": "l104",
                 "title": "Urgent",
-                "color": "#f5d3ce"
+                "color": "#ef7564"
             },
             {
                 "id": "l105",
                 "title": "",
-                "color": "#eddbf4"
+                "color": "#cd8de5"
             },
             {
                 "id": "l106",
                 "title": "",
-                "color": "#bcd9ea"
+                "color": "#5ba4cf"
             },
         ],
         "members": [

@@ -165,7 +165,7 @@ export default {
             this.$store.dispatch({ type:"saveCard", card:this.card})
         },
         updateLabels(labels) {
-            this.$emit('updateLabels', labels)
+            this.$store.commit({type: "updateLabels", labels})
         },
         changeCard(card){
             // console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)

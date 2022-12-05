@@ -1,6 +1,6 @@
 <template>
     <section class="modal-add-menu">
-        <h4>Add to card</h4>
+        <span class="options-head">Add to card</span>
         <div @click="openMiniModal('Members')" class="fake-button add-option-div" value="hello">
             <span class="icon sm user"></span>Members
         </div>
@@ -34,12 +34,12 @@
             <template v-if="(miniModalTitle === 'Dates')">
                 <!-- <div class="el-picker-panel__body"></div> -->
                 <section class="mini-modal-body date-section">
-                    <date-picker @click="dateOpen" locale="en" type="datetime" class="custom-input" label-class="icon-sm icon-clock"
-                        ref="date" v-model="newDate" placeholder="Enter due date" format="YYYY-MM-DD HH:mm:ss" color="#0079bf"
-                         value></date-picker>
-                    
-                         <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
-                         <div @click="updateDate" class="fake-button save-date-btn">Save</div>
+                    <date-picker @click="dateOpen" locale="en" type="datetime" class="custom-input"
+                        label-class="icon-sm icon-clock" ref="date" v-model="newDate" placeholder="Enter due date"
+                        format="YYYY-MM-DD HH:mm:ss" color="#0079bf" value></date-picker>
+
+                    <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
+                    <div @click="updateDate" class="fake-button save-date-btn">Save</div>
                 </section>
             </template>
 
@@ -51,8 +51,8 @@
                     <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
                         <div class="members-checked-box-container">
                             <div class="user-and-img">
-                                <section class="img-container">
-                                    <span class="member-list-icon icon lg user"></span>
+                                <section class="img-container" :style="{ backgroundColor: getRandomColor }">
+                                    <span class="member-list-initials">{{ memberInitials(member) }}</span>
                                 </section>
                                 {{ member.fullname }}
                             </div>
@@ -73,8 +73,12 @@
                                     src="../assets/icons/checkbox-try.svg">
                                 <img @click="toggleLabels(label)" class="box-img" v-else
                                     src="../assets/icons/gray-square.svg" alt="">
-                                <input v-on:keyup.enter="updateLabels" class="checkbox" v-model="label.title"
-                                    type="text" :style="{ backgroundColor: label.color }">
+                                <div class="label-color-container" @click="toggleLabels(label)"
+                                    :style="{ backgroundColor: label.color }">
+                                    <!-- {{label.title}} -->
+                                    <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
+                                    <div class="label-title-area">{{ label.title }}</div>
+                                </div>
                                 <span @click="changeMiniModal(label)" class="icon sm edit"></span>
                             </div>
                         </label>
@@ -83,25 +87,28 @@
             </template>
             <template v-if="(miniModalTitle === 'Edit label')">
                 <section class="mini-modal-body edit-label-section">
-                   <div class="chosen-label-space">
-                    <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color}">{{chosenLabel.title}}</div>
-                   </div>
-                   <span class="mini-head">Title</span>
+                    <div class="chosen-label-space">
+                        <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color }">{{ chosenLabel.title
+                        }}
+                        </div>
+                    </div>
+                    <span class="mini-head">Title</span>
                     <input v-model="chosenLabel.title" type="text">
                     <span class="mini-head">Select a color</span>
                     <div class="colors-palette">
                         <div class="color-box-container" v-for="color in possibleColors">
-                            <div class="color-box" :style="{ backgroundColor: color}">
+                            <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                :style="{ backgroundColor: color }">
                             </div>
                         </div>
                     </div>
-<div class="remove-color-btn-container">
-    <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
-</div>
-<div class="save-delete-btn-container">
-<div class="save-label-btn">Save</div>
-<div class="delete-label-btn">Delete</div>
-</div>
+                    <div class="remove-color-btn-container">
+                        <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
+                    </div>
+                    <div class="save-delete-btn-container">
+                        <div class="save-label-btn" @click="updateChosenLabel('save')">Save</div>
+                        <div class="delete-label-btn" @click="updateChosenLabel('delete')">Delete</div>
+                    </div>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Add checklist')">
@@ -183,7 +190,7 @@ export default {
             boardMembers: null,
             boardLabels: null,
             currMember: null,
-            isDatePickerOpen:false,
+            isDatePickerOpen: false,
             newDate: this.card.dueDate,
             // date: '2020-10-10',
             attachment: {
@@ -192,8 +199,8 @@ export default {
                 createdAt: '',
                 type: '',
             },
-possibleColors:['#b7ddb0','#f5ea92','#fad29c','#efb3ab','#dfc0eb','#7bc86c','#f5dd29','#ffaf3f','#ef7564','#cd8de5','#5aac44','#e6c60d','#e79217','#cf513d','#a86cc1','#8bbdd9','#8fdfeb','#b3f1d0','#f9c2e4','#505f79','#5ba4cf','#29cce5','#6deca9','#ff8ed4','#344563','#026aa7','#00aecc','#4ed583','#e568af','#091e42'],
-chosenLabel:null
+            possibleColors: ['#b7ddb0', '#f5ea92', '#fad29c', '#efb3ab', '#dfc0eb', '#7bc86c', '#f5dd29', '#ffaf3f', '#ef7564', '#cd8de5', '#5aac44', '#e6c60d', '#e79217', '#cf513d', '#a86cc1', '#8bbdd9', '#8fdfeb', '#b3f1d0', '#f9c2e4', '#505f79', '#5ba4cf', '#29cce5', '#6deca9', '#ff8ed4', '#344563', '#026aa7', '#00aecc', '#4ed583', '#e568af', '#091e42'],
+            chosenLabel: null
         }
     },
     async created() {
@@ -207,23 +214,24 @@ chosenLabel:null
             this.miniModalTitle = value
 
             this.$emit('openMiniModal')
-            setTimeout(()=>{
-                if(value==='Dates') this.$refs.date.focus()
-            },0)
+            setTimeout(() => {
+                if (value === 'Dates') this.$refs.date.focus()
+            }, 0)
             // this.isMiniModalOpen = true
         },
-        changeMiniModal(label){
+        changeMiniModal(label) {
             console.log(`label = `, label)
-            this.chosenLabel= JSON.parse(JSON.stringify(label))
+            this.chosenLabel = JSON.parse(JSON.stringify(label))
             this.miniModalTitle = 'Edit label'
         },
         closeMiniModal() {
-console.log(`foo = `)
             this.$emit('closeMiniModal')
             // this.isMiniModalOpen = false
         },
-        setBackgroundCard() {
-
+        memberInitials(member) {
+            const fullName = member.fullname.split(' ');
+            const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
+            return initials.toUpperCase();
         },
         toggleMember(member) {
             if (this.card.members?.length) {
@@ -264,8 +272,8 @@ console.log(`foo = `)
             this.checklist = "checklist"
             this.updateCard()
         },
-        updateLabels() {
-            this.$emit('updateLabels', this.boardLabels)
+        setLabelBGC(selectedColor) {
+            this.chosenLabel.color = selectedColor
         },
         setCover(e) {
             this.card.coverColor = e.target.value
@@ -282,13 +290,20 @@ console.log(`foo = `)
                 type: '',
             }
         },
+        updateChosenLabel(action) {
+            const labelIdx = this.boardLabels.findIndex((label) => label.id === this.chosenLabel.id)
+            if (action === 'save') this.boardLabels.splice(labelIdx, 1, this.chosenLabel)
+            else this.boardLabels.splice(labelIdx, 1)
+            this.$emit('updateLabels', this.boardLabels)
+            this.closeMiniModal()
+        },
         updateDate() {
-            this.card.dueDate= +new Date(this.newDate).getTime()
+            this.card.dueDate = +new Date(this.newDate).getTime()
             console.log(`this.card.dueDate = `, this.card.dueDate)
             this.card.isCompleted = false
             this.$emit('closeMiniModal')
         },
-    
+
         async uploadImgToCloud(ev) {
             const res = await uploadService.uploadImg(ev);
             console.log(`res = `, res)
@@ -297,8 +312,8 @@ console.log(`foo = `)
             this.addAttachment()
             this.$emit('closeMiniModal')
         },
-        dateOpen(){
-this.isDatePickerOpen=true
+        dateOpen() {
+            this.isDatePickerOpen = true
         },
     },
     computed: {
@@ -307,6 +322,9 @@ this.isDatePickerOpen=true
             return this.boardMembers.filter((member) => {
                 return regex.test(member.fullname)
             })
+        },
+        getRandomColor() {
+            return utilService.getRandomColor()
         }
     },
     components: {
@@ -322,7 +340,7 @@ this.isDatePickerOpen=true
             },
             deep: true
         },
-        newDate:{
+        newDate: {
             handler(newVal, oldVal) {
                 console.log("change")
                 this.$emit("sideModalChange", this.card)
