@@ -19,7 +19,6 @@
         </div>
       </Container>
     </ul>
-    <listActions list="list"/>
 
   
 
