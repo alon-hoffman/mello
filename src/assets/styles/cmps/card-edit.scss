@@ -10,7 +10,8 @@
     width: 576px;
 }
 .modal-container{
-    height: 800px;
+    // height: 800px;
+    padding: 16px;
 }
 .modal {
     position: fixed;
@@ -24,6 +25,7 @@
     border-radius: 3px;
     color: $text-dark;
     z-index: 1;
+    // overflow: scroll;
     // opacity: 1;
     // pointer-events: all;
     
@@ -160,13 +162,14 @@
     // padding-inline-start: 0.28em;
     grid-template-areas:
         "icon header"
-        "sub-icon content";
+        "sub-icon content"
+        "dynamic-content dynamic-content";
 
     .icon {
         grid-area: icon;
         align-self: center;
         justify-self: center;
-        height: em(25px);
+        height: 30px;
         vertical-align: text-bottom;
         position: relative;
         top: 6px;
@@ -191,20 +194,30 @@
         align-self: center;
         justify-self: center;
         font-size: 11px;
+        padding-top: 13px;
     }
 
     .content {
         grid-area: content;
         padding-inline-start: 0.55rem;
-        & progress[value]::-webkit-progress-bar{
-            width: 100%;
-            
-                background-color: #eee;
-                border-radius: 2px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
-             
-            background-color: rgba(9, 30, 66, 0.08);
+
+        & .progress-bar{
+            appearance: none;
+            width: 99%;
+            padding-top: 12px;
         }
+
+        & .progress-bar::-webkit-progress-bar {
+            border: none;
+            background-color: rgba(9, 30, 66, 0.08);
+            border-radius: 3em;
+            height: 8px;
+            position: relative;
+          }
+          .progress-bar::-webkit-progress-value {
+            background-color: #5ba4cf;
+            border-radius: 3em 0 0 3em;
+          }
     }
    
 }
@@ -292,7 +305,7 @@
     margin-bottom: 8px;
     margin-inline-start: 8px;
     &-header{
-        color: var(--ds-text-subtle,#5e6c84);
+        color: #5e6c84;
         display: block;
         font-size: 12px;
         font-weight: 600;
@@ -454,6 +467,23 @@
         &::before{
             color: #fff;
             opacity: 1;
+        }
+    }
+}
+
+.todo-list{
+    list-style: none;
+    margin: 10px;
+    padding: 0;
+
+    & .todo-item{
+        width: 100%;
+        height: 36px;
+        padding-block: 6px;
+        & .checkbox{
+            vertical-align: middle;
+            // width: 16px;
+            // height: 16px;
         }
     }
 }
