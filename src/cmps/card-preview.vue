@@ -55,7 +55,6 @@
       }
     },
       created(){
-         console.log( this.newCard)
         this.boardLabels= this.$store.getters.getCurrBoard.labels
         this.newLabels= this.card?.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
