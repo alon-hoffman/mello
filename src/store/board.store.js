@@ -156,6 +156,7 @@ export const boardStore = {
             }
         },
         async addCard({ dispatch, state }, { card }) {
+            console.log("🚀 ~ file: board.store.js:159 ~ addCard ~ card", card)
             card.id = utilService.makeId()
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)

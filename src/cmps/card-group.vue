@@ -23,8 +23,7 @@
     <button v-if="!isCardEdited" class="add-card clickable" @click="isCardEdited = true">
       <span>+</span> Add a card
     </button>
-    <!-- v-click-outside="closeNewCard" -->
-    <div  class="add-card-section" v-else>
+    <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-else>
       <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
       <div class="buttons">
         <div class="left-buttons">
@@ -78,9 +77,11 @@ export default {
       this.isCardEdited = false
     },
     addCard() {
-      // this.list.cards.push(this.newCard)
-      this.$emit('addCard', this.newCard)
-      // this.$emit('saveList', this.list)
+      //XXX
+      
+      const newCard= {title:this.newTitle, groupId: this.list.id}
+      this.$emit('addCard', newCard)
+      this.newTitle=""
     },
     onColumnDrop(dropResult) {
       const list = Object.assign({}, this.list)
