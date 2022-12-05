@@ -10,6 +10,19 @@
         </header>
         <div class="modal-content flex">
             <section class="edit-blocks">
+                <section class="detail-items flex wrap">
+                    <div class="detail-item" v-if="card.members?.length">
+                        <div class="card-detail-item-header">Members</div>
+                        <div class="card-detail-item-content flex" >
+                            <div class="member-avatar" v-for="member in card.members">{{memberInitials(member)}}</div>
+                            <div class="member-avatar fake"></div>
+                        </div>
+                    </div>
+                    <div class="detail-item" v-if="card.labels?.length">
+                        <div class="card-detail-item-header">Labels</div>
+                        {{labelsDisplay}}
+                    </div>
+                </section>
                 <section v-click-outside="closeTextArea" class="edit-block">
                     <span class="icon lg description"></span>
                     <h3 class="header">Description</h3>
@@ -122,7 +135,7 @@ else{
             this.$emit('updateLabels', labels)
         },
         changeCard(card){
-            console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
+            // console.log("🚀 ~ file: card-edit.vue:102 ~ changeCard ~ card", card)
             
            this.card= card
         },
@@ -138,6 +151,11 @@ else{
             this.isInMiniModal=true
             this.isMiniModalOpen = false
         },
+        memberInitials(member){
+            const fullName = member.fullname.split(' ');
+            const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
+            return initials.toUpperCase();
+        }
     },
     computed: {
         isOn() {
@@ -151,7 +169,18 @@ else{
         },
         isDescription(){
             return {"written-description":!!this.card.description}
+        },
+        labelsDisplay(){
+            let labels = [...this.$store.getters.getCurrBoard.labels]
+            // const cardLabelIds = this.card.labels.map(label => label.id)
+            // 
+            labels = labels.filter(label => {
+                console.log(this.card.labels)
+                console.log(label)
+                return true})
+            console.log(labels)
         }
+       
     },
     unmounted(){
         this.realTextArea = false

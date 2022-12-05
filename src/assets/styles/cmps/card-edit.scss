@@ -280,6 +280,37 @@
         white-space: nowrap;
     }
     &-content{
+        & .member-avatar{
+            border-radius: 25em;
+            height: 32px;
+            object-fit: cover;
+            width: 32px;
+            background-color: #0079bf;
+            color: #fff;
+            font-weight: 500;
+            margin-inline-end: 4px;
+            margin-block-end: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &.fake{
+                background-color: #091e420a;
+                color: $text-dark;
+                &:hover{
+                   background-color: #091e4214;
+                }
 
+                &:active{
+                    background-color: #e4f0f6;
+                    color: #0079bf;
+                }
+
+                &::before{
+                    font-size: 16px;
+                    font-family:icons;
+                    content: '\E901'
+                }
+            }
+        }
     }
 }
