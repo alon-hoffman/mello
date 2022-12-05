@@ -112,11 +112,11 @@ export const clickOutsideBigModalDirective = {
       }
     }
     setTimeout(() => {
-      document.addEventListener('mouseDown', el.clickOutside)
+      document.addEventListener('click', el.clickOutside)
     }, 0)
   },
   unmounted(el) {
-    document.removeEventListener('mouseDown', el.clickOutside)
+    document.removeEventListener('click', el.clickOutside)
   },
 }
 

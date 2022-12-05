@@ -56,7 +56,7 @@ export default {
     },
     board() {
        console.log(this.$store.getters.getCurrBoard)
-      return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
+      return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
     },
   },
   async created() {
