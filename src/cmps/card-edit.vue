@@ -30,11 +30,10 @@
                                 <button class="label-avatar flex align-center add clickable"></button>
                             </div>
                         </div>
-                        <div class="detail-item" v-if="card.dueDate">
+                        <div class="detail-item" v-if="card.dueDate.time">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
-                                <!-- @click="(card.isCompleted != card.isCompleted)" -->
-                                <div class="checkbox" :class="isCompleted" @click="(card.isCompleted = !card.isCompleted)"></div>
+                                <div class="checkbox" :class="isCompleted" @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></div>
                                 <div class="date-display">{{formattedDueDate}} <span :class="isCompleted">complete</span></div>
                             </div>
                         </div>
@@ -205,7 +204,7 @@ export default {
             return labels.filter(label => this.card.labels.includes(label.id))
         },
         formattedDueDate(){
-            const dateToFormat= new Date(this.card.dueDate)
+            const dateToFormat= new Date(this.card.dueDate.time)
             const options =  {month: 'short', day: 'numeric'}
             const date = dateToFormat.toLocaleDateString(undefined, options)
             const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
@@ -213,7 +212,7 @@ export default {
             return (date + ' at ' + hours)
         },
         isCompleted(){
-            return {checked: this.card.isCompleted}
+            return {checked: this.card.dueDate.isCompleted}
         }
         
        
