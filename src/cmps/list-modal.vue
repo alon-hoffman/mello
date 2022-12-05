@@ -8,6 +8,10 @@
   <script>
 
   export default {
+    props: {
+    list: Object,
+
+  },
     data() {
       return {
        

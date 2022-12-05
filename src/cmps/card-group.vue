@@ -38,8 +38,8 @@
         </svg>
       </div>
     </div>
+    <listModal :list="list"/>
   </section>
-    <listActions list="list"/>
 
 </template>
   
@@ -47,7 +47,7 @@
 import cardPreview from "../cmps/card-preview.vue"
 import { boardService } from '../services/board.service'
 import { Container, Draggable } from "vue3-smooth-dnd";
-import listActions from "./list-actions.vue"
+import listModal from "./list-modal.vue"
 export default {
   props: {
     list: Object,
@@ -73,9 +73,6 @@ export default {
       counter:1
     }
   },
-  components:{
-      listActions
-    },
   methods: {
     closeNewCard() {
       this.newCard = { title: '', groupId: this.list.id }
@@ -111,6 +108,7 @@ export default {
     cardPreview,
     Container,
     Draggable,
+    listModal
   },
   watch: {
     list: {

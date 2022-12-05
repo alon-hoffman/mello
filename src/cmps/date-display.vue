@@ -29,6 +29,10 @@
         const dateToFormat= new Date(this.date.time)
             const options =  {month: 'short', day: 'numeric'}
 
+        if(this.isCompleted){
+          const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          return  {"class":"done","date":prettyDate}
+        }
         const timeLeft= this.date.time- Date.now()
         if(timeLeft<0){
           const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
