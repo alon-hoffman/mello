@@ -14,10 +14,13 @@
         <button class="filter-btn">
           <span class="icon sm filter"></span> Filter
         </button>
+        <span class="separator-line">|</span>
         <div class="member-list"><img src="" alt="" /></div>
+        
         <button class="add-user-btn" title="Click to star or unstar this board. Starred boards show up at the top of your board list">
           <span class="icon sm share"></span> Share
         </button>
+        <span class="separator-line">|</span>
         <button class="more-btn">
           <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg">

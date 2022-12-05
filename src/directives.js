@@ -83,7 +83,8 @@ export const clickOutsideDirective = {
           clientX < left + width &&
           clientY > top &&
           clientY < top + height)
-      ) {
+          ) {
+        console.log(`out = `)
         cb()
       } else {
       }
@@ -111,11 +112,11 @@ export const clickOutsideBigModalDirective = {
       }
     }
     setTimeout(() => {
-      document.addEventListener('click', el.clickOutside)
+      document.addEventListener('mouseDown', el.clickOutside)
     }, 0)
   },
   unmounted(el) {
-    document.removeEventListener('click', el.clickOutside)
+    document.removeEventListener('mouseDown', el.clickOutside)
   },
 }
 

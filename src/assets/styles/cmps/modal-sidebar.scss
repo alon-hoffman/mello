@@ -42,7 +42,8 @@
         position: absolute;
         background-color: transparent;
         font-size: 16px;
-        right: 0;
+        right: -5px;
+        top: 2px;
 
         &::before {
             content: '\E91C';
@@ -63,16 +64,17 @@
         border: 1px solid rgba(128, 128, 128, 0.466);
 
         .mini-modal-body {
-&:not(.add-attachment-computer){
-    margin-bottom: 20px;
-    margin-top: 10px;
-    padding: 0 12px 12px;
-}
-.under-computer{
-    margin-bottom: 20px;
-    margin-top: 10px;
-    padding: 0 12px 12px;
-}
+            &:not(.add-attachment-computer) {
+                // margin-bottom: 20px;
+                margin-top: 8px;
+                padding: 0 12px 12px;
+            }
+
+            .under-computer {
+                margin-bottom: 20px;
+                margin-top: 10px;
+                padding: 0 12px 12px;
+            }
 
 
             .member-list-icon {
@@ -96,9 +98,11 @@
                 padding: 0 12px;
                 display: flex;
                 align-items: center;
-                p{
+
+                p {
                     margin: 0;
                 }
+
                 // justify-content: center;
                 &:hover {
                     background-color: #091e420a;
@@ -215,11 +219,11 @@
             .mini-head {
                 font-size: 12px;
                 display: flex;
-                // margin: 0 12px;
                 padding: 0 1px;
+                line-height: 16px;
                 color: #5e6c84;
                 font-weight: 600;
-                margin-top: 16px;
+                margin-top: 12px;
                 margin-bottom: 8px;
             }
 
@@ -361,7 +365,8 @@
         align-items: center;
 
     }
-    .save-date-btn{
+
+    .save-date-btn {
         width: 60px;
         height: 32px;
         display: flex;
@@ -369,27 +374,158 @@
         align-items: center;
         margin: 10px auto;
     }
+
+    .chosen-label-space {
+        margin: 0 -12px;
+        padding: 32px;
+        background-color: #F4F5F7;
+    }
+
+    .chosen-label {
+        display: inline-block;
+        position: relative;
+        margin-bottom: 0;
+        border-radius: 3px;
+        padding: 0 12px;
+        max-width: 100%;
+        min-width: 48px;
+        width: 240px;
+        height: 32px;
+        box-sizing: border-box;
+        line-height: 32px;
+        color: #172b4d;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .colors-palette {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+        margin-bottom: 8px;
+    }
+
+    .color-box-container {
+        position: relative;
+        box-sizing: border-box;
+        border-radius: 3px;
+        border: 2px transparent solid;
+        height: 32px;
+    }
+
+    .color-box {
+        position: relative;
+        border-radius: 3px;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .remove-color-btn {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        width: 100%;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 6px 12px;
+        text-decoration: none;
+        white-space: normal;
+        background-color: rgba(9, 30, 66, 0.04);
+        box-shadow: none;
+        border: none;
+        color: inherit;
+        margin-bottom: 24px;
+
+        transition-property: background-color, border-color, box-shadow;
+        transition-duration: 85ms;
+        transition-timing-function: ease;
+    }
+
+    .remove-color-btn-container {
+        border-bottom: 1px solid #5e6c8458;
+    }
+
+    .remove-color-btn {
+        &::before {
+            margin-right: 6px;
+            content: '\E91C';
+        }
+    }
+
+    .save-delete-btn-container {
+        width: 100%;
+        height: 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+    }
+
+    .save-label-btn {
+        background-color: #0079bf;
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 6px 12px;
+        text-decoration: none;
+        white-space: normal;
+    }
+
+    .delete-label-btn {
+        background-color: #b04632;
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 6px 12px;
+        text-decoration: none;
+        white-space: normal;
+    }
 }
 
-.modal-add-menu .option-custom-card .mini-modal-body .mini-head {
-    margin-top: 9px;
-}
-.vpd-container{
+.vpd-container {
     position: static;
     transform: translate(0);
 }
-.vpd-wrapper{
+
+.vpd-wrapper {
     position: static;
 }
-.vpd-content{
+
+.vpd-content {
     box-shadow: none;
 }
+
 .vpd-dir-ltr .vpd-content {
     width: 440px;
 }
-.vpd-input-group{
+
+.vpd-input-group {
     margin-bottom: 10px;
 }
-.vpd-dir-ltr .vpd-actions{
+
+.vpd-dir-ltr .vpd-actions {
     text-align: center;
 }

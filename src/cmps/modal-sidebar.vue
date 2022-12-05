@@ -7,13 +7,13 @@
         <div @click="openMiniModal('Labels')" class="fake-button add-option-div">
             <span class="icon sm label"></span>Labels
         </div>
-        <div @click="openMiniModal('Checklist')" class="fake-button add-option-div">
+        <div @click="openMiniModal('Add checklist')" class="fake-button add-option-div">
             <span class="icon sm checklist-check"></span>Checklist
         </div>
         <div @click="openMiniModal('Dates')" class="fake-button add-option-div">
             <span class="icon sm time"></span>Dates
         </div>
-        <div @click="openMiniModal('Attachment')" class="fake-button add-option-div">
+        <div @click="openMiniModal('Attach from...')" class="fake-button add-option-div">
             <span class="icon sm attach"></span>Attachment
         </div>
         <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
@@ -75,20 +75,43 @@
                                     src="../assets/icons/gray-square.svg" alt="">
                                 <input v-on:keyup.enter="updateLabels" class="checkbox" v-model="label.title"
                                     type="text" :style="{ backgroundColor: label.color }">
-                                <span class="icon sm edit"></span>
+                                <span @click="changeMiniModal(label)" class="icon sm edit"></span>
                             </div>
                         </label>
                     </section>
                 </section>
             </template>
-            <template v-if="(miniModalTitle === 'Checklist')">
+            <template v-if="(miniModalTitle === 'Edit label')">
+                <section class="mini-modal-body edit-label-section">
+                   <div class="chosen-label-space">
+                    <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color}">{{chosenLabel.title}}</div>
+                   </div>
+                   <span class="mini-head">Title</span>
+                    <input v-model="chosenLabel.title" type="text">
+                    <span class="mini-head">Select a color</span>
+                    <div class="colors-palette">
+                        <div class="color-box-container" v-for="color in possibleColors">
+                            <div class="color-box" :style="{ backgroundColor: color}">
+                            </div>
+                        </div>
+                    </div>
+<div class="remove-color-btn-container">
+    <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
+</div>
+<div class="save-delete-btn-container">
+<div class="save-label-btn">Save</div>
+<div class="delete-label-btn">Delete</div>
+</div>
+                </section>
+            </template>
+            <template v-if="(miniModalTitle === 'Add checklist')">
                 <section class="mini-modal-body">
                     <span class="mini-head">Title</span>
                     <input v-model="checklist" @submit="addChecklist" type="text">
                     <button @click="addChecklist" class="add-checkbox-btn">Add</button>
                 </section>
             </template>
-            <template v-if="(miniModalTitle === 'Attachment')">
+            <template v-if="(miniModalTitle === 'Attach from...')">
                 <section class="mini-modal-body add-attachment-computer">
                     <form @submit.prevent="addAttachment">
                         <label class="img-upload-container">
@@ -169,7 +192,8 @@ export default {
                 createdAt: '',
                 type: '',
             },
-
+possibleColors:['#b7ddb0','#f5ea92','#fad29c','#efb3ab','#dfc0eb','#7bc86c','#f5dd29','#ffaf3f','#ef7564','#cd8de5','#5aac44','#e6c60d','#e79217','#cf513d','#a86cc1','#8bbdd9','#8fdfeb','#b3f1d0','#f9c2e4','#505f79','#5ba4cf','#29cce5','#6deca9','#ff8ed4','#344563','#026aa7','#00aecc','#4ed583','#e568af','#091e42'],
+chosenLabel:null
         }
     },
     async created() {
@@ -188,8 +212,13 @@ export default {
             },0)
             // this.isMiniModalOpen = true
         },
+        changeMiniModal(label){
+            console.log(`label = `, label)
+            this.chosenLabel= JSON.parse(JSON.stringify(label))
+            this.miniModalTitle = 'Edit label'
+        },
         closeMiniModal() {
-// if(this.isDatePickerOpen) return
+console.log(`foo = `)
             this.$emit('closeMiniModal')
             // this.isMiniModalOpen = false
         },
