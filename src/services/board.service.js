@@ -163,7 +163,7 @@ const startingBoard = [
                         "groupId": "g123",
                         "title": "Look for taco truck",
                         "imgURL": "https://trello.com/1/cards/63860ca5644759011faa16a2/attachments/63860d602444d1006e32080a/previews/63860d612444d1006e320814/download/IMG_5708__1_.jpg",
-                        "labels": ["important"],
+                        "labels": ["l102"],
                         "members": [
                             {
                                 "_id": "u101",
