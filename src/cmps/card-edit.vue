@@ -65,8 +65,23 @@
                         </span>
                         <span class="sub-icon">50%</span>
                         <div class="content">
-                            <progress value="32" max="100"> 32% </progress>
+                            <progress class="progress-bar" value="32" max="100"> 32% </progress>
                         </div>
+                        
+                        <ul class="dynamic-content todo-list flex column">
+                                <li class="todo-item flex">
+                                    <div class="checkbox"></div>
+                                    <span>Has a fridge</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="checkbox"></div>
+                                    <span>Working wheels</span>
+                                </li>
+                                <li class="flex">
+                                    <div class="checkbox"></div>
+                                    <span>todo</span>
+                                </li>
+                            </ul>
                     </section>
                     <section class="edit-block">
                         <span class="icon lg activity"></span>
@@ -204,7 +219,7 @@ export default {
             return labels.filter(label => this.card.labels.includes(label.id))
         },
         formattedDueDate(){
-            const dateToFormat= new Date(this.card.dueDate.time)
+            const dateToFormat = new Date(this.card.dueDate.time)
             const options =  {month: 'short', day: 'numeric'}
             const date = dateToFormat.toLocaleDateString(undefined, options)
             const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
