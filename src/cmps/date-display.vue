@@ -1,6 +1,6 @@
 <template>
     <section class="date-display">
-<span><span class="icon sm time" :class="urgency"></span>{{formattedDate}}</span>
+<span><span class="icon sm time" :class="urgency"></span>{{formattedDate.date}}</span>
     </section>
     
   </template>
@@ -25,12 +25,12 @@
         const month= 30*day
 
         const dateToFormat= new Date(this.date)
-  
+            const options =  {month: 'short', day: 'numeric'}
+
         const timeLeft= this.date- Date.now()
         if(timeLeft>2*day){ 
-          const dayOfMonth= dateToFormat.getDate()
-          const monthName= (getMonthShortName(2))
-          //  {"class":"good","date":`${this.date.toLocaleString()}`}
+          const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          return  {"class":"good","date":prettyDate}
           }
         if(timeLeft>day) return "today"
         return "over-due"
