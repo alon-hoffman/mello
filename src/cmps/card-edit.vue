@@ -230,6 +230,8 @@ export default {
     watch:{
         card:{
             handler(newVal, oldVal){
+                console.log("🚀 ~ file: card-edit.vue:233 ~ handler ~ newVal", newVal)
+                
                 this.updateCard()
             },
             deep:true

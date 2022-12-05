@@ -62,8 +62,13 @@
         }
     }
     .icons-container {
-        margin: rem(-6px) rem(10px) rem(8px) rem(10px);
+        margin: rem(-6px) rem(10px) rem(7px) rem(10px);
     }
+
+    .left-icons{
+        gap:rem(8px)
+    }
+
     .member-avatar{
         border-radius: 25em;
         height: 32px;
@@ -81,8 +86,14 @@
     }
     .date-display{
         >*{
-            padding: rem(1px) rem(2px) ;
+            // padding: rem(1px) rem(2px) ;
+            width:rem(67px);
             border-radius: 3px;
+            font-size: rem(14px);
+            padding:rem(2px) 0;
+            text-align: center;
+            justify-content: center;
+
         }
         .over-due{
             background-color: $red;

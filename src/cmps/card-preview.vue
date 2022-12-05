@@ -10,8 +10,8 @@
       <h1>{{card.title}}</h1>
       <div class="icons-container flex  align-center justify-between">
         <div class="left-icons flex  align-center">
-          <span v-if="dynamicCard.description" class="icon description"></span>
           <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate"/>
+          <span v-if="dynamicCard.description" class="icon description"></span>
           <span v-if="dynamicCard.checklists" class="icon sm checklist-check"></span>
           <span v-if="dynamicCard.attachment" class="icon sm attach"></span>
         </div>
