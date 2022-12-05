@@ -4,7 +4,7 @@ export const uploadService = {
 function uploadImg(ev) {
   const CLOUD_NAME = "mello123"
   const UPLOAD_PRESET = "mello1234"
-  const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+  const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`
 
   const formData = new FormData();
   formData.append('upload_preset', UPLOAD_PRESET);
