@@ -14,7 +14,7 @@
     <Container group-name="col" @drop="(e) => onCardDrop(list.id, e)" :get-child-payload="getCardPayload(list.id)"
       drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
       <Draggable v-for="card in list.cards" :key="card.id">
-        <card-preview :card="card" @click="$emit('editCard', card.id)" />
+        <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable"/>
       </Draggable>
 
     </Container>
