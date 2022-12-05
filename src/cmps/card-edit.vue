@@ -39,7 +39,7 @@
                     </ul>
                 </section>
             </section>
-            <modal-sidebar :isInMiniModal="isInMiniModal" :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @openMiniModal="openMiniModal" @sideModalChange="changeCard"/>
+            <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal" @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard" @openMiniModal="openMiniModal" @sideModalChange="changeCard"/>
         </div>
     </article>
 </template>
@@ -59,7 +59,6 @@ export default {
            card:null,
             realTextArea: false,
             isMiniModalOpen: false,
-            isInMiniModal:false,
         }
     },
     async created() {
@@ -80,21 +79,12 @@ export default {
     methods: {
         checkCloseModal(){
     //   this.$router.back()
-if(this.isMiniModalOpen ) this.isMiniModalOpen=false 
+if(this.isMiniModalOpen ) return
 else{
     const url= this.$route.path
         const route= url.substring(0, url.indexOf('card'))
         this.$router.push(route)
-}
-    // if(!this.isInMiniModal&&!this.isMiniModalOpen){
-    //     const url= this.$route.path
-    //     const route= url.substring(0, url.indexOf('card'))
-    //     this.$router.push(route)
-    // }
-    // else if(this.isMiniModalOpen&&!this.isInMiniModal){
-    //     this.isMiniModalOpen=false 
-    // } 
-        
+}      
         },
         closeModal(){
             const url= this.$route.path
@@ -127,12 +117,12 @@ else{
             this.closeModal()
         },
         openMiniModal(){
-            this.isInMiniModal=false
             this.isMiniModalOpen = true
         },
         closeMiniModal(){
-            this.isInMiniModal=true
-            this.isMiniModalOpen = false
+            setTimeout(()=>{
+                this.isMiniModalOpen = false
+            },0)
         },
     },
     computed: {

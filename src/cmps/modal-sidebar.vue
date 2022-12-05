@@ -2,20 +2,24 @@
     <section class="modal-add-menu">
         <h4>Add to card</h4>
         <div @click="openMiniModal('Members')" class="fake-button add-option-div" value="hello">
-            <span class="icon sm user"></span>Members</div>
+            <span class="icon sm user"></span>Members
+        </div>
         <div @click="openMiniModal('Labels')" class="fake-button add-option-div">
             <span class="icon sm label"></span>Labels
         </div>
         <div @click="openMiniModal('Checklist')" class="fake-button add-option-div">
-            <span class="icon sm checklist-check"></span>Checklist</div>
+            <span class="icon sm checklist-check"></span>Checklist
+        </div>
         <div @click="openMiniModal('Dates')" class="fake-button add-option-div">
-            <span class="icon sm time"></span>Dates</div>
-        <div @click="openMiniModal('Attachment')" class="fake-button add-option-div"> 
-            <span class="icon sm attach"></span>Attachment</div>
+            <span class="icon sm time"></span>Dates
+        </div>
+        <div @click="openMiniModal('Attachment')" class="fake-button add-option-div">
+            <span class="icon sm attach"></span>Attachment
+        </div>
         <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
             <span class="icon sm cover"></span>Cover
         </div>
-        <div @click="$emit('removeCard' ,card.id)" class="fake-button add-option-div">
+        <div @click="$emit('removeCard', card.id)" class="fake-button add-option-div">
             <span class="icon sm archive"></span>Archive
         </div>
         <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
@@ -29,16 +33,21 @@
 
             <template v-if="(miniModalTitle === 'Dates')">
                 <!-- <div class="el-picker-panel__body"></div> -->
-                <section class="mini-modal-body">
-                    <el-date-picker type="date" placeholder="Pick a day" size="large" />
+                <section class="mini-modal-body date-section">
+                    <date-picker @click="dateOpen" locale="en" type="datetime" class="custom-input" label-class="icon-sm icon-clock"
+                        ref="date" v-model="newDate" format="YYYY-MM-DD HH:mm:ss" color="#0079bf"
+                         value></date-picker>
+                         <input v-model="newDate" type="text">
+                         <div @click="updateDate" class="fake-button">Save</div>
                 </section>
             </template>
+
+
             <template v-if="(miniModalTitle === 'Members')">
                 <section class="mini-modal-body">
                     <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
-                    <span>Board members</span>
-                    <label class="members-checked-box" v-for="member in getFilterMembers"
-                        @click="toggleMember(member)">
+                    <span class="mini-head">Board members</span>
+                    <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
                         <div class="members-checked-box-container">
                             <div class="user-and-img">
                                 <section class="img-container">
@@ -55,44 +64,52 @@
             <template v-if="(miniModalTitle === 'Labels')">
                 <section class="mini-modal-body">
                     <input v-model="filterLabelsBy" type="text" name="" id="" placeholder="Search labels">
-                    <span>Labels</span>
+                    <span class="mini-head">Labels</span>
                     <section class="labels-checked-section" v-for="label in boardLabels">
                         <label class="clickable labels-checked-box">
                             <div class=" label-container">
                                 <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
                                     src="../assets/icons/checkbox-try.svg">
-                                <img @click="toggleLabels(label)" class="box-img" v-else src="../assets/icons/gray-square.svg" alt=""> 
-                                <!-- <el-checkbox v-model="checked1" size="large" /> -->
-                                <input v-on:keyup.enter="updateLabels" class="checkbox" v-model="label.title" type="text" :style="{ backgroundColor: label.color }">
+                                <img @click="toggleLabels(label)" class="box-img" v-else
+                                    src="../assets/icons/gray-square.svg" alt="">
+                                <input v-on:keyup.enter="updateLabels" class="checkbox" v-model="label.title"
+                                    type="text" :style="{ backgroundColor: label.color }">
                                 <span class="icon sm edit"></span>
-                                <!-- <button class="color-space" :style="{ backgroundColor: label.color }">
-                                    <p class="round-circle" :style="{ backgroundColor: label.color }"></p>
-                                </button> -->
-                                <!-- <input class="checkbox " type="type" :style="{ backgroundColor: label.color }"> -->
                             </div>
                         </label>
-                        <!-- <button @submit="updateLabels" class="clickable change-text-btn"> -->
-                            <!-- <img class="pencil-img" src="../assets/icons/edit.svg" alt=""> -->
-                            <!-- </button> -->
                     </section>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Checklist')">
                 <section class="mini-modal-body">
-                    <span>Title</span>
+                    <span class="mini-head">Title</span>
                     <input v-model="checklist" @submit="addChecklist" type="text">
                     <button @click="addChecklist" class="add-checkbox-btn">Add</button>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Attachment')">
-                <section class="mini-modal-body">
-                    <span>Attach a link</span>
-                    <input type="text" placeholder="Paste any link here...">
+                <section class="mini-modal-body add-attachment-computer">
+                    <form @submit.prevent="addAttachment">
+                        <label class="img-upload-container">
+                            <div class="clickable add-attachment-computer">
+                                <!-- <label> -->
+                                <p>Computer</p>
+                                <input type="file" @change="uploadImgToCloud" hidden />
+                                <!-- </label> -->
+                            </div>
+                        </label>
+                        <section class="under-computer">
+
+                            <span class="mini-head">Attach a link</span>
+                            <input type="text" v-model="attachment.href" placeholder="Paste any link here" />
+                            <div @click="addAttachment" class="attach-btn fake-button">Attach</div>
+                        </section>
+                    </form>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Cover')">
                 <section class="mini-modal-body">
-                    <span>Colors</span>
+                    <span class="mini-head">Colors</span>
                     <div class="first-colors-row">
                         <button class="green-btn" value="#7BC86C" @click="setCover"></button>
                         <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
@@ -122,29 +139,41 @@
 <script>
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
+import DatePicker from 'vue3-persian-datetime-picker';
+import { uploadService } from '../services/upload.service.js';
+
 export default {
-    props:{
-        card:Object,
-        isMiniModalOpen:Boolean,
-        isInMiniModal:Boolean,
+    props: {
+        card: Object,
+        isMiniModalOpen: Boolean,
     },
-    emits: ['updateCard','updateLabels','sideModalChange','openMiniModal','closeMiniModal'],
+    emits: ['updateCard', 'updateLabels', 'sideModalChange', 'openMiniModal', 'closeMiniModal'],
     data() {
         return {
-            
+
             miniModalTitle: null,
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "checklist",
             boardMembers: null,
             boardLabels: null,
-            currMember: null
+            currMember: null,
+            isDatePickerOpen:false,
+            newDate: '',
+            // date: '2020-10-10',
+            attachment: {
+                href: '',
+                file: null,
+                createdAt: '',
+                type: '',
+            },
+
         }
     },
     async created() {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-         console.log( this.card)
-        
+        // console.log(this.card)
+
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
     },
@@ -153,10 +182,13 @@ export default {
             this.miniModalTitle = value
 
             this.$emit('openMiniModal')
+            setTimeout(()=>{
+                if(value==='Dates') this.$refs.date.focus()
+            },0)
             // this.isMiniModalOpen = true
         },
         closeMiniModal() {
-            
+// if(this.isDatePickerOpen) return
             this.$emit('closeMiniModal')
             // this.isMiniModalOpen = false
         },
@@ -164,57 +196,78 @@ export default {
 
         },
         toggleMember(member) {
-            if(this.card.members?.length){
+            if (this.card.members?.length) {
                 const idx = this.card.members.findIndex((m) => m._id === member._id)
                 if (idx !== -1) this.card.members.splice(idx, 1)
                 else this.card.members.push(member)
             }
-            else this.card.members=[member]
-
-            // this.updateCard()
+            else this.card.members = [member]
         },
         toggleLabels(label) {
-            if(this.card.labels?.length){
-            const idx = this.card.labels.findIndex((l) => l === label.id)
-            if (idx !== -1) this.card.labels.splice(idx, 1)
-            else this.card.labels.push(label.id)
+            if (this.card.labels?.length) {
+                const idx = this.card.labels.findIndex((l) => l === label.id)
+                if (idx !== -1) this.card.labels.splice(idx, 1)
+                else this.card.labels.push(label.id)
             }
-            else this.card.labels=[label.id]
-            console.log("🚀 ~ file: modal-sidebar.vue:177 ~ toggleLabels ~ this.card.labels", this.card.labels)
-
-            
-            // this.updateCard()
+            else this.card.labels = [label.id]
         },
         checkIfInMemberList(member) {
-            if(!this.card.members) return
+            if (!this.card.members) return
             return this.card.members.filter((currMember) => currMember._id === member._id).length > 0
         },
         checkIfInLabelList(label) {
-            if(!this.card.labels) return false
+            if (!this.card.labels) return false
             return this.card.labels.includes(label.id)
         },
         updateCard() {
+            console.log(`this.card = `, this.card)
             this.$emit('updateCard', this.card)
-            // this.$emit('updateCard', this.card)
         },
-        addChecklist(){
-            const newChecklist={
+        addChecklist() {
+            const newChecklist = {
                 title: `${this.checklist}`,
-                id:utilService.makeId()
+                id: utilService.makeId()
             }
-            if(!this.card.checklists) this.card.checklists=[]
+            if (!this.card.checklists) this.card.checklists = []
             this.card.checklists.push(newChecklist)
             this.IsMiniModalOpen = false
-            this.checklist="checklist"
+            this.checklist = "checklist"
             this.updateCard()
         },
-        updateLabels(){
+        updateLabels() {
             this.$emit('updateLabels', this.boardLabels)
         },
-        setCover(e){
+        setCover(e) {
             this.card.coverColor = e.target.value
-        }
-    },  
+        },
+        addAttachment() {
+            if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
+            if (!this.attachment.type) return;
+            this.attachment.createdAt = Date.now();
+            if (!this.card.attachments?.length) this.card.attachments = []
+            this.card.attachments.unshift(this.attachment)
+            this.attachment = {
+                href: '',
+                createdAt: '',
+                type: '',
+            }
+        },
+        updateDate() {
+            console.log(`this.newDate = `, this.newDate)
+            this.$emit("updateDate", this.newDate);
+            this.newDate = "";
+        },
+        async uploadImgToCloud(ev) {
+            const res = await uploadService.uploadImg(ev);
+            this.attachment.href = res.url;
+            this.attachment.type = 'img';
+            this.addAttachment()
+            this.$emit('closeMiniModal')
+        },
+        dateOpen(){
+this.isDatePickerOpen=true
+        },
+    },
     computed: {
         getFilterMembers() {
             const regex = new RegExp(this.filterMembersBy, 'i')
@@ -225,15 +278,16 @@ export default {
     },
     components: {
         customCard,
+        DatePicker,
     },
-    watch:{
-        card:{
-            handler(newVal, oldVal){
-                 console.log( "change")
-                 this.$emit("sideModalChange",this.card)
+    watch: {
+        card: {
+            handler(newVal, oldVal) {
+                console.log("change")
+                this.$emit("sideModalChange", this.card)
             },
-            deep:true
+            deep: true
         }
-}
+    }
 }
 </script>

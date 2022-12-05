@@ -49,7 +49,6 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
-            console.log(`board = `, board)
             state.currBoard = board
         },
         removeBoard(state, { boardId }) {

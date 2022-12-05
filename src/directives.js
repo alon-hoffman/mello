@@ -59,17 +59,18 @@ export const clickOnEscDirective = {
 export const clickOnSlashDirective = {
   mounted(el, { value: cb }) {
     el.clickEsc = (el) => {
-      if (el.keyCode === 191) {
+      console.log(`el = `, el)
+      if (el.key === '/') {
         cb()
       } else {
       }
     }
     setTimeout(() => {
-      document.addEventListener('keyup', el.clickEsc)
+      document.addEventListener('keydown', el.clickEsc)
     }, 0)
   },
   unmounted(el) {
-    document.removeEventListener('keyup', el.clickEsc)
+    document.removeEventListener('keydown', el.clickEsc)
 
   },
 }

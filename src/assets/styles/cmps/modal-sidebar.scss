@@ -43,10 +43,12 @@
         background-color: transparent;
         font-size: 16px;
         right: 0;
-        &::before{
+
+        &::before {
             content: '\E91C';
         }
-        &:hover{
+
+        &:hover {
             color: #172b4d;
         }
     }
@@ -54,20 +56,61 @@
     .option-custom-card {
         display: flex;
         flex-direction: column;
-        width: 304px;
+        min-width: 304px;
         position: absolute;
         padding: 0;
         top: 5px;
         border: 1px solid rgba(128, 128, 128, 0.466);
 
         .mini-modal-body {
-            margin-bottom: 20px;
-            margin-top: 10px;
-            padding: 0 12px 12px;
-.member-list-icon{
-    font-size: 25px;
-    margin-inline-start: 7px;
+&:not(.add-attachment-computer){
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 0 12px 12px;
 }
+.under-computer{
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 0 12px 12px;
+}
+
+
+            .member-list-icon {
+                font-size: 25px;
+                margin-inline-start: 7px;
+            }
+
+            .attach-btn {
+                width: 64px;
+                margin-top: 12px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .add-attachment-computer {
+                width: 304px;
+                height: 32px;
+                display: flex;
+                padding: 0 12px;
+                display: flex;
+                align-items: center;
+                p{
+                    margin: 0;
+                }
+                // justify-content: center;
+                &:hover {
+                    background-color: #091e420a;
+
+                    input {
+                        background-color: transparent;
+                    }
+                }
+            }
+
+
+
             .add-checkbox-btn {
                 background-color: #0079bf;
                 width: 73px;
@@ -114,7 +157,8 @@
                 justify-content: space-between;
                 align-items: center;
                 gap: 15px;
-                input{
+
+                input {
                     width: 212px;
                     height: 32px;
                     border: none;
@@ -168,7 +212,7 @@
                 gap: 7px;
             }
 
-            span {
+            .mini-head {
                 font-size: 12px;
                 display: flex;
                 // margin: 0 12px;
@@ -319,6 +363,19 @@
     }
 }
 
-.modal-add-menu .option-custom-card .mini-modal-body span {
-        margin-top: 9px;
+.modal-add-menu .option-custom-card .mini-modal-body .mini-head {
+    margin-top: 9px;
+}
+.vpd-container{
+    position: static;
+    transform: translate(0);
+}
+.vpd-wrapper{
+    position: static;
+}
+.vpd-content{
+    box-shadow: none;
+}
+.vpd-dir-ltr .vpd-content {
+    width: 500px;
 }
