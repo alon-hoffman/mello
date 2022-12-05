@@ -87,4 +87,7 @@
     &.checkList::before{
        content: '\E918'
     }
+    &.done::before{
+        content: '\E916'
+    }
 }

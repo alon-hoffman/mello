@@ -264,9 +264,12 @@
         left: 1px;
     }
 }
-
-
-.card-detail-item{
+.detail-items{
+    margin-inline-start: 36px;
+}
+.detail-item{
+    margin-bottom: 8px;
+    margin-inline-start: 8px;
     &-header{
         color: var(--ds-text-subtle,#5e6c84);
         display: block;
@@ -292,7 +295,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            &.fake{
+            &.add{
                 background-color: #091e420a;
                 color: $text-dark;
                 &:hover{
@@ -317,7 +320,7 @@
             gap: 12px;
             padding-inline: 10px;
             max-width: 100%;
-            min-width: 48px;
+            // min-width: 48px;
             height: 32px;
             background-color:  #DFE1E6;
             line-height: 32px;
@@ -326,19 +329,85 @@
             &:hover{
                 filter: saturate(85%) brightness(85%);
             }
-            &:focus{
-                outline: black auto 5px;
+            // &:focus{
+            //     outline: black auto 5px;
+            // }
+
+            &.add{
+                background-color: #091e420a;
+                color: $text-dark;
+                max-width: max-content;
+                &:hover{
+                   background-color: #091e4214;
+                }
+
+                &:active{
+                    background-color: #e4f0f6;
+                    color: #0079bf;
+                }
+
+                &::before{
+                    font-size: 16px;
+                    font-family:icons;
+                    content: '\E901'
+                }
             }
             & > .bullet {
                 border-radius: 50%;
                 width: 16px;
                 height: 16px;
                 background-color: greenyellow;
-                // position: absolute;
-                // top: 8px;
-                // bottom: 8px;
-                // left: 8px;
-            } 
+            }
+        }
+
+        & .date-display{
+            background-color: #091e420a;
+            color: $text-dark;
+            max-width: max-content;
+            margin-inline-start: 4px;
+            padding-inline: 10px;
+            padding-block: 5px;
+            &:hover{
+                background-color: #091e4214;
+            }
+
+            &:active{
+                background-color: #e4f0f6;
+                color: #0079bf;
+            }
+        }
+    }
+}
+
+
+.checkbox{
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    background-color: #fafbfc;
+    box-shadow: #dfe1e6 0px 0px 0px 2px inset;
+    transition: 0.2s;
+    transition-timing-function: ease-in-out;
+    &:hover{
+        background-color: #eaecf0;
+    }
+
+    &::before{
+        position: relative;
+        top: -3px;
+        left: 1px;
+        content: '\E916';
+        transition: 0.2;
+        opacity:0;
+    }
+
+    &.checked{
+        background-color: #0079bf;
+        box-shadow: #0079bf 0px 0px 0px 2px inset;
+
+        &::before{
+            color: #fff;
+            opacity: 1;
         }
     }
 }
