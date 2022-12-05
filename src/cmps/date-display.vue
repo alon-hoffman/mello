@@ -1,7 +1,7 @@
 <template>
     <section class="date-display">
 <span @click.stop="toggleIsCompleted " class="flex align-items" :class="formattedDate.class"
-:style="{backgroundColor: completed}" ><span class="icon sm time" ></span>{{formattedDate.date}}</span>
+ ><span class="icon sm time" ></span>{{formattedDate.date}}</span>
     </section>
     
   </template>
@@ -14,12 +14,14 @@
     },
     data() {
       return {
-       
+       prettyDate:null,
+       wakeMeUp:true
       }
     },
     computed: {
     formattedDate(){
-      //  console.log( this.date)
+       console.log( this.wakeMeUp)
+       console.log( this.date)
       const second= 1000
         const minute= 60*second
         const hour= 60*minute
@@ -31,6 +33,7 @@
 
         if(this.date.isCompleted){
           const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
+          this.prettyDate = prettyDate
           return  {"class":"done","date":prettyDate}
         }
         const timeLeft= this.date.time- Date.now()
@@ -53,10 +56,6 @@
         options.year= 'numeric'
         const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
           return  {"class":"","date":prettyDate}
-    },
-    completed(){
-      return {green:this.date.isCompleted}
-      // return this.isCompleted
     },
   },
     methods:{
