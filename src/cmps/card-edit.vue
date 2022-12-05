@@ -97,9 +97,17 @@ export default {
     },
     async created() {
         if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+
+        var boardId= this.$route.path
+        //XXX
+        const finale= boardId.substring(7, boardId.indexOf('/card'))
+        this.$store.commit({ type: 'setBoardById',  id:finale });        
+
+
         this.realTextArea = false
         const {id}= this.$route.params
         const board = this.$store.getters.getCurrBoard
+        console.log("🚀 ~ file: card-edit.vue:110 ~ created ~ board", board)
         board.groups.forEach(group=>{
             group.cards.forEach(card=>{
 
