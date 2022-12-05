@@ -1,10 +1,10 @@
 <template>
     <article class="board-creator">
         <header>Create board
-                <span class="icon sm close clickable"></span>
+                <span class="icon sm close clickable" @click="$emit('close')"></span>
 
         </header>
-        <div class="preview-display flex align-center justify-center" :style="{'background-color' : newBoard.coverColor}">
+        <div class="preview-display flex align-center justify-center" :style="{'background-color' : newBoard.backgroundColor}">
             <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg" alt="board example">
         </div>
         <span class="label">Background</span>
@@ -16,11 +16,11 @@
                 <li>img</li>
             </ul>
             <ul class="color-list flex justify-between">
-                <li class="blue-btn clickable"  @click="setCoverColor('#0079BF')"></li>
-                <li class="yellow-btn clickable"  @click="setCoverColor('#D29034')"></li>
-                <li class="green-btn clickable"  @click="setCoverColor('#519839')"></li>
-                <li class="red-btn clickable"  @click="setCoverColor('#B04632')"></li>
-                <li class="purple-btn clickable"  @click="setCoverColor('#89609e')"></li>
+                <li class="blue-btn clickable"  @click="setBackgroundColor('#0079BF')"></li>
+                <li class="yellow-btn clickable"  @click="setBackgroundColor('#D29034')"></li>
+                <li class="green-btn clickable"  @click="setBackgroundColor('#519839')"></li>
+                <li class="red-btn clickable"  @click="setBackgroundColor('#B04632')"></li>
+                <li class="purple-btn clickable"  @click="setBackgroundColor('#89609e')"></li>
                 <li class="more-btn clickable"></li>
 
             </ul>
@@ -41,12 +41,12 @@ export default{
     created(){
         this.newBoard = {
                 title: '',
-                coverColor: '#0079bf'
+                backgroundColor: '#0079bf'
             }
     },
     methods:{
-        setCoverColor(clr){
-            this.newBoard.coverColor = clr
+        setBackgroundColor(clr){
+            this.newBoard.backgroundColor = clr
         },
         saveBoard(){
             if (!this.newBoard.title) return

@@ -284,7 +284,6 @@ export const boardService = {
     getById,
     save,
     remove,
-    getEmptyBoard,
     findGroupById,
     applyDrag
 }
@@ -319,16 +318,28 @@ async function save(board) {
     } else {
         // Later, owner is set by the backend
         // board.owner = userService.getLoggedinUser()
-        savedBoard = await storageService.post(STORAGE_KEY, board)
+        savedBoard = _makeBoard(board)
+        savedBoard = await storageService.post(STORAGE_KEY, savedBoard)
         // boardChannel.postMessage(getActionAddBoard(savedBoard))
     }
     return savedBoard
 }
 
-function getEmptyBoard() {
+function _makeBoard(newBoard) {
     return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
+        "_id": utilService.makeId(),
+        "title": newBoard.title,
+        "isStarred": false,
+        "archivedAt": Date.now(),
+        "createdBy": {},
+        "style": {
+            backgroundColor: newBoard.backgroundColor,
+            backgroundImage: newBoard.backgroundImg
+        },
+        "labels": [],
+        "members": [],
+        "groups": [],
+        "activities": [],
     }
 }
 
@@ -337,20 +348,20 @@ function findGroupById(groupId, board) {
     return board.groups.find(group => group.id === groupId)
 }
 
-function applyDrag(arr, dragResult){
+function applyDrag(arr, dragResult) {
     const { removedIndex, addedIndex, payload } = dragResult
     if (removedIndex === null && addedIndex === null) return arr
-  
+
     const result = [...arr]
     let itemToAdd = payload
-  
+
     if (removedIndex !== null) {
-      itemToAdd = result.splice(removedIndex, 1)[0]
+        itemToAdd = result.splice(removedIndex, 1)[0]
     }
-  
+
     if (addedIndex !== null) {
-      result.splice(addedIndex, 0, itemToAdd)
+        result.splice(addedIndex, 0, itemToAdd)
     }
-  
+
     return result
-  }
+}
