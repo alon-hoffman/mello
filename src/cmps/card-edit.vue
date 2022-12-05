@@ -20,7 +20,13 @@
                     </div>
                     <div class="detail-item" v-if="card.labels?.length">
                         <div class="card-detail-item-header">Labels</div>
-                        {{labelsDisplay}}
+                        <div class="card-detail-item-content flex">
+                            <button class="label-avatar flex align-center clickable" 
+                            v-for="label in labelsDisplay"
+                            :style="{'background-color': label.color}">
+                            <div class="bullet"></div>
+                            {{label.title}}</button>
+                        </div>
                     </div>
                 </section>
                 <section v-click-outside="closeTextArea" class="edit-block">
@@ -171,14 +177,8 @@ else{
             return {"written-description":!!this.card.description}
         },
         labelsDisplay(){
-            let labels = [...this.$store.getters.getCurrBoard.labels]
-            // const cardLabelIds = this.card.labels.map(label => label.id)
-            // 
-            labels = labels.filter(label => {
-                console.log(this.card.labels)
-                console.log(label)
-                return true})
-            console.log(labels)
+            const labels = [...this.$store.getters.getCurrBoard.labels]
+            return labels.filter(label => this.card.labels.includes(label.id))
         }
        
     },

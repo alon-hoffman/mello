@@ -280,6 +280,7 @@
         white-space: nowrap;
     }
     &-content{
+        gap: 4px;
         & .member-avatar{
             border-radius: 25em;
             height: 32px;
@@ -288,8 +289,6 @@
             background-color: #0079bf;
             color: #fff;
             font-weight: 500;
-            margin-inline-end: 4px;
-            margin-block-end: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -311,6 +310,35 @@
                     content: '\E901'
                 }
             }
+        }
+        & .label-avatar{
+            margin: 0;
+            border-radius: 3px;
+            gap: 12px;
+            padding-inline: 10px;
+            max-width: 100%;
+            min-width: 48px;
+            height: 32px;
+            background-color:  #DFE1E6;
+            line-height: 32px;
+            color: #172b4d;
+
+            &:hover{
+                filter: saturate(85%) brightness(85%);
+            }
+            &:focus{
+                outline: black auto 5px;
+            }
+            & > .bullet {
+                border-radius: 50%;
+                width: 16px;
+                height: 16px;
+                background-color: greenyellow;
+                // position: absolute;
+                // top: 8px;
+                // bottom: 8px;
+                // left: 8px;
+            } 
         }
     }
 }
