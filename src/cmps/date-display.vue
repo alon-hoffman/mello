@@ -25,11 +25,11 @@
         const month= 30*day
 
         const dateToFormat= new Date(this.date)
-        console.log("🚀 ~ file: date-display.vue:28 ~ formattedDate ~ dateToFormat", dateToFormat)
   
         const timeLeft= this.date- Date.now()
         if(timeLeft>2*day){ 
-
+          const dayOfMonth= dateToFormat.getDate()
+          const monthName= (getMonthShortName(2))
           //  {"class":"good","date":`${this.date.toLocaleString()}`}
           }
         if(timeLeft>day) return "today"
