@@ -49,6 +49,8 @@
         margin: rem(5px) rem(10px) rem(2px) rem(10px);
         padding-top:rem(12px);
         gap:em(10px);
+        width:100%;
+        flex-wrap: wrap;
         .label-preview{
             min-width:em(42px);
             cursor: pointer;
