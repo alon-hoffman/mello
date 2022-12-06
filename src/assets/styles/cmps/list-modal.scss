@@ -1,4 +1,32 @@
-.list-modal{
-    position:absolute;
-    background-color: $clr2;
-}
+.list-modal {
+    position: fixed;
+    justify-content: space-between;
+    background: white;
+    padding: 2em;
+    border: 1px solid $clr2;
+    border-radius: 5px;
+
+    .mini-modal-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 41px;
+        margin: 0 auto;
+        width: 280px;
+        border-bottom:1px solid #5e6c8458;
+
+    }
+        
+    main {
+        text-align: center;
+      }
+      
+      footer {
+        font-size: 1rem;
+        color: gray;
+      }
+  }
+  
+  
+ 
+  

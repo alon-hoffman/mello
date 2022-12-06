@@ -126,7 +126,6 @@ export const boardStore = {
                 context.commit(getActionAddBoard(board))
                 return board
             } catch (err) {
-                console.log('boardStore: Error in addBoard', err)
                 throw err
             }
         },
@@ -144,7 +143,6 @@ export const boardStore = {
         async loadBoards(context) {
             try {
                 const boards = await boardService.query()
-                // console.log("🚀 ~ file: board.store.js:143 ~ loadBoards ~ boards", boards)
                 context.commit({ type: 'setBoards', boards })
             } catch (err) {
                 console.log('boardStore: Error in loadBoards', err)
@@ -159,6 +157,11 @@ export const boardStore = {
                 console.log('boardStore: Error in removeBoard', err)
                 throw err
             }
+        },
+        async removeList({ commit }, { groupId }) {
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            const Idx = board.groups.findIndex(group => group.id === groupId)
+
         },
         async addCard({ dispatch, state }, { card }) {
             card.id = utilService.makeId()
@@ -178,12 +181,7 @@ export const boardStore = {
             board.groups.push(list)
             dispatch({ type: "updateBoard", board })
         },
-        async removeList({ dispatch, state }, { id }) {
-            const board = JSON.parse(JSON.stringify(state.currBoard))
-
-        },
         async saveCard({ dispatch, state }, { card, groupId }) {
-            console.log(`card = `, card)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const groupIdx = board.groups.findIndex((group) => group.id === card.groupId)
             const cardIdx = board.groups[groupIdx].cards.findIndex((currCard) => currCard.id === card.id)

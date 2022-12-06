@@ -1,6 +1,8 @@
 <template>
-    <section class="list-modal" :style="{cords}">
-<h1 >list-actions</h1>
+    <section class="list-modal" :style="cords">
+    <!-- <section class="list-modal" :style="{top:(top), left:(right)}"> -->
+<header class="mini-modal-header" >list actions</header>
+<buttons @click="deleteList" >Archive List</buttons>
     </section>
     
   </template>
@@ -19,11 +21,20 @@
     },
     computed: {
       cords(){
-        return {top:`${this.listModalCords.y}+px`, right:`${this.listModalCords.x}+px`}
+        return {top: `${this.listModalCords.y+41}px`, left: `${this.listModalCords.x+230}px`}
+      },
+      top(){
+        // return `${this.listModalCords.y}px`
+        {}
+      },
+      right(){
+        return `${this.listModalCords.x}px`
       }
     },
     methods: {
-      
+      deleteList(){
+         this.$emit('deleteList', this.list.id)
+      }
     }
   
     
