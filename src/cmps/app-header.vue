@@ -7,9 +7,12 @@
           alt=""> -->
         <img class="logo-img-home" src="../assets/icons/logo.png" alt="">
       </router-link>
-      <router-link to="/login">
-        <button class="login-button">Log in</button>
-      </router-link>
+      <section class="right-home-header">
+        <router-link to="/login">
+          <button class="login-button">Log in</button>
+        </router-link>
+        <button @click="enterAsGuest" class="guest-button clickable">See demo</button>
+      </section>
     </nav>
   </header>
   <header v-click-slash="focusInput" v-if="params.includes('board')" class="boards-page">
@@ -59,6 +62,9 @@ export default {
     focusInput() {
       this.$refs.search.focus()
     },
+    enterAsGuest(){
+      this.$router.push('/board')
+    }
   },
   computed: {
     loggedInUser() {

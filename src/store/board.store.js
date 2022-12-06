@@ -173,10 +173,10 @@ export const boardStore = {
                 card.id = utilService.makeId()
             })
             board.groups.splice(idx, 0, newList)
-            console.log("🚀 ~ file: board.store.js:175 ~ duplicateList ~ newList", newList)
             dispatch({ type: "updateBoard", board })
         },
         async addCard({ dispatch, state }, { card }) {
+            console.log(`addCard = `)
             card.id = utilService.makeId()
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
@@ -224,11 +224,12 @@ export const boardStore = {
             const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })
         },
-        async saveLists({ dispatch, state }, { lists }) {
-            const board = JSON.parse(JSON.stringify(state.currBoard))
-            board.groups = lists
-            dispatch({ type: "updateBoard", board })
-        },
+        // async saveLists({ dispatch, state }, { lists }) {
+
+        //     const board = JSON.parse(JSON.stringify(state.currBoard))
+        //     board.groups = lists
+        //     dispatch({ type: "updateBoard", board })
+        // },
     },
 
 }
