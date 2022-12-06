@@ -53,7 +53,7 @@ export const boardStore = {
         },
         updateBoard(state, { board }) {
             const boardIdx = state.boards.find(b => b._id === board._id)
-            state.boards.splice(boardIdx,1,board)
+            state.boards.splice(boardIdx, 1, board)
             state.currBoard = board
         },
         removeBoard(state, { boardId }) {
@@ -62,8 +62,6 @@ export const boardStore = {
         setBoardById(state, { id }) {
             // const board = JSON.parse(JSON.stringify(state.boards))[0];
             const board = state.boards.find(b => b._id === id)
-            console.log(`board = `, board)
-            // console.log(board)
             state.currBoard = board
 
         },
@@ -185,22 +183,11 @@ export const boardStore = {
 
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
-            console.log("🚀 ~ file: board.store.js:185 ~ saveCard ~ card", card)
+            console.log(`card = `, card)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const groupIdx = board.groups.findIndex((group) => group.id === card.groupId)
             const cardIdx = board.groups[groupIdx].cards.findIndex((currCard) => currCard.id === card.id)
             board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
-            // board.groups.forEach((group, idx1) => {
-            //     if (group.cards) {
-            //         group.cards.forEach((currCard, idx) => {
-            //             if (currCard.id === card.id) {
-            //                 cardIdx = idx
-            //                 groupIdx = idx1
-            //             }
-            //         })
-            //         if (groupIdx >= 0) board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
-            //     }
-            // })
             dispatch({ type: "updateBoard", board })
         },
         async removeCard({ dispatch, state }, { cardId }) {
@@ -231,8 +218,6 @@ export const boardStore = {
             board.groups = lists
             dispatch({ type: "updateBoard", board })
         },
-
     },
-
 
 }

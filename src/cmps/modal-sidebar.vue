@@ -202,7 +202,6 @@
 
 <script>
 import customCard from './custom-card.vue';
-import datePicker2 from "../cmps/date-picker2.vue";
 import { utilService } from '../services/util.service';
 import DatePicker from 'vue3-persian-datetime-picker';
 import { uploadService } from '../services/upload.service.js';
@@ -326,8 +325,14 @@ export default {
             this.card.imgURL=url
         },
         removeCover(){
-            if(this.card.coverColor) this.card.coverColor=null
-            else this.card.imgURL=null
+            if(this.card.coverColor){
+console.log(`cover = `)
+                this.card.coverColor=null
+            } 
+            else{
+                console.log(`img = `)
+                this.card.imgURL=null
+            }
         },
         addAttachment() {
             if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
@@ -393,23 +398,22 @@ export default {
     components: {
         customCard,
         DatePicker,
-        datePicker2,
     },
     watch: {
         card: {
             handler(newVal, oldVal) {
                 console.log("change")
-                this.$emit("sideModalChange", this.card)
+                this.$emit("updateCard", this.card)
             },
             deep: true
         },
-        newDate: {
-            handler(newVal, oldVal) {
-                console.log("change")
-                this.$emit("sideModalChange", this.card)
-            },
-            deep: true
-        }
+        // newDate: {
+        //     handler(newVal, oldVal) {
+        //         console.log("change")
+        //         this.$emit("sideModalChange", this.card)
+        //     },
+        //     deep: true
+        // }
     }
 }
 </script>
