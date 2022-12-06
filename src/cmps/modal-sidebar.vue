@@ -49,7 +49,7 @@
                     <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
                     <span class="mini-head">Board members</span>
                     <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
-                        <div class="members-checked-box-container">
+                        <div class="members-checked-box-container clickable">
                             <div class="user-and-img">
                                 <section class="img-container" :style="{ backgroundColor: getRandomColor }">
                                     <span class="member-list-initials">{{ memberInitials(member) }}</span>
@@ -188,7 +188,7 @@
                     </div>
                     <span class="mini-head">Attachments</span>
                     <div v-if="card.attachments?.length" class="attachment-imgs-container">
-                        <img class="attachment-img" v-for="image in getImageAttachments" :src="image.href"
+                        <img class="attachment-img clickable" v-for="image in getImageAttachments" :src="image.href"
                             @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
                     </div>
                     <label class="cover-img-label">
@@ -197,7 +197,7 @@
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
                     <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.raw)" :src="photoObject.urls.raw" class="unsplashPhoto">
+                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.raw)" :src="photoObject.urls.raw" class="unsplashPhoto clickable">
                     </div>
                 </section>
             </template>

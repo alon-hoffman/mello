@@ -156,6 +156,7 @@
 
     .header {
         grid-area: header;
+        font-weight: 600;
         padding-inline-start: 6px;
         padding-top: 0.6rem;
         height: 32px;
@@ -484,6 +485,11 @@
             & textarea{
                 height: 56px;
                 font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                background-color: transparent;
+                border: 0;
+                width: 100%;
+                &.edit-mode{
+                }
             }
 
             &-options {
