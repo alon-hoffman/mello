@@ -488,10 +488,9 @@
     }
 
     .label-circle {
-        // filter:brightness(0.7);
         position: absolute;
         top: 8px;
-        bottom: 8px;
+        left: 8px;
         border-radius: 50%;
         width: 16px;
         height: 16px;
@@ -509,6 +508,7 @@
         margin-bottom: 0;
         border-radius: 3px;
         padding: 0 12px;
+        padding-left: 32px;
         max-width: 100%;
         min-width: 48px;
         width: 240px;
