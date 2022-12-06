@@ -50,3 +50,12 @@ textarea{
 ::after, ::before{
     font-family:icons;
 }
+
+input, textarea{
+    font-family: inherit;
+    font-size: inherit;
+}
+
+placeholder{
+    font-family: inherit;
+}
