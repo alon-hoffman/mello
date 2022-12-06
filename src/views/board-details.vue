@@ -41,8 +41,10 @@
                 :isSidebarMenuModal="isSidebarMenuModal"
                 v-if="board.groups" :lists="board.groups" />
 
-                <listModal v-if="listModalOpen" :list="list"
-                 :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"/>
+    <listModal v-if="listModalOpen" :list="list"
+                :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"/>
+
+    <filter-menu v-if="isFilterMenu" :filterBy="filterBy" :board="board" v-click-outside="closeFilter"/>
 
   </section>
 </template>
@@ -53,6 +55,7 @@ import groupList from "../cmps/group-list.vue"
 import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
 import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
+import filterMenu from "../cmps/filter-menu.vue"
 //icons
 
 export default {
@@ -62,6 +65,7 @@ export default {
     cardEdit,
     listModal,
     sidebarMenuModal,
+    filterMenu,
   },
   data(){
     return{
@@ -71,7 +75,13 @@ export default {
         y:null,
         x:null
       },
-      isSidebarMenuModal:false
+      isSidebarMenuModal:false,
+      isFilterMenu: false,
+      filterBy:{
+        keyword: '',
+        dueDate: '',
+        labels: [],
+      }
     }
   },
   computed: {
@@ -94,7 +104,7 @@ export default {
     // todo check if the param really is _id
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
-    console.log(this.board)
+    console.log(this.board.members)
   },
   methods: {
     toggleEdit(cardId) {
@@ -138,10 +148,10 @@ export default {
       this.$store.dispatch({ type: "duplicateList", list });
     },
     openFilter(){
-      this.isFilter = true
+      this.isFilterMenu = true
     },
     closeFilter() {
-      
+      this.isFilterMenu = false
     },
   },
 };
