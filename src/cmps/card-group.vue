@@ -21,7 +21,7 @@
 
 
     <button v-if="!isCardEdited" class="add-card clickable" @click="isCardEdited = true">
-      <span>+</span> Add a card
+      <span class="icon add sm"></span> Add a card
     </button>
     <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-else>
       <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
