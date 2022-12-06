@@ -35,13 +35,17 @@
                 @editCard="toggleEdit" 
                 @saveList="saveList"
                 v-if="board.groups" :lists="board.groups"  @toggleIsCompleted="updateCard"/>
+
+                <listModal v-if="listModalOpen" :list="list"/>
+
   </section>
 </template>
 
 <script>
-import sidebar from "../cmps/sidebar.vue";
-import groupList from "../cmps/group-list.vue";
-import cardEdit from "../cmps/card-edit.vue";
+import sidebar from "../cmps/sidebar.vue"
+import groupList from "../cmps/group-list.vue"
+import cardEdit from "../cmps/card-edit.vue"
+import listModal from "../cmps/list-modal.vue"
 //icons
 
 export default {
@@ -49,6 +53,7 @@ export default {
     sidebar,
     groupList,
     cardEdit,
+    listModal
   },
   computed: {
     isScreen() {
