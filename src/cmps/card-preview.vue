@@ -10,7 +10,7 @@
       <h1>{{card.title}}</h1>
       <div class="icons-container flex  align-center justify-between">
         <div class="left-icons flex  align-center">
-          <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate"/>
+          <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted"/>
           <span v-if="dynamicCard.description" class="icon description"></span>
           <span v-if="dynamicCard.checklists" class="icon sm checklist-check"></span>
           <span v-if="dynamicCard.attachment" class="icon sm attach"></span>
@@ -71,6 +71,10 @@
             const fullName = member.fullname.split(' ');
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
+        },
+        toggleIsCompleted(isCompleted){
+          this.card.isCompleted = isCompleted;
+          this.$emit("toggleIsCompleted",this.card)
         }
       }
   

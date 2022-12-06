@@ -14,7 +14,7 @@
     <Container group-name="col" @drop="(e) => onCardDrop(list.id, e)" :get-child-payload="getCardPayload(list.id)"
       drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
       <Draggable v-for="card in list.cards" :key="card.id">
-        <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable"/>
+        <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted"/>
       </Draggable>
 
     </Container>
@@ -103,6 +103,10 @@ export default {
         return this.lists.filter(p => p.id === columnId)[0].cards[index]
       }
     },
+    toggleIsCompleted(card){
+      this.$emit("toggleIsCompleted",card)
+      console.log("🚀 ~ file: card-group.vue:109 ~ toggleIsCompleted ~ card", card)
+    }
   },
   components: {
     cardPreview,

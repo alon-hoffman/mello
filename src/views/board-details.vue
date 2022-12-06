@@ -34,7 +34,7 @@
     <group-list @addCard="addCard"
                 @editCard="toggleEdit" 
                 @saveList="saveList"
-                v-if="board.groups" :lists="board.groups" />
+                v-if="board.groups" :lists="board.groups"  @toggleIsCompleted="updateCard"/>
   </section>
 </template>
 
