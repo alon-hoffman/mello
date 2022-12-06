@@ -62,8 +62,8 @@ export default {
       listModalOpen: false,
       list:null,
       listModalCords:{
-        height:null,
-        right:null
+        y:null,
+        x:null
       }
     }
   },
@@ -103,9 +103,9 @@ export default {
       // this.board.groups.push({ title })
       this.$store.dispatch({ type: "addList", list });
     },
-    openListModal(height, right, list){
-      this.listModalCords.height = height
-      this.listModalCords.right = right
+    openListModal(y, x, list){
+      this.listModalCords.y = y
+      this.listModalCords.x = x
       this.list=list
       this.listModalOpen=true
     }

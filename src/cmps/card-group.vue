@@ -105,8 +105,8 @@ export default {
       this.$emit("toggleIsCompleted",card)
     },
     openListModal(){
-      const  {height, right} = this.$refs.col.getBoundingClientRect()
-      this.$emit("openListModal", height, right, this.list)      
+      const  {y, x} = this.$refs.col.getBoundingClientRect()
+      this.$emit("openListModal",y, x, this.list)      
     }
   },
   components: {
