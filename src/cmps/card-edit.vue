@@ -1,7 +1,6 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article v-if="card"   class="modal" :class="isOn">
-    <!-- <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn"> -->
+    <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <div class="modal-container">
