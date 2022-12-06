@@ -192,7 +192,7 @@ export default {
             }
         },
         closeModal() {
-            this.updateCard()
+            // this.updateCard()
             const url = this.$route.path
             const route = url.substring(0, url.indexOf('card'))
             this.$router.push(route)
@@ -208,8 +208,9 @@ export default {
         addDescription() {
             //need to add description to card
         },
-        updateCard() {
-            this.$store.dispatch({ type: "saveCard", card: this.card })
+        updateCard(currCard) {
+            if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
+            else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
         updateLabels(labels) {
             this.$store.commit({ type: "updateLabels", labels })

@@ -6,7 +6,7 @@
     <div class="board-header">
       <div class="board-header-left">
         <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
-        <input class="board-details-title" type="text" v-model="board.title" v-click-outside="updateBoard">
+        <input class="board-details-title" type="text" v-model="board.title" >
         <button class="star-board-details-btn">
           <span class="icon sm star-empty"></span>
         </button>
@@ -113,6 +113,7 @@ export default {
       this.$router.push(`/board/${id}/card/${cardId}`)
     },
     updateBoard(){
+      console.log(`foo = `)
       this.$store.dispatch({type: 'updateBoard', board: this.board})
     },
     addCard(card){
