@@ -93,4 +93,7 @@
     &.expand-down::before{
         content: '\E924'
     }
+    &.smiley::before{
+        content: '\E92A';
+    }
 }

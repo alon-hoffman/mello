@@ -54,13 +54,13 @@
                                 <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                             </div>
                     </section>
-                    <section class="edit-block">
+                    <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
-                            <h3>Checklist</h3>
+                            <h3>{{checklist.title}}</h3>
                             <div class="checklist-options">
                                 <button class="modal-btn">Hide Checked items</button>
-                                <button class="modal-btn">Delete</button>
+                                <button class="modal-btn" @click="removeChecklist">Delete</button>
                             </div>
                         </span>
                         <span class="sub-icon">50%</span>
@@ -69,31 +69,36 @@
                         </div>
                         
                         <ul class="dynamic-content todo-list flex column">
-                                <li class="todo-item-container flex justify-between">
+                                <li class="todo-item-container flex justify-between" v-for="todo in checklist.todos">
                                     <div class="todo-item flex">
-                                        <button class="checkbox"></button>
-                                        <span>Has a fridge</span>
+                                        <button class="checkbox" :class="isDone"></button>
+                                        <input type="text" v-model="todo.title" />
+                                        <!-- <textarea v-model="todo.title" cols="30" rows="10"></textarea> -->
                                     </div>
                                     <div class="todo-item-options flex align-center">
                                         <span class="icon sm time"></span>
                                         <span class="icon sm share"></span>
                                         <span class="icon sm more"></span>
                                     </div>
-
                                 </li>
-                                <li class="todo-item-container flex justify-between">
-                                    <div class="todo-item flex">
-                                        <button class="checkbox"></button>
-                                        <span>Has a fridge</span>
+                                <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"  v-click-outside="closeAddTodo(checklist)">Add an item</button>
+                                <section v-else class="add-todo flex wrap" >
+                                    <textarea placeholer="Add an item"></textarea>
+                                    <div class="add-todo-options flex justify-between">
+                                        <div class="flex">
+                                            <button class="modal-btn">Add</button>
+                                            <button class="modal-btn">Cancel</button>
+                                        </div>
+                                        <div class="flex">
+                                            <button class="modal-btn">Assign</button>
+                                            <button class="modal-btn">Due date</button>
+                                            <button class="modal-btn">@</button>
+                                            <button class="modal-btn">:)</button>
+                                        </div>
                                     </div>
-                                    <div class="todo-item-options flex">
-                                        <span class="icon sm time"></span>
-                                        <span class="icon sm share"></span>
-                                        <span class="icon sm more"></span>
-                                    </div>
-                                </li>
-                                <button class="modal-btn">Add an item</button>
+                                </section>
                             </ul>
+
                     </section>
                     <section class="edit-block">
                         <span class="icon lg activity"></span>
@@ -120,8 +125,7 @@
 
 <script>
 import modalSidebar from './modal-sidebar.vue'
-import { FastAverageColor } from 'fast-average-color';
-
+import { utilService } from '../services/util.service';
 export default {
     props: {
         isScreen: Boolean
@@ -129,7 +133,6 @@ export default {
     emits: ['toggleEdit', 'updateCard', 'updateLabels'],
     data() {
         return {
-            //XXX find solution for getting to modal not through board details
            card:null,
             realTextArea: false,
             isMiniModalOpen: false,
@@ -211,6 +214,22 @@ export default {
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
         },
+        removeChecklist(checklistId){
+            const checklistIdx = this.card.checklists.findIndex(c => c.id === checklistId)
+            this.card.checklists.splice(checklistIdx, 1)
+        },
+        openAddTodo(checklist){
+            checklist.newTodo = true;
+            // checklist.todos.push({
+            //     id: utilService.makeId(),
+            //     title: '',
+            //     isDone: false,
+            //     editMode: false,
+            // })
+        },
+        closeAddTodo(checklist){
+            checklist.newTodo = false;
+        },
     },
     computed: {
         isOn() {
@@ -240,7 +259,10 @@ export default {
         },
         isCompleted(){
             return {checked: this.card.dueDate.isCompleted}
-        }
+        },
+        // isDone(){
+            // return {checked: this.card.d.isDone}
+        // }
         
        
     },

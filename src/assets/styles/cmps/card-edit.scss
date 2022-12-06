@@ -62,25 +62,6 @@
             background-color: unset;
         }
     }
-
-    // .edit-description-btn{
-    //     background-color: #091e420a;
-    //     color: $text-dark;
-    //     border-radius: 3px;
-    //     padding:6px 12px;
-    //     transition-duration: 85ms;
-    //     transition-property: background-color,border-color,box-shadow;
-    //     transition-timing-function: ease;
-    //     font-size: 14px;
-    //     &:hover{
-    //         background-color: #091e4214;
-    //     }
-    //     &:focus{
-    //         background-color: rgb(228, 240, 246);
-    //         outline: 0;
-
-    //     }
-    // }
     .save-description-btn {
         background-color: #0079bf;
         width: 52px;
@@ -500,6 +481,11 @@
             line-height: 16px;
             gap: 1.35em;
 
+            & textarea{
+                height: 56px;
+                font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+
             &-options {
             gap: 2px;
             
@@ -525,7 +511,7 @@
     }
 
     & .modal-btn{
-        margin-inline-start: 34px;
+        // margin-inline-start: 34px;
         // width: 44px;
     }
 }
@@ -534,6 +520,24 @@
     margin-block: -6px;
     margin-inline: -3px;
 }
+
+.add-todo{
+    & textarea{
+        display: block;
+        border-radius: 3px;
+        box-shadow: #0079bf 0 0 0 2px inset;
+        height: 56px;
+        outline: 0;
+        border: 0;
+        padding: 8px 12px;
+    }
+    // &-options{
+    // }
+    > *{
+        width: 100%;
+    }
+}
+
 
 .modal-btn{
     background-color: #091e420a;
