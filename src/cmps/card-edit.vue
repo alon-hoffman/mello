@@ -53,7 +53,8 @@
                                 <button @click="addDescription" class="save-description-btn">Save</button>
                                 <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                             </div>
-                    </section>
+                        </section>
+                        <attachmentDisplay v-if="card.attachments" :attachment="attachments"/>
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
@@ -121,6 +122,7 @@
 
 <script>
 import modalSidebar from './modal-sidebar.vue'
+import attachmentDisplay from './attachment-display.vue'
 import { utilService } from '../services/util.service';
 export default {
     props: {
@@ -277,7 +279,8 @@ export default {
         this.realTextArea = false
     },
     components: {
-        modalSidebar
+        modalSidebar,
+        attachmentDisplay
     },
 //     watch:{
 //         card:{
