@@ -199,8 +199,8 @@
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
                     <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.raw)"
-                            :src="photoObject.urls.raw" class="unsplashPhoto clickable">
+                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.thumb)"
+                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
                 </section>
             </template>

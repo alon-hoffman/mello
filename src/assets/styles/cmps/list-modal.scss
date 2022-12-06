@@ -1,23 +1,38 @@
-.list-modal {
-    width: rem(280px);
+.list-modal{
+    width: rem(349px);
+    // font-size:1.rem;
     position: fixed;
     justify-content: space-between;
     background: white;
-    padding: 1em;
+    padding: 0.55em 0.3em;
     border: 1px solid $clr2;
     border-radius: 5px;
-        button{
-          color:$clr3;
-          position: absolute;
-    background-color: transparent;
-    font-size: 16px;
-    right: -5px;
-    top: 8px;
+      
+        header{
+          border-bottom: 1px solid $clr2;
+          padding-bottom:0.65rem;
+          margin-bottom:0.7rem;
+          button{
+            color:$clr3;
+            position: absolute;
+            background-color: transparent;
+            font-size: 16px;
+            right: 2px;
+            top: 7px;
+          }
         }
         .mini-header{
-          width:100%;
+          margin-left: auto;
+          margin-right: auto;
           align-self: center;
-          border-bottom: 1px solid $clr3;
+        }
+        buttons{
+          align-items: flex-start;
+          gap:0.5rem;
+        }
+        button{
+          color:$clr4;
+          margin:0;
         }
         
     main {
