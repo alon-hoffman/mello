@@ -52,6 +52,8 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
+            const boardIdx = state.boards.find(b => b._id === board._id)
+            state.boards.splice(boardIdx,1,board)
             state.currBoard = board
         },
         removeBoard(state, { boardId }) {
