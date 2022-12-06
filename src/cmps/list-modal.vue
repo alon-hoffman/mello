@@ -1,11 +1,11 @@
 <template>
-    <section class="list-modal flex column" :style="cords" v-click-outside="closeModal">
+    <section class="list-modal flex column" :style="cords" v-click-outside="$emit(closeTitleModal)">
     
-    <header class="flex">  <span class="mini-header">List actions <button class="clickable icon ex" @click="closeMiniModal">
+    <header class="flex">  <span class="mini-header">List actions <button class="clickable icon ex" @click="$emit(closeTitleModal)">
         <span class=""></span></button></span> </header>
         <buttons class="flex column">
-        <button class="" @click="duplicateList" >Copy List...</button>
-        <button @click="deleteList" >Archive List...</button>
+        <button class="clickable" @click="duplicateList" >Copy List...</button>
+        <button class="clickable" @click="deleteList" >Archive List...</button>
       </buttons>
     </section>
     

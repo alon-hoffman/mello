@@ -2,15 +2,25 @@
     ul{
         gap:10px;
     }
-    img{
+    .img-container{
         width:112px;
         height:80px;
         margin-inline-end: rem(17px);
+    img{
+        width:100%;
+        height:100%;
         object-fit: contain;
     }
-    a{
+}
+    .attachment-info{
+        width: 100%;
         padding-top: rem(4px);
-        color:black;
-        font-weight: bold;;
+        a{
+            color:black;
+            font-weight: bold;;
+        }
+        .actions>*{
+            text-decoration: underline;
+        }
     }
 }

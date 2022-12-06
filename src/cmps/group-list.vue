@@ -14,7 +14,7 @@
           <input type="text" v-model="newTitle" ref="newTitle" placeholder="Enter list title..." />
           <div class="buttons">
             <button @click="addList" @keyup.enter="addCard" class="clickable add-list">Add list</button>
-            <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>
+            <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>&nbsp
           </div>
         </div>
       </Container>

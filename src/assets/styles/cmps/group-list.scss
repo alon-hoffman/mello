@@ -1,5 +1,5 @@
 .group-list{
-    margin-inline-end: rem(15px);
+    // margin-inline-end: rem(15px);
     margin-bottom: 8px;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -35,6 +35,7 @@
     z-index: 0;
     }
     .add-line-btn{
+        margin-inline-end: 10px;
         background-color: rgba(255, 255, 255, 0.2);
         font-size: rem(18px);
         border-radius: 5px;
@@ -51,7 +52,7 @@
         content:"\E901";
         padding-inline-end: rem(7px);
     }
-
+    
     }
     .add-list-section{
         background-color: $clr2;
