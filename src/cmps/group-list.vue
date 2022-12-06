@@ -6,7 +6,7 @@
         :drop-placeholder="upperDropPlaceholderOptions">
         <Draggable v-for="list in lists" :key="list.id">
           <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"  @toggleIsCompleted="toggleIsCompleted"
-            @addCard="addCard"  />
+            @addCard="addCard" @openListModal="openListModal"  />
         </Draggable>
         <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="openEditArea">Add another
           list</button>
@@ -85,8 +85,10 @@ export default {
       },)
     },
   toggleIsCompleted(card){
-      console.log("🚀 ~ file: group-list.vue:103 ~ toggleIsCompleted ~ card", card)
       this.$emit("toggleIsCompleted",card)
+    },
+    openListModal(height, right, list){
+      this.$emit("openListModal", height, right, list)        
     }
   },
   // watch: {
