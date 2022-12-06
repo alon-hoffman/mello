@@ -1,12 +1,12 @@
 .sidebar-menu-modal {
     width: 339px;
     height: calc(100vh - 44px);
-    top: 420px;
+    top: 0;
     // top: calc(100vh - 44px);
     // bottom: calc(100vh - 44px);
     // bottom: 5px;
-    right: -4px;
-    position: relative;
+    right: 0;
+    position: absolute;
     justify-content: space-between;
     background: white;
     border: 1px solid $clr2;

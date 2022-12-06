@@ -13,15 +13,16 @@
         margin: 0 4px;
         padding: 0 4px;
         &::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             // margin-right: 5px;
           }
         &::-webkit-scrollbar-track {
+            background: rgba(223, 222, 222, 0.908); 
             border-radius: 10px;
           }
           &::-webkit-scrollbar-thumb {
-            background: rgba(141, 140, 140, 0.269); 
+            background: rgba(96, 95, 95, 0.269); 
             border-radius: 10px;
           }
     }
@@ -154,12 +155,14 @@
 }
 .card-ghost {
     transition: transform 0.18s ease;
-    transform: rotateZ(5deg)
+    transform: rotateZ(5deg);
+    width:272px;
 }
 
 .card-ghost-drop {
     transition: transform 0.18s ease-in-out;
-    transform: rotateZ(0deg)
+    transform: rotateZ(0deg);
+    width:272px;
 }
 .drop-preview {
     background-color: rgba(150, 150, 200, 0.1);

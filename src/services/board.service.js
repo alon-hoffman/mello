@@ -220,7 +220,6 @@ const startingBoard = [
                         "id": "jvlvhlv",
                         "groupId": "bjkhlk44",
                         "title": "Stress test employees",
-                        "imgURL": "https://trello-backgrounds.s3.amazonaws.com/Shared…eba801f64257/photo-1604208485423-f19bc2aaae2d.jpg",
                         "createdBy": {
                             "_id": "u102",
                             "fullname": "Itai Morag",
