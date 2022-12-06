@@ -34,12 +34,12 @@
             <template v-if="(miniModalTitle === 'Dates')">
                 <!-- <div class="el-picker-panel__body"></div> -->
                 <section class="mini-modal-body date-section">
-                    <date-picker @click="dateOpen" locale="en" type="datetime" class="custom-input"
+                    <date-picker @click="dateOpen" @change="updateDate" locale="en" type="datetime" class="custom-input"
                         label-class="icon-sm icon-clock" ref="date" v-model="newDate" placeholder="Enter due date"
                         format="YYYY-MM-DD HH:mm:ss" color="#0079bf" value></date-picker>
 
                     <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
-                    <div @click="updateDate" class="fake-button save-date-btn">Save</div>
+                    <!-- <div @click="updateDate" class="fake-button save-date-btn">Save</div> -->
                 </section>
             </template>
 
@@ -302,8 +302,9 @@ export default {
         },
         addChecklist() {
             const newChecklist = {
-                title: `${this.checklist}`,
-                id: utilService.makeId()
+                title: this.checklist,
+                id: utilService.makeId(),
+                todos:[],
             }
             if (!this.card.checklists) this.card.checklists = []
             this.card.checklists.push(newChecklist)
@@ -350,8 +351,9 @@ export default {
             const time = +new Date(this.newDate).getTime()
             this.card.dueDate = { time, isCompleted: false }
 
-            this.card.dueDate.isCompleted = false
-            this.$emit('closeMiniModal')
+            // this.card.dueDate.isCompleted = false
+            setTimeout(()=>{this.$emit('closeMiniModal')},1000)
+            
         },
 
         async uploadImgToCloud(ev) {

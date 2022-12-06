@@ -60,6 +60,7 @@ export const boardStore = {
         setBoardById(state, { id }) {
             // const board = JSON.parse(JSON.stringify(state.boards))[0];
             const board = state.boards.find(b => b._id === id)
+            console.log(`board = `, board)
             // console.log(board)
             state.currBoard = board
 
