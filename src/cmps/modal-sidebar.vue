@@ -49,7 +49,7 @@
                     <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
                     <span class="mini-head">Board members</span>
                     <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
-                        <div class="members-checked-box-container">
+                        <div class="members-checked-box-container clickable">
                             <div class="user-and-img">
                                 <section class="img-container" :style="{ backgroundColor: getRandomColor }">
                                     <span class="member-list-initials">{{ memberInitials(member) }}</span>
@@ -70,22 +70,23 @@
                         <section class="labels-checked-section" v-for="label in boardLabels">
                             <label class="clickable labels-checked-box">
                                 <div class=" label-container">
-                                    <img @click="toggleLabels(label)" class="checked-img" v-if="checkIfInLabelList(label)"
-                                    src="../assets/icons/checkbox-try.svg">
+                                    <img @click="toggleLabels(label)" class="checked-img"
+                                        v-if="checkIfInLabelList(label)" src="../assets/icons/checkbox-try.svg">
                                     <img @click="toggleLabels(label)" class="box-img" v-else
-                                    src="../assets/icons/gray-square.svg" alt="">
+                                        src="../assets/icons/gray-square.svg" alt="">
                                     <div class="label-color-container" @click="toggleLabels(label)"
-                                    :style="{ backgroundColor: label.color }">
-                                    <!-- {{label.title}} -->
-                                    <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
-                                    <div class="label-title-area">{{ label.title }}</div>
+                                        :style="{ backgroundColor: label.color }">
+                                        <!-- {{label.title}} -->
+                                        <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
+                                        <div class="label-title-area">{{ label.title }}</div>
+                                    </div>
+                                    <span @click="changeMiniModal(label)" class="icon sm edit"></span>
                                 </div>
-                                <span @click="changeMiniModal(label)" class="icon sm edit"></span>
-                            </div>
-                        </label>
-                    </section>
-                </div>
-                    <div @click="openCreateLabelModal" class="fake-button go-to-create-label-btn">Create a new label</div>
+                            </label>
+                        </section>
+                    </div>
+                    <div @click="openCreateLabelModal" class="fake-button go-to-create-label-btn">Create a new label
+                    </div>
                 </section>
             </template>
             <template v-if="(miniModalTitle === 'Edit label')">
@@ -168,7 +169,8 @@
             </template>
             <template v-if="(miniModalTitle === 'Cover')">
                 <section class="mini-modal-body">
-                    <div v-if="(card.coverColor||card.imgURL)" @click="removeCover" class="fake-button remove-cover-button">Remove cover</div>
+                    <div v-if="(card.coverColor || card.imgURL)" @click="removeCover"
+                        class="fake-button remove-cover-button">Remove cover</div>
                     <span class="mini-head">Colors</span>
                     <div class="first-colors-row">
                         <button class="green-btn" value="#7BC86C" @click="setCover"></button>
@@ -186,13 +188,17 @@
                     </div>
                     <span class="mini-head">Attachments</span>
                     <div v-if="card.attachments?.length" class="attachment-imgs-container">
-                        <img class="attachment-img" v-for="image in getImageAttachments" :src="image.href" @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
+                        <img class="attachment-img clickable" v-for="image in getImageAttachments" :src="image.href"
+                            @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
                     </div>
                     <label class="cover-img-label">
                         <div class="fake-button cover-img-btn">Upload a cover image </div><input
                             @input="setBackgroundCard" class="cover-img-input" type="file">
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
+                    <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.raw)" :src="photoObject.urls.raw" class="unsplashPhoto clickable">
+                    </div>
                 </section>
             </template>
         </custom-card>
@@ -205,6 +211,7 @@ import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 import DatePicker from 'vue3-persian-datetime-picker';
 import { uploadService } from '../services/upload.service.js';
+import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
 
 export default {
     props: {
@@ -232,7 +239,8 @@ export default {
                 type: '',
             },
             possibleColors: ['#b7ddb0', '#f5ea92', '#fad29c', '#efb3ab', '#dfc0eb', '#7bc86c', '#f5dd29', '#ffaf3f', '#ef7564', '#cd8de5', '#5aac44', '#e6c60d', '#e79217', '#cf513d', '#a86cc1', '#8bbdd9', '#8fdfeb', '#b3f1d0', '#f9c2e4', '#505f79', '#5ba4cf', '#29cce5', '#6deca9', '#ff8ed4', '#344563', '#026aa7', '#00aecc', '#4ed583', '#e568af', '#091e42'],
-            chosenLabel: null
+            chosenLabel: null,
+            unsplashPhotos: null
         }
     },
     async created() {
@@ -240,19 +248,22 @@ export default {
         // console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
+
     },
     methods: {
-        openMiniModal(value) {
+       async openMiniModal(value) {
             this.miniModalTitle = value
-
-            this.$emit('openMiniModal')
+            if (value === 'Cover') {
+                this.unsplashPhotos= await unsplashPhotosService.getPhoto()
+                this.unsplashPhotos.splice(9,1)
+            }
+                this.$emit('openMiniModal')
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
             // this.isMiniModalOpen = true
         },
         changeMiniModal(label) {
-            console.log(`label = `, label)
             this.chosenLabel = JSON.parse(JSON.stringify(label))
             this.miniModalTitle = 'Edit label'
         },
@@ -297,40 +308,37 @@ export default {
             return this.card.labels.includes(label.id)
         },
         updateCard() {
-            console.log(`this.card = `, this.card)
             this.$emit('updateCard', this.card)
         },
         addChecklist() {
             const newChecklist = {
                 title: this.checklist,
                 id: utilService.makeId(),
-                todos:[],
+                todos: [],
             }
             if (!this.card.checklists) this.card.checklists = []
             this.card.checklists.push(newChecklist)
             this.IsMiniModalOpen = false
             this.checklist = "checklist"
             this.updateCard()
-            setTimeout(()=>{this.$emit('closeMiniModal')},500)
+            setTimeout(() => { this.$emit('closeMiniModal') }, 500)
         },
         setLabelBGC(selectedColor) {
             this.chosenLabel.color = selectedColor
         },
         setCover(e) {
-            if(this.card.imgURL) this.card.imgURL=null
+            if (this.card.imgURL) this.card.imgURL = null
             this.card.coverColor = e.target.value
         },
-        setCoverImg(url){
-            if(this.card.coverColor) this.card.coverColor=null
-            this.card.imgURL=url
+        setCoverImg(url) {
+            if (this.card.coverColor) this.card.coverColor = null
+            this.card.imgURL = url
         },
         removeCover(){
             if(this.card.coverColor){
-console.log(`cover = `)
                 this.card.coverColor=null
             } 
             else{
-                console.log(`img = `)
                 this.card.imgURL=null
             }
         },
@@ -355,7 +363,7 @@ console.log(`cover = `)
             // this.closeMiniModal()
         },
         addChosenLabel() {
-            this.chosenLabel.id=utilService.makeId()
+            this.chosenLabel.id = utilService.makeId()
             this.boardLabels.push(this.chosenLabel)
             this.$emit('updateLabels', this.boardLabels)
             this.miniModalTitle = 'Labels'
@@ -365,13 +373,12 @@ console.log(`cover = `)
             this.card.dueDate = { time, isCompleted: false }
 
             // this.card.dueDate.isCompleted = false
-            setTimeout(()=>{this.$emit('closeMiniModal')},1000)
-            
+            setTimeout(() => { this.$emit('closeMiniModal') }, 1000)
+
         },
 
         async uploadImgToCloud(ev) {
             const res = await uploadService.uploadImg(ev);
-            console.log(`res = `, res)
             this.attachment.href = res.url;
             this.attachment.type = 'img';
             this.addAttachment()
@@ -391,8 +398,8 @@ console.log(`cover = `)
         getRandomColor() {
             return utilService.getRandomColor()
         },
-        getImageAttachments(){
-         return this.card.attachments.filter((attachment)=>attachment.type==="img")   
+        getImageAttachments() {
+            return this.card.attachments.filter((attachment) => attachment.type === "img")
         }
     },
     components: {
@@ -402,7 +409,6 @@ console.log(`cover = `)
     watch: {
         card: {
             handler(newVal, oldVal) {
-                console.log("change")
                 this.$emit("updateCard", this.card)
             },
             deep: true

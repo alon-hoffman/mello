@@ -38,7 +38,7 @@
                 @openListModal="openListModal"
                 v-if="board.groups" :lists="board.groups" />
 
-                <listModal v-if="listModalOpen" :list="list" :listModalCords="listModalCords"/>
+                <listModal v-if="listModalOpen" :list="list" :listModalCords="listModalCords" @deleteList="deleteList"/>
 
   </section>
 </template>
@@ -108,6 +108,8 @@ export default {
       this.listModalCords.x = x
       this.list=list
       this.listModalOpen=true
+    },
+    deleteList(groupId){
     }
   },
 };

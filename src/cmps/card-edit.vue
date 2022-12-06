@@ -159,7 +159,6 @@ export default {
                 }
             })
         })
-        console.log('printing card',this.card)
     },
     methods: {
         checkCloseModal(){
