@@ -87,8 +87,8 @@ export default {
   toggleIsCompleted(card){
       this.$emit("toggleIsCompleted",card)
     },
-    openListModal(height, right, list){
-      this.$emit("openListModal", height, right, list)        
+    openListModal(y, x, list){
+      this.$emit("openListModal", y, x, list)        
     }
   },
   // watch: {

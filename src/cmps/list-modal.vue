@@ -1,5 +1,5 @@
 <template>
-    <section class="list-modal" :style="{ top: cords+'px' }">
+    <section class="list-modal" :style="{cords}">
 <h1 >list-actions</h1>
     </section>
     
@@ -19,7 +19,7 @@
     },
     computed: {
       cords(){
-        return this.listModalCords.height
+        return {top:`${this.listModalCords.y}+px`, right:`${this.listModalCords.x}+px`}
       }
     },
     methods: {
