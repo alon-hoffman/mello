@@ -19,7 +19,8 @@ const startingBoard = [
             "fullname": "Alon",
         },
         "style": {
-            "imgUrl": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg",
+            "backgroundImage": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg",
+            "backgroundColor": "#B04632"
             // "coverColor": "#FFFFFF",
         },
         "labels": [
@@ -152,8 +153,8 @@ const startingBoard = [
                         }],
                         "labels": ["l102"],
                         "dueDate": {
-                            time:16156215211,
-                            isCompleted:false
+                            time: 16156215211,
+                            isCompleted: false
                         },
                     }
                 ],

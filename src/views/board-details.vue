@@ -1,11 +1,12 @@
 <template>
   <router-view></router-view>
-  <section class="board-details" v-if="board">
+  <section class="board-details" :style="chosenBackground" v-if="board">
     <!-- <sidebar/> -->
     <!-- <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/> -->
     <div class="board-header">
       <div class="board-header-left">
-        <h1 class="editable board-details-title">Traco</h1>
+        <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
+        <input class="board-details-title" type="text" v-model="board.title" v-click-outside="updateBoard">
         <button class="star-board-details-btn">
           <span class="icon sm star-empty"></span>
         </button>
@@ -80,12 +81,18 @@ export default {
     board() {
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
     },
+    chosenBackground(){
+        const {backgroundColor, backgroundImage} = this.board.style
+        if(backgroundImage) return {'background': `url(${backgroundImage})`, 'background-size': 'cover'}
+        return {'background': backgroundColor}
+      },
   },
   async created() {
     if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
     // todo check if the param really is _id
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
+    console.log(this.board)
   },
   methods: {
     toggleEdit(cardId) {
@@ -95,6 +102,9 @@ export default {
 
       const id= this.$store.getters.getCurrBoard._id
       this.$router.push(`/board/${id}/card/${cardId}`)
+    },
+    updateBoard(){
+      this.$store.dispatch({type: 'updateBoard', board: this.board})
     },
     addCard(card){
       this.$store.dispatch({ type: 'addCard', card})
