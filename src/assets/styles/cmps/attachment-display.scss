@@ -1,0 +1,16 @@
+.attachment-display{
+    ul{
+        gap:10px;
+    }
+    img{
+        width:112px;
+        height:80px;
+        margin-inline-end: rem(17px);
+        object-fit: contain;
+    }
+    a{
+        padding-top: rem(4px);
+        color:black;
+        font-weight: bold;;
+    }
+}

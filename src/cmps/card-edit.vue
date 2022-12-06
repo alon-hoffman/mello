@@ -1,6 +1,7 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
+    <article v-if="card"   class="modal" :class="isOn">
+    <!-- <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn"> -->
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <div class="modal-container">
@@ -54,7 +55,7 @@
                                 <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                             </div>
                         </section>
-                        <attachmentDisplay v-if="card.attachments" :attachment="attachments"/>
+                        <attachmentDisplay v-if="card.attachments" :attachments="card.attachments"/>
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">

@@ -96,4 +96,7 @@
     &.smiley::before{
         content: '\E92A';
     }
+    &.attachment::before{
+        content: '\E908';
+    }
 }
