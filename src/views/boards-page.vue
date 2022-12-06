@@ -23,15 +23,15 @@
                 </div>
               </aside>
       
-              <section class="boards full">
+            <section class="boards full">
         <h3 class="gallery-header">
           <span class="icon lg time"></span>
           Recently viewed
         </h3>
       <ul class="gallery-list flex wrap">
         <li class="gallery-item" v-for="board in boards">
-            <router-link :to="('/board/' + board._id)">
-            <div class="board-preview">
+            <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
+            <div class="board-preview" :style="chosenBackground(board.style)">
               {{board.title}}
               <div class="board-preview-options">
                 <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
@@ -83,8 +83,14 @@ import boardCreator from '../cmps/board-creator.vue'
         this.boardCreateMode = false
       },
       saveBoard(board){
-        this.$store.dispatch({ type: "addBoard", board });
-      }
+        this.$store.dispatch({ type: "addBoard", board })
+        this.closeCreator()
+      },
+      chosenBackground(style){
+        const {backgroundColor, backgroundImage} = style
+        if(backgroundImage) return {'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover'}
+        return {'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}`}
+      },
     },
     components:{
       boardCreator

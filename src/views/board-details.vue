@@ -1,17 +1,18 @@
 <template>
   <router-view></router-view>
-  <section class="board-details" v-if="board">
+  <section class="board-details"  :style="chosenBackground" v-if="board">
     <!-- <sidebar/> -->
     <!-- <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/> -->
     <div class="board-header">
       <div class="board-header-left">
-        <h1 class="editable board-details-title">Traco</h1>
+        <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
+        <input class="board-details-title" type="text" v-model="board.title" v-click-outside="updateBoard">
         <button class="star-board-details-btn">
           <span class="icon sm star-empty"></span>
         </button>
       </div>
       <div class="board-header-right">
-        <button class="filter-btn">
+        <button class="filter-btn" @click="openFilter">
           <span class="icon sm filter"></span> Filter
         </button>
         <span class="separator-line">|</span>
@@ -80,21 +81,29 @@ export default {
     board() {
       return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
     },
+    chosenBackground(){
+      if(this.board.style){
+        const {backgroundColor, backgroundImage} = this.board.style
+        if(backgroundImage) return {'background': `url(${backgroundImage})`, 'background-size': 'cover'}
+        return {'background': backgroundColor}
+      }
+      },
   },
   async created() {
     if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
     // todo check if the param really is _id
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
+    console.log(this.board)
   },
   methods: {
     toggleEdit(cardId) {
       this.$store.commit({ type: "setCurrCard",cardId} );
-      //XXX for multiple boards
-      // const { _id } = this.$route.params
-
       const id= this.$store.getters.getCurrBoard._id
       this.$router.push(`/board/${id}/card/${cardId}`)
+    },
+    updateBoard(){
+      this.$store.dispatch({type: 'updateBoard', board: this.board})
     },
     addCard(card){
       this.$store.dispatch({ type: 'addCard', card})
@@ -124,11 +133,16 @@ export default {
     closeSidebarMenuModal(){
       this.isSidebarMenuModal=false
     },
-    
     duplicateList(list){
       console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
       this.$store.dispatch({ type: "duplicateList", list });
-    }
+    },
+    openFilter(){
+      this.isFilter = true
+    },
+    closeFilter() {
+      
+    },
   },
 };
 </script>
