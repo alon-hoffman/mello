@@ -37,6 +37,7 @@
                 @saveList="saveList"
                 @toggleIsCompleted="updateCard"
                 @openListModal="openListModal"
+                :isSidebarMenuModal="isSidebarMenuModal"
                 v-if="board.groups" :lists="board.groups" />
 
                 <listModal v-if="listModalOpen" :list="list"

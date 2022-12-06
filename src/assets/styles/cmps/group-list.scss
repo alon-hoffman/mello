@@ -3,6 +3,9 @@
     margin-bottom: 8px;
     overflow-x: scroll;
     overflow-y: hidden;
+    &.menu-modal-open{
+        margin-inline-end: 339px;
+    }
     &::-webkit-scrollbar {
         width: 12px;
         height: 12px;
