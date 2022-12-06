@@ -86,14 +86,12 @@
     }
     .date-display{
         >*{
-            // padding: rem(1px) rem(2px) ;
-            width:rem(67px);
+            min-width:rem(67px);
             border-radius: 3px;
             font-size: rem(14px);
             padding:rem(2px) 0;
             text-align: center;
             justify-content: center;
-
         }
         .over-due{
             background-color: $red;

@@ -5,8 +5,8 @@
       <Container orientation="horizontal" class="list-containers" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
         :drop-placeholder="upperDropPlaceholderOptions">
         <Draggable v-for="list in lists" :key="list.id">
-          <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"
-            @addCard="addCard" />
+          <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"  @toggleIsCompleted="toggleIsCompleted"
+            @addCard="addCard"  />
         </Draggable>
         <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="openEditArea">Add another
           list</button>
@@ -83,30 +83,20 @@ export default {
       setTimeout(()=>{
         this.$refs.newTitle.focus()
       },)
+    },
+  toggleIsCompleted(card){
+      console.log("🚀 ~ file: group-list.vue:103 ~ toggleIsCompleted ~ card", card)
+      this.$emit("toggleIsCompleted",card)
     }
-    // onCardDrop(columnId, dropResult) {
-    //   if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-    //     const lists = JSON.parse(JSON.stringify(this.lists))
-    //     console.log(`lists = `, lists)
-    //     console.log(`columnId = `, columnId)
-    //     const column = lists.filter((l) => l.id === columnId)[0]
-    //     const columnIndex = list.findIndex((c) => c.id === list.id)
-    //     const newColumn = Object.assign({}, column)
-    //     newColumn = boardService.applyDrag(newColumn.cards, dropResult)
-    //     lists.splice(columnIndex, 1, newColumn)
-    //     this.lists = lists
-    //     this.$store.dispatch({ type: "saveLists", lists })
-    //   }
-    // }
   },
-  watch: {
-    lists: {
-      handler(newVal, oldVal) {
+  // watch: {
+  //   lists: {
+  //     handler(newVal, oldVal) {
 
-        // dispatch({ type: "updateBoard", board:currBoard })
-      },
-      deep: true
-    }
-  }
+  //       // dispatch({ type: "updateBoard", board:currBoard })
+  //     },
+  //     deep: true
+  //   }
+  // }
 };
 </script>

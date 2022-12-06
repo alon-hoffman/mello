@@ -69,17 +69,29 @@
                         </div>
                         
                         <ul class="dynamic-content todo-list flex column">
-                                <li class="todo-item flex">
-                                    <div class="checkbox"></div>
-                                    <span>Has a fridge</span>
+                                <li class="todo-item-container flex justify-between">
+                                    <div class="todo-item flex">
+                                        <div class="checkbox"></div>
+                                        <span>Has a fridge</span>
+                                    </div>
+                                    <div class="todo-item-options flex">
+                                        <span class="icon sm time"></span>
+                                        <span class="icon sm share"></span>
+                                        <span class="icon sm more"></span>
+                                    </div>
+
                                 </li>
-                                <li class="flex">
-                                    <div class="checkbox"></div>
-                                    <span>Working wheels</span>
-                                </li>
-                                <li class="flex">
-                                    <div class="checkbox"></div>
-                                    <span>todo</span>
+                                <li class="todo-item-container flex justify-between">
+                                    <div class="todo-item flex">
+                                        <div class="checkbox"></div>
+                                        <span>Has a fridge</span>
+                                    </div>
+                                    <div class="todo-item-options flex">
+                                        <span class="icon sm time"></span>
+                                        <span class="icon sm share"></span>
+                                        <span class="icon sm more"></span>
+                                    </div>
+
                                 </li>
                             </ul>
                     </section>

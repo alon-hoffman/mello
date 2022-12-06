@@ -61,6 +61,7 @@
     methods:{
       toggleIsCompleted(){
         this.date.isCompleted=!this.date.isCompleted
+        this.$emit("toggleIsCompleted",this.date.isCompleted)
       }
     }
   }

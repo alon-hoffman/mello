@@ -161,7 +161,6 @@ export const boardStore = {
             }
         },
         async addCard({ dispatch, state }, { card }) {
-            console.log("🚀 ~ file: board.store.js:159 ~ addCard ~ card", card)
             card.id = utilService.makeId()
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
@@ -184,6 +183,7 @@ export const boardStore = {
 
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
+            console.log("🚀 ~ file: board.store.js:185 ~ saveCard ~ card", card)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const groupIdx = board.groups.findIndex((group) => group.id === card.groupId)
             const cardIdx = board.groups[groupIdx].cards.findIndex((currCard) => currCard.id === card.id)
