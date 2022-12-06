@@ -403,17 +403,17 @@ console.log(`cover = `)
         card: {
             handler(newVal, oldVal) {
                 console.log("change")
-                this.$emit("sideModalChange", this.card)
+                this.$emit("updateCard", this.card)
             },
             deep: true
         },
-        newDate: {
-            handler(newVal, oldVal) {
-                console.log("change")
-                this.$emit("sideModalChange", this.card)
-            },
-            deep: true
-        }
+        // newDate: {
+        //     handler(newVal, oldVal) {
+        //         console.log("change")
+        //         this.$emit("sideModalChange", this.card)
+        //     },
+        //     deep: true
+        // }
     }
 }
 </script>
