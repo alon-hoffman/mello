@@ -461,6 +461,7 @@
 
     .label-color-container {
         opacity: 1;
+        // filter:brightness(1.3);
         display: inline-block;
         position: relative;
         margin-bottom: 0;
@@ -487,7 +488,7 @@
     }
 
     .label-circle {
-        content: '';
+        // filter:brightness(0.7);
         position: absolute;
         top: 8px;
         bottom: 8px;

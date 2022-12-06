@@ -5,7 +5,8 @@ export const utilService = {
     delay,
     randomPastTime,
     debounce,
-    getRandomColor
+    getRandomColor,
+    LightenDarkenColor
 }
 
 function makeId(length = 6) {
@@ -65,3 +66,27 @@ function getRandomColor() {
     }
     return color;
   }
+  function LightenDarkenColor(col,amt) {
+    var usePound = false;
+    if ( col[0] == "#" ) {
+        col = col.slice(1);
+        usePound = true;
+    }
+    var num = parseInt(col,16);
+    console.log(`num = `, num)
+    var r = (num >> 16) + amt;
+    console.log(`r = `, r)
+    if ( r > 255 ) r = 255;
+    else if  (r < 0) r = 0;
+    var b = ((num >> 8) & 0x00FF) + amt;
+    if ( b > 255 ) b = 255;
+    else if  (b < 0) b = 0;
+    var g = (num & 0x0000FF) + amt;
+    if ( g > 255 ) g = 255;
+    else if  ( g < 0 ) g = 0;
+    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+}
+  
+  
+  // TEST
+//   console.log(LightenDarkenColor("3F6D2A", -40));
