@@ -1,10 +1,10 @@
 .group-list{
-    margin-inline-end: rem(15px);
+    padding-inline-end: rem(15px);
     margin-bottom: 8px;
     overflow-x: scroll;
     overflow-y: hidden;
     &.menu-modal-open{
-        margin-inline-end: 339px;
+        margin-inline-end: 319px;
     }
     &::-webkit-scrollbar {
         width: 12px;
@@ -45,7 +45,9 @@
         color: $clr1;
         text-align: start;
         padding:rem(4px) 0 rem(4px) rem(20px);
-        margin: rem(4px);
+        // margin: rem(4px);
+        margin: 0;
+        margin-inline-end: 44px;
         font-size:rem(16px);
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
     &::before{

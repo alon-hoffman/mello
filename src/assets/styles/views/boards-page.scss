@@ -59,8 +59,8 @@
             position:relative;
             cursor: pointer;
             height: 5.5em;
-            background-image:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-            url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg");
+            // background:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+            // url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg");
             background-size: cover;
             margin-right: 2%;
             margin-bottom: 2%;
@@ -68,8 +68,7 @@
             // min-width: 175px;
             border-radius: 3px;
             &:hover{
-                background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg");
+           
                 
                 & .board-preview-options{
                     transform: translateX(-100%);
@@ -83,7 +82,8 @@
                 padding: 8px;
                 height: 100%;
                 width: 100%;
-                
+                border-radius: 3px;
+                text-decoration: none;
                 &-options{
                     height: max-content;
                     position: absolute;
