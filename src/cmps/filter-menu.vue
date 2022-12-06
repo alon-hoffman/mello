@@ -30,7 +30,13 @@
             <ul class="filter-list">
                 <li class="filter-list-item flex">
                     <button class="checkbox"></button>
-                    <span>No labels</span>
+                    <span> <span class="icon sm label"></span> No labels</span>
+                </li>
+                <li class="filter-list-item flex" v-for="label in board.labels">
+                    <button class="checkbox" ></button>
+                    <button class="modal-btn" :style="{ backgroundColor: getColorWithOpacity(label.color) }">
+                        <span class="label-circle" :style="{ backgroundColor: label.color }">aa</span>
+                        {{label.title}}</button>
                 </li>
             </ul>
 
