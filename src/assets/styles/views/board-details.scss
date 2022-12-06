@@ -3,6 +3,7 @@
     height: calc(100vh - 44px);
     background-size: cover;
     display:flex;
+    overflow: hidden;
     flex-direction: column;
 }
 

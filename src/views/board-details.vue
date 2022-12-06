@@ -21,7 +21,7 @@
           <span class="icon sm share"></span> Share
         </button>
         <span class="separator-line">|</span>
-        <button class="more-btn">
+        <button v-if="!isSidebarMenuModal" @click="openSidebarMenuModal" class="more-btn clickable">
           <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -29,6 +29,7 @@
               fill="currentColor"></path>
           </svg>
         </button>
+        <sidebarMenuModal v-else  @closeSidebarMenuModal="closeSidebarMenuModal"/>
       </div>
     </div>
     <group-list @addCard="addCard"
@@ -36,6 +37,7 @@
                 @saveList="saveList"
                 @toggleIsCompleted="updateCard"
                 @openListModal="openListModal"
+                :isSidebarMenuModal="isSidebarMenuModal"
                 v-if="board.groups" :lists="board.groups" />
 
                 <listModal v-if="listModalOpen" :list="list"
@@ -49,6 +51,7 @@ import sidebar from "../cmps/sidebar.vue"
 import groupList from "../cmps/group-list.vue"
 import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
+import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
 //icons
 
 export default {
@@ -56,7 +59,8 @@ export default {
     sidebar,
     groupList,
     cardEdit,
-    listModal
+    listModal,
+    sidebarMenuModal,
   },
   data(){
     return{
@@ -65,7 +69,8 @@ export default {
       listModalCords:{
         y:null,
         x:null
-      }
+      },
+      isSidebarMenuModal:false
     }
   },
   computed: {
@@ -113,6 +118,13 @@ export default {
     deleteList(groupId){
       this.$store.dispatch({ type: "removeList", groupId });
     },
+    openSidebarMenuModal(){
+      this.isSidebarMenuModal=true
+    },
+    closeSidebarMenuModal(){
+      this.isSidebarMenuModal=false
+    },
+    
     duplicateList(list){
       console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
       this.$store.dispatch({ type: "duplicateList", list });

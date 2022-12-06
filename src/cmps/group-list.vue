@@ -1,5 +1,5 @@
 <template>
-  <section v-if="lists" class="group-list">
+  <section v-if="lists" class="group-list" :class="{'menu-modal-open':isSidebarMenuModal}">
     <ul class="clean-list">
 
       <Container orientation="horizontal" class="list-containers" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
@@ -33,6 +33,7 @@ import { Container, Draggable } from "vue3-smooth-dnd"
 export default {
   props: {
     lists: Array,
+    isSidebarMenuModal:Boolean,
   },
   data() {
     return {
