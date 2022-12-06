@@ -1,5 +1,5 @@
 <template>
-    <section v-if="currBoard" class="sidebar-menu-modal" :style="cords">
+    <section v-if="currBoard" class="sidebar-menu-modal">
         <section class="mini-modal-header">
             <span class="menu-modal-title">Menu</span>
             <button class="clickable close-mini-modal-btn" @click="closeSidebarMenuModal"></button>

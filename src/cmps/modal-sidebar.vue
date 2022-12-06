@@ -67,7 +67,7 @@
                     <input v-model="filterLabelsBy" type="text" name="" id="" placeholder="Search labels">
                     <span class="mini-head">Labels</span>
                     <div class="labels-checked-section-container">
-                        <section class="labels-checked-section" v-for="label in boardLabels">
+                        <section class="labels-checked-section" v-for="label in labelsForDisplay">
                             <label class="clickable labels-checked-box">
                                 <div class=" label-container">
                                     <img @click="toggleLabels(label)" class="checked-img"
@@ -92,8 +92,9 @@
             <template v-if="(miniModalTitle === 'Edit label')">
                 <section class="mini-modal-body edit-label-section">
                     <div class="chosen-label-space">
-                        <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color }">{{ chosenLabel.title
-                        }}
+                        <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
+                            <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
+                            <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
                         </div>
                     </div>
                     <span class="mini-head">Title</span>
@@ -118,8 +119,9 @@
             <template v-if="(miniModalTitle === 'Create label')">
                 <section class="mini-modal-body edit-label-section">
                     <div class="chosen-label-space">
-                        <div class="chosen-label" :style="{ backgroundColor: chosenLabel.color }">{{ chosenLabel.title
-                        }}
+                        <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
+                            <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
+                            <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
                         </div>
                     </div>
                     <span class="mini-head">Title</span>
@@ -197,7 +199,8 @@
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
                     <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.raw)" :src="photoObject.urls.raw" class="unsplashPhoto clickable">
+                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.thumb)"
+                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
                 </section>
             </template>
@@ -251,13 +254,13 @@ export default {
 
     },
     methods: {
-       async openMiniModal(value) {
+        async openMiniModal(value) {
             this.miniModalTitle = value
             if (value === 'Cover') {
-                this.unsplashPhotos= await unsplashPhotosService.getPhoto()
-                this.unsplashPhotos.splice(9,1)
+                this.unsplashPhotos = await unsplashPhotosService.getPhoto()
+                this.unsplashPhotos.splice(9, 1)
             }
-                this.$emit('openMiniModal')
+            this.$emit('openMiniModal')
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
@@ -334,12 +337,12 @@ export default {
             if (this.card.coverColor) this.card.coverColor = null
             this.card.imgURL = url
         },
-        removeCover(){
-            if(this.card.coverColor){
-                this.card.coverColor=null
-            } 
-            else{
-                this.card.imgURL=null
+        removeCover() {
+            if (this.card.coverColor) {
+                this.card.coverColor = null
+            }
+            else {
+                this.card.imgURL = null
             }
         },
         addAttachment() {
@@ -387,11 +390,9 @@ export default {
         dateOpen() {
             this.isDatePickerOpen = true
         },
-        getColorWithOpacity(color){
-            // console.log(`foo = `, foo)
-            color+='4F'
+        getColorWithOpacity(color) {
+            color += '4F'
             return color
-    //  return utilService.LightenDarkenColor(color,200)
         },
     },
     computed: {
@@ -406,6 +407,12 @@ export default {
         },
         getImageAttachments() {
             return this.card.attachments.filter((attachment) => attachment.type === "img")
+        },
+        labelsForDisplay(){
+            const regex = new RegExp(this.filterLabelsBy, 'i')
+            return this.boardLabels.filter((label) => {
+                return regex.test(label.title)
+            })
         },
     },
     components: {
