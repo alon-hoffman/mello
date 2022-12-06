@@ -30,7 +30,7 @@
         </h3>
       <ul class="gallery-list flex wrap">
         <li class="gallery-item" v-for="board in boards">
-            <router-link :to="('/board/' + board._id)">
+            <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
             <div class="board-preview" :style="chosenBackground(board.style)">
               {{board.title}}
               <div class="board-preview-options">
