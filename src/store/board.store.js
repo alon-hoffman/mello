@@ -158,10 +158,23 @@ export const boardStore = {
                 throw err
             }
         },
-        async removeList({ commit }, { groupId }) {
+        async removeList({ dispatch, state }, { groupId }) {
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const Idx = board.groups.findIndex(group => group.id === groupId)
-
+            board.groups.splice(Idx, 1)
+            dispatch({ type: "updateBoard", board })
+        },
+        async duplicateList({ dispatch, state }, { list }) {
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            const idx = board.groups.findIndex(group => group.id === list.id)
+            const newList = JSON.parse(JSON.stringify(list))
+            newList.id = utilService.makeId()
+            newList.cards.forEach(card => {
+                card.id = utilService.makeId()
+            })
+            board.groups.splice(idx, 0, newList)
+            console.log("🚀 ~ file: board.store.js:175 ~ duplicateList ~ newList", newList)
+            dispatch({ type: "updateBoard", board })
         },
         async addCard({ dispatch, state }, { card }) {
             card.id = utilService.makeId()

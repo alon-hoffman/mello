@@ -39,7 +39,8 @@
                 @openListModal="openListModal"
                 v-if="board.groups" :lists="board.groups" />
 
-                <listModal v-if="listModalOpen" :list="list" :listModalCords="listModalCords" @deleteList="deleteList"/>
+                <listModal v-if="listModalOpen" :list="list"
+                 :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"/>
 
   </section>
 </template>
@@ -114,6 +115,7 @@ export default {
       this.listModalOpen=true
     },
     deleteList(groupId){
+      this.$store.dispatch({ type: "removeList", groupId });
     },
     openSidebarMenuModal(){
       this.isSidebarMenuModal=true
@@ -121,6 +123,11 @@ export default {
     closeSidebarMenuModal(){
       this.isSidebarMenuModal=false
     },
+    
+    duplicateList(list){
+      console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
+      this.$store.dispatch({ type: "duplicateList", list });
+    }
   },
 };
 </script>

@@ -53,7 +53,8 @@
                                 <button @click="addDescription" class="save-description-btn">Save</button>
                                 <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                             </div>
-                    </section>
+                        </section>
+                        <attachmentDisplay v-if="card.attachments" :attachment="attachments"/>
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
@@ -69,11 +70,15 @@
                         </div>
                         
                         <ul class="dynamic-content todo-list flex column">
-                                <li class="todo-item-container flex justify-between" v-for="todo in checklist.todos">
-                                    <div class="todo-item flex">
-                                        <button class="checkbox" :class="isDone"></button>
-                                        <input type="text" v-model="todo.title" />
-                                        <!-- <textarea v-model="todo.title" cols="30" rows="10"></textarea> -->
+                                <li class="todo-item-container flex justify-between clickable" 
+                                v-for="todo in checklist.todos"
+                                @click="(todo.editMode = true)" v-click-outside="()=>closeEditMode(todo)">
+                                    <div class="todo-item flex" >
+                                        <button class="checkbox" :class="isDone(todo.isDone)" @click="todo.isDone = !todo.isDone"></button>
+                                        <span v-if="!todo.editMode" >{{todo.title}}</span>
+                                        <section v-else class="todo-edit flex wrap">
+                                            <textarea v-model="todo.title"></textarea>
+                                        </section>
                                     </div>
                                     <div class="todo-item-options flex align-center">
                                         <span class="icon sm time"></span>
@@ -81,20 +86,12 @@
                                         <span class="icon sm more"></span>
                                     </div>
                                 </li>
-                                <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"  v-click-outside="closeAddTodo(checklist)">Add an item</button>
+                                <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"  v-click-outside="() => closeAddTodo(checklist)">Add an item</button>
                                 <section v-else class="add-todo flex wrap" >
-                                    <textarea placeholer="Add an item"></textarea>
-                                    <div class="add-todo-options flex justify-between">
-                                        <div class="flex">
-                                            <button class="modal-btn">Add</button>
-                                            <button class="modal-btn">Cancel</button>
-                                        </div>
-                                        <div class="flex">
-                                            <button class="modal-btn">Assign</button>
-                                            <button class="modal-btn">Due date</button>
-                                            <button class="modal-btn">@</button>
-                                            <button class="modal-btn">:)</button>
-                                        </div>
+                                    <textarea placeholer="Add an item" v-model="newTodo.title"></textarea>
+                                    <div class="add-todo-options flex">
+                                        <button class="modal-btn" @click="saveTodo(checklist)">Add</button>
+                                        <button class="modal-btn" @click="closeAddTodo(checklist)">Cancel</button>
                                     </div>
                                 </section>
                             </ul>
@@ -125,6 +122,7 @@
 
 <script>
 import modalSidebar from './modal-sidebar.vue'
+import attachmentDisplay from './attachment-display.vue'
 import { utilService } from '../services/util.service';
 export default {
     props: {
@@ -136,6 +134,11 @@ export default {
            card:null,
             realTextArea: false,
             isMiniModalOpen: false,
+            newTodo: {
+                title: '',
+                isDone: false
+            },
+            // currTodo: null
         }
     },
     async created() {
@@ -219,16 +222,23 @@ export default {
         },
         openAddTodo(checklist){
             checklist.newTodo = true;
-            // checklist.todos.push({
-            //     id: utilService.makeId(),
-            //     title: '',
-            //     isDone: false,
-            //     editMode: false,
-            // })
         },
         closeAddTodo(checklist){
+            this.newTodo = {title: ''}
             checklist.newTodo = false;
         },
+        saveTodo(checklist){
+            this.newTodo.id = utilService.makeId()
+        
+            checklist.todos.push(this.newTodo)
+            this.closeAddTodo(checklist)
+        },
+        closeEditMode(todo){
+            todo.editMode = false
+        },
+        isDone(isDone){
+            return {checked: isDone}
+        }
     },
     computed: {
         isOn() {
@@ -259,8 +269,8 @@ export default {
         isCompleted(){
             return {checked: this.card.dueDate.isCompleted}
         },
-        // isDone(){
-            // return {checked: this.card.d.isDone}
+        // todoMode(){
+        //     return {checked: this.currTodo.isDone, 'edit-mode':this.currTodo.editMode }
         // }
         
        
@@ -269,7 +279,8 @@ export default {
         this.realTextArea = false
     },
     components: {
-        modalSidebar
+        modalSidebar,
+        attachmentDisplay
     },
 //     watch:{
 //         card:{
