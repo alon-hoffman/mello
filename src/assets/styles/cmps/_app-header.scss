@@ -99,8 +99,12 @@
         align-items: center;
         border: 1px solid rgba(23, 43, 77, 0.16);
 
-     
-
+        &:focus-within{
+            width:rem(890px);
+        }
+    }
+    &:focus + span{
+        color:red;
     }
 }
 
@@ -190,4 +194,15 @@
         width: rem(20px);
 
     }
+}
+
+.board-search-input {
+    &:focus{
+    &::placeholder {
+        color:$clr3;
+    }
+    &+ span{
+        color:black;
+    }
+}
 }

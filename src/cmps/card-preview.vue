@@ -13,7 +13,7 @@
           <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted"/>
           <span v-if="dynamicCard.description" class="icon description"></span>
           <span v-if="dynamicCard.checklists" class="icon sm checklist-check"></span>
-          <span v-if="dynamicCard.attachment" class="icon sm attach"></span>
+          <span v-if="dynamicCard.attachments?.length" class="icon sm attachment"></span>
         </div>
         <div v-if="dynamicCard.members" class="members flex align-center">
         <div class="member-avatar" v-for="member in card.members">{{memberInitials(member)}}</div>

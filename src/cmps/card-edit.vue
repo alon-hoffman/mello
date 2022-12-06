@@ -1,6 +1,7 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
-    <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
+    <article v-if="card"   class="modal" :class="isOn">
+    <!-- <article v-if="card"  v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn"> -->
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card?.coverColor" :style="{'background-color' : card.coverColor}"></div>
         <div class="modal-container">
@@ -54,43 +55,47 @@
                                 <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                             </div>
                         </section>
-                        <attachmentDisplay v-if="card.attachments" :attachment="attachments"/>
+                        <attachmentDisplay v-if="card.attachments" :attachments="card.attachments"/>
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
-                            <h3>{{checklist.title}}</h3>
+                            <!-- <h3>{{checklist.title}}</h3> -->
+                            <input type="text" v-model="checklist.title">
                             <div class="checklist-options">
-                                <button class="modal-btn">Hide Checked items</button>
+                                <!-- <button class="modal-btn">Hide Checked items</button> -->
                                 <button class="modal-btn" @click="removeChecklist">Delete</button>
                             </div>
                         </span>
-                        <span class="sub-icon">50%</span>
+                        <span class="sub-icon">{{calcProgress(checklist)}}%</span>
                         <div class="content">
-                            <progress class="progress-bar" value="32" max="100"> 32% </progress>
+                            <progress class="progress-bar" :class="allDone(checklist)" :value="calcProgress(checklist)" max="100"></progress>
                         </div>
                         
                         <ul class="dynamic-content todo-list flex column">
-                                <li class="todo-item-container flex justify-between clickable" 
+                                <li class="todo-item-container flex clickable" 
                                 v-for="todo in checklist.todos"
-                                @click="(todo.editMode = true)" v-click-outside="()=>closeEditMode(todo)">
+                                @click="openEditMode(todo)" v-click-outside="()=>closeEditMode(todo)">
                                     <div class="todo-item flex" >
-                                        <button class="checkbox" :class="isDone(todo.isDone)" @click="todo.isDone = !todo.isDone"></button>
-                                        <span v-if="!todo.editMode" >{{todo.title}}</span>
-                                        <section v-else class="todo-edit flex wrap">
-                                            <textarea v-model="todo.title"></textarea>
+                                        <button class="checkbox" :class="isDone(todo.isDone)" @click.stop="todo.isDone = !todo.isDone"></button>
+                                        <span v-if="!todo.editMode" :class="isDone(todo.isDone)">{{todo.title}}</span>
+                                        <section v-else class="edit-todo flex wrap">
+                                            <textarea class="edit-mode" v-model="todo.title"></textarea>
+                                            <div class="break"></div>
+                                            <button class="modal-btn add-todo-btn" @click.stop="closeEditMode(todo)">save</button>
+                                            <span class="icon lg close" @click.stop="removeTodo(checklist, todo)"></span>
                                         </section>
                                     </div>
-                                    <div class="todo-item-options flex align-center">
+                                    <!-- <div class="todo-item-options flex align-center">
                                         <span class="icon sm time"></span>
                                         <span class="icon sm share"></span>
                                         <span class="icon sm more"></span>
-                                    </div>
+                                    </div> -->
                                 </li>
                                 <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"  v-click-outside="() => closeAddTodo(checklist)">Add an item</button>
                                 <section v-else class="add-todo flex wrap" >
                                     <textarea placeholer="Add an item" v-model="newTodo.title"></textarea>
                                     <div class="add-todo-options flex">
-                                        <button class="modal-btn" @click="saveTodo(checklist)">Add</button>
+                                        <button class="modal-btn add-todo-btn" @click="saveTodo(checklist)">Add</button>
                                         <button class="modal-btn" @click="closeAddTodo(checklist)">Cancel</button>
                                     </div>
                                 </section>
@@ -236,8 +241,25 @@ export default {
         closeEditMode(todo){
             todo.editMode = false
         },
+        openEditMode(todo){
+            todo.editMode = true
+        },
+        removeTodo(checklist, todo){
+            todo.editMode = false
+            const todoIdx = checklist.todos.findIndex(t => t.id == todo.id)
+            checklist.todos.splice(todoIdx, 1)
+        },
         isDone(isDone){
             return {checked: isDone}
+        },
+        calcProgress(checklist){
+            const ratio = checklist.todos.reduce((acc, todo) =>  todo.isDone ? acc + 1 : acc ,0)
+            const percent = (100 * (ratio / checklist.todos.length)).toFixed(1)
+            // console.log('doneRatio', checklist)
+            return percent
+        },
+        allDone(checklist){
+            return {done: this.calcProgress(checklist) == 100}
         }
     },
     computed: {
@@ -269,9 +291,7 @@ export default {
         isCompleted(){
             return {checked: this.card.dueDate.isCompleted}
         },
-        // todoMode(){
-        //     return {checked: this.currTodo.isDone, 'edit-mode':this.currTodo.editMode }
-        // }
+      
         
        
     },

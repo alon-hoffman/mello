@@ -25,9 +25,9 @@
       </div>
       <div class="right-header">
         <div class="search-boards">
+          <input ref="search" type="text" placeholder="Search" class="board-search-input"
+          style="font-family:Arial, FontAwesome">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
-          <input ref="search" type="text" placeholder="Search"
-            style="font-family:Arial, FontAwesome">
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
         <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
