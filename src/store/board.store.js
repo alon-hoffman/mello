@@ -168,7 +168,6 @@ export const boardStore = {
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const idx = board.groups.findIndex(group => group.id === list.id)
             const newList = JSON.parse(JSON.stringify(list))
-            console.log("🚀 ~ file: board.store.js:170 ~ duplicateList ~ list", list)
             newList.id = utilService.makeId()
             newList.cards.forEach(card => {
                 card.id = utilService.makeId()
