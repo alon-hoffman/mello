@@ -168,6 +168,7 @@
             </template>
             <template v-if="(miniModalTitle === 'Cover')">
                 <section class="mini-modal-body">
+                    <div v-if="(card.coverColor||card.imgURL)" @click="removeCover" class="fake-button remove-cover-button">Remove cover</div>
                     <span class="mini-head">Colors</span>
                     <div class="first-colors-row">
                         <button class="green-btn" value="#7BC86C" @click="setCover"></button>
@@ -311,15 +312,22 @@ export default {
             this.IsMiniModalOpen = false
             this.checklist = "checklist"
             this.updateCard()
+            setTimeout(()=>{this.$emit('closeMiniModal')},500)
         },
         setLabelBGC(selectedColor) {
             this.chosenLabel.color = selectedColor
         },
         setCover(e) {
+            if(this.card.imgURL) this.card.imgURL=null
             this.card.coverColor = e.target.value
         },
         setCoverImg(url){
+            if(this.card.coverColor) this.card.coverColor=null
             this.card.imgURL=url
+        },
+        removeCover(){
+            if(this.card.coverColor) this.card.coverColor=null
+            else this.card.imgURL=null
         },
         addAttachment() {
             if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
