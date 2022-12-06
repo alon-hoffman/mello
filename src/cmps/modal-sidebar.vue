@@ -75,7 +75,7 @@
                                     <img @click="toggleLabels(label)" class="box-img" v-else
                                         src="../assets/icons/gray-square.svg" alt="">
                                     <div class="label-color-container" @click="toggleLabels(label)"
-                                        :style="{ backgroundColor: label.color }">
+                                        :style="{ backgroundColor: getColorWithOpacity(label.color) }">
                                         <!-- {{label.title}} -->
                                         <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
                                         <div class="label-title-area">{{ label.title }}</div>
@@ -387,6 +387,12 @@ export default {
         dateOpen() {
             this.isDatePickerOpen = true
         },
+        getColorWithOpacity(color){
+            // console.log(`foo = `, foo)
+            color+='4F'
+            return color
+    //  return utilService.LightenDarkenColor(color,200)
+        },
     },
     computed: {
         getFilterMembers() {
@@ -400,7 +406,7 @@ export default {
         },
         getImageAttachments() {
             return this.card.attachments.filter((attachment) => attachment.type === "img")
-        }
+        },
     },
     components: {
         customCard,

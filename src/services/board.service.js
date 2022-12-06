@@ -26,32 +26,38 @@ const startingBoard = [
             {
                 "id": "l101",
                 "title": "When possible",
-                "color": "#7bc86c"
+                "color": "#7bc86c",
+                // "backgroundColor":"#d6ecd2"
             },
             {
                 "id": "l102",
                 "title": "Important",
-                "color": "#f5dd29"
+                "color": "#f5dd29",
+                // "backgroundColor":"#faf3c0"
             },
             {
                 "id": "l103",
                 "title": "",
-                "color": "#ffaf3f"
+                "color": "#ffaf3f",
+                // "backgroundColor":"#fce6c6"
             },
             {
                 "id": "l104",
                 "title": "Urgent",
-                "color": "#ef7564"
+                "color": "#ef7564",
+                // "backgroundColor":"#f5d3ce"
             },
             {
                 "id": "l105",
                 "title": "",
-                "color": "#cd8de5"
+                "color": "#cd8de5",
+                // "backgroundColor":"#eddbf4"
             },
             {
                 "id": "l106",
                 "title": "",
-                "color": "#5ba4cf"
+                "color": "#5ba4cf",
+                // "backgroundColor":"#bcd9ea"
             },
         ],
         "members": [
