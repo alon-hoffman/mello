@@ -34,9 +34,11 @@
     <group-list @addCard="addCard"
                 @editCard="toggleEdit" 
                 @saveList="saveList"
-                v-if="board.groups" :lists="board.groups"  @toggleIsCompleted="updateCard"/>
+                @toggleIsCompleted="updateCard"
+                @openListModal="openListModal"
+                v-if="board.groups" :lists="board.groups" />
 
-                <listModal v-if="listModalOpen" :list="list"/>
+                <listModal v-if="listModalOpen" :list="list" :listModalCords="listModalCords"/>
 
   </section>
 </template>
@@ -54,6 +56,16 @@ export default {
     groupList,
     cardEdit,
     listModal
+  },
+  data(){
+    return{
+      listModalOpen: false,
+      list:null,
+      listModalCords:{
+        height:null,
+        right:null
+      }
+    }
   },
   computed: {
     isScreen() {
@@ -91,6 +103,12 @@ export default {
       // this.board.groups.push({ title })
       this.$store.dispatch({ type: "addList", list });
     },
+    openListModal(height, right, list){
+      this.listModalCords.height = height
+      this.listModalCords.right = right
+      this.list=list
+      this.listModalOpen=true
+    }
   },
 };
 </script>

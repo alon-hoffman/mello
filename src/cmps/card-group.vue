@@ -1,6 +1,6 @@
 
 <template>
-  <section class="card-group">
+  <section ref="col" class="card-group">
     <div class="title-container">
       <input class="group-title" type="text" v-model="title" />
       <svg @click="openListModal" width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
@@ -103,10 +103,10 @@ export default {
     },
     toggleIsCompleted(card){
       this.$emit("toggleIsCompleted",card)
-      console.log("🚀 ~ file: card-group.vue:109 ~ toggleIsCompleted ~ card", card)
     },
-    openListModal(event){
-      console.log("🚀 ~ file: card-group.vue:109 ~ openListModal ~ event", event)
+    openListModal(){
+      const  {height, right} = this.$refs.col.getBoundingClientRect()
+      this.$emit("openListModal", height, right, this.list)      
     }
   },
   components: {

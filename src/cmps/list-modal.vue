@@ -1,6 +1,6 @@
 <template>
-    <section class="list-actions">
-<h1>list-actions</h1>
+    <section class="list-modal" :style="{ top: cords+'px' }">
+<h1 >list-actions</h1>
     </section>
     
   </template>
@@ -10,7 +10,7 @@
   export default {
     props: {
     list: Object,
-
+    listModalCords: Object,
   },
     data() {
       return {
@@ -18,10 +18,9 @@
       }
     },
     computed: {
-      
-    },
-    created() {
-      
+      cords(){
+        return this.listModalCords.height
+      }
     },
     methods: {
       
