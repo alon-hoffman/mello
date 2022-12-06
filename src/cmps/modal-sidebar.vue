@@ -34,12 +34,12 @@
             <template v-if="(miniModalTitle === 'Dates')">
                 <!-- <div class="el-picker-panel__body"></div> -->
                 <section class="mini-modal-body date-section">
-                    <date-picker @click="dateOpen" locale="en" type="datetime" class="custom-input"
+                    <date-picker @click="dateOpen" @change="updateDate" locale="en" type="datetime" class="custom-input"
                         label-class="icon-sm icon-clock" ref="date" v-model="newDate" placeholder="Enter due date"
                         format="YYYY-MM-DD HH:mm:ss" color="#0079bf" value></date-picker>
 
                     <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
-                    <div @click="updateDate" class="fake-button save-date-btn">Save</div>
+                    <!-- <div @click="updateDate" class="fake-button save-date-btn">Save</div> -->
                 </section>
             </template>
 
@@ -168,6 +168,7 @@
             </template>
             <template v-if="(miniModalTitle === 'Cover')">
                 <section class="mini-modal-body">
+                    <div v-if="(card.coverColor||card.imgURL)" @click="removeCover" class="fake-button remove-cover-button">Remove cover</div>
                     <span class="mini-head">Colors</span>
                     <div class="first-colors-row">
                         <button class="green-btn" value="#7BC86C" @click="setCover"></button>
@@ -302,23 +303,31 @@ export default {
         },
         addChecklist() {
             const newChecklist = {
-                title: `${this.checklist}`,
-                id: utilService.makeId()
+                title: this.checklist,
+                id: utilService.makeId(),
+                todos:[],
             }
             if (!this.card.checklists) this.card.checklists = []
             this.card.checklists.push(newChecklist)
             this.IsMiniModalOpen = false
             this.checklist = "checklist"
             this.updateCard()
+            setTimeout(()=>{this.$emit('closeMiniModal')},500)
         },
         setLabelBGC(selectedColor) {
             this.chosenLabel.color = selectedColor
         },
         setCover(e) {
+            if(this.card.imgURL) this.card.imgURL=null
             this.card.coverColor = e.target.value
         },
         setCoverImg(url){
+            if(this.card.coverColor) this.card.coverColor=null
             this.card.imgURL=url
+        },
+        removeCover(){
+            if(this.card.coverColor) this.card.coverColor=null
+            else this.card.imgURL=null
         },
         addAttachment() {
             if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
@@ -350,8 +359,9 @@ export default {
             const time = +new Date(this.newDate).getTime()
             this.card.dueDate = { time, isCompleted: false }
 
-            this.card.dueDate.isCompleted = false
-            this.$emit('closeMiniModal')
+            // this.card.dueDate.isCompleted = false
+            setTimeout(()=>{this.$emit('closeMiniModal')},1000)
+            
         },
 
         async uploadImgToCloud(ev) {

@@ -19,7 +19,7 @@
     transform: translate(-50%, -50%);
     // opacity: 0;
     // pointer-events: none;
-    background-color: $clr2;
+    background-color: #f4f5f7;
     width: 768px;
     border-radius: 3px;
     color: $text-dark;
@@ -164,12 +164,11 @@
         "sub-icon content"
         "dynamic-content dynamic-content";
 
-    .icon {
+    > .icon {
         grid-area: icon;
         align-self: center;
         justify-self: center;
         height: 30px;
-        vertical-align: text-bottom;
         position: relative;
         top: 6px;
     }
@@ -443,8 +442,10 @@
 
 
 .checkbox{
+    margin: 0;
     width: 16px;
     height: 16px;
+    padding: 0;
     border-radius: 2px;
     background-color: #fafbfc;
     box-shadow: #dfe1e6 0px 0px 0px 2px inset;
@@ -452,12 +453,13 @@
     transition-timing-function: ease-in-out;
     &:hover{
         background-color: #eaecf0;
+        &:active{
+            background-color: #e4f0f6;
+            box-shadow: #5ba4cf 0 0 0 2px inset;
+        }
     }
 
     &::before{
-        position: relative;
-        top: -3px;
-        left: 1px;
         content: '\E916';
         transition: 0.2;
         opacity:0;
@@ -498,12 +500,33 @@
             line-height: 16px;
             gap: 1.35em;
 
-            // &-options{
-            //     position: absolute;
-            //     right: 0;
-            // }
+            &-options {
+            gap: 2px;
+            
+            > *{
+                background-color: #091e420a;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                padding-top: 2px;
+                padding-inline-start: 4.5px;
+                &:hover {
+                    background-color: #091e4214;
+                }
+            
+                &:active {
+                    background-color: #e4f0f6;
+                    color: #0079bf;
+                }
+            }
+        }
         
         }
+    }
+
+    & .modal-btn{
+        margin-inline-start: 34px;
+        // width: 44px;
     }
 }
 
@@ -521,6 +544,7 @@
     transition-property: background-color,border-color,box-shadow;
     transition-timing-function: ease;
     font-size: 14px;
+    width: max-content;
     &:hover{
         background-color: #091e4214;
     }

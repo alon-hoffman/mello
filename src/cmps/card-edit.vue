@@ -33,7 +33,7 @@
                         <div class="detail-item" v-if="card.dueDate">
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
-                                <div class="checkbox" :class="isCompleted" @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></div>
+                                <button class="checkbox" :class="isCompleted" @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></button>
                                 <div class="date-display">{{formattedDueDate}} <span :class="isCompleted">complete</span></div>
                             </div>
                         </div>
@@ -71,10 +71,10 @@
                         <ul class="dynamic-content todo-list flex column">
                                 <li class="todo-item-container flex justify-between">
                                     <div class="todo-item flex">
-                                        <div class="checkbox"></div>
+                                        <button class="checkbox"></button>
                                         <span>Has a fridge</span>
                                     </div>
-                                    <div class="todo-item-options flex">
+                                    <div class="todo-item-options flex align-center">
                                         <span class="icon sm time"></span>
                                         <span class="icon sm share"></span>
                                         <span class="icon sm more"></span>
@@ -83,7 +83,7 @@
                                 </li>
                                 <li class="todo-item-container flex justify-between">
                                     <div class="todo-item flex">
-                                        <div class="checkbox"></div>
+                                        <button class="checkbox"></button>
                                         <span>Has a fridge</span>
                                     </div>
                                     <div class="todo-item-options flex">
@@ -91,8 +91,8 @@
                                         <span class="icon sm share"></span>
                                         <span class="icon sm more"></span>
                                     </div>
-
                                 </li>
+                                <button class="modal-btn">Add an item</button>
                             </ul>
                     </section>
                     <section class="edit-block">
@@ -137,9 +137,7 @@ export default {
     },
     async created() {
         if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-
         const { boardId } = this.$route.params
-
         this.$store.commit({ type: 'setBoardById',  id:boardId });        
 
 
@@ -152,12 +150,12 @@ export default {
                 if (card.id=== id) 
                 {
                     this.card=JSON.parse(JSON.stringify(card))
-
                     // setCurrCard(state, { cardId })
                     return
                 }
             })
         })
+        console.log('printing card',this.card)
     },
     methods: {
         checkCloseModal(){
@@ -170,9 +168,10 @@ export default {
             }      
         },
         closeModal(){
+            this.updateCard()
             const url= this.$route.path
-        const route= url.substring(0, url.indexOf('card'))
-        this.$router.push(route)
+            const route= url.substring(0, url.indexOf('card'))
+            this.$router.push(route)
         },
         toggleTextArea() {
             this.realTextArea = true
@@ -251,13 +250,13 @@ export default {
     components: {
         modalSidebar
     },
-    watch:{
-        card:{
-            handler(newVal, oldVal){
-                this.updateCard()
-            },
-            deep:true
-        }
-}
+//     watch:{
+//         card:{
+//             handler(newVal, oldVal){
+//                 this.updateCard()
+//             },
+//             deep:true
+//         }
+// }
 }
 </script>

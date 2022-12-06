@@ -52,6 +52,8 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
+            const boardIdx = state.boards.find(b => b._id === board._id)
+            state.boards.splice(boardIdx,1,board)
             state.currBoard = board
         },
         removeBoard(state, { boardId }) {
@@ -60,6 +62,7 @@ export const boardStore = {
         setBoardById(state, { id }) {
             // const board = JSON.parse(JSON.stringify(state.boards))[0];
             const board = state.boards.find(b => b._id === id)
+            console.log(`board = `, board)
             // console.log(board)
             state.currBoard = board
 
