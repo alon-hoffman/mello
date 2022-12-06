@@ -5,12 +5,27 @@
     top: 0px;
     transition: background-color 0.5s ease 0s, box-shadow 0.5s ease 0s;
     width: 100vw;
-
-
     height: 60px;
     z-index: 100;
     background-color: #fff;
-    padding: 10px;
+    padding: 0 10px;
+
+    .guest-button {
+        height: 100%;
+        width: 164px;
+        font-size: 16px;
+        padding: 0.7rem 1rem 0.8rem;
+        color: #fff;
+        background-color: rgb(0, 101, 255);
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .right-home-header {
+        display: flex;
+        height: 60px
+    }
+
 
     .logo-img-home {
         width: rem(135px);
@@ -30,6 +45,7 @@
         display: flex;
         font-size: 19px;
         height: 100%;
+        margin: 0;
         padding: 0.5rem 1.5rem;
         text-decoration: none;
 
@@ -99,12 +115,13 @@
         align-items: center;
         border: 1px solid rgba(23, 43, 77, 0.16);
 
-        &:focus-within{
-            width:rem(890px);
+        &:focus-within {
+            width: rem(890px);
         }
     }
-    &:focus + span{
-        color:red;
+
+    &:focus+span {
+        color: red;
     }
 }
 
@@ -129,19 +146,20 @@
             background-color: #55a1cd;
         }
     }
-    
-    
-        .magnifying-glass {
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: 14px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+
+
+    .magnifying-glass {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     input {
         padding: 0px 12px 0px 30px;
         border: none;
@@ -149,17 +167,20 @@
         width: 200px;
         height: 32px;
         background-color: transparent;
+
         &::placeholder {
             color: #fff;
             position: relative;
             top: 3px;
         }
+
         &:focus {
             ::placeholder {
                 color: #172b4d;
                 position: relative;
                 top: 3px;
             }
+
             width: 100%;
             background-color: #fff;
             border: none;
@@ -167,15 +188,17 @@
             line-height: 20px;
             border-radius: 3px;
             color: rgb(0, 0, 0);
+
             .search-boards {
                 background-color: #fff;
                 width: 780px;
                 line-height: 20px;
                 color: black;
-            border-radius: 3px;
-            border: 2px solid #388bff;
+                border-radius: 3px;
+                border: 2px solid #388bff;
             }
-            .magnifying-glass{
+
+            .magnifying-glass {
                 color: #172b4d;
             }
 
@@ -197,12 +220,13 @@
 }
 
 .board-search-input {
-    &:focus{
-    &::placeholder {
-        color:$clr3;
+    &:focus {
+        &::placeholder {
+            color: $clr3;
+        }
+
+        &+span {
+            color: black;
+        }
     }
-    &+ span{
-        color:black;
-    }
-}
 }
