@@ -264,7 +264,6 @@ export default {
             // this.isMiniModalOpen = true
         },
         changeMiniModal(label) {
-            console.log(`label = `, label)
             this.chosenLabel = JSON.parse(JSON.stringify(label))
             this.miniModalTitle = 'Edit label'
         },
@@ -309,7 +308,6 @@ export default {
             return this.card.labels.includes(label.id)
         },
         updateCard() {
-            console.log(`this.card = `, this.card)
             this.$emit('updateCard', this.card)
         },
         addChecklist() {
@@ -336,14 +334,12 @@ export default {
             if (this.card.coverColor) this.card.coverColor = null
             this.card.imgURL = url
         },
-        removeCover() {
-            if (this.card.coverColor) {
-                console.log(`cover = `)
-                this.card.coverColor = null
-            }
-            else {
-                console.log(`img = `)
-                this.card.imgURL = null
+        removeCover(){
+            if(this.card.coverColor){
+                this.card.coverColor=null
+            } 
+            else{
+                this.card.imgURL=null
             }
         },
         addAttachment() {
@@ -383,7 +379,6 @@ export default {
 
         async uploadImgToCloud(ev) {
             const res = await uploadService.uploadImg(ev);
-            console.log(`res = `, res)
             this.attachment.href = res.url;
             this.attachment.type = 'img';
             this.addAttachment()
@@ -414,7 +409,6 @@ export default {
     watch: {
         card: {
             handler(newVal, oldVal) {
-                console.log("change")
                 this.$emit("updateCard", this.card)
             },
             deep: true
