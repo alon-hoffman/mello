@@ -12,7 +12,7 @@
         <div class="left-icons flex  align-center">
           <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted"/>
           <span v-if="dynamicCard.description" class="icon description"></span>
-          <span v-if="dynamicCard.checklists" class="icon sm checklist-check"></span>
+          <span v-if="dynamicCard.checklists.length" class="icon sm checklist-check"></span>
           <span v-if="dynamicCard.attachments?.length" class="icon sm attachment"></span>
         </div>
         <div v-if="dynamicCard.members" class="members flex align-center">
