@@ -9,21 +9,20 @@
     position: absolute;
     justify-content: space-between;
     background: #f4f5f7;
-    border: 1px solid $clr2;
     z-index: 2;
 
     .mini-modal-header {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 41px;
+        height: 48px;
         margin: 0 auto;
         width: 280px;
 
         .menu-modal-title {
             flex: 1;
             width: 257px;
-            color: #58667f;
+            color: #172b4d;
             line-height: 20px;
             font-size: 16px;
             font-weight: 600;
@@ -42,11 +41,30 @@
             font-size: 20px;
             padding: 0;
             margin: 0;
-            right: 30px;
+            right: 13px;
             top: 10px;
 
             &::before {
                 content: '\E91C';
+            }
+
+            &:hover {
+                color: #172b4d;
+            }
+        }
+
+        .go-back-to-menu-arrow {
+            color: #5e6c84;
+            position: absolute;
+            background-color: transparent;
+            font-size: 20px;
+            padding: 0;
+            margin: 0;
+            left: 13px;
+            top: 7px;
+
+            &::before {
+                content: '\e90a';
             }
 
             &:hover {
@@ -160,6 +178,33 @@
             padding: 6px 6px 6px 40px;
             position: relative;
         }
+        .colors-blocks-container{
+            // margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #5e6c8458;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            .color-block{
+                border-radius: 8px;
+                width: 152.5px;
+                height: 96px;
+                // padding: 0 4px;
+                // margin-bottom: 8px;
+            }
+        }
+        .unsplash-photos-container{
+            padding-top: 15px;
+            border-top: 1px solid #5e6c8458;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            .unsplashPhoto{
+                border-radius: 8px;
+                width: 152.5px;
+                height: 96px;
+            }
+        }
     }
 
     .edit-block {
@@ -193,20 +238,98 @@
     .activity {
         font-size: 20px;
     }
-    .custom-section{
-        color:#172b4d ;
+
+    .custom-section {
+        color: #172b4d;
     }
-.plus-btn-container{
-    width: 160px;
-    height: 96px;
-}
-    .plus-btn {
-        font-size: 16px;
-        font-family: icons;
-        content: "\e901";
-    }
+
 
     .activity-title {
         font-size: 14px;
     }
+
+    .photos-colors-btn {
+        display: flex;
+        color: #172b4d;
+        padding-bottom: 10px;
+        padding-top: 13px;
+        border-bottom: 1px solid #5e6c8458;
+        border-top: 1px solid #5e6c8458;
+
+        img {
+            width: 152.5px;
+            height: 96px;
+            margin-bottom: 8px;
+            border-radius: 3px;
+            &:hover{
+                opacity: 0.5;
+            }
+        }
+
+        .photos-div {
+            box-sizing: border-box;
+            cursor: pointer;
+            float: left;
+            padding: 0 4px;
+            position: relative;
+            text-align: center;
+            width: 50%;
+
+            .photos-title {
+                display: flex;
+                justify-content: center;
+                margin-top: 8px;
+            }
+        }
+
+        .colors-div {
+            box-sizing: border-box;
+            cursor: pointer;
+            float: left;
+            padding: 0 4px;
+            position: relative;
+            text-align: center;
+            width: 50%;
+
+            .colors-title {
+                display: flex;
+                justify-content: center;
+                margin-top: 8px;
+            }
+        }
+    }
+
+    .custom-section {
+        padding-top: 35px;
+
+        .custom-title {
+            font-size: 20px;
+            line-height: 24px;
+            font-weight: 600;
+            margin: 0 0 8px;
+
+        }
+
+        .plus-btn-container {
+            width: 160px;
+            height: 96px;
+            background-color: #eaecf0;
+            border-radius: 3px;
+            &:hover{
+                opacity: 0.8;
+            }
+            .plus-btn {
+                font-size: 24px;
+                width: 100%;
+                color: #5e6c84;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: icons;
+                // content: "\e901";
+            }
+        }
+    }
+  
 }

@@ -52,8 +52,8 @@
                         <div class="members-checked-box-container clickable">
                             <div class="user-and-img">
                                 <!-- <section class="img-container" :style="{ backgroundColor: getRandomColor }"> -->
-                                    <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
-                                    <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
+                                <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
+                                <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
                                 <!-- </section> -->
                                 {{ member.fullname }}
                             </div>
@@ -200,7 +200,7 @@
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
                     <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.thumb)"
+                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject)"
                             :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
                 </section>
@@ -330,11 +330,11 @@ export default {
         setCover(e) {
             if (this.card.imgURL) this.card.imgURL = null
             this.card.coverColor = e.target.value
-        },
-        setCoverImg(url) {
-            console.log(`url = `, url)
-            if (this.card.coverColor) this.card.coverColor = null
-            this.card.imgURL = url
+        },        
+        setCoverImg(photoObject) {
+            console.log(`photo = `, photoObject)
+            this.card.coverColor = photoObject.color
+            this.card.imgURL = photoObject.urls.thumb
         },
         removeCover() {
             if (this.card.coverColor) {
@@ -350,12 +350,12 @@ export default {
             this.attachment.createdAt = Date.now();
             if (!this.card.attachments?.length) this.card.attachments = []
             this.card.attachments.unshift(this.attachment)
-                this.attachment = {
-                    href: '',
-                    createdAt: '',
-                    type: '',
-                    file: null,
-                }       
+            this.attachment = {
+                href: '',
+                createdAt: '',
+                type: '',
+                file: null,
+            }
         },
         updateChosenLabel(action) {
             const labelIdx = this.boardLabels.findIndex((label) => label.id === this.chosenLabel.id)
@@ -380,17 +380,18 @@ export default {
 
         },
 
-        async uploadImgToCloud(ev) {        
-                console.log(`ev = `, ev)
-                const res = await uploadService.uploadImg(ev);
-                console.log(`res = `, res)
-                this.attachment.href = res.url;
-                this.attachment.type = 'img';                
-                      this.addAttachment() 
-                    this.$emit('closeMiniModal')
-            },
-        uploadAndSetCoverImg(){
-
+        async uploadImgToCloud(ev) {
+            // console.log(`ev = `, ev)
+            const res = await uploadService.uploadImg(ev);
+            // console.log(`res = `, res)
+            this.attachment.href = res.url;
+            this.attachment.type = 'img';
+            this.addAttachment()
+            this.$emit('closeMiniModal')
+        },
+       async uploadAndSetCoverImg(ev) {
+            const res = await uploadService.uploadImg(ev);
+            setCoverImg(res.secure_url)
         },
         dateOpen() {
             this.isDatePickerOpen = true
@@ -413,7 +414,7 @@ export default {
         getImageAttachments() {
             return this.card.attachments.filter((attachment) => attachment.type === "img")
         },
-        labelsForDisplay(){
+        labelsForDisplay() {
             const regex = new RegExp(this.filterLabelsBy, 'i')
             return this.boardLabels.filter((label) => {
                 return regex.test(label.title)
