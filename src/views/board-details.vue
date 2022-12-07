@@ -7,8 +7,9 @@
       <div class="board-header-left">
         <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
         <input class="board-details-title" type="text" v-model="board.title" >
-        <button class="star-board-details-btn">
-          <span class="icon sm star-empty"></span>
+        <button @click="toggleStar" class="star-board-details-btn">
+          <span v-if="!board.isStarred" class="icon sm star-empty"></span>
+          <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
       </div>
       <div class="board-header-right">
@@ -153,8 +154,10 @@ export default {
       const id= this.$store.getters.getCurrBoard._id
       this.$router.push(`/board/${id}/card/${cardId}`)
     },
+    toggleStar(){
+      this.board()
+    },
     updateBoard(){
-      console.log(`foo = `)
       this.$store.dispatch({type: 'updateBoard', board: this.board})
     },
     addCard(card){

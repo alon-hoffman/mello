@@ -33,6 +33,9 @@
     &.star-empty::before{
         content: '\E966'
     }
+    &.star-full::before{
+        content: '\E967'
+    }
     &.filter::before{
         content: '\E92E'
     }

@@ -1,4 +1,4 @@
-import { boardService } from '../services/board.service'
+import { boardService } from '../services/board-service-local.js'
 import { utilService } from '../services/util.service'
 
 export function getActionRemoveBoard(boardId) {
@@ -79,7 +79,7 @@ export const boardStore = {
             })
         },
         saveCard(state, { card, groupId }) {
-            console.log("🚀 ~ file: board.store.js:82 ~ saveCard ~ card", card)
+            // console.log("🚀 ~ file: board.store.js:82 ~ saveCard ~ card", card)
             // let cardIdx = 0
             // let groupIdx = -1
             const group = boardService.findGroupById(groupId, state.currBoard)
@@ -132,7 +132,7 @@ export const boardStore = {
             }
         },
         async updateBoard({ commit, state }, { board }) {
-            console.log(`updateBoard = `)
+            // console.log(`updateBoard = `)
             try {
 
                 board = await boardService.save(board)
@@ -203,8 +203,8 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
-            console.log(`saveCard = `)
-            console.log(`card = `, card)
+            // console.log(`saveCard = `)
+            // console.log(`card = `, card)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const groupIdx = board.groups.findIndex((group) => group.id === card.groupId)
             const cardIdx = board.groups[groupIdx].cards.findIndex((currCard) => currCard.id === card.id)
@@ -230,7 +230,7 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async saveList({ commit, dispatch, state }, { list }) {
-            console.log(`saveList = `, list)
+            // console.log(`saveList = `, list)
             list.cards.forEach((card)=>{
                 if(card.groupId!==list.id) card.groupId=list.id
             })
@@ -242,7 +242,7 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async saveLists({ dispatch, state }, { lists }) {
-            console.log(`saveLists = `)
+            // console.log(`saveLists = `)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             board.groups = lists
             dispatch({ type: "updateBoard", board })

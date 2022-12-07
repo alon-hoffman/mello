@@ -28,7 +28,7 @@
 
 <script>
 import cardGroup from "./card-group.vue"
-import { boardService } from '../services/board.service'
+import { boardService } from '../services/board-service-local'
 import { Container, Draggable } from "vue3-smooth-dnd"
 export default {
   props: {
