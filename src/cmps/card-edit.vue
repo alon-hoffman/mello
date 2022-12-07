@@ -77,9 +77,9 @@
                                 <button class="modal-btn" @click="removeChecklist">Delete</button>
                             </div>
                         </span>
-                        <span class="sub-icon">{{ calcProgress(checklist) }}%</span>
+                        <span class="sub-icon">{{ calcProgress(checklist.todos) }}%</span>
                         <div class="content">
-                            <progress class="progress-bar" :class="allDone(checklist)" :value="calcProgress(checklist)"
+                            <progress class="progress-bar" :class="allDone(checklist)" :value="calcProgress(checklist.todos)"
                                 max="100"></progress>
                         </div>
 
@@ -271,10 +271,10 @@ export default {
         isDone(isDone) {
             return { checked: isDone }
         },
-        calcProgress(checklist) {
-            const ratio = checklist.todos.reduce((acc, todo) => todo.isDone ? acc + 1 : acc, 0)
-            const percent = (100 * (ratio / checklist.todos.length)).toFixed(1)
-            // console.log('doneRatio', checklist)
+        calcProgress(todos) {
+            if (!todos.length) return 0
+            const ratio = todos.reduce((acc, todo) => todo.isDone ? acc + 1 : acc, 0)
+            const percent = Math.floor(100 * (ratio / todos.length))
             return percent
         },
         getColorWithOpacity(color) {
@@ -282,7 +282,7 @@ export default {
             return color
         },
         allDone(checklist) {
-            return { done: this.calcProgress(checklist) == 100 }
+            return { done: this.calcProgress(checklist.todos) == 100 }
         }
     },
     computed: {
