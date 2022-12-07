@@ -32,7 +32,7 @@
         if(this.date.isCompleted){
           const prettyDate=dateToFormat.toLocaleDateString(undefined, options)
           this.prettyDate = prettyDate
-          return  {"class":"done","date":prettyDate}
+          return  {"class":"preview-done","date":prettyDate}
         }
         const timeLeft= this.date.time- Date.now()
         if(timeLeft<0){
