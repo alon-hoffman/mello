@@ -94,10 +94,10 @@ export default {
     },
     editNewCard(event){
       this.isCardEdited = true
-      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
-      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
-      this.$refs.addCard.scrollIntoView({block: "end"});
-       console.log( this.$refs.addCard)
+      // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      // this.$refs.addCard.scrollIntoView({block: "end"});
+      //  console.log( this.$refs.addCard)
     },
     addCard() {
       const newCard= {title:this.newTitle, groupId: this.list.id}
