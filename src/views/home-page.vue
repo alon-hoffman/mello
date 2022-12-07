@@ -11,7 +11,7 @@
           </div>
         </div>
         <button @click="enterAsGuest" class="guest-button">Enter as a guest</button>
-        <img class="trello-board-img" alt="Vue logo" src="https://images.ctfassets.net/rz1oowkt5gyp/5lDhjfcNTvIKeiBPtxRdQ7/67717ed94b8f6e7fb13a59c109933596/HeroBoard__CalendarView_4x.png?w=960&fm=webp">
+        <img class="trello-board-img" alt="img" src="https://res.cloudinary.com/mello123/image/upload/v1670406778/przlb3phmyfo3iizxymw.png">
       </div>
     </div>
 

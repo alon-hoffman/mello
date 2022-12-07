@@ -66,7 +66,7 @@
                             <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                         </div>
                     </section>
-                    <attachmentDisplay v-if="card.attachments" :attachments="card.attachments" @updateAttachments="updateAttachments" />
+                    <attachment-display v-if="card.attachments?.length" :attachments="card.attachments" @updateAttachments="updateAttachments" />
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
@@ -314,8 +314,8 @@ export default {
         isCompleted() {
             return { checked: this.card.dueDate.isCompleted }
         },
-        updateAttachments(attachments){
-            this.card.attachments = attachments
+        updateAttachments(newAttachments){
+            this.card.attachments = newAttachments
             // this.updateCard()
         }
 
