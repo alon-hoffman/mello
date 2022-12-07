@@ -27,45 +27,45 @@
 
 </template>
   
-<script>
-import dateDisplay from "../cmps/date-display.vue"
-export default {
-  props: {
-    card: Object,
-  },
-  data() {
-    return {
-      newLabels: null,
-      boardLabels: null,
-      newCard: null,
-    }
-  },
-  components: {
-    dateDisplay
-  },
-  computed: {
-    cardUrl() {
-      return this.card.imgURL
+  <script>
+  import dateDisplay from "../cmps/date-display.vue"
+  export default {
+    props:{
+    card:Object,
+        },
+        data(){
+          return{
+            newLabels:null,
+            boardLabels:null,
+            newCard:null,
+          }
+        },
+        components:{
+          dateDisplay
+        },
+    computed: {
+      cardUrl(){
+        return this.card.imgURL
+      },
+      labels(){
+        return this.card.labels?.map(label=>{
+         const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
+         if(idx>-1)  return {color:this.boardLabels[idx].color,title:this.boardLabels[idx].title}
+         return "red"
+        })
+      },
+      dynamicCard(){
+        return this.card
+      },
+      // checklistCompletion()
     },
-    labels() {
-      return this.card.labels?.map(label => {
-        const idx = this.boardLabels.findIndex(boardLabel => boardLabel.id === label)
-        if (idx > -1) return { color: this.boardLabels[idx].color, title: this.boardLabels[idx].title }
-        return "red"
-      })
-    },
-    dynamicCard() {
-      return this.card
-    },
-    // checklistCompletion()
-  },
-  created() {
-    this.boardLabels = this.$store.getters.getCurrBoard.labels
-    this.newLabels = this.card?.labels?.map(label => {
-      const idx = this.boardLabels.findIndex(boardLabel => boardLabel.id === label)
-      if (idx > -1) return { color: this.boardLabels[idx].color }
-      return "red"
-    })
+      created(){
+        this.boardLabels= this.$store.getters.getCurrBoard.labels
+        this.newLabels= this.card?.labels?.map(label=>{
+         const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
+         if(idx>-1)  return {color:this.boardLabels[idx].color}
+         return "red"
+        })
 
   },
   methods: {
