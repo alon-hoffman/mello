@@ -70,10 +70,8 @@
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
-                            <!-- <h3>{{checklist.title}}</h3> -->
                             <input type="text" v-model="checklist.title">
                             <div class="checklist-options">
-                                <!-- <button class="modal-btn">Hide Checked items</button> -->
                                 <button class="modal-btn" @click="removeChecklist">Delete</button>
                             </div>
                         </span>
@@ -86,17 +84,16 @@
                         <ul class="dynamic-content todo-list flex column">
                             <li class="todo-item-container flex clickable" v-for="todo in checklist.todos"
                                 @click="openEditMode(todo)" v-click-outside="() => closeEditMode(todo)">
-                                <div class="todo-item flex">
-                                    <button class="checkbox" :class="isDone(todo.isDone)"
+                                <div class="todo-item edit-block">
+                                    <button class="icon checkbox" :class="isDone(todo.isDone)"
                                         @click.stop="todo.isDone = !todo.isDone"></button>
-                                    <span v-if="!todo.editMode" :class="isDone(todo.isDone)">{{ todo.title }}</span>
-                                    <section v-else class="edit-todo flex wrap">
-                                        <textarea class="edit-mode" v-model="todo.title"></textarea>
-                                        <div class="break"></div>
+                                    <span v-if="!todo.editMode" class="header" :class="isDone(todo.isDone)">{{ todo.title }}</span>
+                                    <textarea v-else class="header edit-mode" v-model="todo.title"></textarea>
+                                    <div v-if="todo.editMode" class="content edit-todo">
                                         <button class="modal-btn add-todo-btn"
-                                            @click.stop="closeEditMode(todo)">save</button>
+                                        @click.stop="closeEditMode(todo)">Save</button>
                                         <span class="icon lg close" @click.stop="removeTodo(checklist, todo)"></span>
-                                    </section>
+                                    </div>
                                 </div>
                                 <!-- <div class="todo-item-options flex align-center">
                                         <span class="icon sm time"></span>
