@@ -209,6 +209,7 @@ export default {
             //need to add description to card
         },
         updateCard(currCard) {
+            console.log(`currCard = `, currCard)
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
             else this.$store.dispatch({ type: "saveCard", card: this.card })
         },

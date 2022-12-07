@@ -195,7 +195,7 @@
                     </div>
                     <label class="cover-img-label">
                         <div class="fake-button cover-img-btn">Upload a cover image </div><input
-                            @input="setBackgroundCard" class="cover-img-input" type="file">
+                            @input="uploadAndSetCoverImg" class="cover-img-input" type="file">
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
                     <div class="unsplash-photos-container" v-if="unsplashPhotos">
@@ -334,6 +334,7 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(url) {
+            console.log(`url = `, url)
             if (this.card.coverColor) this.card.coverColor = null
             this.card.imgURL = url
         },
@@ -351,11 +352,12 @@ export default {
             this.attachment.createdAt = Date.now();
             if (!this.card.attachments?.length) this.card.attachments = []
             this.card.attachments.unshift(this.attachment)
-            this.attachment = {
-                href: '',
-                createdAt: '',
-                type: '',
-            }
+                this.attachment = {
+                    href: '',
+                    createdAt: '',
+                    type: '',
+                    file: null,
+                }       
         },
         updateChosenLabel(action) {
             const labelIdx = this.boardLabels.findIndex((label) => label.id === this.chosenLabel.id)
@@ -380,12 +382,17 @@ export default {
 
         },
 
-        async uploadImgToCloud(ev) {
-            const res = await uploadService.uploadImg(ev);
-            this.attachment.href = res.url;
-            this.attachment.type = 'img';
-            this.addAttachment()
-            this.$emit('closeMiniModal')
+        async uploadImgToCloud(ev) {        
+                console.log(`ev = `, ev)
+                const res = await uploadService.uploadImg(ev);
+                console.log(`res = `, res)
+                this.attachment.href = res.url;
+                this.attachment.type = 'img';                
+                      this.addAttachment() 
+                    this.$emit('closeMiniModal')
+            },
+        uploadAndSetCoverImg(){
+
         },
         dateOpen() {
             this.isDatePickerOpen = true
@@ -422,6 +429,7 @@ export default {
     watch: {
         card: {
             handler(newVal, oldVal) {
+                // console.log(`this.card = `, this.card)
                 this.$emit("updateCard", this.card)
             },
             deep: true
