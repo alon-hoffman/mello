@@ -62,7 +62,6 @@
         return this.card
       },
       checklistCompletion(){
-         console.log( this.card.checklists)
         var doneTodos=0
         var todos=0
          this.card.checklists.forEach(checklist => {

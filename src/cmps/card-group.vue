@@ -59,7 +59,7 @@
   
 <script>
 import cardPreview from "../cmps/card-preview.vue"
-import { boardService } from '../services/board-service-local'
+import { boardService } from '../services/board-service.js'
 import { Container, Draggable } from "vue3-smooth-dnd";
 export default {
   props: {
@@ -94,10 +94,10 @@ export default {
     },
     editNewCard(event){
       this.isCardEdited = true
-      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
-      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
-      this.$refs.addCard.scrollIntoView({block: "end"});
-       console.log( this.$refs.addCard)
+      // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      // this.$refs.addCard.scrollIntoView({block: "end"});
+      //  console.log( this.$refs.addCard)
     },
     addCard() {
       const newCard= {title:this.newTitle, groupId: this.list.id}
