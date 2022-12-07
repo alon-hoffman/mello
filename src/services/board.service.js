@@ -16,7 +16,7 @@ const startingBoard = [
         "archivedAt": 1589983468418,
         "createdBy": {
             "_id": "u101",
-            "fullname": "Alon",
+            "fullname": "Alon Hoffman",
         },
         "style": {
             "backgroundImage": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2465x1600/560d0ec362004ae022ec06afdb2b06ef/photo-1599974579688-8dbdd335c77f.jpg",
@@ -65,17 +65,17 @@ const startingBoard = [
             {
                 "_id": "u101",
                 "fullname": "Alon Hoffman",
-                "imgUrl": "https://www.google.com"
+                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400597/pqqzgegaqywvcmovvroq.jpg"
             },
             {
                 "_id": "u102",
                 "fullname": "Itai Morag",
-                "imgUrl": "https://www.google.com"
+                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400586/ujrglkfvggsttcuk6t5l.jpg"
             },
             {
                 "_id": "u103",
                 "fullname": "Erez Eitan",
-                "imgUrl": "https://www.google.com"
+                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400532/ls7fwbpl28orkpfpbgwb.jpg"
             }
         ],
         "groups": [
@@ -99,12 +99,12 @@ const startingBoard = [
                             {
                                 "_id": "u101",
                                 "fullname": "Alon Hoffman",
-                                "imgUrl": "https://www.google.com"
+                                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400597/pqqzgegaqywvcmovvroq.jpg"
                             },
                             {
                                 "_id": "u102",
                                 "fullname": "Itai Morag",
-                                "imgUrl": "https://www.google.com"
+                                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400586/ujrglkfvggsttcuk6t5l.jpg"
                             },
                         ]
                     }
@@ -175,10 +175,12 @@ const startingBoard = [
                             {
                                 "_id": "u101",
                                 "fullname": "Alon Hoffman",
+                                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400597/pqqzgegaqywvcmovvroq.jpg"
                             },
                             {
                                 "_id": "u102",
                                 "fullname": "Itai Morag",
+                                "imgUrl": "https://res.cloudinary.com/mello123/image/upload/v1670400586/ujrglkfvggsttcuk6t5l.jpg"
                             },
                         ]
 

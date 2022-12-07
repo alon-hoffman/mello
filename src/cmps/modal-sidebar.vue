@@ -51,9 +51,10 @@
                     <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
                         <div class="members-checked-box-container clickable">
                             <div class="user-and-img">
-                                <section class="img-container" :style="{ backgroundColor: getRandomColor }">
-                                    <span class="member-list-initials">{{ memberInitials(member) }}</span>
-                                </section>
+                                <!-- <section class="img-container" :style="{ backgroundColor: getRandomColor }"> -->
+                                    <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
+                                    <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
+                                <!-- </section> -->
                                 {{ member.fullname }}
                             </div>
                             <img class="check-img" v-if="checkIfInMemberList(member)"
@@ -264,7 +265,6 @@ export default {
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
-            // this.isMiniModalOpen = true
         },
         changeMiniModal(label) {
             this.chosenLabel = JSON.parse(JSON.stringify(label))
@@ -321,9 +321,7 @@ export default {
             }
             if (!this.card.checklists) this.card.checklists = []
             this.card.checklists.push(newChecklist)
-            this.IsMiniModalOpen = false
             this.checklist = "checklist"
-            this.updateCard()
             setTimeout(() => { this.$emit('closeMiniModal') }, 500)
         },
         setLabelBGC(selectedColor) {

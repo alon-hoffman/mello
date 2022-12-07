@@ -1,32 +1,34 @@
-.card-preview{
+.card-preview {
     min-height: em(32px);
     background-color: $clr1;
     margin: rem(9px) 0;
     margin-top: 0;
     border-radius: 3px;
-    border-bottom:1px solid $clr3 ;
+    border-bottom: 1px solid $clr3 ;
     margin-bottom: rem(8px);
     color: $dark-blue;
 
-    &:hover{
+    &:hover {
         background-color: #f4f5f7;
     }
+
     // padding: rem(5px) rem(10px) rem(5px) rem(10px);
-    h1{
+    h1 {
         margin: 0 rem(10px) rem(10px) rem(10px);
-        padding-top:5px;
+        padding-top: 5px;
         font-weight: unset;
         font-size: rem(16px);
     }
 
-    img{
-        width:100%;
+    img {
+        width: 100%;
         border-radius: em(3px);
         background-position: 50%;
         object-fit: cover;
-        aspect-ratio:inherit;
+        aspect-ratio: inherit;
         pointer-events: none
     }
+
     // textarea{
     //     resize: none;
     //     border:none;
@@ -40,36 +42,44 @@
     //         font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     //         font-size: 14px;
     //     }
-        
+
     // }
 
-    &-cover{
+    &-cover {
         border-radius: 3px 3px 0 0;
         height: 32px;
     }
 
-    .labels-container{
+    .labels-container {
         margin: rem(5px) rem(10px) rem(2px) rem(10px);
-        padding-top:rem(12px);
-        gap:em(10px);
-        width:100%;
+        padding-top: rem(12px);
+        gap: em(10px);
+        width: 100%;
         flex-wrap: wrap;
-        .label-preview{
-            min-width:em(42px);
+
+        .label-preview {
+            min-width: em(42px);
             cursor: pointer;
-            height:em(10px);
+            height: em(10px);
             border-radius: 5px;
         }
     }
+
     .icons-container {
         margin: rem(-6px) rem(10px) rem(7px) rem(10px);
     }
 
-    .left-icons{
-        gap:rem(8px)
+    .left-icons {
+        gap: rem(8px)
     }
 
-    .member-avatar{
+    .member-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+    }
+
+    .member-avatar {
         border-radius: 25em;
         height: 32px;
         object-fit: cover;
@@ -82,26 +92,30 @@
         display: flex;
         justify-content: center;
         align-items: center;
-      
+
     }
-    .date-display{
-        >*{
-            min-width:rem(67px);
+
+    .date-display {
+        >* {
+            min-width: rem(67px);
             border-radius: 3px;
             font-size: rem(14px);
-            padding:rem(2px) 0;
+            padding: rem(2px) 0;
             text-align: center;
             justify-content: center;
         }
-        .over-due{
+
+        .over-due {
             background-color: $red;
-            color:white;
+            color: white;
         }
-        .today{
+
+        .today {
             background-color: $yellow;
-            color:white;
+            color: white;
         }
-        .done{
+
+        .done {
             background-color: $green;
         }
     }
