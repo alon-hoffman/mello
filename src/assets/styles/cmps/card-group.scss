@@ -5,7 +5,9 @@
     color: $clr4;
     background-color: $clr2;
     border-radius: 3px;
-    max-height: calc(100vh - 120px);
+    // max-height: calc(100vh - 120px);
+    display:flex;
+    flex-direction: column;
     .undefined{
         max-height: calc(100vh - 200px);
         overflow: auto;
@@ -15,7 +17,6 @@
         &::-webkit-scrollbar {
             width: 8px;
             height: 8px;
-            // margin-right: 5px;
           }
         &::-webkit-scrollbar-track {
             background: rgba(223, 222, 222, 0.908); 
@@ -63,22 +64,21 @@
     }
 
     .add-card {
-        display: flex;
         align-items: center;
         gap: 3px;
         background-color: unset;
         color: unset;
         border: none;
-        width: 100%;
         text-align: start;
-        padding:0;
-        margin:0.4rem 0 1rem 1rem;
-        padding-bottom:0.9em;
-        font-size: rem(16px);
+        width:256px;
+        margin:0 8px 7px;
 
+        word-spacing: 0;
+        // padding-inline-start:rem(6px);
+        font-size: rem(16px);
         span{
         font-size:rem(17px) !important;
-        padding-inline-start: rem(4px);
+        vertical-align: bottom
         }
 
         &:hover {
@@ -93,6 +93,7 @@
     }
 
     .add-card-section {
+        flex-grow: 1;
         .buttons {
             display: flex;
             justify-content: space-between;
@@ -184,3 +185,5 @@
     border: 1px dashed #abc;
     margin: 5px 45px 5px 5px;
   }
+
+  
