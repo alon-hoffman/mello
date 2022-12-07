@@ -142,10 +142,11 @@
         }
     }
     textarea{
-        width: 93.5%;
+        width: 100%;
         height:rem(75px);
         margin: 0 rem(10px) 0 rem(10px);
         border-radius: em(3px);
+        margin: 0;
         resize: none;
         border:none;
         outline: none;
