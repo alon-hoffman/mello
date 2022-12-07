@@ -279,7 +279,7 @@ const startingBoard = [
 ]
 
 function activitySorter(card, activity) {
-    const list = 
+    const list = 'aa'
     const map = {
         cardAdd: `Added ${card.title} to list`
 
