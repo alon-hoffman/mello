@@ -59,6 +59,8 @@
         min-height: 40px;
         margin-top: 1.2em;
         margin-inline-start: 6px;
+        // padding-top: 8px;
+        padding-inline-start: 13px !important;
         padding-bottom: 2em;
 
         &.written-description {
@@ -174,6 +176,9 @@
 
         >* {
             margin: 0;
+        }
+        & > .modal-btn{
+            margin:0;
         }
 
         & input {

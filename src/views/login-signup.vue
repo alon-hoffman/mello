@@ -3,7 +3,7 @@
   <section class="login-signup">
     <router-link to="/">
       <!-- logo-login-page -->
-      <img class="logo-login-page" src="../assets/icons/logo.png" alt="">
+      <img class="logo-login-page" src="https://res.cloudinary.com/mello123/image/upload/v1670406786/yd2qyxfpqsuosu76o82o.png" alt="">
     </router-link>
     <section v-if="!showLogin" class="login-section">
       <h2>Login</h2>

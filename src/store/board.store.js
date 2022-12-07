@@ -204,6 +204,7 @@ export const boardStore = {
         },
         async saveCard({ dispatch, state }, { card, groupId }) {
             console.log(`saveCard = `)
+            console.log(`card = `, card)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const groupIdx = board.groups.findIndex((group) => group.id === card.groupId)
             const cardIdx = board.groups[groupIdx].cards.findIndex((currCard) => currCard.id === card.id)
