@@ -17,7 +17,7 @@
         <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted"/>
         
       </Draggable>
-      <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">
+      <div ref="addCard" @keyup.enter="addCard" class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">
         <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
         <div class="buttons">
           <div class="left-buttons">
@@ -35,7 +35,7 @@
     </Container>
 
 
-    <button v-if="!isCardEdited" class="add-card clickable" @click="isCardEdited = true">
+    <button v-if="!isCardEdited" class="add-card clickable" @click="editNewCard">
       <span class="icon add sm"></span> Add a card
     </button>
     <!-- <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">
@@ -86,14 +86,20 @@ export default {
       counter:1
     }
   },
+  
   methods: {
     closeNewCard() {
       this.newCard = { title: '', groupId: this.list.id }
       this.isCardEdited = false
     },
+    editNewCard(event){
+      this.isCardEdited = true
+      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      this.$refs.addCard.scrollIntoView({block: "end"});
+       console.log( this.$refs.addCard)
+    },
     addCard() {
-      //XXX
-      
       const newCard= {title:this.newTitle, groupId: this.list.id}
       this.$emit('addCard', newCard)
       this.newTitle=""

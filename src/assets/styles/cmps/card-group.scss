@@ -93,6 +93,7 @@
     }
 
     .add-card-section {
+        margin-bottom: 5px;
         flex-grow: 1;
         .buttons {
             display: flex;
@@ -104,8 +105,7 @@
                 display: flex;
                 align-items: center;
                 span{
-                    margin-bottom:3px;
-                    margin-left:4px;
+                    margin-inline-start:8px;
                 }
                 img {
                     width: rem(18px);
@@ -113,8 +113,9 @@
                 }
 
                 button {
-                    margin-inline-start: rem(10px);
-                    margin-top:0;
+                    width:80.6px;
+                    margin-inline-end: rem(2px);
+                    margin:0;
                     background-color: $light-blue;
                     color: #fff;
                     border-radius: 3px;
@@ -137,14 +138,15 @@
                 
             }
             svg{
-                margin-bottom:3px;
+                margin:0;
+                width:30px
             }
         }
     }
     textarea{
-        width: 93.5%;
+        width: 100%;
         height:rem(75px);
-        margin: 0 rem(10px) 0 rem(10px);
+        margin: 0;
         border-radius: em(3px);
         resize: none;
         border:none;
