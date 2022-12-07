@@ -15,7 +15,8 @@
         <span v-if="dynamicCard.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
           <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
 
-        <span v-if="dynamicCard.attachments?.length" class="icon sm attachment"></span>
+        <span v-if="dynamicCard.attachments?.length" class="attachments">
+          <span class="icon sm attachment"></span>{{dynamicCard.attachments.length}}</span>
       </div>
       <div v-if="dynamicCard.members" class="members flex align-center">
         <div class="member-avatar" v-for="member in card.members">

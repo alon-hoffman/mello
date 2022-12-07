@@ -66,7 +66,7 @@
                             <button @click="closeTextArea" class="cancel-description-btn fake-button">Cancel</button>
                         </div>
                     </section>
-                    <attachment-display v-if="card.attachments?.length" :attachments="card.attachments" @updateAttachments="updateAttachments" />
+                    <attachment-display v-if="getAttachments" :attachments="getAttachments" @updateAttachments="updateAttachments" />
                     <section class="edit-block" v-if="card.checklists" v-for="checklist in card.checklists">
                         <span class="icon lg checkList"></span>
                         <span class="header flex justify-between">
@@ -142,8 +142,8 @@
 </template>
 
 <script>
-import modalSidebar from './modal-sidebar.vue'
-import attachmentDisplay from './attachment-display.vue'
+import modalSidebar from './modal-sidebar.vue';
+import attachmentDisplay from './attachment-display.vue';
 import { utilService } from '../services/util.service';
 export default {
     props: {
@@ -283,6 +283,13 @@ export default {
         },
         allDone(checklist) {
             return { done: this.calcProgress(checklist.todos) == 100 }
+        },
+        updateAttachments(newAttachments){
+            console.log(newAttachments)
+            // if(typeof newAttachments==="object") return
+            this.card.attachments = newAttachments
+            console.log("🚀 ~ file: card-edit.vue:291 ~ updateAttachments ~ this.card.attachments", this.card.attachments)
+            this.updateCard(this.card.attachments)
         }
     },
     computed: {
@@ -295,6 +302,10 @@ export default {
         },
         getCurrCard() {
             return this.card
+        },
+        getAttachments(){
+        if(!this.card.attachments||!this.card.attachments.length) return false
+        return this.card.attachments
         },
         isDescription() {
             return { "written-description": !!this.card.description }
@@ -314,10 +325,7 @@ export default {
         isCompleted() {
             return { checked: this.card.dueDate.isCompleted }
         },
-        updateAttachments(newAttachments){
-            this.card.attachments = newAttachments
-            // this.updateCard()
-        }
+      
 
 
 
