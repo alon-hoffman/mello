@@ -51,6 +51,7 @@
                  :board="board"
                  v-click-outside="closeFilter"
                  @updateFilter="updateFilter"
+                 @close="closeFilter"
                  />
 
   </section>
@@ -63,7 +64,6 @@ import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
 import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
 import filterMenu from "../cmps/filter-menu.vue"
-//icons
 
 export default {
   components: {
@@ -131,7 +131,6 @@ export default {
         }
         return true
       })
-      // console.log(board.groups)
       return board
     },
     chosenBackground(){
@@ -147,7 +146,6 @@ export default {
     // todo check if the param really is _id
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
-    console.log(this.board.members)
   },
   methods: {
     toggleEdit(cardId) {
@@ -190,7 +188,7 @@ export default {
       this.isSidebarMenuModal=false
     },
     duplicateList(list){
-      console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
+      // console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
       this.$store.dispatch({ type: "duplicateList", list });
     },
     openFilter(){
@@ -200,7 +198,6 @@ export default {
       this.isFilterMenu = false
     },
     updateFilter(filter){
-      // console.log('updateFilter',filter)
       this.filterBy = filter
     },
   },
