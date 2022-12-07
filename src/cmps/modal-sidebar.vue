@@ -52,8 +52,8 @@
                         <div class="members-checked-box-container clickable">
                             <div class="user-and-img">
                                 <!-- <section class="img-container" :style="{ backgroundColor: getRandomColor }"> -->
-                                    <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
-                                    <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
+                                <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
+                                <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
                                 <!-- </section> -->
                                 {{ member.fullname }}
                             </div>
@@ -332,7 +332,6 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(url) {
-            console.log(`url = `, url)
             if (this.card.coverColor) this.card.coverColor = null
             this.card.imgURL = url
         },
@@ -350,12 +349,12 @@ export default {
             this.attachment.createdAt = Date.now();
             if (!this.card.attachments?.length) this.card.attachments = []
             this.card.attachments.unshift(this.attachment)
-                this.attachment = {
-                    href: '',
-                    createdAt: '',
-                    type: '',
-                    file: null,
-                }       
+            this.attachment = {
+                href: '',
+                createdAt: '',
+                type: '',
+                file: null,
+            }
         },
         updateChosenLabel(action) {
             const labelIdx = this.boardLabels.findIndex((label) => label.id === this.chosenLabel.id)
@@ -380,17 +379,18 @@ export default {
 
         },
 
-        async uploadImgToCloud(ev) {        
-                console.log(`ev = `, ev)
-                const res = await uploadService.uploadImg(ev);
-                console.log(`res = `, res)
-                this.attachment.href = res.url;
-                this.attachment.type = 'img';                
-                      this.addAttachment() 
-                    this.$emit('closeMiniModal')
-            },
-        uploadAndSetCoverImg(){
-
+        async uploadImgToCloud(ev) {
+            // console.log(`ev = `, ev)
+            const res = await uploadService.uploadImg(ev);
+            // console.log(`res = `, res)
+            this.attachment.href = res.url;
+            this.attachment.type = 'img';
+            this.addAttachment()
+            this.$emit('closeMiniModal')
+        },
+       async uploadAndSetCoverImg(ev) {
+            const res = await uploadService.uploadImg(ev);
+            setCoverImg(res.secure_url)
         },
         dateOpen() {
             this.isDatePickerOpen = true
@@ -413,7 +413,7 @@ export default {
         getImageAttachments() {
             return this.card.attachments.filter((attachment) => attachment.type === "img")
         },
-        labelsForDisplay(){
+        labelsForDisplay() {
             const regex = new RegExp(this.filterLabelsBy, 'i')
             return this.boardLabels.filter((label) => {
                 return regex.test(label.title)
