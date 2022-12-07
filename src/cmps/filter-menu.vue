@@ -48,15 +48,7 @@
 export default{
     props: {
         board: Object,
-    },
-    data(){
-        return {
-            filterBy:{
-                keyword: '',
-                labels: [],
-                members: [],
-            }
-        }
+        filterBy: Object
     },
     methods: {
         memberInitials(member) {

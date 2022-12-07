@@ -46,6 +46,7 @@
                 @closeTitleModal="(listModalOpen=false)"/>
 
     <filter-menu v-if="isFilterMenu"
+                 :filterBy="filterBy"
                  :board="board"
                  v-click-outside="closeFilter"
                  @updateFilter="updateFilter"
@@ -82,7 +83,11 @@ export default {
       },
       isSidebarMenuModal:false,
       isFilterMenu: false,
-      filterBy: null
+      filterBy: {
+                keyword: '',
+                labels: [],
+                members: [],
+            }
     }
   },
   computed: {
@@ -95,9 +100,6 @@ export default {
       if (!keyword && !members.length && !labels.length) return false
       return true
     },
-    // board() {
-    //   return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
-    // },
     board(){
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
       if(!this.isFilter) return board
@@ -106,17 +108,29 @@ export default {
       board.groups = board.groups.filter(group => {
 
         // KEYWORD FILTER
-        if (regex.test(group.title)) return true
-        group.cards = group.cards.filter(card => regex.test(card.title))
-        if (!group.cards.length) return false
+        if (keyword){
+          if(regex.test(group.title)) return true
+          group.cards = group.cards.filter(card => regex.test(card.title))
+          if (!group.cards.length) return false
+        } 
         // LABEL FILTER
         if (labels.length){
-          group.cards = group.cards.filter(card => card.labels.some(label => labels.includes(label)))
-          // if ()
+          group.cards = group.cards.filter(card => {
+            if (!card.labels || !card.labels.length) return false
+            return card.labels.some(label => labels.includes(label))})
+          if (!group.cards.length) return false
         }
-        return false
+
+        // MEMBERS FILTER
+        if(members.length){
+          group.cards = group.cards.filter(card => {
+            if (!card.members || !card.members.length) return false
+            return card.members.some(member => members.includes(member._id))})
+          if (!group.cards.length) return false
+        }
+        return true
       })
-      console.log(board.groups)
+      // console.log(board.groups)
       return board
     },
     chosenBackground(){
