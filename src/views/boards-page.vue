@@ -46,6 +46,31 @@
       </ul>
 
     </section>
+    
+    <section class="boards full">
+      <h3 class="gallery-header">
+        <span class="icon lg time"></span>
+        favorite Boards
+      </h3>
+    <ul class="gallery-list flex wrap">
+      <li class="gallery-item" v-for="board in favoriteBoards">
+          <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
+          <div class="board-preview" :style="chosenBackground(board.style)">
+            {{board.title}}
+            <div class="board-preview-options">
+              <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
+            </div>
+          </div>
+        </router-link>
+      </li>
+       <li class="fake-board-preview clickable flex align-center justify-center"
+       @click="(boardCreateMode = true)">
+          Create new board
+      </li>
+    </ul>
+
+  </section>
+
     <board-creator v-if="boardCreateMode" 
     @saveBoard="saveBoard"
     @close="closeCreator"
@@ -69,7 +94,14 @@ import boardCreator from '../cmps/board-creator.vue'
     },
     computed: {
       boards(){
+        console.log( this.$store.getters.boards)
         return this.$store.getters.boards
+      },
+      favoriteBoards(){
+        const boards =this.$store.getters.boards
+        // return boards.filter(board => board.isStarred)
+        return this.$store.getters.boards
+
       }
     },
    async created() {
