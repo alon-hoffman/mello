@@ -31,7 +31,7 @@
               fill="currentColor"></path>
           </svg>
         </button>
-        <sidebarMenuModal v-else  @closeSidebarMenuModal="closeSidebarMenuModal"/>
+        <sidebarMenuModal v-else :currBoard="board" @closeSidebarMenuModal="closeSidebarMenuModal"/>
       </div>
     </div>
     <group-list @addCard="addCard"

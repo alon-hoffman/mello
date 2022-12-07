@@ -210,8 +210,6 @@
     .edit-block {
         display: grid;
         color: #172b4d;
-        font-size: 12px;
-        font-weight: 300;
         grid-template-columns: 36px 1fr;
         grid-template-rows: 36px 1fr;
         // padding-inline-start: 0.28em;
@@ -228,7 +226,6 @@
             color: #fff;
             font-weight: 500;
             margin-inline-end: 4px;
-            margin-block-end: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -239,9 +236,7 @@
         }
     }
 
-    .activity {
-        font-size: 20px;
-    }
+  
 
     .custom-section {
         color: #172b4d;
@@ -336,4 +331,10 @@
         }
     }
   
+}
+
+.activity-list {
+    &-item{
+        padding-block: 8px;
+    }
 }

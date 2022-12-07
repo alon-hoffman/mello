@@ -97,18 +97,8 @@ export const boardStore = {
             const groupIdx = state.currBoard.groups.findIndex(currGroup => currGroup.id === group.id)
             state.currBoard.groups.splice(groupIdx, 1, group)
         },
-        addActivity({ currBoard }, { activity }) {
-            const { card, action } = activity
-            const activityToAdd = {
-                card: {
-                    id: card.id,
-                    title: card.title
-                },
-                title: boardService.activitySorter(action, currBoard, card),
-                addedAt: Date.now(),
-            }
-            currBoard.activities.unshift(activityToAdd)
-            // console.log(currBoard.activities)
+        addActivity(state, { activity }) {
+            state.currBoard.activities.unshift(activity)
         },
     },
     actions: {
@@ -171,14 +161,14 @@ export const boardStore = {
             board.groups.splice(idx, 0, newList)
             dispatch({ type: "updateBoard", board })
         },
-        async addCard({ dispatch, commit, state }, { card }) {
+        addCard({ dispatch, commit, state }, { card }) {
             card.id = utilService.makeId()
-            const board = JSON.parse(JSON.stringify(state.currBoard))
+            const activity = { action: 'addCard', card }
+            dispatch({ type: 'addActivity', activity })
+            let board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
             group.cards.push(card)
-            const activity = { action: 'addCard', card }
             try {
-                commit({ type: 'addActivity', activity })
                 dispatch({ type: "updateBoard", board })
             } catch (err) {
                 console.log('Error, could not Add or update list')
@@ -213,7 +203,7 @@ export const boardStore = {
                             cardIdx = idx
                             groupIdx = idx1
                             const activity = { action: 'removeCard', card: currCard }
-                            commit({ type: 'addActivity', activity })
+                            dispatch({ type: 'addActivity', activity })
                         }
                     })
                 }
@@ -238,6 +228,18 @@ export const boardStore = {
             const board = JSON.parse(JSON.stringify(state.currBoard))
             board.groups = lists
             dispatch({ type: "updateBoard", board })
+        },
+        addActivity({ commit, state }, { activity }) {
+            const { card, action } = activity
+            const activityToAdd = {
+                card: {
+                    id: card.id,
+                    title: card.title
+                },
+                title: boardService.activitySorter(action, state.currBoard, card),
+                addedAt: Date.now(),
+            }
+            commit({ type: 'addActivity', activity: activityToAdd })
         },
     },
 
