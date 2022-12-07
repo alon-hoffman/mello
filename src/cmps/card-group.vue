@@ -15,15 +15,30 @@
       drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
       <Draggable v-for="card in list.cards" :key="card.id">
         <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted"/>
+        
       </Draggable>
-
+      <div ref="addCard" @keyup.enter="addCard" class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">
+        <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
+        <div class="buttons">
+          <div class="left-buttons">
+            <button @click="addCard" class="clickable">Add card</button>
+            <span class="icon lg close clickable" @click="closeNewCard"></span>
+          </div>
+          <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M5 14C6.10457 14 7 13.1046 7 12C7 10.8954 6.10457 10 5 10C3.89543 10 3 10.8954 3 12C3 13.1046 3.89543 14 5 14ZM12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14ZM21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12Z"
+              fill="currentColor"></path>
+          </svg>
+        </div>
+      </div>
     </Container>
 
 
-    <button v-if="!isCardEdited" class="add-card clickable" @click="isCardEdited = true">
+    <button v-if="!isCardEdited" class="add-card clickable" @click="editNewCard">
       <span class="icon add sm"></span> Add a card
     </button>
-    <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-else>
+    <!-- <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">
       <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
       <div class="buttons">
         <div class="left-buttons">
@@ -37,7 +52,7 @@
             fill="currentColor"></path>
         </svg>
       </div>
-    </div>
+    </div> -->
   </section>
 
 </template>
@@ -71,14 +86,20 @@ export default {
       counter:1
     }
   },
+  
   methods: {
     closeNewCard() {
       this.newCard = { title: '', groupId: this.list.id }
       this.isCardEdited = false
     },
+    editNewCard(event){
+      this.isCardEdited = true
+      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
+      this.$refs.addCard.scrollIntoView({block: "end"});
+       console.log( this.$refs.addCard)
+    },
     addCard() {
-      //XXX
-      
       const newCard= {title:this.newTitle, groupId: this.list.id}
       this.$emit('addCard', newCard)
       this.newTitle=""

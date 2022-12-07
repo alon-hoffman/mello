@@ -7,8 +7,9 @@
       <div class="board-header-left">
         <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
         <input class="board-details-title" type="text" v-model="board.title" >
-        <button class="star-board-details-btn">
-          <span class="icon sm star-empty"></span>
+        <button @click="toggleStar" class="star-board-details-btn">
+          <span v-if="!board.isStarred" class="icon sm star-empty"></span>
+          <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
       </div>
       <div class="board-header-right">
@@ -50,6 +51,7 @@
                  :board="board"
                  v-click-outside="closeFilter"
                  @updateFilter="updateFilter"
+                 @close="closeFilter"
                  />
 
   </section>
@@ -62,7 +64,6 @@ import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
 import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
 import filterMenu from "../cmps/filter-menu.vue"
-//icons
 
 export default {
   components: {
@@ -130,7 +131,6 @@ export default {
         }
         return true
       })
-      // console.log(board.groups)
       return board
     },
     chosenBackground(){
@@ -146,7 +146,6 @@ export default {
     // todo check if the param really is _id
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
-    console.log(this.board.members)
   },
   methods: {
     toggleEdit(cardId) {
@@ -154,9 +153,14 @@ export default {
       const id= this.$store.getters.getCurrBoard._id
       this.$router.push(`/board/${id}/card/${cardId}`)
     },
-    updateBoard(){
-      console.log(`foo = `)
-      this.$store.dispatch({type: 'updateBoard', board: this.board})
+    toggleStar(){
+      const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+      board.isStarred =!board.isStarred
+      console.log("🚀 ~ file: board-details.vue:159 ~ toggleStar ~ board.isStarred", board.isStarred)
+      this.updateBoard(board)
+    },
+    updateBoard(board = this.board){
+      this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
       this.$store.dispatch({ type: 'addCard', card})
@@ -187,7 +191,7 @@ export default {
       this.isSidebarMenuModal=false
     },
     duplicateList(list){
-      console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
+      // console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
       this.$store.dispatch({ type: "duplicateList", list });
     },
     openFilter(){
@@ -197,7 +201,6 @@ export default {
       this.isFilterMenu = false
     },
     updateFilter(filter){
-      // console.log('updateFilter',filter)
       this.filterBy = filter
     },
   },

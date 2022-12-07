@@ -213,11 +213,11 @@
         font-size: 12px;
         font-weight: 300;
         grid-template-columns: 36px 1fr;
-        grid-template-rows: 36px auto 1fr;
+        grid-template-rows: 36px 1fr;
         // padding-inline-start: 0.28em;
         grid-template-areas:
             "icon header"
-            "member content";
+            "content content";
 
         .member-avatar {
             border-radius: 25em;
@@ -232,6 +232,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        & .content{
+            list-style: none;
+            padding: 0;
         }
     }
 

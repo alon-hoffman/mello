@@ -29,17 +29,15 @@
                 <span class="icon lg activity"></span>
                 <span class="header flex justify-between">
                     <span class="activity-title">Activity</span>
-                    <button class="fake-button">needs to be unread activity</button>
+                    <!-- <button class="fake-button">needs to be unread activity</button> -->
                 </span>
-                <ul class="activities">
-                    <li>
-                        <section class="member">
-                            <div class="member-avatar"></div>
-                        </section>
-                        <section class="content">
-                            <div>member name</div>
+                <ul class="content activities">
+                    <li v-for="activity in currBoard.activity">
+                        <div class="member-avatar"></div>
+                        {{ activity.title}}
+                        <!-- <section class="member"> -->
+                        <!-- </section> -->
 
-                        </section>
                     </li>
                 </ul>
             </section>
