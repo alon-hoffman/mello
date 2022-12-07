@@ -1,7 +1,7 @@
 <template>
-    <section class="list-modal flex column" :style="cords" v-click-outside="$emit(closeTitleModal)">
+    <section class="list-modal flex column" :style="cords" v-click-outside="closeTitleModal">
     
-    <header class="flex">  <span class="mini-header">List actions <button class="clickable icon ex" @click="$emit(closeTitleModal)">
+    <header class="flex">  <span class="mini-header">List actions <button class="clickable icon ex" @click="closeTitleModal">
         <span class=""></span></button></span> </header>
         <buttons class="flex column">
         <button class="clickable" @click="duplicateList" >Copy List...</button>
@@ -35,6 +35,9 @@
       duplicateList(){
          console.log( "duplicateList")
          this.$emit('duplicateList', this.list)
+      },
+      closeTitleModal(){
+        this.$emit('closeTitleModal')
       }
     }
   

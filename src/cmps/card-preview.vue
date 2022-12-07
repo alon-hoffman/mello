@@ -49,7 +49,7 @@
       labels(){
         return this.card.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
-         if(idx>-1)  return {color:this.boardLabels[idx].color}
+         if(idx>-1)  return {color:this.boardLabels[idx].color,title:this.boardLabels[idx].title}
          return "red"
         })
       },
