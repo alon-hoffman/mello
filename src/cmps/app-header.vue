@@ -5,7 +5,7 @@
         <!-- <img class="logo-img-home"
           src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
           alt=""> -->
-        <img class="logo-img-home" src="../assets/icons/logo.png" alt="">
+        <img class="logo-img-home" src="https://res.cloudinary.com/mello123/image/upload/v1670406786/yd2qyxfpqsuosu76o82o.png" alt="">
       </router-link>
       <section class="right-home-header">
         <router-link to="/login">
@@ -19,7 +19,7 @@
     <nav>
       <div class="left-header">
         <router-link to="/" class="home-logo-page">
-          <img class="logo-img-board" src="../assets/icons/logo-white.svg" alt="">
+          <img class="logo-img-board" src="https://res.cloudinary.com/mello123/image/upload/v1670406801/dmvdzqf6o9tnxxnohnb0.png" alt="">
         </router-link>
         <router-link to="/board">
           <button class="boards-header-btn">Boards</button>
