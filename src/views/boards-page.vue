@@ -94,11 +94,14 @@ import boardCreator from '../cmps/board-creator.vue'
     },
     computed: {
       boards(){
+        console.log( this.$store.getters.boards)
         return this.$store.getters.boards
       },
       favoriteBoards(){
         const boards =this.$store.getters.boards
-        return boards.filter(board => board.isStarred)
+        // return boards.filter(board => board.isStarred)
+        return this.$store.getters.boards
+
       }
     },
    async created() {

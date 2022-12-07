@@ -49,6 +49,7 @@ export const boardStore = {
             state.boards = boards
         },
         addBoard(state, { board }) {
+            board.lastUpdate = Date.now()
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
@@ -124,7 +125,7 @@ export const boardStore = {
         },
         async updateBoard({ commit, state }, { board }) {
             try {
-
+                board.lastUpdate = Date.now()
                 board = await boardService.save(board)
                 commit({ type: 'updateBoard', board })
 
