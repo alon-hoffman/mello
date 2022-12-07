@@ -9,6 +9,12 @@
     padding-inline: 12px;
     max-height: 82vh;
     overflow-y: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    &::-webkit-scrollbar { 
+        display: none;
+      }
+      
     &-header{
         height: 40px;
         margin-bottom: 8px;
@@ -62,15 +68,16 @@
     margin: 0;
     &-item {
         align-items: baseline;
-        padding: 8px;
+        padding-bottom: 8px;
+        padding-inline: 8px;
         // width: 100%;
         & > * {
             margin-inline-end: 8px;
             }
         }
-        & span{
+        & .checkbox.checked::before{
             position: relative;
-            top: -3px;
+            top: 1px;
         }
         & .member-icon{
             font-size: 11px;
@@ -87,6 +94,8 @@
             text-align: start;
             padding-inline: 8px;
             padding-block: 7px;
+            margin: 0;
+            height: 32px;
             & > .label-circle {
                 position: relative;
                 top: 0;
@@ -98,4 +107,8 @@
                 user-select: none;
             }
         }
+        // &:has(.modal-btn){
+        //     padding-block: 0;
+        //     background-color: #0079bf;
+        // }
     }

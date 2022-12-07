@@ -44,7 +44,11 @@
     <listModal v-if="listModalOpen" :list="list"
                 :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"/>
 
-    <filter-menu v-if="isFilterMenu" :filterBy="filterBy" :board="board" v-click-outside="closeFilter"/>
+    <filter-menu v-if="isFilterMenu"
+                 :board="board"
+                 v-click-outside="closeFilter"
+                 @updateFilter="updateFilter"
+                 />
 
   </section>
 </template>
@@ -77,19 +81,42 @@ export default {
       },
       isSidebarMenuModal:false,
       isFilterMenu: false,
-      filterBy:{
-        keyword: '',
-        dueDate: '',
-        labels: [],
-      }
+      filterBy: null
     }
   },
   computed: {
     isScreen() {
       return this.$store.getters.isScreen;
     },
-    board() {
-      return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+    isFilter(){
+      if(!this.filterBy) return false
+      const {keyword, members, labels} = this.filterBy
+      if (!keyword && !members.length && !labels.length) return false
+      return true
+    },
+    // board() {
+    //   return JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+    // },
+    board(){
+      const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+      if(!this.isFilter) return board
+      const {labels, members, keyword} = this.filterBy
+      const regex = new RegExp(keyword, 'i')
+      board.groups = board.groups.filter(group => {
+
+        // KEYWORD FILTER
+        if (regex.test(group.title)) return true
+        group.cards = group.cards.filter(card => regex.test(card.title))
+        if (!group.cards.length) return false
+        // LABEL FILTER
+        if (labels.length){
+          group.cards = group.cards.filter(card => card.labels.some(label => labels.includes(label)))
+          // if ()
+        }
+        return false
+      })
+      console.log(board.groups)
+      return board
     },
     chosenBackground(){
       if(this.board.style){
@@ -153,6 +180,10 @@ export default {
     },
     closeFilter() {
       this.isFilterMenu = false
+    },
+    updateFilter(filter){
+      // console.log('updateFilter',filter)
+      this.filterBy = filter
     },
   },
 };
