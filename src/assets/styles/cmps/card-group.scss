@@ -5,9 +5,9 @@
     color: $clr4;
     background-color: $clr2;
     border-radius: 3px;
-    max-height: 781px;
+    max-height: calc(100vh - 120px);
     .undefined{
-        max-height: 703px;
+        max-height: calc(100vh - 200px);
         overflow: auto;
         overflow-x: hidden;
         margin: 0 4px;
