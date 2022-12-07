@@ -44,7 +44,7 @@
   
 <script>
 import cardPreview from "../cmps/card-preview.vue"
-import { boardService } from '../services/board-service-local'
+import { boardService } from '../services/board-service.js'
 import { Container, Draggable } from "vue3-smooth-dnd";
 export default {
   props: {
