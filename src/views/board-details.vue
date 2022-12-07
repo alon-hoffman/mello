@@ -50,6 +50,7 @@
                  :board="board"
                  v-click-outside="closeFilter"
                  @updateFilter="updateFilter"
+                 @close="closeFilter"
                  />
 
   </section>
@@ -62,7 +63,6 @@ import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
 import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
 import filterMenu from "../cmps/filter-menu.vue"
-//icons
 
 export default {
   components: {
@@ -130,7 +130,6 @@ export default {
         }
         return true
       })
-      // console.log(board.groups)
       return board
     },
     chosenBackground(){

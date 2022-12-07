@@ -2,9 +2,7 @@
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
-        <div class="card-cover flex justify-center" v-if="card.coverColor" :style="{ 'background-color': card.coverColor }">
-            <img v-if="card.imgUrl" :src="card.imgURL" alt="missing photo">
-        </div>
+        <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}"></div>
         <div class="modal-container">
             <header class="modal-header edit-block">
                 <span class="icon lg card"></span>
@@ -56,7 +54,7 @@
                                 v-if="(card.description && !realTextArea)" @click="toggleTextArea">Edit</button></h3>
                         <div v-if="!realTextArea" class="content fake-text-area fake-button" :class="isDescription"
                             @click="toggleTextArea">
-                            <template v-if="card.description">{{ card.description }}</template>
+                            <pre v-if="card.description">{{ card.description }}</pre>
                             <template v-else>Add a more detailed description...</template>
 
                         </div>
@@ -106,7 +104,7 @@
                             <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"
                                 v-click-outside="() => closeAddTodo(checklist)">Add an item</button>
                             <section v-else class="add-todo flex wrap">
-                                <textarea placeholer="Add an item" v-model="newTodo.title"></textarea>
+                                <textarea placeholer="Add an item" v-model="newTodo.title" @keyup.enter="saveTodo(checklist)"></textarea>
                                 <div class="add-todo-options flex">
                                     <button class="modal-btn add-todo-btn" @click="saveTodo(checklist)">Add</button>
                                     <button class="modal-btn" @click="closeAddTodo(checklist)">Cancel</button>
@@ -182,6 +180,7 @@ export default {
             })
         })
         this.boardMembers = this.$store.getters.getMembersOfBoard
+        console.log(this.card.imgURL)
     },
     methods: {
         checkCloseModal() {
@@ -251,10 +250,11 @@ export default {
             checklist.newTodo = false;
         },
         saveTodo(checklist) {
+            console.log(this.newTodo.title.length)
+            if(!this.newTodo.title) return
             this.newTodo.id = utilService.makeId()
-
             checklist.todos.push(this.newTodo)
-            this.closeAddTodo(checklist)
+            this.newTodo = { title: ''}
         },
         closeEditMode(todo) {
             todo.editMode = false
