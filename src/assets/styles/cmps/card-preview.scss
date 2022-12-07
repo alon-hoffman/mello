@@ -58,7 +58,7 @@
         flex-wrap: wrap;
 
         .label-preview {
-            min-width: em(42px);
+            min-width: em(45px);
             cursor: pointer;
             height: em(10px);
             border-radius: 5px;
@@ -66,11 +66,14 @@
     }
 
     .icons-container {
-        margin: rem(-6px) rem(10px) rem(7px) rem(10px);
+        margin: rem(-6px) rem(10px) rem(7px) rem(7px);
     }
 
     .left-icons {
-        gap: rem(8px)
+        gap: rem(2px);
+        .checklist-check{
+            letter-spacing: 0;
+        }
     }
 
     .member-img {
@@ -92,12 +95,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
     }
 
     .date-display {
         >* {
-            min-width: rem(67px);
+            min-width: rem(62px);
             border-radius: 3px;
             font-size: rem(14px);
             padding: rem(2px) 0;
@@ -114,9 +116,22 @@
             background-color: $yellow;
             color: white;
         }
-
-        .done {
-            background-color: $green;
+    }
+    .preview-done{
+        background-color: $green;
+        color: white;
+        border-radius: 3px;
+        font-size: rem(14px);
+        padding: rem(2px) 0;
+        text-align: center;
+        justify-content: center;
+        font-size: rem(14px);
+    }
+    .check-list{
+        padding: rem(2px) rem(2px);
+        .number{
+            padding-inline-start: rem(5px);
+            padding-inline-end:rem(2px); 
         }
     }
 }

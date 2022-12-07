@@ -10,8 +10,11 @@
     <div class="icons-container flex  align-center justify-between">
       <div class="left-icons flex  align-center">
         <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted" />
-        <span v-if="dynamicCard.description" class="icon description"></span>
-        <span v-if="dynamicCard.checklists?.length" class="icon sm checklist-check"></span>
+        <span><span v-if="dynamicCard.description" class="icon description"></span></span>
+
+        <span v-if="dynamicCard.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
+          <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
+
         <span v-if="dynamicCard.attachments?.length" class="icon sm attachment"></span>
       </div>
       <div v-if="dynamicCard.members" class="members flex align-center">
@@ -57,7 +60,20 @@
       dynamicCard(){
         return this.card
       },
-      // checklistCompletion()
+      checklistCompletion(){
+         console.log( this.card.checklists)
+        var doneTodos=0
+        var todos=0
+         this.card.checklists.forEach(checklist => {
+          checklist.todos.forEach(todo =>{
+            if(todo.isDone) doneTodos++
+            todos++
+          })
+         });
+         const todoState = {number:`${doneTodos}/${todos}`, class:"notDone"}
+         if (doneTodos===todos) todoState.class = "preview-done"
+         return todoState
+      }
     },
       created(){
         this.boardLabels= this.$store.getters.getCurrBoard.labels
