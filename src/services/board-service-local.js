@@ -278,12 +278,13 @@ const startingBoard = [
     }
 ]
 
-function activitySorter(card, activity) {
-    const list = 'aa'
-    const map = {
-        cardAdd: `Added ${card.title} to list`
-
+function activitySorter(action, board, card) {
+    const group = findGroupById(card.groupId, board)
+    const activityMap = {
+        addCard: `Added ${card.title} to ${group.title}`,
+        removeCard: `Removed ${card.title} from ${group.title}`
     }
+    return activityMap[action]
 }
 
 
@@ -303,7 +304,8 @@ export const boardService = {
     save,
     remove,
     findGroupById,
-    applyDrag
+    applyDrag,
+    activitySorter,
 }
 window.cs = boardService
 
