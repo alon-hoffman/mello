@@ -34,8 +34,10 @@
                 <ul class="content activity-list">
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex align-center">
                         <div class="member-avatar"></div>
-                        <span>{{ activity.title}}</span>
-                        <!-- <span>{{ timeAgo(activity.addedAt)}}</span> -->
+                        <div class="flex-column">
+                            <span>{{ activity.title}}</span>
+                            <span>{{ timeSince(activity.addedAt)}}</span>
+                        </div>
                         <!-- aaaa -->
                         <!-- <section class="member"> -->
                         <!-- </section> -->
@@ -108,9 +110,9 @@ export default {
 
     },
     methods: {
-        // board() {
-        //     this.currBoard = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
-        // },
+        timeSince(time){
+            return utilService.timeSince(time)
+        },
         closeSidebarMenuModal() {
             this.$emit('closeSidebarMenuModal')
         },

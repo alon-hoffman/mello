@@ -6,7 +6,8 @@ export const utilService = {
     randomPastTime,
     debounce,
     getRandomColor,
-    LightenDarkenColor
+    LightenDarkenColor,
+    timeSince
 }
 
 function makeId(length = 6) {
@@ -51,42 +52,69 @@ function randomPastTime() {
     return Date.now() - pastTime
 }
 
-function debounce(func, timeout = 300){
+function debounce(func, timeout = 300) {
     let timer
     return (...args) => {
-      clearTimeout(timer)
-      timer = setTimeout(() => { func.apply(this, args) }, timeout)
+        clearTimeout(timer)
+        timer = setTimeout(() => { func.apply(this, args) }, timeout)
     }
 }
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
     for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
-  function LightenDarkenColor(col,amt) {
+}
+function LightenDarkenColor(col, amt) {
     var usePound = false;
-    if ( col[0] == "#" ) {
+    if (col[0] == "#") {
         col = col.slice(1);
         usePound = true;
     }
-    var num = parseInt(col,16);
+    var num = parseInt(col, 16);
     console.log(`num = `, num)
     var r = (num >> 16) + amt;
     console.log(`r = `, r)
-    if ( r > 255 ) r = 255;
-    else if  (r < 0) r = 0;
+    if (r > 255) r = 255;
+    else if (r < 0) r = 0;
     var b = ((num >> 8) & 0x00FF) + amt;
-    if ( b > 255 ) b = 255;
-    else if  (b < 0) b = 0;
+    if (b > 255) b = 255;
+    else if (b < 0) b = 0;
     var g = (num & 0x0000FF) + amt;
-    if ( g > 255 ) g = 255;
-    else if  ( g < 0 ) g = 0;
-    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+    return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 }
-  
-  
-  // TEST
-//   console.log(LightenDarkenColor("3F6D2A", -40));
+
+
+function timeSince(date) {
+
+    let seconds = Math.floor((new Date() - date) / 1000);
+    // 31536000 seconds per year
+    let interval = seconds / 31536000;
+    if (interval <= 0) return 'Error - invalid time attribute'
+    if (interval > 1) {
+        return Math.floor(interval) + ' years ago';
+    }
+    // per month
+    interval = seconds / 2592000;
+    if (interval > 1) {
+        return Math.floor(interval) + ' months ago';
+    }
+    // per days
+    interval = seconds / 86400;
+    if (interval > 1) {
+        return Math.floor(interval) + ' days ago';
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+        return Math.floor(interval) + ' hours ago';
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+        return Math.floor(interval) + ' minutes ago';
+    }
+    return Math.floor(seconds) + ' seconds ago';
+}
