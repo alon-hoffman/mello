@@ -2,7 +2,9 @@
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
-        <div class="card-cover" v-if="card?.coverColor" :style="{ 'background-color': card.coverColor }"></div>
+        <div class="card-cover flex justify-center" v-if="card.coverColor" :style="{ 'background-color': card.coverColor }">
+            <img v-if="card.imgUrl" :src="card.imgURL" alt="missing photo">
+        </div>
         <div class="modal-container">
             <header class="modal-header edit-block">
                 <span class="icon lg card"></span>

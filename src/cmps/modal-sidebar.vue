@@ -200,7 +200,7 @@
                     </label>
                     <span class="mini-head">Photos from unsplash</span>
                     <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.thumb)"
+                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject)"
                             :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
                 </section>
@@ -331,10 +331,10 @@ export default {
             if (this.card.imgURL) this.card.imgURL = null
             this.card.coverColor = e.target.value
         },
-        setCoverImg(url) {
-            console.log(`url = `, url)
-            if (this.card.coverColor) this.card.coverColor = null
-            this.card.imgURL = url
+        setCoverImg(photoObject) {
+            console.log(`photo = `, photoObject)
+            this.card.coverColor = photoObject.color
+            this.card.imgURL = photoObject.urls.thumb
         },
         removeCover() {
             if (this.card.coverColor) {
