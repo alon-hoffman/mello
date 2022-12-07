@@ -154,10 +154,13 @@ export default {
       this.$router.push(`/board/${id}/card/${cardId}`)
     },
     toggleStar(){
-      this.board()
+      const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+      board.isStarred =!board.isStarred
+      console.log("🚀 ~ file: board-details.vue:159 ~ toggleStar ~ board.isStarred", board.isStarred)
+      this.updateBoard(board)
     },
-    updateBoard(){
-      this.$store.dispatch({type: 'updateBoard', board: this.board})
+    updateBoard(board = this.board){
+      this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
       this.$store.dispatch({ type: 'addCard', card})
