@@ -42,7 +42,8 @@
                 v-if="board.groups" :lists="board.groups" />
 
     <listModal v-if="listModalOpen" :list="list"
-                :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"/>
+                :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"
+                @closeTitleModal="(listModalOpen=false)"/>
 
     <filter-menu v-if="isFilterMenu"
                  :board="board"

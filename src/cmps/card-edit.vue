@@ -15,8 +15,9 @@
                         <div class="detail-item" v-if="card.members?.length">
                             <div class="detail-item-header">Members</div>
                             <div class="detail-item-content flex">
-                                <div class="member-avatar clickable" v-for="member in card.members">
-                                    {{ memberInitials(member) }}</div>
+                                <div class="member-avatar" v-for="member in card.members">
+                                    <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
+                                </div>
                                 <div class="member-avatar add clickable"></div>
                             </div>
                         </div>
@@ -158,6 +159,7 @@ export default {
                 title: '',
                 isDone: false
             },
+            boardMembers: null,
             // currTodo: null
         }
     },
@@ -165,14 +167,14 @@ export default {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         const { boardId } = this.$route.params
         this.$store.commit({ type: 'setBoardById', id: boardId });
-
-
+        
+        
         this.realTextArea = false
         const { id } = this.$route.params
         const board = this.$store.getters.getCurrBoard
         board.groups.forEach(group => {
             group.cards.forEach(card => {
-
+                
                 if (card.id === id) {
                     this.card = JSON.parse(JSON.stringify(card))
                     // setCurrCard(state, { cardId })
@@ -180,6 +182,7 @@ export default {
                 }
             })
         })
+        this.boardMembers = this.$store.getters.getMembersOfBoard
     },
     methods: {
         checkCloseModal() {
@@ -209,6 +212,7 @@ export default {
             //need to add description to card
         },
         updateCard(currCard) {
+            console.log(`currCard = `, currCard)
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
             else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
