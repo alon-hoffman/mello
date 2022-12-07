@@ -97,20 +97,18 @@ export const boardStore = {
             const groupIdx = state.currBoard.groups.findIndex(currGroup => currGroup.id === group.id)
             state.currBoard.groups.splice(groupIdx, 1, group)
         },
-        addActivity(state, { activity }) {
-            const { user, action, target, parent } = activity
-            // target: {type: 'card', id: 'cardId'}
-            // if it is a card, target is an object {id: 'abc', title: 'efg', listTitle: 'hij'}
-            // action: String
-            // Date.now()
-            // <user.fullname> <action> <target.title> (? at <parent.title>)
-            const str = user.fullname + action
-            str += (typeof target === 'object') ? target.title : target
-            if (parent)
-
-                console.log(str)
-            // newActivity = { type: '' }
-            // state.currBoard.activities.push()
+        addActivity({ currBoard }, { activity }) {
+            const { card, action } = activity
+            const activityToAdd = {
+                card: {
+                    id: card.id,
+                    title: card.title
+                },
+                title: boardService.activitySorter(action, currBoard, card),
+                addedAt: Date.now(),
+            }
+            currBoard.activities.unshift(activityToAdd)
+            // console.log(currBoard.activities)
         },
     },
     actions: {
@@ -174,13 +172,11 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async addCard({ dispatch, commit, state }, { card }) {
-            // console.log(`addCard = `)
             card.id = utilService.makeId()
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
             group.cards.push(card)
-            const activity = { user: 'Erez', action: 'added', target: card }
-            console.log(activity)
+            const activity = { action: 'addCard', card }
             try {
                 commit({ type: 'addActivity', activity })
                 dispatch({ type: "updateBoard", board })
@@ -205,7 +201,7 @@ export const boardStore = {
             board.groups[groupIdx].cards.splice(cardIdx, 1, JSON.parse(JSON.stringify(card)))
             dispatch({ type: "updateBoard", board })
         },
-        async removeCard({ dispatch, state }, { cardId }) {
+        async removeCard({ dispatch, state, commit }, { cardId }) {
             // console.log(`removeCard = `)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             let cardIdx = 0
@@ -216,6 +212,8 @@ export const boardStore = {
                         if (currCard.id === cardId) {
                             cardIdx = idx
                             groupIdx = idx1
+                            const activity = { action: 'removeCard', card: currCard }
+                            commit({ type: 'addActivity', activity })
                         }
                     })
                 }
