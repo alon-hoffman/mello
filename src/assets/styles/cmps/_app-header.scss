@@ -11,6 +11,7 @@
     padding: 0 10px;
 
     .guest-button {
+
         height: 100%;
         font-size: 16px;
         padding: 0.7rem 1rem 0.8rem;
@@ -128,10 +129,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-inline-start: 1rem ;
-    & has .board-details{
-        display: none;
-    }
 }
 
 .right-header {
