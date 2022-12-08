@@ -1,45 +1,87 @@
-.login-signup{
-    background-color: rgb(192, 188, 188);
+.login-signup {
+    position: absolute;
+    background-color: #fafbfc;
     text-align: center;
     height: 100vh;
+    width: 100%;
 
-    .change-login-btn{
-        background: rgb(164, 164, 164);
-        color:#0052CC ;
-        padding: 4px 10px;
-        border-radius: 3px;
-        line-height: 40px;
-    }
-    .login-signup-form{
+    
+
+    .login-signup-form {
         text-align: -webkit-center;
-        .login-signup-btn{
-            background:#0052CC;
-            padding: 4px 10px;
+
+        .login-signup-btn {
+            background: #5AAC44;
+            padding: 8px 12px;
+            border-radius: 4px;
+            // line-height: 30px;
+            margin: 0;
+            width: 320px;
+            height: 35px;
+            margin-bottom: 50px;
+            // border-bottom: 1px solid black;
+            // text-align: center;
+            font-weight: 700;
+
+            &:hover {
+                background: #61bd4f;
+            }
+        }
+
+        input {
+            color: #4d4d4d;
+            padding: 7px;
+            border: 2px solid #dfe1e6;
             border-radius: 3px;
-            line-height: 30px;
+            width: 320px;
+            height: 40px;
+            outline: none;
+            margin-bottom: 20px;
+
+            &:focus {
+                // box-shadow: #0079bf 0 0 0 2px inset;
+                border: 2px solid #0079bf;
+
+            }
         }
     }
-    .logo-login-page{
+
+    .logo-login-page {
         text-align: center;
         display: block;
         margin: 40px auto;
 
-        width: 14%;
+        width: 183px;
+        height: 40px;
     }
-    .login-section{
+
+    .login-signup-section {
         box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
         background-color: #fff;
-        width: 25%;
+        width: 400px;
+        height: 576px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 25px 40px;
         border-radius: 4px;
+
+        .login-signup-title {
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
     }
-    .signup-section{
-        box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
-        background-color: #fff;
-        width: 25%;
-        margin: 0 auto;
-        padding: 20px;
-        border-radius: 4px;
+
+    .change-login-signup-container {
+        padding-top: 80px;
+border-top: 1px solid #cccccc;
+        .change-login-signup-btn {
+            // background: rgb(164, 164, 164);
+
+            color: #0052CC;
+            padding: 4px 10px;
+            border-radius: 3px;
+            line-height: 40px;
+        }
     }
+
 }
