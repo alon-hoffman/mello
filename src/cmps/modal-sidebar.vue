@@ -288,7 +288,7 @@ export default {
         },
         toggleMember(member) {
             if (this.card.members?.length) {
-                const idx = this.card.members.findIndex((m) => m._id === member._id)
+                const idx = this.card.members.findIndex((m) => m.fullname === member.fullname)
                 if (idx !== -1) this.card.members.splice(idx, 1)
                 else this.card.members.push(member)
             }
@@ -304,7 +304,7 @@ export default {
         },
         checkIfInMemberList(member) {
             if (!this.card.members) return
-            return this.card.members.filter((currMember) => currMember._id === member._id).length > 0
+            return this.card.members.filter((currMember) => currMember.fullname === member.fullname).length > 0
         },
         checkIfInLabelList(label) {
             if (!this.card.labels) return false

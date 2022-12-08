@@ -140,7 +140,7 @@ export default {
         if(members.length){
           group.cards = group.cards.filter(card => {
             if (!card.members || !card.members.length) return false
-            return card.members.some(member => members.includes(member._id))})
+            return card.members.some(member => members.includes(member.fullname))})
           if (!group.cards.length) return false
         }
         return true
@@ -173,8 +173,7 @@ export default {
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
-      const activity = {card, action: 'addCard'}
-      this.$store.dispatch({type: 'addActivity', activity})
+      // this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){

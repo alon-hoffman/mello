@@ -219,8 +219,7 @@ export default {
             this.card = card
         },
         removeCard(cardId) {
-
-            this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
+            // this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
         },
@@ -235,7 +234,7 @@ export default {
         toggleDueDate(){
             this.card.dueDate.isCompleted = !this.card.dueDate.isCompleted
             const action = this.card.dueDate ? 'dateComplete' : 'dateIncomplete'
-            this.$store.dispatch({type: 'addActivity'}, {card: this.card, action})
+            // this.$store.dispatch({type: 'addActivity'}, {card: this.card, action})
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');

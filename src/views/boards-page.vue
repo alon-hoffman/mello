@@ -7,7 +7,7 @@
 
           <nav class="flex column">
             <button class="gallery-nav-btn">
-              <span class="icon sm board"></span>
+              <span class="icon sm board board-btn-page"></span>
               Boards
             </button>
             <button class="gallery-nav-btn">

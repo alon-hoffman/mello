@@ -31,19 +31,19 @@
                     <span class="activity-title">Activity</span>
                     <!-- <button class="fake-button">needs to be unread activity</button> -->
                 </span>
-                <ul class="content activity-list">
+                <!-- <ul class="content activity-list">
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
                         <div class="member-avatar"></div>
                         <div class="flex column" v-if="activity.title">
                             <span>{{ activity.title.before}} <span class="toberouterlink">{{activity.card.title}}</span>{{activity.title.after}}</span>
                             <span class="time">{{timeSince(activity.addedAt)}}</span>
                         </div>
-                        <!-- aaaa -->
-                        <!-- <section class="member"> -->
-                        <!-- </section> -->
+                         aaaa 
+                         <section class="member"> 
+                         </section> 
 
                     </li>
-                </ul>
+                </ul> -->
             </section>
         </section>
         <section v-if="header === 'Change background'" class="mini-modal-content">

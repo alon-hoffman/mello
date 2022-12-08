@@ -100,6 +100,7 @@ export default {
       //  console.log( this.$refs.addCard)
     },
     addCard() {
+      if(this.newTitle==="") return
       const newCard= {title:this.newTitle, groupId: this.list.id}
       this.$emit('addCard', newCard)
       this.newTitle=""
