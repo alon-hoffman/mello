@@ -55,10 +55,11 @@
     <ul class="gallery-list flex wrap">
       <li class="gallery-item" v-for="board in favoriteBoards">
           <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
-          <div class="board-preview" :style="chosenBackground(board.style)">
+          <div class="board-preview" :style="{ backgroundColor :chosenBackground(board.style)}">
             {{board.title}}
             <div class="board-preview-options">
-              <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
+              <span class="icon sm star-empty" @click="toggleStarred(board)"></span>
+              <!-- <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span> -->
             </div>
           </div>
         </router-link>
@@ -94,11 +95,12 @@ import boardCreator from '../cmps/board-creator.vue'
     },
     computed: {
       boards(){
-        console.log( this.$store.getters.boards)
+        console.log("🚀 ~ file: boards-page.vue:99 ~ boards ~ this.$store.getters.boards", this.$store.getters.boards)
         return this.$store.getters.boards
       },
       favoriteBoards(){
         const boards =this.$store.getters.boards
+        console.log("🚀 ~ file: boards-page.vue:103 ~ favoriteBoards ~ boards", boards)
         // return boards.filter(board => board.isStarred)
         return this.$store.getters.boards
 
@@ -119,6 +121,7 @@ import boardCreator from '../cmps/board-creator.vue'
         this.closeCreator()
       },
       chosenBackground(style){
+        console.log("🚀 ~ file: boards-page.vue:124 ~ chosenBackground ~ style", style)
         const {backgroundColor, backgroundImage} = style
         if(backgroundImage) return {'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover'}
         return {'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}`}

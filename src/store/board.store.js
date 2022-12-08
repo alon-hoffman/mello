@@ -27,7 +27,9 @@ export const boardStore = {
         currCard: null,
     },
     getters: {
-        boards({ boards }) { return boards },
+        boards({ boards }) {
+            return boards
+        },
         getCurrBoard(state) { return state.currBoard },
         getMembersOfBoard(state) { return state.currBoard.members },
         getLabelsOfBoard(state) { return state.currBoard.labels },
