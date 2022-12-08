@@ -1,6 +1,6 @@
 import { boardService } from '../services/board-service.js'
 import { utilService } from '../services/util.service'
-import { socketService,SOCKET_EMIT_BOARD_UPDATED } from '../services/socket.service'
+import { socketService, SOCKET_EMIT_BOARD_UPDATED } from '../services/socket.service'
 
 
 
@@ -24,11 +24,12 @@ export function getActionUpdateBoard(board) {
 }
 
 export const boardStore = {
-    
+
     state: {
         boards: null,
         currBoard: null,
         currCard: null,
+        lastActivity: null,
     },
     getters: {
         boards({ boards }) {
@@ -62,7 +63,7 @@ export const boardStore = {
             const boardIdx = state.boards.find(b => b._id === board._id)
             state.boards.splice(boardIdx, 1, board)
             state.currBoard = board
-           
+
         },
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
@@ -104,6 +105,7 @@ export const boardStore = {
             state.currBoard.groups.splice(groupIdx, 1, group)
         },
         addActivity(state, { activity }) {
+            state.lastActivity = activity
             state.currBoard.activities.unshift(activity)
         },
     },
@@ -122,7 +124,7 @@ export const boardStore = {
                 board.lastUpdate = Date.now()
                 board = await boardService.save(board)
                 socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
-                
+
                 commit({ type: 'updateBoard', board })
 
             } catch (err) {
@@ -173,8 +175,7 @@ export const boardStore = {
         },
         addCard({ dispatch, commit, state }, { card }) {
             card.id = utilService.makeId()
-            const activity = { action: 'addCard', card }
-            dispatch({ type: 'addActivity', activity })
+
             let board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
             group.cards.push(card)
@@ -212,8 +213,7 @@ export const boardStore = {
                         if (currCard.id === cardId) {
                             cardIdx = idx
                             groupIdx = idx1
-                            const activity = { action: 'removeCard', card: currCard }
-                            dispatch({ type: 'addActivity', activity })
+
                         }
                     })
                 }
@@ -246,9 +246,10 @@ export const boardStore = {
                     id: card.id,
                     title: card.title
                 },
-                title: boardService.activitySorter(action, state.currBoard, card),
+                title: boardService.activityNamer(action, state.currBoard, card),
                 addedAt: Date.now(),
             }
+            console.log(activityToAdd.title)
             commit({ type: 'addActivity', activity: activityToAdd })
         },
     },

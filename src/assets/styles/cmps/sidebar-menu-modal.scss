@@ -336,5 +336,10 @@
 .activity-list {
     &-item{
         padding-block: 8px;
+
+        & .time{
+            font-size: 12px;
+            color: #5e6c84;
+        }
     }
 }
