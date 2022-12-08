@@ -178,8 +178,8 @@ export default {
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
-      console.log(`card = `, card)
-      // this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
+      const activity = {card, action: 'addCard'}
+      this.$store.dispatch({type: 'addActivity', activity})
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){
