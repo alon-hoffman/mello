@@ -23,55 +23,33 @@
                 </div>
               </aside>
       
-            <section class="boards full">
-        <h3 class="gallery-header">
-          <span class="icon lg time"></span>
-          Recently viewed
-        </h3>
-      <ul class="gallery-list flex wrap">
-        <li class="gallery-item" v-for="board in boards">
-            <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
-            <div class="board-preview" :style="chosenBackground(board.style)">
-              {{board.title}}
-              <div class="board-preview-options">
-                <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
-              </div>
-            </div>
-          </router-link>
-        </li>
-         <li class="fake-board-preview clickable flex align-center justify-center"
-         @click="(boardCreateMode = true)">
-            Create new board
-        </li>
-      </ul>
 
-    </section>
-    
-    <section class="boards full">
-      <h3 class="gallery-header">
-        <span class="icon lg time"></span>
-        Favorite Boards
-      </h3>
-    <ul class="gallery-list flex wrap">
-      <li class="gallery-item" v-for="board in favoriteBoards">
-          <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
-          <div class="board-preview" :style="chosenBackground(board.style)">
-            {{board.title}}
-            <div class="board-preview-options">
-              <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
-            </div>
+<template v-for="display in [{computed:favoriteBoards, title:'Favorite Boards'},{computed:lastViewed, title:'Last Viewed'},{computed:boards, title:'All Boards'}]" >
+  <section class="boards full">
+    <h3 class="gallery-header">
+      <span class="icon lg time"></span>
+      {{display.title}}
+    </h3>
+  <ul class="gallery-list flex wrap">
+    <li class="gallery-item" v-for="board in display.computed">
+        <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
+        <div class="board-preview" :style="chosenBackground(board.style)">
+          {{board.title}}
+          <div class="board-preview-options">
+            <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
           </div>
-        </router-link>
-      </li>
-       <li class="fake-board-preview clickable flex align-center justify-center"
-       @click="(boardCreateMode = true)">
-          Create new board
-      </li>
-    </ul>
+        </div>
+      </router-link>
+    </li>
+     <li class="fake-board-preview clickable flex align-center justify-center"
+     @click="(boardCreateMode = true)">
+        Create new board
+    </li>
+  </ul>
+</section>
+</template>
 
-  </section>
-
-
+          
     <board-creator v-if="boardCreateMode" 
     @saveBoard="saveBoard"
     @close="closeCreator"
@@ -101,6 +79,12 @@ import boardCreator from '../cmps/board-creator.vue'
       favoriteBoards(){
         const boards =this.$store.getters.boards
         return boards.filter(board => board.isStarred)
+      },
+      lastViewed(){
+        const boards =this.$store.getters.boards
+        console.log("🚀 ~ file: boards-page.vue:129 ~ lastViewed ~ boards", boards)
+        const filteredBoards= boards.filter(board => board.LastViewed)
+        return filteredBoards
       }
     },
    async created() {
