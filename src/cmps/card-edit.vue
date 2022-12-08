@@ -293,7 +293,6 @@ export default {
             console.log(newAttachments)
             // if(typeof newAttachments==="object") return
             this.card.attachments = newAttachments
-            console.log("🚀 ~ file: card-edit.vue:291 ~ updateAttachments ~ this.card.attachments", this.card.attachments)
             this.updateCard(this.card.attachments)
         }
     },
@@ -324,7 +323,8 @@ export default {
             const options = { month: 'short', day: 'numeric' }
             const date = dateToFormat.toLocaleDateString(undefined, options)
             const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
-            const hours = (dateToFormat.getHours() % 12) + ':' + dateToFormat.getMinutes() + ' ' + ampm
+            const minutes= `${dateToFormat.getMinutes()}`.padStart(2, '0')
+            const hours = (dateToFormat.getHours() % 12) + ':' + minutes + ' ' + ampm
             return (date + ' at ' + hours)
         },
         isCompleted() {

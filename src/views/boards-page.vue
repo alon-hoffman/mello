@@ -25,10 +25,9 @@
 
         <section class="boards-showcase-container">
           <template v-if="boards"
-            v-for="display in [{ computed: favoriteBoards, title: 'Favorite Boards' }, { computed: lastViewed, title: 'Last Viewed' }, { computed: boards, title: 'All Boards' }]">
-            <section class="boards-showcase">
+            v-for="display in [{ computed: favoriteBoards, title: 'Favorite Boards',icon:'icon lg star-full' }, { computed: lastViewed, title: 'Last Viewed',icon:'icon lg time' }, { computed: boards, title: 'All Boards',icon:'' }]">
               <h3 class="gallery-header">
-                <span class="icon lg time"></span>
+                <span :class="display.icon"></span>
                 {{ display.title }}
               </h3>
               <ul class="gallery-list boards-showcase-container">
@@ -42,14 +41,12 @@
                     </div>
                   </router-link>
                 </li>
-                <li v-if="(display.computed === boards)"
-                  class="fake-board-preview clickable flex align-center justify-center"
-                  @click="(boardCreateMode = true)">
-                  Create new board
+                <li  @click="(boardCreateMode = true)" v-if="(display.computed === boards)"
+                  class="clickable gallery-item ">
+                  <div class="board-preview fake-board-preview">Create new board</div>
                 </li>
               </ul>
            
-            </section>
           </template>
         </section>
 
@@ -86,7 +83,7 @@ export default {
     lastViewed() {
       const boards = this.$store.getters.boards
       const filteredBoards = boards.filter(board => board.lastViewed)
-      return filteredBoards.sort((board1, board2) => board2.lastViewed - board1.lastViewed)
+      return filteredBoards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
     }
   },
   methods: {
@@ -101,6 +98,7 @@ export default {
       this.closeCreator()
     },
     chosenBackground(style) {
+      // console.log(`foo = `)
       const { backgroundColor, backgroundImage } = style
       if (backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover' }
       return { 'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}` }

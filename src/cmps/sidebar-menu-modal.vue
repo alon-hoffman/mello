@@ -76,7 +76,12 @@
         </section>
         <section v-if="header === 'Photos'" class="mini-modal-content">
             <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.full)"
+                    <div class="search-boards">
+                        <input @input="processChange" ref="search" type="text" placeholder="Photos" class="board-search-input"
+                        style="font-family:Arial, FontAwesome" v-model="searchPhoto">
+                        <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+                </div>
+                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject.urls.full)"
                             :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
         </section>
@@ -99,11 +104,15 @@ export default {
             header: 'Menu',
             unsplashPhotos: null,
             colorList: ['#0079bf', '#d29034', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#00aecc', '#838c91',],
+            searchPhoto:null,
+            processChange:null,
+
         }
     },
     created() {
+         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
         console.log(this.currBoard.activities)
-
+       
     },
     methods: {
         timeSince(time){
@@ -115,6 +124,9 @@ export default {
        async changeModal(value) {
             if (value === 'Photos') this.unsplashPhotos = await unsplashPhotosService.getPhoto()
             this.header = value
+        },
+        async searchPhotosUnsplash(){
+            this.unsplashPhotos = await unsplashPhotosService.getPhoto(this.searchPhoto)
         },
         goBack() {
             if ((this.header === 'Colors') || (this.header === 'Photos')) this.header = 'Change background'
@@ -138,6 +150,9 @@ export default {
         },
     },
     computed: {
+        getUnsplashPhotos(){
+            return this.unsplashPhotos
+        }
         //   cords(){
         //     return {top:`0px`, right:`0px`}
         //   }

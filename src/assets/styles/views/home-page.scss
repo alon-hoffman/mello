@@ -55,10 +55,13 @@
     margin: 0 auto;
 
 }
-        h1 {
+.main-home-page-title {
             font-size: 48px;
             text-align: center;
             line-height: 1.25;
+            font-weight: 500;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 30px;
         }
 
         p {
@@ -70,7 +73,8 @@
     .guest-button {
         height: 49px;
         width: 164px;
-        font-size: 16px;
+        font-size: 20px;
+        font-weight: 400;
         padding: 0.7rem 1rem 0.8rem;
         border-radius: 0.3rem;
         color: #fff;
@@ -80,6 +84,7 @@
     }
     .trello-board-img{
         text-align: center;
+        margin-bottom: 40px;
     }
     
 

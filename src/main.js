@@ -8,7 +8,7 @@ import 'element-plus/dist/index.css'
 import './assets/styles/main.scss'
 import vue3GoogleLogin from 'vue3-google-login'
 import { socketService } from './services/socket.service'
-
+// import { getAverageColor } from 'fast-average-color-node';
 import rootCmp from './root-cmp.vue'
 
 
