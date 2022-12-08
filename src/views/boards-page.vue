@@ -23,9 +23,9 @@
                 </div>
               </aside>
       
-
-<template v-for="display in [{computed:favoriteBoards, title:'Favorite Boards'},{computed:lastViewed, title:'Last Viewed'},{computed:boards, title:'All Boards'}]" >
-  <section class="boards full">
+<section class="boards-showcase-container">
+<template  v-for="display in [{computed:favoriteBoards, title:'Favorite Boards'},{computed:lastViewed, title:'Last Viewed'},{computed:boards, title:'All Boards'}]" >
+  <section class="boards-showcase">
     <h3 class="gallery-header">
       <span class="icon lg time"></span>
       {{display.title}}
@@ -48,6 +48,7 @@
   </ul>
 </section>
 </template>
+</section>
 
           
     <board-creator v-if="boardCreateMode" 
