@@ -2,56 +2,59 @@
   <main class="gallery-container flex full">
     <section class="main-container-boards">
 
-        <article class="gallery flex">
-          <aside class="gallery-sidebar">
-            
-            <nav class="flex column">
-              <button class="gallery-nav-btn">
-                <span class="icon sm board"></span>
-                Boards
-              </button>
-              <button class="gallery-nav-btn">
-                <span class="icon sm template"></span>
-                Templates</button>
-                <button class="gallery-nav-btn">
-                  <span class="icon sm pulse"></span>
-                  Home</button>
-                </nav>
-                <div class="workspace-div flex justify-between">
-                  Workspaces
-                  <!-- <img src="../assets/icons/add.svg" alt=""> -->
-                </div>
-              </aside>
-      
-<section class="boards-showcase-container">
-<template  v-if="boards" v-for="display in [{computed:favoriteBoards, title:'Favorite Boards'},{computed:lastViewed, title:'Last Viewed'},{computed:boards, title:'All Boards'}]" >
-  <section class="boards-showcase">
-    <h3 class="gallery-header">
-      <span class="icon lg time"></span>
-      {{display.title}}
-    </h3>
-  <ul class="gallery-list flex wrap">
-    <li class="gallery-item" v-for="board in display.computed">
-        <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
-        <div class="board-preview" :style="chosenBackground(board.style)">
-          {{board.title}}
-          <div class="board-preview-options">
-            <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
+      <article class="gallery flex">
+        <aside class="gallery-sidebar">
+
+          <nav class="flex column">
+            <button class="gallery-nav-btn">
+              <span class="icon sm board"></span>
+              Boards
+            </button>
+            <button class="gallery-nav-btn">
+              <span class="icon sm template"></span>
+              Templates</button>
+            <button class="gallery-nav-btn">
+              <span class="icon sm pulse"></span>
+              Home</button>
+          </nav>
+          <div class="workspace-div flex justify-between">
+            Workspaces
+            <!-- <img src="../assets/icons/add.svg" alt=""> -->
           </div>
-        </div>
-      </router-link>
-    </li>
-     <li v-if="(display.computed===boards)" class="fake-board-preview clickable flex align-center justify-center"
-     @click="(boardCreateMode = true)">
-        Create new board
-    </li>
-  </ul>
-</section>
-</template>
+        </aside>
 
+        <section class="boards-showcase-container">
+          <template v-if="boards"
+            v-for="display in [{ computed: favoriteBoards, title: 'Favorite Boards' }, { computed: lastViewed, title: 'Last Viewed' }, { computed: boards, title: 'All Boards' }]">
+            <section class="boards-showcase">
+              <h3 class="gallery-header">
+                <span class="icon lg time"></span>
+                {{ display.title }}
+              </h3>
+              <ul class="gallery-list flex wrap">
+                <li class="gallery-item" v-for="board in display.computed">
+                  <router-link :style="{ 'text-decoration': 'none' }" :to="('/board/' + board._id)">
+                    <div class="board-preview" :style="chosenBackground(board.style)">
+                      {{ board.title }}
+                      <div class="board-preview-options">
+                        <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
+                      </div>
+                    </div>
+                  </router-link>
+                </li>
+                <li v-if="(display.computed === boards)"
+                  class="fake-board-preview clickable flex align-center justify-center"
+                  @click="(boardCreateMode = true)">
+                  Create new board
+                </li>
+              </ul>
+           
+            </section>
+          </template>
+        </section>
 
-        <board-creator v-if="boardCreateMode" @saveBoard="saveBoard" @close="closeCreator"
-          v-click-outside="closeCreator" />
+          <board-creator v-if="boardCreateMode" @saveBoard="saveBoard" @close="closeCreator"
+            v-click-outside="closeCreator" />
       </article>
     </section>
   </main>
