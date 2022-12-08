@@ -24,6 +24,7 @@
     .right-home-header {
         display: flex;
         height: 60px
+        
     }
 
 
@@ -135,6 +136,17 @@
     display: flex;
     gap: 5px;
 
+    .board-search-input {
+        &:focus {
+            border: 1px solid $blue;
+            &::placeholder {
+                color: $clr3;
+            }
+            &+span {
+                color: black;
+            }
+        }
+    }
     button {
         background-color: transparent;
         color: #fff;
@@ -219,14 +231,3 @@
     }
 }
 
-.board-search-input {
-    &:focus {
-        &::placeholder {
-            color: $clr3;
-        }
-
-        &+span {
-            color: black;
-        }
-    }
-}
