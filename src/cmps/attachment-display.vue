@@ -12,8 +12,8 @@
             <template v-if="attachment.name">{{ attachment.name }}</template>
             <template v-else>{{ attachment.type }} file</template>
           </a> &nbsp
-          <input class="attachment-edit-input" v-else type="text" :value="getName(index)" @blur="saveName(index)"
-            @keyup.enter="saveName(index)"> 
+          <input class="attachment-edit-input" v-else type="text" :value="getName(index)" 
+           v-click-outside="saveName(index)"> 
             <span>{{formattedDueDate(attachment.createdAt)}}&nbsp</span>
           <div class="actions">
             <span @click="removeAttachment(index)">Delete </span>-&nbsp
@@ -64,8 +64,8 @@ console.log(this.attachments)
     saveName(idx) {
       const newName = document.querySelector('.attachment-edit-input').value
       const newAttachments = JSON.parse(JSON.stringify(this.attachments))
-      newAttachments[idx].title= newName
-      this.$emit('updateAttachments', newAttachments)
+      newAttachments[idx].name= newName
+      // this.$emit('updateAttachments', newAttachments)
     },
     formattedDueDate(timeStamp) {
             const dateToFormat=  new Date(timeStamp)

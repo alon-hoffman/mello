@@ -208,8 +208,10 @@ export default {
             this.realTextArea = false
         },
         updateCard(currCard) {
+            console.log("🚀 ~ file: card-edit.vue:211 ~ updateCard ~ currCard", currCard)
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
-            else this.$store.dispatch({ type: "saveCard", card: this.card })
+            else this.$store.dispatch({ type: "saveCard", card: currCard })
+            // else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
         updateLabels(labels) {
             this.$store.commit({ type: "updateLabels", labels })
@@ -253,7 +255,6 @@ export default {
             checklist.newTodo = false;
         },
         saveTodo(checklist) {
-            console.log(this.newTodo.title.length)
             if(!this.newTodo.title) return
             this.newTodo.id = utilService.makeId()
             checklist.todos.push(this.newTodo)
@@ -287,10 +288,8 @@ export default {
             return { done: this.calcProgress(checklist.todos) == 100 }
         },
         updateAttachments(newAttachments){
-            console.log(newAttachments)
-            // if(typeof newAttachments==="object") return
             this.card.attachments = newAttachments
-            this.updateCard(this.card.attachments)
+            this.updateCard(this.card)
         }
     },
     computed: {
