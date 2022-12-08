@@ -24,7 +24,7 @@
               </aside>
       
 
-<template v-for="display in [{computed:favoriteBoards, title:'Favorite Boards'},{computed:lastViewed, title:'Last Viewed'},{computed:boards, title:'All Boards'}]" >
+<template v-if="boards" v-for="display in [{computed:favoriteBoards, title:'Favorite Boards'},{computed:lastViewed, title:'Last Viewed'},{computed:boards, title:'All Boards'}]" >
   <section class="boards full">
     <h3 class="gallery-header">
       <span class="icon lg time"></span>
