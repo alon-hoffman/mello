@@ -63,6 +63,7 @@ import groupList from "../cmps/group-list.vue"
 import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
 import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
+import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG,SOCKET_EMIT_BOARD_UPDATED, SOCKET_EMIT_SET_TOPIC} from '../services/socket.service'
 import filterMenu from "../cmps/filter-menu.vue"
 
 export default {
@@ -88,9 +89,21 @@ export default {
                 keyword: '',
                 labels: [],
                 members: [],
+              }
             }
-    }
-  },
+          },
+          async created() {
+            if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+            const { boardId } = this.$route.params
+            socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
+            socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board)=>{ 
+              this.$store.commit({ type: "updateBoard", board })
+    })
+            this.$store.commit({ type: 'setBoardById',  id:boardId });
+            const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+            board.lastViewed= Date.now()
+            this.updateBoard(board)
+          },
   computed: {
     isScreen() {
       return this.$store.getters.isScreen;
@@ -103,6 +116,7 @@ export default {
     },
     board(){
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+      
       if(!this.isFilter) return board
       const {labels, members, keyword} = this.filterBy
       const regex = new RegExp(keyword, 'i')
@@ -143,14 +157,6 @@ export default {
       filterOpen(){
         return {open: this.isFilterMenu}
       }
-  },
-  async created() {
-    if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-    const { boardId } = this.$route.params
-    this.$store.commit({ type: 'setBoardById',  id:boardId });
-    const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
-    board.lastViewed= Date.now()
-    this.updateBoard(board)
   },
   methods: {
     toggleEdit(cardId) {
