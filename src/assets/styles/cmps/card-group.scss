@@ -60,9 +60,14 @@
         color: #172b4d;
         border: none;
         margin-inline-start: rem(16px);
-        padding-top: rem(13px);
-        padding-bottom: rem(9px);
+        padding-top: rem(11px);
+        padding-bottom: rem(11px);
         font-weight: 600;
+
+        &:focus{
+            background-color: white;
+            outline:1px solid #0079bf
+        }
 
     }
 
