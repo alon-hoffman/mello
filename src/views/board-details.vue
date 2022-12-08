@@ -143,9 +143,11 @@ export default {
   },
   async created() {
     if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-    // todo check if the param really is _id
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
+    const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+    board.LastViewed= Date.now()
+    this.updateBoard(board)
   },
   methods: {
     toggleEdit(cardId) {
@@ -156,7 +158,6 @@ export default {
     toggleStar(){
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
       board.isStarred =!board.isStarred
-      console.log("🚀 ~ file: board-details.vue:159 ~ toggleStar ~ board.isStarred", board.isStarred)
       this.updateBoard(board)
     },
     updateBoard(board = this.board){
@@ -191,7 +192,6 @@ export default {
       this.isSidebarMenuModal=false
     },
     duplicateList(list){
-      // console.log("🚀 ~ file: board-details.vue:117 ~ duplicateList ~ list", list)
       this.$store.dispatch({ type: "duplicateList", list });
     },
     openFilter(){
