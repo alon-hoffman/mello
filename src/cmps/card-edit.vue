@@ -164,7 +164,7 @@ export default {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         const { boardId } = this.$route.params
         this.$store.commit({ type: 'setBoardById', id: boardId });
-        
+        socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
         
         this.realTextArea = false
         const { id } = this.$route.params

@@ -1,5 +1,8 @@
 import { boardService } from '../services/board-service.js'
 import { utilService } from '../services/util.service'
+import { socketService,SOCKET_EMIT_BOARD_UPDATED } from '../services/socket.service'
+
+
 
 export function getActionRemoveBoard(boardId) {
     return {
@@ -21,6 +24,7 @@ export function getActionUpdateBoard(board) {
 }
 
 export const boardStore = {
+    
     state: {
         boards: null,
         currBoard: null,
@@ -58,6 +62,7 @@ export const boardStore = {
             const boardIdx = state.boards.find(b => b._id === board._id)
             state.boards.splice(boardIdx, 1, board)
             state.currBoard = board
+           
         },
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
@@ -116,6 +121,8 @@ export const boardStore = {
             try {
                 board.lastUpdate = Date.now()
                 board = await boardService.save(board)
+                socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
+                
                 commit({ type: 'updateBoard', board })
 
             } catch (err) {
@@ -123,6 +130,8 @@ export const boardStore = {
                 throw err
             }
         },
+        // async updateBoardSocket(){
+        // },
         async loadBoards(context) {
             // console.log(`loadBoards = `)
             try {
