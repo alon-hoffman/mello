@@ -65,6 +65,14 @@
             align-items: center;
             width: 78px;
             height: 32px;
+            transition: 85ms;
+            &:hover{
+                background-color: #ffffff4d;
+            }
+            &.open{
+                color: $text-dark;
+                background-color:#fff;
+            }
         }
         .filter-img-board{
             width: 20px;

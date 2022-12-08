@@ -13,7 +13,7 @@
         </button>
       </div>
       <div class="board-header-right">
-        <button class="filter-btn" @click="openFilter">
+        <button class="filter-btn" :class="filterOpen" @click="openFilter">
           <span class="icon sm filter"></span> Filter
         </button>
         <span class="separator-line">|</span>
@@ -140,6 +140,9 @@ export default {
         return {'background': backgroundColor}
       }
       },
+      filterOpen(){
+        return {open: this.isFilterMenu}
+      }
   },
   async created() {
     if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
