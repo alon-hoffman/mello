@@ -17,7 +17,7 @@
               <span class="icon sm pulse"></span>
               Home</button>
           </nav>
-          <div class="workspace-div flex justify-between">
+          <div class="workspace-div justify-between">
             Workspaces
             <!-- <img src="../assets/icons/add.svg" alt=""> -->
           </div>
@@ -31,7 +31,7 @@
                 <span class="icon lg time"></span>
                 {{ display.title }}
               </h3>
-              <ul class="gallery-list flex wrap">
+              <ul class="gallery-list boards-showcase-container">
                 <li class="gallery-item" v-for="board in display.computed">
                   <router-link :style="{ 'text-decoration': 'none' }" :to="('/board/' + board._id)">
                     <div class="board-preview" :style="chosenBackground(board.style)">
