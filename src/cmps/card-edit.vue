@@ -181,7 +181,6 @@ export default {
                 }
             })
         })
-        console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
     },
     methods: {
@@ -209,7 +208,6 @@ export default {
             this.realTextArea = false
         },
         updateCard(currCard) {
-            // console.log(`currCard = `, currCard)
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
             else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
@@ -221,6 +219,7 @@ export default {
             this.card = card
         },
         removeCard(cardId) {
+
             this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()

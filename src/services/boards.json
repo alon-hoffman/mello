@@ -459,22 +459,7 @@
                     ]
                 }
             ],
-            "activities": [
-                {
-                    "id": "a101",
-                    "txt": "Changed Color",
-                    "createdAt": 154514,
-                    "byMember": {
-                        "_id": "u101",
-                        "fullname": "Abi Abambi",
-                        "imgUrl": "http://some-img"
-                    },
-                    "card": {
-                        "id": "c101",
-                        "title": "Replace Logo"
-                    }
-                }
-            ]
+            "activities": []
         },
         {
           
