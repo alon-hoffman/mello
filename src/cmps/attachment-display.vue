@@ -53,6 +53,7 @@ console.log(this.attachments)
     },
     startEdit() {
       this.isEdited = true
+       console.log(this.$refs.input)
       //ref did not work due to it not being on the template at creation 
       setTimeout(() => this.$refs.input.focus(), 1)
     },
