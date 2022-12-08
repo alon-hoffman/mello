@@ -41,7 +41,7 @@
         </div>
       </router-link>
     </li>
-     <li class="fake-board-preview clickable flex align-center justify-center"
+     <li v-if="(display.computed===boards)" class="fake-board-preview clickable flex align-center justify-center"
      @click="(boardCreateMode = true)">
         Create new board
     </li>
@@ -73,7 +73,6 @@ import boardCreator from '../cmps/board-creator.vue'
     },
     computed: {
       boards(){
-        console.log("🚀 ~ file: boards-page.vue:99 ~ boards ~ this.$store.getters.boards", this.$store.getters.boards)
         return this.$store.getters.boards
       },
       favoriteBoards(){
@@ -82,9 +81,8 @@ import boardCreator from '../cmps/board-creator.vue'
       },
       lastViewed(){
         const boards =this.$store.getters.boards
-        console.log("🚀 ~ file: boards-page.vue:129 ~ lastViewed ~ boards", boards)
-        const filteredBoards= boards.filter(board => board.LastViewed)
-        return filteredBoards
+        const filteredBoards= boards.filter(board => board.lastViewed)
+        return filteredBoards.sort((board1, board2)=>board2.lastViewed-board1.lastViewed)
       }
     },
    async created() {
@@ -102,7 +100,6 @@ import boardCreator from '../cmps/board-creator.vue'
         this.closeCreator()
       },
       chosenBackground(style){
-        console.log("🚀 ~ file: boards-page.vue:124 ~ chosenBackground ~ style", style)
         const {backgroundColor, backgroundImage} = style
         if(backgroundImage) return {'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover'}
         return {'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}`}
