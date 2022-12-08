@@ -10,7 +10,6 @@ export const storageService = {
 
 function query(entityType, delay = 1) {
     var entities = JSON.parse(localStorage.getItem(entityType)) || []
-
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             // reject('OOOOPs')
@@ -75,3 +74,4 @@ function postMany(entityType, newEntities) {
             return entities
         })
 }
+// dasdadsd
