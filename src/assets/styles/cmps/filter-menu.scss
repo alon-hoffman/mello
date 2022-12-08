@@ -112,6 +112,10 @@
                 height: 16px;
                 color: transparent;
                 user-select: none;
+
+                & + span{
+                    vertical-align: top;
+                }
             }
         }
         // &:has(.modal-btn){

@@ -14,6 +14,9 @@
         overflow-x: hidden;
         margin: 0 4px;
         padding: 0 4px;
+        &.edit{
+            max-height: calc(100vh - 163px);
+        }
         &::-webkit-scrollbar {
             width: 8px;
             height: 8px;
