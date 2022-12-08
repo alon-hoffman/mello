@@ -241,17 +241,19 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         addActivity({ commit, state }, { activity }) {
-            const { card, action } = activity
-            const activityToAdd = {
-                card: {
-                    id: card.id,
-                    title: card.title
-                },
-                title: boardService.activityNamer(action, state.currBoard, card),
-                addedAt: Date.now(),
-            }
-            console.log(activityToAdd.title)
-            commit({ type: 'addActivity', activity: activityToAdd })
+            // console.log(activity)
+            // const { card, action } = activity
+            // const activityToAdd = {
+            //     id: utilService.makeId(),
+            //     card: {
+            //         id: card.id,
+            //         title: card.title
+            //     },
+            //     title: boardService.activityNamer(action, state.currBoard, card.groupId),
+            //     addedAt: Date.now(),
+            // }
+            // console.log(activityToAdd.title)
+            // commit({ type: 'addActivity', activity: activityToAdd })
         },
     },
 
