@@ -25,7 +25,7 @@
 
         <section class="boards-showcase-container">
           <template v-if="boards"
-            v-for="display in [{ computed: favoriteBoards, title: 'Favorite Boards',icon:'icon lg star-full' }, { computed: lastViewed, title: 'Last Viewed',icon:'icon lg time' }, { computed: boards, title: 'All Boards',icon:'' }]">
+            v-for="display in [{ computed: favoriteBoards, title: 'Starred Boards',icon:'icon lg star-empty' }, { computed: lastViewed, title: 'Recently Viewed',icon:'icon lg time' }, { computed: boards, title: 'All Boards',icon:'' }]">
               <h3 class="gallery-header">
                 <span :class="display.icon"></span>
                 {{ display.title }}
@@ -43,7 +43,7 @@
                 </li>
                 <li  @click="(boardCreateMode = true)" v-if="(display.computed === boards)"
                   class="clickable gallery-item ">
-                  <div class="board-preview fake-board-preview">Create new board</div>
+                  <div class="board-preview fake-board-preview flex align-center">Create new board</div>
                 </li>
               </ul>
            
