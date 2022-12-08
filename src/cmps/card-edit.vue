@@ -219,7 +219,8 @@ export default {
             this.card = card
         },
         removeCard(cardId) {
-            // this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
+            const activity = {card: this.card,  action: 'removeCard'}
+            this.$store.dispatch({ type: 'addActivity', activity})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
         },
@@ -234,7 +235,8 @@ export default {
         toggleDueDate(){
             this.card.dueDate.isCompleted = !this.card.dueDate.isCompleted
             const action = this.card.dueDate ? 'dateComplete' : 'dateIncomplete'
-            // this.$store.dispatch({type: 'addActivity'}, {card: this.card, action})
+            const activity = { action, card:this.card }
+            this.$store.dispatch({type: 'addActivity', activity})
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');
@@ -242,6 +244,7 @@ export default {
             return initials.toUpperCase();
         },
         removeChecklist(checklistId) {
+            const activity = { action: 'removeChecklist', card: this.card}
             const checklistIdx = this.card.checklists.findIndex(c => c.id === checklistId)
             this.card.checklists.splice(checklistIdx, 1)
         },

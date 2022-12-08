@@ -240,7 +240,6 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         addActivity({ commit, state }, { activity }) {
-            // console.log(activity)
             // const { card, action } = activity
             // const activityToAdd = {
             //     id: utilService.makeId(),
