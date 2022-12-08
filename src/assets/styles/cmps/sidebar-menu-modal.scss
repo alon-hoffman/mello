@@ -1,7 +1,7 @@
 .sidebar-menu-modal {
     width: 339px;
-    height: calc(100vh - 44px);
-    top: 0;
+    height: 93vh;
+    top:0;
     // top: calc(100vh - 44px);
     // bottom: calc(100vh - 44px);
     // bottom: 5px;
@@ -10,7 +10,7 @@
     justify-content: space-between;
     background: #f4f5f7;
     z-index: 2;
-
+    overflow-y: auto;
     .mini-modal-header {
         display: flex;
         justify-content: center;
@@ -192,9 +192,9 @@
             &:focus {
                 outline:none;
                 border: 1px solid #0079bf;
-                .search-boards{
+                // .search-boards{
                     //  outline: 1px solid #0079bf;
-                }
+                // }
                 ::placeholder {
                     color: #798498;
                     // position: relative;
@@ -292,7 +292,7 @@
             border-radius: 25em;
             height: 32px;
             object-fit: cover;
-            width: 32px;
+            min-width: 32px;
             background-color: #0079bf;
             color: #fff;
             font-weight: 500;

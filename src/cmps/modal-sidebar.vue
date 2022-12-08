@@ -233,7 +233,7 @@ export default {
             miniModalTitle: null,
             filterMembersBy: '',
             filterLabelsBy: '',
-            checklist: "checklist",
+            checklist: "Checklist",
             boardMembers: null,
             boardLabels: null,
             currMember: null,
@@ -329,8 +329,10 @@ export default {
                 todos: [],
             }
             if (!this.card.checklists) this.card.checklists = []
+            const activity = {action: 'addDetail', card: this.card, detail: this.checklist}
+            this.$store.dispatch({ type: 'addActivity', activity})
             this.card.checklists.push(newChecklist)
-            this.checklist = "checklist"
+            this.checklist = "Checklist"
             setTimeout(() => { this.$emit('closeMiniModal') }, 500)
         },
         setLabelBGC(selectedColor) {

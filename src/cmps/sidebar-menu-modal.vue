@@ -1,5 +1,5 @@
 <template>
-    <section v-if="currBoard" class="sidebar-menu-modal">
+    <section v-if="currBoard" class="sidebar-menu-modal" v-click-outside="closeSidebarMenuModal">
         <section class="mini-modal-header">
             <span class="menu-modal-title">{{ header }}</span>
             <div @click="goBack"
@@ -35,7 +35,7 @@
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
                         <div class="member-avatar"></div>
                         <div class="flex column" v-if="activity.title">
-                            <span>{{ activity.title.before}} <span class="activity-link clickable" @click="$emit('editCard', card.id)">{{activity.card.title}}</span>{{activity.title.after}}</span>
+                            <span>{{ activity.title.before}} <span class="activity-link clickable" @click="goToCard(activity)">{{activity.card.title}}</span>{{activity.title.after}}</span>
                             <span class="time">{{timeSince(activity.addedAt)}}</span>
                         </div>
                     </li>
@@ -110,9 +110,7 @@ export default {
         }
     },
     created() {
-         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
-        console.log(this.currBoard.activities)
-       
+         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())       
     },
     methods: {
         timeSince(time){
@@ -148,6 +146,12 @@ export default {
             this.setCoverImg(res.secure_url)
             // console.log(`res = `, res)
         },
+        goToCard(activity){
+            if (activity.card?.id) {
+                this.closeSidebarMenuModal()
+                this.$emit('editCard', activity.card.id)
+            }
+        }
     },
     computed: {
         getUnsplashPhotos(){
