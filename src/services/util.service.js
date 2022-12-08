@@ -7,7 +7,7 @@ export const utilService = {
     debounce,
     getRandomColor,
     LightenDarkenColor,
-    timeSince
+    timeSince,
 }
 
 function makeId(length = 6) {
@@ -118,3 +118,4 @@ function timeSince(date) {
     }
     return Math.floor(seconds) + ' seconds ago';
 }
+

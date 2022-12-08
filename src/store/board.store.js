@@ -82,7 +82,6 @@ export const boardStore = {
             })
         },
         saveCard(state, { card, groupId }) {
-
             const group = boardService.findGroupById(groupId, state.currBoard)
             card.id = utilService.makeId()
             group.cards.push(JSON.parse(JSON.stringify(card)))
