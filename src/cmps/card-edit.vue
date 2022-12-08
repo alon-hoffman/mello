@@ -72,7 +72,7 @@
                         <span class="header flex justify-between">
                             <input type="text" v-model="checklist.title">
                             <div class="checklist-options">
-                                <button class="modal-btn" @click="removeChecklist">Delete</button>
+                                <button class="modal-btn" @click="removeChecklist(checklist)">Delete</button>
                             </div>
                         </span>
                         <span class="sub-icon">{{ calcProgress(checklist.todos) }}%</span>
@@ -86,7 +86,7 @@
                                 @click="openEditMode(todo)" v-click-outside="() => closeEditMode(todo)">
                                 <div class="todo-item edit-block">
                                     <button class="icon checkbox" :class="isDone(todo.isDone)"
-                                        @click.stop="todo.isDone = !todo.isDone"></button>
+                                        @click.stop="toggleTodo(todo)"></button>
                                     <span v-if="!todo.editMode" class="header" :class="isDone(todo.isDone)">{{ todo.title }}</span>
                                     <textarea v-else class="header edit-mode" v-model="todo.title"></textarea>
                                     <div v-if="todo.editMode" class="content edit-todo">
@@ -202,7 +202,6 @@ export default {
         toggleTextArea() {
             this.realTextArea = true
             setTimeout(() => this.$refs.textarea.focus(), 0)
-
         },
         closeTextArea() {
             this.realTextArea = false
@@ -217,11 +216,11 @@ export default {
             this.$store.commit({ type: "updateLabels", labels })
         },
         changeCard(card) {
-
             this.card = card
         },
         removeCard(cardId) {
-            const activity = {card: this.card,  action: 'removeCard'}
+            const card = {title: this.card.title, groupId: this.card.groupId}
+            const activity = {card,  action: 'removeCard'}
             this.$store.dispatch({ type: 'addActivity', activity})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
@@ -245,10 +244,18 @@ export default {
             const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
             return initials.toUpperCase();
         },
-        removeChecklist(checklistId) {
-            const activity = { action: 'removeChecklist', card: this.card}
-            const checklistIdx = this.card.checklists.findIndex(c => c.id === checklistId)
+        removeChecklist(checklist) {
+            const activity = { action: 'removeDetail', card: this.card, detail: checklist.title}
+            this.$store.dispatch({ type: 'addActivity', activity})
+            const checklistIdx = this.card.checklists.findIndex(c => c.id === checklist.id)
             this.card.checklists.splice(checklistIdx, 1)
+        },
+        toggleTodo(todo){
+            todo.isDone = !todo.isDone
+            if(todo.isDone){
+                const activity = { action: 'todo', card: this.card, detail: todo.title}
+                this.$store.dispatch({ type: 'addActivity', activity})
+            }
         },
         openAddTodo(checklist) {
             checklist.newTodo = true;
@@ -291,6 +298,7 @@ export default {
             return { done: this.calcProgress(checklist.todos) == 100 }
         },
         updateAttachments(newAttachments){
+            // if(typeof newAttachments==="object") return
             this.card.attachments = newAttachments
             this.updateCard(this.card)
         }
