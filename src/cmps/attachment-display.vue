@@ -5,15 +5,16 @@
       <h3>Attachment</h3>
     </span>
     <ul class="dynamic-content flex column">
-      <li class="todo-item-container flex clickable" v-for="(attachment, index) in attachments">
-        <div class="img-container"> <img :src="attachment.href" /> </div>
-          <div class="attachment-info flex justify-between"> 
+      <li class=" flex clickable" v-for="(attachment, index) in attachments">
+        <div class="img-container"> <img :src="attachment.href" /> &nbsp</div>
+          <div class="attachment-info flex "> 
           <a v-if="!isEdited" :href=attachment.href target="_blank" rel="noreferrer">
             <template v-if="attachment.name">{{ attachment.name }}</template>
             <template v-else>{{ attachment.type }} file</template>
-          </a>
+          </a> &nbsp
           <input class="attachment-edit-input" v-else type="text" :value="getName(index)" @blur="saveName(index)"
             @keyup.enter="saveName(index)"> 
+            <span>{{formattedDueDate(attachment.createdAt)}}&nbsp</span>
           <div class="actions">
             <span @click="removeAttachment(index)">Delete </span>-&nbsp
             <span @click="startEdit">Edit</span>
@@ -61,15 +62,20 @@ console.log(this.attachments)
       return `${this.attachments[idx].type} file`
     },
     saveName(idx) {
-      console.log("asdas")
       const newName = document.querySelector('.attachment-edit-input').value
       const newAttachments = JSON.parse(JSON.stringify(this.attachments))
-      newAttachments.splice(idx, 1, newName)
+      newAttachments[idx].title= newName
       this.$emit('updateAttachments', newAttachments)
     },
-    // updateAttachments(){
-    //   console.log('hi')
-    // }
+    formattedDueDate(timeStamp) {
+            const dateToFormat=  new Date(timeStamp)
+            const options = { month: 'short', day: 'numeric' }
+            const date = dateToFormat.toLocaleDateString(undefined, options)
+            const ampm = dateToFormat.getHours() >= 12 ? 'AM' : 'PM';
+            const minutes= `${dateToFormat.getMinutes()}`.padStart(2, '0')
+            const hours = (dateToFormat.getHours() % 12) + ':' + minutes + ' ' + ampm
+            return (date + ' at ' + hours)
+        }
   }
 
 
