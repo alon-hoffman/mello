@@ -1,6 +1,6 @@
 import { boardService } from '../services/board-service.js'
 import { utilService } from '../services/util.service'
-import { socketService,SOCKET_EMIT_BOARD_UPDATED } from '../services/socket.service'
+import { socketService, SOCKET_EMIT_BOARD_UPDATED } from '../services/socket.service'
 
 
 
@@ -24,7 +24,7 @@ export function getActionUpdateBoard(board) {
 }
 
 export const boardStore = {
-    
+
     state: {
         boards: null,
         currBoard: null,
@@ -63,7 +63,7 @@ export const boardStore = {
             const boardIdx = state.boards.find(b => b._id === board._id)
             state.boards.splice(boardIdx, 1, board)
             state.currBoard = board
-           
+
         },
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
@@ -124,7 +124,7 @@ export const boardStore = {
                 board.lastUpdate = Date.now()
                 board = await boardService.save(board)
                 socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
-                
+
                 commit({ type: 'updateBoard', board })
 
             } catch (err) {
@@ -239,18 +239,18 @@ export const boardStore = {
             board.groups = lists
             dispatch({ type: "updateBoard", board })
         },
-        addActivity({ commit, state }, { card, activity }) {
-            console.log(card, activity)
-            // const { card, action } = activity
-            // const activityToAdd = {
-            //     card: {
-            //         id: card.id,
-            //         title: card.title
-            //     },
-            //     title: boardService.activityNamer(action, state.currBoard, card),
-            //     addedAt: Date.now(),
-            // }
-            // commit({ type: 'addActivity', activity: activityToAdd })
+        addActivity({ commit, state }, { activity }) {
+            const { card, action } = activity
+            const activityToAdd = {
+                card: {
+                    id: card.id,
+                    title: card.title
+                },
+                title: boardService.activityNamer(action, state.currBoard, card),
+                addedAt: Date.now(),
+            }
+            console.log(activityToAdd.title)
+            commit({ type: 'addActivity', activity: activityToAdd })
         },
     },
 

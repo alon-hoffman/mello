@@ -35,8 +35,8 @@
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
                         <div class="member-avatar"></div>
                         <div class="flex column">
-                            <span>{{ activity.title}}</span>
-                            <span class="time">{{ timeSince(activity.addedAt)}}</span>
+                            <span>{{ activity.title.before}} <span class="toberouterlink">{{activity.card.title}}</span>{{activity.title.after}}</span>
+                            <span class="time">{{timeSince(activity.addedAt)}}</span>
                         </div>
                         <!-- aaaa -->
                         <!-- <section class="member"> -->

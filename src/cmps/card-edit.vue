@@ -143,6 +143,7 @@
 import modalSidebar from './modal-sidebar.vue';
 import attachmentDisplay from './attachment-display.vue';
 import { utilService } from '../services/util.service';
+import { socketService, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service';
 export default {
     props: {
         isScreen: Boolean
@@ -220,7 +221,7 @@ export default {
             this.card = card
         },
         removeCard(cardId) {
-            // this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
+            this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
         },
@@ -234,8 +235,8 @@ export default {
         },
         toggleDueDate(){
             this.card.dueDate.isCompleted = !this.card.dueDate.isCompleted
-            const state = this.card.dueDate ? 'complete' : 'incomplete'
-            this.$store.dispatch({type: 'addActivity', card: this.card, title: `marked the due date on ${this.card.title} ${state}`})
+            const action = this.card.dueDate ? 'dateComplete' : 'dateIncomplete'
+            this.$store.dispatch({type: 'addActivity'}, {card: this.card, action})
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');
