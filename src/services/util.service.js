@@ -52,7 +52,7 @@ function randomPastTime() {
     return Date.now() - pastTime
 }
 
-function debounce(func, timeout = 300) {
+function debounce(func, timeout = 500) {
     let timer
     return (...args) => {
         clearTimeout(timer)
