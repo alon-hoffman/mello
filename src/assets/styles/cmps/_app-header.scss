@@ -129,6 +129,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    & has .board-details{
+        display: none;
+    }
 }
 
 .right-header {

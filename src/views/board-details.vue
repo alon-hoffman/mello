@@ -1,8 +1,7 @@
 <template>
   <router-view></router-view>
   <section class="board-details"  :style="chosenBackground" v-if="board">
-    <!-- <sidebar/> -->
-    <!-- <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/> -->
+    
     <div class="board-header">
       <div class="board-header-left">
         <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
@@ -173,7 +172,7 @@ export default {
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
-      // this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
+      this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){
