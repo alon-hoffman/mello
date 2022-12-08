@@ -129,7 +129,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    margin-inline-start: 1rem ;
     & has .board-details{
         display: none;
     }
