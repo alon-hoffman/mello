@@ -29,14 +29,14 @@ export const userStore = {
         removeUser(state, { userId }) {
             state.users = state.users.filter(user => user._id !== userId)
         },
-        setUserScore(state, { score }) {
-            state.loggedinUser.score = score
-        },
+        // setUserScore(state, { score }) {
+        //     state.loggedinUser.score = score
+        // },
     },
     actions: {
-        async login({ commit }, { userCred }) {
+        async login({ commit }, { cred }) {
             try {
-                const user = await userService.login(userCred)
+                const user = await userService.login(cred)
                 commit({ type: 'setLoggedinUser', user })
                 return user
             } catch (err) {
@@ -44,9 +44,9 @@ export const userStore = {
                 throw err
             }
         },
-        async signup({ commit }, { userCred }) {
+        async signup({ commit }, { cred }) {
             try {
-                const user = await userService.signup(userCred)
+                const user = await userService.signup(cred)
                 commit({ type: 'setLoggedinUser', user })
                 return user
             } catch (err) {
@@ -103,14 +103,14 @@ export const userStore = {
             }
 
         },
-        async increaseScore({ commit }) {
-            try {
-                const score = await userService.changeScore(100)
-                commit({ type: 'setUserScore', score })
-            } catch (err) {
-                console.log('userStore: Error in increaseScore', err)
-                throw err
-            }
-        }
+        // async increaseScore({ commit }) {
+        //     try {
+        //         const score = await userService.changeScore(100)
+        //         commit({ type: 'setUserScore', score })
+        //     } catch (err) {
+        //         console.log('userStore: Error in increaseScore', err)
+        //         throw err
+        //     }
+        // }
     }
 }
