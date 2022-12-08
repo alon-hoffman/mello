@@ -6,7 +6,7 @@
     border-radius: 3px;
     border-bottom: 1px solid $clr3 ;
     margin-bottom: rem(8px);
-    color: $dark-blue;
+    color: $clr6;
 
     &:hover {
         background-color: #f4f5f7;
@@ -67,11 +67,11 @@
     }
 
     .icons-container {
-        margin: rem(-6px) rem(10px) rem(7px) rem(7px);
+        margin: rem(-6px) rem(6px) rem(6px) rem(6px);
     }
 
     .left-icons {
-        gap: rem(2px);
+        gap: rem(6px);
         .checklist-check{
             letter-spacing: 0;
         }
