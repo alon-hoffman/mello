@@ -209,13 +209,15 @@
     </section>
 </template>
 
-
-<script>
+<script >
 import customCard from './custom-card.vue';
 import { utilService } from '../services/util.service';
 import DatePicker from 'vue3-persian-datetime-picker';
-import { uploadService } from '../services/upload.service.js';
+import { uploadService } from '../services/upload.service.js'
+import { FastAverageColor } from 'fast-average-color';
 import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
+
+
 
 export default {
     props: {
@@ -244,7 +246,8 @@ export default {
             },
             possibleColors: ['#b7ddb0', '#f5ea92', '#fad29c', '#efb3ab', '#dfc0eb', '#7bc86c', '#f5dd29', '#ffaf3f', '#ef7564', '#cd8de5', '#5aac44', '#e6c60d', '#e79217', '#cf513d', '#a86cc1', '#8bbdd9', '#8fdfeb', '#b3f1d0', '#f9c2e4', '#505f79', '#5ba4cf', '#29cce5', '#6deca9', '#ff8ed4', '#344563', '#026aa7', '#00aecc', '#4ed583', '#e568af', '#091e42'],
             chosenLabel: null,
-            unsplashPhotos: null
+            unsplashPhotos: null,
+            fac : new FastAverageColor()
         }
     },
     async created() {
@@ -252,7 +255,7 @@ export default {
         // console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
-
+        // this.getAverageColor()
     },
     methods: {
         async openMiniModal(value) {
@@ -265,6 +268,10 @@ export default {
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
+        },
+        async printAverageColor() {
+            const color = await getAverageColor('./image.png');
+            console.log(color);
         },
         changeMiniModal(label) {
             this.chosenLabel = JSON.parse(JSON.stringify(label))
@@ -330,11 +337,15 @@ export default {
         setCover(e) {
             if (this.card.imgURL) this.card.imgURL = null
             this.card.coverColor = e.target.value
-        },        
+        },
         setCoverImg(photoObject) {
             console.log(`photo = `, photoObject)
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
+        },
+       async getAverageColor(){
+ const res = await this.fac.getColorAsync('https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg')
+ console.log(`res = `, res)
         },
         removeCover() {
             if (this.card.coverColor) {
@@ -389,7 +400,7 @@ export default {
             this.addAttachment()
             this.$emit('closeMiniModal')
         },
-       async uploadAndSetCoverImg(ev) {
+        async uploadAndSetCoverImg(ev) {
             const res = await uploadService.uploadImg(ev);
             setCoverImg(res.secure_url)
         },

@@ -80,6 +80,11 @@
         </section>
         <section v-if="header === 'Photos'" class="mini-modal-content">
             <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                    <div class="search-boards">
+                        <input ref="search" type="text" placeholder="Photos" class="board-search-input"
+                        style="font-family:Arial, FontAwesome">
+                        <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+                </div>
                         <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject.urls.full)"
                             :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>

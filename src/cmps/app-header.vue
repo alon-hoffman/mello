@@ -11,7 +11,7 @@
         <router-link to="/login">
           <button class="login-button">Log in</button>
         </router-link>
-        <button @click="enterAsGuest" class="guest-button clickable">See demo</button>
+        <button @click="enterAsGuest" class="guest-button clickable">Enter as a guest</button>
       </section>
     </nav>
   </header>
