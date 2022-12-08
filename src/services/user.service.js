@@ -11,7 +11,7 @@ export const userService = {
     logout,
     signup,
     getLoggedinUser,
-    saveLocalUser,
+    setLoggedinUser,
     getUsers,
     getById,
     remove,
@@ -28,7 +28,7 @@ function getUsers() {
 }
 
 function onUserUpdate(user) {
-    showSuccessMsg(`This user ${user.fullname} just got updated from socket, new score: ${user.score}`)
+    // showSuccessMsg(`This user ${user.fullname} just got updated from socket, new score: ${user.score}`)
     store.commit({type: 'setWatchedUser', user})
 }
 
@@ -51,7 +51,7 @@ async function update(user) {
 //    user =  await storageService.put('user', user)
     user = await httpService.put(`user/${user._id}`, user)
     // Handle case in which admin updates other user's details
-    if (getLoggedinUser()._id === user._id) saveLocalUser(user)
+    if (getLoggedinUser()._id === user._id) setLoggedinUser(user)
     return user
 }
 
@@ -62,7 +62,7 @@ async function login(userCred) {
     if (user) {
         // socketService.login(user._id)
 
-        return saveLocalUser(user)
+        return setLoggedinUser(user)
     }
 }
 async function signup(userCred) {
@@ -70,7 +70,7 @@ async function signup(userCred) {
     // const user = await storageService.post('user', userCred)
     const user = await httpService.post('auth/signup', userCred)
     // socketService.login(user._id)
-    return saveLocalUser(user)
+    return setLoggedinUser(user)
 }
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
@@ -87,7 +87,7 @@ async function logout() {
 // }
 
 
-function saveLocalUser(user) {
+function setLoggedinUser(user) {
     const userToSave = { _id: user._id, fullName: user.fullName ,username:user.username ,isAdmin: user.isAdmin}
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
     return userToSave
