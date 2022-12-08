@@ -31,10 +31,14 @@
                     <span class="activity-title">Activity</span>
                     <!-- <button class="fake-button">needs to be unread activity</button> -->
                 </span>
-                <ul class="content activities">
-                    <li v-for="activity in currBoard.activity">
+                <ul class="content activity-list">
+                    <li v-for="activity in currBoard.activities" class="activity-list-item flex align-center">
                         <div class="member-avatar"></div>
-                        {{ activity.title}}
+                        <div class="flex-column">
+                            <span>{{ activity.title}}</span>
+                            <span>{{ timeSince(activity.addedAt)}}</span>
+                        </div>
+                        <!-- aaaa -->
                         <!-- <section class="member"> -->
                         <!-- </section> -->
 
@@ -90,20 +94,24 @@ import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
 
 export default {
     emits: ['closeSidebarMenuModal'],
+    props: {
+        currBoard: Object
+    },
     data() {
         return {
-            currBoard: null,
+            // currBoard: null,
             header: 'Menu',
             unsplashPhotos: null,
             colorList: ['#0079bf', '#d29034', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#00aecc', '#838c91',],
         }
     },
     created() {
-        this.board()
+        console.log(this.currBoard.activities)
+
     },
     methods: {
-        board() {
-            this.currBoard = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard))
+        timeSince(time){
+            return utilService.timeSince(time)
         },
         closeSidebarMenuModal() {
             this.$emit('closeSidebarMenuModal')
