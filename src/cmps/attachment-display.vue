@@ -9,10 +9,10 @@
         <div class="img-container"> <img :src="attachment.href" /> &nbsp</div>
           <div class="attachment-info flex "> 
           <a v-if="!isEdited" :href=attachment.href target="_blank" rel="noreferrer">
-            <template v-if="attachment.name">{{ attachment.name }}</template>
+            <template v-if="attachment.name">{{ attachment.name }}&nbsp</template>
             <template v-else>{{ attachment.type }} file</template>
           </a> &nbsp
-          <input class="attachment-edit-input" v-else type="text" :value="getName(index)" 
+          <input ref="input" v-show="isEdited" class="attachment-edit-input" type="text" :value="getName(index)" 
            v-click-outside="saveName(index)"> 
             <span>{{formattedDueDate(attachment.createdAt)}}&nbsp</span>
           <div class="actions">
@@ -54,14 +54,14 @@ console.log(this.attachments)
     startEdit() {
       this.isEdited = true
       //ref did not work due to it not being on the template at creation 
-      setTimeout(() => document.querySelector('.attachment-edit-input').focus(), 1)
+      setTimeout(() => this.$refs.input.focus(), 1)
     },
     getName(idx) {
-      console.log(idx)
       if (this.attachments[idx].name) return this.attachments[idx].name
       return `${this.attachments[idx].type} file`
     },
     saveName(idx) {
+      if(!this.isEdited) return
       const newName = document.querySelector('.attachment-edit-input').value
       const newAttachments = JSON.parse(JSON.stringify(this.attachments))
       newAttachments[idx].name= newName

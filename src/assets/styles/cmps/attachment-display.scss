@@ -31,5 +31,9 @@
   padding: none;
   width: auto;
   height:1rem;
+  &:focus{
+    outline: none;
+    color:unset;
+  }
     }
 }
