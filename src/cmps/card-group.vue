@@ -94,6 +94,7 @@ export default {
     },
     editNewCard(event){
       this.isCardEdited = true
+      setTimeout(() => this.$refs["addCard"].scrollIntoView(), 0)
       // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
       // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
       // this.$refs.addCard.scrollIntoView({block: "end"});
@@ -134,8 +135,7 @@ export default {
   },
   computed: {
     isEdit(){
-      if(this.isCardEdited)return {edit: true, undefined: true, 'group-list': true}
-      return { undefined: true, 'group-list': true}
+      return { undefined: true, 'group-list': true, edit: this.isCardEdited}
     },
   },
   components: {
