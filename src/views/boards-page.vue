@@ -50,16 +50,15 @@
     <section class="boards full">
       <h3 class="gallery-header">
         <span class="icon lg time"></span>
-        favorite Boards
+        Favorite Boards
       </h3>
     <ul class="gallery-list flex wrap">
       <li class="gallery-item" v-for="board in favoriteBoards">
           <router-link :style="{'text-decoration': 'none'}" :to="('/board/' + board._id)">
-          <div class="board-preview" :style="{ backgroundColor :chosenBackground(board.style)}">
+          <div class="board-preview" :style="chosenBackground(board.style)">
             {{board.title}}
             <div class="board-preview-options">
-              <span class="icon sm star-empty" @click="toggleStarred(board)"></span>
-              <!-- <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span> -->
+              <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
             </div>
           </div>
         </router-link>
@@ -71,6 +70,7 @@
     </ul>
 
   </section>
+
 
     <board-creator v-if="boardCreateMode" 
     @saveBoard="saveBoard"
@@ -100,10 +100,7 @@ import boardCreator from '../cmps/board-creator.vue'
       },
       favoriteBoards(){
         const boards =this.$store.getters.boards
-        console.log("🚀 ~ file: boards-page.vue:103 ~ favoriteBoards ~ boards", boards)
-        // return boards.filter(board => board.isStarred)
-        return this.$store.getters.boards
-
+        return boards.filter(board => board.isStarred)
       }
     },
    async created() {
