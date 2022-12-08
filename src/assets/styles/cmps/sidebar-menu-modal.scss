@@ -173,11 +173,15 @@
     
         input {
             padding: 0px 12px 0px 30px;
+            margin-inline-end: 8px;
             border: none;
             font-size: 14px;
             width: 100%;
             height: 32px;
             background-color: transparent;
+            color: $clr4;
+            border: 1px solid $clr4;
+            border-radius:3px;
     
             &::placeholder {
                 color: #798498;
@@ -186,7 +190,8 @@
             }
     
             &:focus {
-                // border: 1px solid #0079bf;
+                outline:none;
+                border: 1px solid #0079bf;
                 .search-boards{
                     //  outline: 1px solid #0079bf;
                 }
