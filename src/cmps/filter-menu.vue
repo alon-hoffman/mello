@@ -38,7 +38,8 @@
                         <button class="checkbox" :class="isIncluded(label.id, 'labels')" ></button>
                         <button class="modal-btn" :style="{ backgroundColor: getColorWithOpacity(label.color) }">
                             <span class="label-circle" :style="{ backgroundColor: label.color }"></span>
-                            {{label.title}}</button>
+                            <span>{{label.title}}</span>
+                        </button>
                     </li>
                 </ul>
             </section>

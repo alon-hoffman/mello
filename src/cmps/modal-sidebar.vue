@@ -229,7 +229,7 @@ export default {
         card: Object,
         isMiniModalOpen: Boolean,
     },
-    emits: ['updateCard', 'updateLabels', 'sideModalChange', 'openMiniModal', 'closeMiniModal'],
+    emits: ['updateCard', 'updateLabels', 'sideModalChange', 'openMiniModal', 'closeMiniModal', 'removeCard'],
     data() {
         return {
 
