@@ -6,6 +6,7 @@ import { editable, clickOutsideDirective, clickOnEscDirective, clickOnSlashDirec
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import './assets/styles/main.scss'
+import vue3GoogleLogin from 'vue3-google-login'
 import rootCmp from './root-cmp.vue'
 
 

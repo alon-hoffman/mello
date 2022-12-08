@@ -149,7 +149,7 @@ export default {
     const { boardId } = this.$route.params
     this.$store.commit({ type: 'setBoardById',  id:boardId });
     const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
-    board.LastViewed= Date.now()
+    board.lastViewed= Date.now()
     this.updateBoard(board)
   },
   methods: {

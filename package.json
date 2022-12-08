@@ -17,6 +17,7 @@
     "unsplash-js": "^7.0.15",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2",
+    "vue3-google-login": "^2.0.12",
     "vue3-persian-datetime-picker": "^1.2.2",
     "vue3-smooth-dnd": "^0.0.2",
     "vuex": "^4.0.2"
