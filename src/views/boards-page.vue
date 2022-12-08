@@ -80,7 +80,7 @@ import boardCreator from '../cmps/board-creator.vue'
       },
       favoriteBoards(){
         const boards =this.$store.getters.boards
-        console.log(`boards = `, boards)
+        // console.log(`boards = `, boards)
         return boards.filter(board =>  board.isStarred)
       },
       lastViewed(){
