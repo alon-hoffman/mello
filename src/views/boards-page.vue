@@ -71,22 +71,23 @@ import boardCreator from '../cmps/board-creator.vue'
         boardCreateMode:false,
       }
     },
+    async created() {
+      if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+     },
     computed: {
       boards(){
         return this.$store.getters.boards
       },
       favoriteBoards(){
         const boards =this.$store.getters.boards
-        return boards.filter(board => board.isStarred)
+        console.log(`boards = `, boards)
+        return boards.filter(board =>  board.isStarred)
       },
       lastViewed(){
         const boards =this.$store.getters.boards
         const filteredBoards= boards.filter(board => board.lastViewed)
         return filteredBoards.sort((board1, board2)=>board2.lastViewed-board1.lastViewed)
       }
-    },
-   async created() {
-    await this.$store.dispatch({ type: "loadBoards" });
     },
     methods: {
       toggleStarred(boardId){
