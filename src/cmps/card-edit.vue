@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')"></div>
+    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')">
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <span class="icon lg close modal-close" @click="closeModal"></span>
         <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}"></div>
@@ -42,7 +42,7 @@
                             <div class="detail-item-header">Due date</div>
                             <div class="detail-item-content flex align-center">
                                 <button class="checkbox" :class="isCompleted"
-                                    @click="(card.dueDate.isCompleted = !card.dueDate.isCompleted)"></button>
+                                    @click="toggleDueDate"></button>
                                 <div class="date-display">{{ formattedDueDate }} <span
                                         :class="isCompleted">complete</span></div>
                             </div>
@@ -136,6 +136,7 @@
             </div>
         </div>
     </article>
+    </div>
 </template>
 
 <script>
@@ -165,7 +166,6 @@ export default {
         const { boardId } = this.$route.params
         this.$store.commit({ type: 'setBoardById', id: boardId });
         
-        
         this.realTextArea = false
         const { id } = this.$route.params
         const board = this.$store.getters.getCurrBoard
@@ -179,8 +179,8 @@ export default {
                 }
             })
         })
+        console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
-        console.log(this.card.imgURL)
     },
     methods: {
         checkCloseModal() {
@@ -206,11 +206,8 @@ export default {
         closeTextArea() {
             this.realTextArea = false
         },
-        addDescription() {
-            //need to add description to card
-        },
         updateCard(currCard) {
-            console.log(`currCard = `, currCard)
+            // console.log(`currCard = `, currCard)
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
             else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
@@ -222,6 +219,7 @@ export default {
             this.card = card
         },
         removeCard(cardId) {
+            // this.$store.dispatch({ type: 'addActivity'}, {card: this.card,  action: 'removeCard'})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
         },
@@ -232,6 +230,11 @@ export default {
             setTimeout(() => {
                 this.isMiniModalOpen = false
             }, 0)
+        },
+        toggleDueDate(){
+            this.card.dueDate.isCompleted = !this.card.dueDate.isCompleted
+            const state = this.card.dueDate ? 'complete' : 'incomplete'
+            this.$store.dispatch({type: 'addActivity', card: this.card, title: `marked the due date on ${this.card.title} ${state}`})
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');

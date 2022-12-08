@@ -13,7 +13,7 @@ export const boardService = {
     remove,
     save,
     getEmptyBoard,
-    activitySorter,
+    activityNamer,
     findGroupById,
     applyDrag
 
@@ -62,11 +62,11 @@ function findGroupById(groupId, board) {
     return board.groups.find(group => group.id === groupId)
 }
 
-function activitySorter(action, board, card) {
+function activityNamer(action, board, card) {
     const group = findGroupById(card.groupId, board)
     const activityMap = {
-        addCard: `Added ${card.title} to ${group.title}`,
-        removeCard: `Removed ${card.title} from ${group.title}`
+        addCard: { before: `Added`, after: `to ${group.title}` },
+        removeCard: { before: `Removed`, after: `from ${group.title}` },
     }
     return activityMap[action]
 }

@@ -5,6 +5,9 @@
     inset: 0;
     z-index: 1;
     background-color: #000000a3;
+    // max-height: max-content;
+    min-height: 100vh;
+    overflow-y: scroll;
 }
 
 .edit-blocks {
@@ -16,7 +19,7 @@
 }
 
 .modal {
-    position: fixed;
+    position: relative;
     top: 48px;
     left: 50%;
     transform: translateX(-50%);
@@ -25,14 +28,15 @@
     border-radius: 3px;
     color: $text-dark;
     z-index: 1;
-    max-height: 89vh;
-    overflow-y: scroll;
-    // overflow-x: visible;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-    &::-webkit-scrollbar { 
-        display: none;
-    }
+    // max-height: 89vh;
+    overflow: visible;
+    margin-bottom: 100px;
+    // // overflow-x: visible;
+    // -ms-overflow-style: none;  /* IE and Edge */
+    // scrollbar-width: none;  /* Firefox */
+    // &::-webkit-scrollbar { 
+    //     display: none;
+    // }
     &-header {
         & input {
             background-color: transparent;

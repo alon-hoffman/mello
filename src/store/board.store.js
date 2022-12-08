@@ -25,6 +25,7 @@ export const boardStore = {
         boards: null,
         currBoard: null,
         currCard: null,
+        lastActivity: null,
     },
     getters: {
         boards({ boards }) {
@@ -99,6 +100,7 @@ export const boardStore = {
             state.currBoard.groups.splice(groupIdx, 1, group)
         },
         addActivity(state, { activity }) {
+            state.lastActivity = activity
             state.currBoard.activities.unshift(activity)
         },
     },
@@ -164,8 +166,7 @@ export const boardStore = {
         },
         addCard({ dispatch, commit, state }, { card }) {
             card.id = utilService.makeId()
-            const activity = { action: 'addCard', card }
-            dispatch({ type: 'addActivity', activity })
+
             let board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
             group.cards.push(card)
@@ -203,8 +204,7 @@ export const boardStore = {
                         if (currCard.id === cardId) {
                             cardIdx = idx
                             groupIdx = idx1
-                            const activity = { action: 'removeCard', card: currCard }
-                            dispatch({ type: 'addActivity', activity })
+
                         }
                     })
                 }
@@ -230,17 +230,18 @@ export const boardStore = {
             board.groups = lists
             dispatch({ type: "updateBoard", board })
         },
-        addActivity({ commit, state }, { activity }) {
-            const { card, action } = activity
-            const activityToAdd = {
-                card: {
-                    id: card.id,
-                    title: card.title
-                },
-                title: boardService.activitySorter(action, state.currBoard, card),
-                addedAt: Date.now(),
-            }
-            commit({ type: 'addActivity', activity: activityToAdd })
+        addActivity({ commit, state }, { card, activity }) {
+            console.log(card, activity)
+            // const { card, action } = activity
+            // const activityToAdd = {
+            //     card: {
+            //         id: card.id,
+            //         title: card.title
+            //     },
+            //     title: boardService.activityNamer(action, state.currBoard, card),
+            //     addedAt: Date.now(),
+            // }
+            // commit({ type: 'addActivity', activity: activityToAdd })
         },
     },
 
