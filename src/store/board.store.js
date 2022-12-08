@@ -163,6 +163,7 @@ export const boardStore = {
         },
         async duplicateList({ dispatch, state }, { list }) {
             // console.log(`duplicateList = `)
+            console.log(`list = `, list)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const idx = board.groups.findIndex(group => group.id === list.id)
             const newList = JSON.parse(JSON.stringify(list))
@@ -240,17 +241,19 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         addActivity({ commit, state }, { activity }) {
-            const { card, action } = activity
-            const activityToAdd = {
-                card: {
-                    id: card.id,
-                    title: card.title
-                },
-                title: boardService.activityNamer(action, state.currBoard, card),
-                addedAt: Date.now(),
-            }
-            console.log(activityToAdd.title)
-            commit({ type: 'addActivity', activity: activityToAdd })
+            // console.log(activity)
+            // const { card, action } = activity
+            // const activityToAdd = {
+            //     id: utilService.makeId(),
+            //     card: {
+            //         id: card.id,
+            //         title: card.title
+            //     },
+            //     title: boardService.activityNamer(action, state.currBoard, card.groupId),
+            //     addedAt: Date.now(),
+            // }
+            // console.log(activityToAdd.title)
+            // commit({ type: 'addActivity', activity: activityToAdd })
         },
     },
 

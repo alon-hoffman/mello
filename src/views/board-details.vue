@@ -1,7 +1,6 @@
 <template>
   <router-view></router-view>
   <section class="board-details"  :style="chosenBackground" v-if="board">
-    
     <div class="board-header">
       <div class="board-header-left">
         <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
@@ -172,7 +171,8 @@ export default {
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
-      this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
+      console.log(`card = `, card)
+      // this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){
