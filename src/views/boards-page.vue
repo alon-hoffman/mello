@@ -7,7 +7,7 @@
 
           <nav class="flex column">
             <button class="gallery-nav-btn">
-              <span class="icon sm board"></span>
+              <span class="icon sm board board-btn-page"></span>
               Boards
             </button>
             <button class="gallery-nav-btn">
@@ -24,6 +24,7 @@
         </aside>
 
         <section class="boards-showcase-container">
+          <h1>Starred Boards</h1>
           <template v-if="boards"
             v-for="display in [{ computed: favoriteBoards, title: 'Favorite Boards' }, { computed: lastViewed, title: 'Last Viewed' }, { computed: boards, title: 'All Boards' }]">
             <section class="boards-showcase">

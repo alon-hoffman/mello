@@ -102,4 +102,11 @@
     &.attachment::before{
         content: '\E908';
     }
+    &.center{
+        vertical-align: middle;
+    }
+    &.top{
+        vertical-align:top;
+    }
 }
+

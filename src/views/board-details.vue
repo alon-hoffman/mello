@@ -173,6 +173,7 @@ export default {
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
+      this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){
