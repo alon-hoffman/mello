@@ -19,8 +19,8 @@
     <section v-else class="login-signup-section">
       <h2 class="login-signup-title">Sign up for your account</h2>
       <form class="login-signup-form" @submit.prevent="signup">
-        <input type="text" v-model="signupInfo.fullName" placeholder="Full name" />
-        <input class="email-input" type="text" v-model="signupInfo.email" placeholder="Enter email" />
+        <input ref="email" class="email-input" type="text" v-model="signupInfo.email" placeholder="Enter email" />
+        <input type="text" v-model="signupInfo.fullname" placeholder="Full name" />
         <input type="password" v-model="signupInfo.password" placeholder="Password" />
         <button class="login-signup-btn">Signup</button>
       </form>
@@ -44,7 +44,7 @@ export default {
         password: ''
       },
       signupInfo: {
-        fullName: '',
+        fullname: '',
         email: '',
         password: ''
       }

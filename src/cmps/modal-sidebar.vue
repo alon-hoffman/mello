@@ -164,49 +164,52 @@
                             </label>
                             <section class="under-computer">
 
-                                <span class="mini-head">Attach a link</span>
-                                <input type="text" v-model="attachment.href" placeholder="Paste any link here" />
-                                <div @click="addAttachment" class="attach-btn fake-button">Attach</div>
-                            </section>
-                        </form>
-                    </section>
-                </template>
-                <template v-if="(miniModalTitle === 'Cover')">
-                    <section class="mini-modal-body">
-                        <div v-if="(card.coverColor || card.imgURL)" @click="removeCover"
-                            class="fake-button remove-cover-button">Remove cover</div>
-                        <span class="mini-head">Colors</span>
-                        <div class="first-colors-row">
-                            <button class="green-btn" value="#7BC86C" @click="setCover"></button>
-                            <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
-                            <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
-                            <button class="red-btn" value="#EF7564" @click="setCover"></button>
-                            <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
-                        </div>
-                        <div class="second-colors-row">
-                            <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
-                            <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
-                            <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
-                            <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
-                            <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
-                        </div>
-                        <span class="mini-head">Attachments</span>
-                        <div v-if="card.attachments?.length" class="attachment-imgs-container">
-                            <img class="attachment-img clickable" v-for="image in getImageAttachments" :src="image.href"
-                                @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
-                        </div>
-                        <label class="cover-img-label">
-                            <div class="fake-button cover-img-btn">Upload a cover image </div><input
-                                @input="uploadAndSetCoverImg" class="cover-img-input" type="file">
-                        </label>
-                        <span class="mini-head">Photos from unsplash</span>
-                        <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                            <img v-for="photoObject in unsplashPhotos" @click="setCoverImg(photoObject)"
-                                :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
-                        </div>
-                    </section>
-                </template>
-            </custom-card>
+                            <span class="mini-head">Attach a link</span>
+                            <input type="text" v-model="attachment.href" placeholder="Paste any link here" />
+                            <div @click="addAttachment" class="attach-btn fake-button">Attach</div>
+                        </section>
+                    </form>
+                </section>
+            </template>
+            <template v-if="(miniModalTitle === 'Cover')">
+                <section class="mini-modal-body">
+                    <div v-if="(card.coverColor || card.imgURL)" @click="removeCover"
+                        class="fake-button remove-cover-button">Remove cover</div>
+                    <span class="mini-head">Colors</span>
+                    <div class="first-colors-row">
+                        <button class="green-btn" value="#7BC86C" @click="setCover"></button>
+                        <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
+                        <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
+                        <button class="red-btn" value="#EF7564" @click="setCover"></button>
+                        <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
+                    </div>
+                    <div class="second-colors-row">
+                        <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
+                        <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
+                        <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
+                        <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
+                        <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
+                    </div>
+                    <span class="mini-head">Attachments</span>
+                    <div v-if="card.attachments?.length" class="attachment-imgs-container">
+                        <img class="attachment-img clickable" v-for="image in getImageAttachments" :src="image.href"
+                            @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
+                    </div>
+                    <label class="cover-img-label">
+                        <div class="fake-button cover-img-btn">Upload a cover image </div><input
+                            @input="uploadAndSetCoverImg" class="cover-img-input" type="file">
+                    </label>
+                    <span class="mini-head">Photos from unsplash</span>
+
+                    <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
+                        class="search-unsplash-photos" v-model="searchPhoto">
+                    <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
+                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
+                    </div>
+                </section>
+            </template>
+        </custom-card>
         </Teleport>
     </section>
 </template>
@@ -249,7 +252,8 @@ export default {
             possibleColors: ['#b7ddb0', '#f5ea92', '#fad29c', '#efb3ab', '#dfc0eb', '#7bc86c', '#f5dd29', '#ffaf3f', '#ef7564', '#cd8de5', '#5aac44', '#e6c60d', '#e79217', '#cf513d', '#a86cc1', '#8bbdd9', '#8fdfeb', '#b3f1d0', '#f9c2e4', '#505f79', '#5ba4cf', '#29cce5', '#6deca9', '#ff8ed4', '#344563', '#026aa7', '#00aecc', '#4ed583', '#e568af', '#091e42'],
             chosenLabel: null,
             unsplashPhotos: null,
-            fac : new FastAverageColor()
+            fac: new FastAverageColor(),
+            searchPhoto:null,
         }
     },
     async created() {
@@ -257,6 +261,7 @@ export default {
         // console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
+        this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
         // this.getAverageColor()
     },
     methods: {
@@ -345,9 +350,12 @@ export default {
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
         },
-       async getAverageColor(){
- const res = await this.fac.getColorAsync('https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg')
- console.log(`res = `, res)
+        async getAverageColor() {
+            const res = await this.fac.getColorAsync('https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg')
+            console.log(`res = `, res)
+        },
+        async searchPhotosUnsplash() {
+            this.unsplashPhotos = await unsplashPhotosService.getPhoto(this.searchPhoto)
         },
         removeCover() {
             if (this.card.coverColor) {
@@ -433,6 +441,9 @@ export default {
                 return regex.test(label.title)
             })
         },
+        getUnsplashPhotos(){
+            return this.unsplashPhotos
+        }
     },
     components: {
         customCard,
