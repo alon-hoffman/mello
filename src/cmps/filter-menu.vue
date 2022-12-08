@@ -37,7 +37,7 @@
                     <li class="filter-list-item flex align-center" v-for="label in board.labels" @click="toggle(label.id, 'labels')">
                         <button class="checkbox" :class="isIncluded(label.id, 'labels')" ></button>
                         <button class="modal-btn" :style="{ backgroundColor: getColorWithOpacity(label.color) }">
-                            <span class="label-circle" :style="{ backgroundColor: label.color }">aa</span>
+                            <span class="label-circle" :style="{ backgroundColor: label.color }"></span>
                             {{label.title}}</button>
                     </li>
                 </ul>

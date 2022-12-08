@@ -3,7 +3,7 @@
   <section ref="title" class="board-details"  :style="chosenBackground" v-if="board">
     <div class="board-header">
       <div class="board-header-left">
-        <input v-if="board" class="board-details-title" type="text" v-model="reactiveTitle" :style="{width:`${reactiveTitle.length*10}px`}" @keyup.enter="updateTitle" >
+        <input ref="title" v-if="board" class="board-details-title" type="text" v-model="reactiveTitle" :style="{width:`${reactiveTitle.length*9.82}px`}" @keyup.enter="updateTitle"   @blur="updateTitle">
         <button @click="toggleStar" class="star-board-details-btn">
           <span v-if="!board.isStarred" class="icon sm star-empty"></span>
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
@@ -171,15 +171,15 @@ export default {
     updateTitle(){
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
       board.title= this.reactiveTitle
-      // this.refs
+      this.$refs.title.blur()
       this.updateBoard(board)
     },
     updateBoard(board = this.board){
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
-      console.log(`card = `, card)
-      // this.$store.dispatch({type: 'addCard'}, {card, action: 'addCard'})
+      const activity = {card, action: 'addCard'}
+      this.$store.dispatch({type: 'addActivity', activity})
       this.$store.dispatch({ type: 'addCard', card})
     },
     updateCard(card){

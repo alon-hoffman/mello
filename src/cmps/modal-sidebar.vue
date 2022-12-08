@@ -22,146 +22,147 @@
         <div @click="$emit('removeCard', card.id)" class="fake-button add-option-div">
             <span class="icon sm archive"></span>Archive
         </div>
-        <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
-            <template #header>
-                <section class="mini-modal-header">
-                    <span> {{ miniModalTitle }} </span>
-                    <button class="clickable close-mini-modal-btn" @click="closeMiniModal"></button>
-                </section>
-            </template>
+        <Teleport to="body">
+            <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
+                <template #header>
+                    <section class="mini-modal-header">
+                        <span> {{ miniModalTitle }} </span>
+                        <button class="clickable close-mini-modal-btn" @click="closeMiniModal"></button>
+                    </section>
+                </template>
 
 
-            <template v-if="(miniModalTitle === 'Dates')">
-                <!-- <div class="el-picker-panel__body"></div> -->
-                <section class="mini-modal-body date-section">
-                    <date-picker @click="dateOpen" @change="updateDate" locale="en" type="datetime" class="custom-input"
-                        label-class="icon-sm icon-clock" ref="date" v-model="newDate" placeholder="Enter due date"
-                        format="YYYY-MM-DD HH:mm:ss" color="#0079bf" value></date-picker>
+                <template v-if="(miniModalTitle === 'Dates')">
+                    <!-- <div class="el-picker-panel__body"></div> -->
+                    <section class="mini-modal-body date-section">
+                        <date-picker @click="dateOpen" @change="updateDate" locale="en" type="datetime" class="custom-input"
+                            label-class="icon-sm icon-clock" ref="date" v-model="newDate" placeholder="Enter due date"
+                            format="YYYY-MM-DD HH:mm:ss" color="#0079bf" value></date-picker>
 
-                    <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
-                    <!-- <div @click="updateDate" class="fake-button save-date-btn">Save</div> -->
-                </section>
-            </template>
+                        <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
+                        <!-- <div @click="updateDate" class="fake-button save-date-btn">Save</div> -->
+                    </section>
+                </template>
 
 
-            <template v-if="(miniModalTitle === 'Members')">
-                <section class="mini-modal-body">
-                    <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
-                    <span class="mini-head">Board members</span>
-                    <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
-                        <div class="members-checked-box-container clickable">
-                            <div class="user-and-img">
-                                <!-- <section class="img-container" :style="{ backgroundColor: getRandomColor }"> -->
-                                <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
-                                <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
-                                <!-- </section> -->
-                                {{ member.fullname }}
-                            </div>
-                            <img class="check-img" v-if="checkIfInMemberList(member)"
-                                src="../assets/icons/gray-check.svg">
-                        </div>
-                    </label>
-                </section>
-            </template>
-            <template v-if="(miniModalTitle === 'Labels')">
-                <section class="mini-modal-body">
-                    <input v-model="filterLabelsBy" type="text" name="" id="" placeholder="Search labels">
-                    <span class="mini-head">Labels</span>
-                    <div class="labels-checked-section-container">
-                        <section class="labels-checked-section" v-for="label in labelsForDisplay">
-                            <label class="clickable labels-checked-box">
-                                <div class=" label-container">
-                                    <img @click="toggleLabels(label)" class="checked-img"
-                                        v-if="checkIfInLabelList(label)" src="../assets/icons/checkbox-try.svg">
-                                    <img @click="toggleLabels(label)" class="box-img" v-else
-                                        src="../assets/icons/gray-square.svg" alt="">
-                                    <div class="label-color-container" @click="toggleLabels(label)"
-                                        :style="{ backgroundColor: getColorWithOpacity(label.color) }">
-                                        <!-- {{label.title}} -->
-                                        <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
-                                        <div class="label-title-area">{{ label.title }}</div>
-                                    </div>
-                                    <span @click="changeMiniModal(label)" class="icon sm edit"></span>
+                <template v-if="(miniModalTitle === 'Members')">
+                    <section class="mini-modal-body">
+                        <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
+                        <span class="mini-head">Board members</span>
+                        <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
+                            <div class="members-checked-box-container clickable">
+                                <div class="user-and-img">
+                                    <!-- <section class="img-container" :style="{ backgroundColor: getRandomColor }"> -->
+                                    <!-- <span class="member-list-initials">{{ memberInitials(member) }}</span> -->
+                                    <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
+                                    <!-- </section> -->
+                                    {{ member.fullname }}
                                 </div>
-                            </label>
-                        </section>
-                    </div>
-                    <div @click="openCreateLabelModal" class="fake-button go-to-create-label-btn">Create a new label
-                    </div>
-                </section>
-            </template>
-            <template v-if="(miniModalTitle === 'Edit label')">
-                <section class="mini-modal-body edit-label-section">
-                    <div class="chosen-label-space">
-                        <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
-                            <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
-                            <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
-                        </div>
-                    </div>
-                    <span class="mini-head">Title</span>
-                    <input v-model="chosenLabel.title" type="text">
-                    <span class="mini-head">Select a color</span>
-                    <div class="colors-palette">
-                        <div class="color-box-container" v-for="color in possibleColors">
-                            <div @click="setLabelBGC(color)" value="color" class="color-box"
-                                :style="{ backgroundColor: color }">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="remove-color-btn-container">
-                        <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
-                    </div>
-                    <div class="save-delete-btn-container">
-                        <div class="save-label-btn" @click="updateChosenLabel('save')">Save</div>
-                        <div class="delete-label-btn" @click="updateChosenLabel('delete')">Delete</div>
-                    </div>
-                </section>
-            </template>
-            <template v-if="(miniModalTitle === 'Create label')">
-                <section class="mini-modal-body edit-label-section">
-                    <div class="chosen-label-space">
-                        <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
-                            <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
-                            <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
-                        </div>
-                    </div>
-                    <span class="mini-head">Title</span>
-                    <input v-model="chosenLabel.title" type="text">
-                    <span class="mini-head">Select a color</span>
-                    <div class="colors-palette">
-                        <div class="color-box-container" v-for="color in possibleColors">
-                            <div @click="setLabelBGC(color)" value="color" class="color-box"
-                                :style="{ backgroundColor: color }">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="remove-color-btn-container">
-                        <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
-                    </div>
-                    <div class="save-delete-btn-container">
-                        <div class="add-label-btn" @click="addChosenLabel">Create</div>
-                    </div>
-                </section>
-            </template>
-            <template v-if="(miniModalTitle === 'Add checklist')">
-                <section class="mini-modal-body">
-                    <span class="mini-head">Title</span>
-                    <input v-model="checklist" @submit="addChecklist" type="text">
-                    <button @click="addChecklist" class="add-checkbox-btn">Add</button>
-                </section>
-            </template>
-            <template v-if="(miniModalTitle === 'Attach from...')">
-                <section class="mini-modal-body add-attachment-computer">
-                    <form @submit.prevent="addAttachment">
-                        <label class="img-upload-container">
-                            <div class="clickable add-attachment-computer">
-                                <!-- <label> -->
-                                <p>Computer</p>
-                                <input type="file" @change="uploadImgToCloud" hidden />
-                                <!-- </label> -->
+                                <img class="check-img" v-if="checkIfInMemberList(member)"
+                                    src="../assets/icons/gray-check.svg">
                             </div>
                         </label>
-                        <section class="under-computer">
+                    </section>
+                </template>
+                <template v-if="(miniModalTitle === 'Labels')">
+                    <section class="mini-modal-body">
+                        <input v-model="filterLabelsBy" type="text" name="" id="" placeholder="Search labels">
+                        <span class="mini-head">Labels</span>
+                        <div class="labels-checked-section-container">
+                            <section class="labels-checked-section" v-for="label in labelsForDisplay">
+                                <label class="clickable labels-checked-box">
+                                    <div class=" label-container">
+                                        <img @click="toggleLabels(label)" class="checked-img"
+                                            v-if="checkIfInLabelList(label)" src="../assets/icons/checkbox-try.svg">
+                                        <img @click="toggleLabels(label)" class="box-img" v-else
+                                            src="../assets/icons/gray-square.svg" alt="">
+                                        <div class="label-color-container" @click="toggleLabels(label)"
+                                            :style="{ backgroundColor: getColorWithOpacity(label.color) }">
+                                            <!-- {{label.title}} -->
+                                            <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
+                                            <div class="label-title-area">{{ label.title }}</div>
+                                        </div>
+                                        <span @click="changeMiniModal(label)" class="icon sm edit"></span>
+                                    </div>
+                                </label>
+                            </section>
+                        </div>
+                        <div @click="openCreateLabelModal" class="fake-button go-to-create-label-btn">Create a new label
+                        </div>
+                    </section>
+                </template>
+                <template v-if="(miniModalTitle === 'Edit label')">
+                    <section class="mini-modal-body edit-label-section">
+                        <div class="chosen-label-space">
+                            <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
+                                <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
+                                <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
+                            </div>
+                        </div>
+                        <span class="mini-head">Title</span>
+                        <input v-model="chosenLabel.title" type="text">
+                        <span class="mini-head">Select a color</span>
+                        <div class="colors-palette">
+                            <div class="color-box-container" v-for="color in possibleColors">
+                                <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                    :style="{ backgroundColor: color }">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="remove-color-btn-container">
+                            <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
+                        </div>
+                        <div class="save-delete-btn-container">
+                            <div class="save-label-btn" @click="updateChosenLabel('save')">Save</div>
+                            <div class="delete-label-btn" @click="updateChosenLabel('delete')">Delete</div>
+                        </div>
+                    </section>
+                </template>
+                <template v-if="(miniModalTitle === 'Create label')">
+                    <section class="mini-modal-body edit-label-section">
+                        <div class="chosen-label-space">
+                            <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
+                                <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
+                                <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
+                            </div>
+                        </div>
+                        <span class="mini-head">Title</span>
+                        <input v-model="chosenLabel.title" type="text">
+                        <span class="mini-head">Select a color</span>
+                        <div class="colors-palette">
+                            <div class="color-box-container" v-for="color in possibleColors">
+                                <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                    :style="{ backgroundColor: color }">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="remove-color-btn-container">
+                            <div @click="updateDate" class="fake-button remove-color-btn">Remove color</div>
+                        </div>
+                        <div class="save-delete-btn-container">
+                            <div class="add-label-btn" @click="addChosenLabel">Create</div>
+                        </div>
+                    </section>
+                </template>
+                <template v-if="(miniModalTitle === 'Add checklist')">
+                    <section class="mini-modal-body">
+                        <span class="mini-head">Title</span>
+                        <input v-model="checklist" @submit="addChecklist" type="text">
+                        <button @click="addChecklist" class="add-checkbox-btn">Add</button>
+                    </section>
+                </template>
+                <template v-if="(miniModalTitle === 'Attach from...')">
+                    <section class="mini-modal-body add-attachment-computer">
+                        <form @submit.prevent="addAttachment">
+                            <label class="img-upload-container">
+                                <div class="clickable add-attachment-computer">
+                                    <!-- <label> -->
+                                    <p>Computer</p>
+                                    <input type="file" @change="uploadImgToCloud" hidden />
+                                    <!-- </label> -->
+                                </div>
+                            </label>
+                            <section class="under-computer">
 
                             <span class="mini-head">Attach a link</span>
                             <input type="text" v-model="attachment.href" placeholder="Paste any link here" />
@@ -209,6 +210,7 @@
                 </section>
             </template>
         </custom-card>
+        </Teleport>
     </section>
 </template>
 
