@@ -1,12 +1,9 @@
 <template>
   <router-view></router-view>
-  <section class="board-details"  :style="chosenBackground" v-if="board">
-    <!-- <sidebar/> -->
-    <!-- <card-edit :isScreen="isScreen" @toggleEdit="toggleEdit" @updateCard="updateCard" @updateLabels="updateLabels"/> -->
+  <section ref="title" class="board-details"  :style="chosenBackground" v-if="board">
     <div class="board-header">
       <div class="board-header-left">
-        <!-- <h1 class="editable board-details-title">{{board.title}}</h1> -->
-        <input class="board-details-title" type="text" v-model="board.title" >
+        <input v-if="board" class="board-details-title" type="text" v-model="reactiveTitle" :style="{width:`${reactiveTitle.length*10}px`}" @keyup.enter="updateTitle" >
         <button @click="toggleStar" class="star-board-details-btn">
           <span v-if="!board.isStarred" class="icon sm star-empty"></span>
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
@@ -79,6 +76,7 @@ export default {
     return{
       listModalOpen: false,
       list:null,
+      reactiveTitle:null,
       listModalCords:{
         y:null,
         x:null
@@ -101,6 +99,7 @@ export default {
     })
             this.$store.commit({ type: 'setBoardById',  id:boardId });
             const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+            this.reactiveTitle= board.title
             board.lastViewed= Date.now()
             this.updateBoard(board)
           },
@@ -167,6 +166,12 @@ export default {
     toggleStar(){
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
       board.isStarred =!board.isStarred
+      this.updateBoard(board)
+    },
+    updateTitle(){
+      const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+      board.title= this.reactiveTitle
+      // this.refs
       this.updateBoard(board)
     },
     updateBoard(board = this.board){
