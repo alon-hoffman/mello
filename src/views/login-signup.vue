@@ -49,7 +49,7 @@ export default {
   methods: {
     async login() {
       await this.$store.dispatch({ type: 'login', cred: this.credentials });
-      this.$router.push('/board')
+      this.$router.push('/#/board')
     },
     changeShowLogin() {
       this.showLogin = !this.showLogin
