@@ -163,6 +163,7 @@ export const boardStore = {
         },
         async duplicateList({ dispatch, state }, { list }) {
             // console.log(`duplicateList = `)
+            console.log(`list = `, list)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const idx = board.groups.findIndex(group => group.id === list.id)
             const newList = JSON.parse(JSON.stringify(list))

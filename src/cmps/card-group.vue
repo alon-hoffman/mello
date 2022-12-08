@@ -101,6 +101,7 @@ export default {
     },
     addCard() {
       const newCard= {title:this.newTitle, groupId: this.list.id}
+      if(!newCard.title.trim()) return
       this.$emit('addCard', newCard)
       this.newTitle=""
     },

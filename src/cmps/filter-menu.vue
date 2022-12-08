@@ -17,8 +17,8 @@
                         <button class="checkbox" :class="noMembers" @click="clearCategory('members')"></button>
                         <span>No members</span>
                     </li>
-                    <li class="filter-list-item flex" v-for="member in board.members" @click="toggle(member._id, 'members')">
-                        <button class="checkbox" :class="isIncluded(member._id, 'members')"></button>
+                    <li class="filter-list-item flex" v-for="member in board.members" @click="toggle(member.fullname, 'members')">
+                        <button class="checkbox" :class="isIncluded(member.fullname, 'members')"></button>
                         <span class="member-icon flex align-center justify-center">{{memberInitials(member)}}</span>
                         <span>{{member.fullname}}</span>
                     </li>
