@@ -18,9 +18,11 @@
         <span v-if="dynamicCard.attachments?.length" class="attachments">
           <span class="icon sm attachment"></span>{{dynamicCard.attachments.length}}</span>
       </div>
+      <div class="flex">
       <div v-if="dynamicCard.members" class="members flex align-center" v-for="member in card.members">
           <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)">
       </div>
+    </div>
     </div>
   </section>
   <!-- <section v-else class="card-preview" >

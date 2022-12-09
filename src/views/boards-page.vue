@@ -6,13 +6,13 @@
         <aside class="gallery-sidebar">
 
           <nav class="flex column">
-            <button class="gallery-nav-btn">
+            <button ref="home-btn" @click="setArchive(false, $event)"  class="gallery-nav-btn" :class="{active:!archived}">
               <span class="icon sm board board-btn-page"></span>
               Boards
             </button>
-            <button class="gallery-nav-btn">
-              <span class="icon sm template"></span>
-              Templates</button>
+            <button  ref="archived-btn" @click="setArchive(true, $event)"  class="gallery-nav-btn" :class="{active:archived}">
+              <span class="icon sm archive"></span>
+              Archive</button>
             <button class="gallery-nav-btn">
               <span class="icon sm pulse"></span>
               Home</button>
@@ -23,7 +23,7 @@
           </div>
         </aside>
 
-        <section class="boards-showcase-container">
+        <section  class="boards-showcase-container">
           <template v-if="boards"
             v-for="display in boardGroups">
               <h3 class="gallery-header">
@@ -46,9 +46,9 @@
                   <div class="board-preview fake-board-preview flex align-center">Create new board</div>
                 </li>
               </ul>
-           
           </template>
         </section>
+
 
           <board-creator v-if="boardCreateMode" @saveBoard="saveBoard" @close="closeCreator"
             v-click-outside="closeCreator" />
@@ -74,7 +74,8 @@ export default {
   },
   computed: {
     boardGroups(){
-      if(this.archived)return this.$store.getters.boards?.filter(board => board.isArchived);
+      if(this.archived)return [{computed:this.archivedBoard, title:"Archived boards",icon:"icon lg archive"}]
+      // if(this.archived)  console.log( "archived")
       return [{ computed: this.favoriteBoards, title: 'Starred Boards',icon:'icon lg star-empty' },
        { computed: this.lastViewed, title: 'Recently Viewed',icon:'icon lg time' }, 
        { computed: this.boards, title: 'All Boards',icon:'' }]
@@ -91,6 +92,9 @@ export default {
       const boards = this.$store.getters.boards.filter(board => !board.isArchived);
       const filteredBoards = boards.filter(board => board.lastViewed)
       return filteredBoards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
+    },
+    archivedBoard(){
+      return this.$store.getters.boards?.filter(board => board.isArchived)
     }
   },
   methods: {
@@ -114,6 +118,13 @@ export default {
       if (backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover' }
       return { 'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}` }
     },
+    setArchive(bool, ev){
+      this.archived= bool
+      // for (const btn in this.$refs){
+      //   console.log("🚀 ~ file: boards-page.vue:124 ~ setArchive ~ btn", btn)
+      //   btn.classList.remove('active')
+      // }
+    }
   },
   components: {
     boardCreator
