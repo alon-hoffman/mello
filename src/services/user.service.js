@@ -88,7 +88,7 @@ async function logout() {
 
 
 function setLoggedinUser(user) {
-    const userToSave = { _id: user._id, fullName: user.fullName ,username:user.username ,isAdmin: user.isAdmin}
+    const userToSave = { _id: user._id, fullname: user.fullname ,email:user.email ,isAdmin: user.isAdmin}
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(userToSave))
     return userToSave
 }

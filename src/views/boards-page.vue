@@ -25,7 +25,7 @@
 
         <section class="boards-showcase-container">
           <template v-if="boards"
-            v-for="display in [{ computed: favoriteBoards, title: 'Starred Boards',icon:'icon lg star-empty' }, { computed: lastViewed, title: 'Recently Viewed',icon:'icon lg time' }, { computed: boards, title: 'All Boards',icon:'' }]">
+            v-for="display in boardGroups">
               <h3 class="gallery-header">
                 <span :class="display.icon"></span>
                 {{ display.title }}
@@ -66,22 +66,29 @@ export default {
   data() {
     return {
       boardCreateMode: false,
+      archived:false
     }
   },
   async created() {
-    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" })
   },
   computed: {
+    boardGroups(){
+      if(this.archived)return this.$store.getters.boards?.filter(board => board.isArchived);
+      return [{ computed: this.favoriteBoards, title: 'Starred Boards',icon:'icon lg star-empty' },
+       { computed: this.lastViewed, title: 'Recently Viewed',icon:'icon lg time' }, 
+       { computed: this.boards, title: 'All Boards',icon:'' }]
+    },
     boards() {
-      return this.$store.getters.boards
+      return this.$store.getters.boards?.filter(board => !board.isArchived);
     },
     favoriteBoards() {
       const boards = this.$store.getters.boards
       // console.log(`boards = `, boards)
-      return boards.filter(board => board.isStarred)
+      return boards.filter(board => board.isStarred).filter(board => !board.isArchived)
     },
     lastViewed() {
-      const boards = this.$store.getters.boards
+      const boards = this.$store.getters.boards.filter(board => !board.isArchived);
       const filteredBoards = boards.filter(board => board.lastViewed)
       return filteredBoards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
     }
@@ -93,9 +100,13 @@ export default {
     closeCreator() {
       this.boardCreateMode = false
     },
-    saveBoard(board) {
-      this.$store.dispatch({ type: "addBoard", board })
+    async saveBoard(board) {
+    await  this.$store.dispatch({ type: "addBoard", board })
       this.closeCreator()
+      const newBoard= this.$store.getters.boards[this.$store.getters.boards.length - 1]
+      
+      this.$router.push('/board/' + newBoard._id)
+
     },
     chosenBackground(style) {
       // console.log(`foo = `)

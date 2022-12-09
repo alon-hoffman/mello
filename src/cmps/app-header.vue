@@ -34,9 +34,12 @@
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
         <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
-        <button><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
+        <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
       </div>
     </nav>
+    <section class="user-modal" v-click-outside="closeUserModal" v-if="isUserModalOpen">
+<span class="mini-head">hello</span>
+    </section>
     <section class="create-modal">
 
     </section>
@@ -50,6 +53,7 @@ export default {
     return {
       route: this.$route,
       isCreateModalOpen: false,
+      isUserModalOpen:false,
       // placeholder
     }
   },
@@ -64,7 +68,15 @@ export default {
     },
     enterAsGuest(){
       this.$router.push('/board')
+    },
+    openUserModal(){
+this.isUserModalOpen=true
+    },
+    closeUserModal(){
+      this.isUserModalOpen=false
     }
+
+
   },
   computed: {
     loggedInUser() {

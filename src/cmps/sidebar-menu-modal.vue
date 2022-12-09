@@ -25,7 +25,13 @@
                     <span class="change-background-text mini-head">Change background</span>
                 </div>
             </div>
-            <section class="edit-block">
+            <section @click="archive" class="edit-block">
+                <span class="icon lg archive"></span>
+                <span class="header flex justify-between">
+                    <span class="activity-title">Archive board</span>
+                    <!-- <button class="fake-button">needs to be unread activity</button> -->
+                </span> </section>
+            <section  class="edit-block">
                 <span class="icon lg activity"></span>
                 <span class="header flex justify-between">
                     <span class="activity-title">Activity</span>
@@ -151,6 +157,10 @@ export default {
                 this.closeSidebarMenuModal()
                 this.$emit('editCard', activity.card.id)
             }
+        },
+        archive(){
+        this.currBoard.isArchived = true
+        this.$router.push('/board/')
         }
     },
     computed: {
