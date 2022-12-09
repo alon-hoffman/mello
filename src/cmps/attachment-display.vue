@@ -13,7 +13,7 @@
             <template v-else>{{ attachment.type }} file</template>
           </a> &nbsp
           <input ref="input" v-show="isEdited" class="attachment-edit-input" type="text" :value="getName(index)" 
-           v-click-outside="saveName(index)"> 
+           v-click-outside="() =>saveName(index)"> 
             <span>{{formattedDueDate(attachment.createdAt)}}&nbsp</span>
           <div class="actions">
             <span @click="removeAttachment(index)">Delete </span>-&nbsp
