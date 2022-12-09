@@ -22,9 +22,12 @@
         & > nav{
             border-bottom: 1px solid  rgba(0, 0, 0, 0.1);
             
-            :first-child.gallery-nav-btn {
+            .active{
                 background-color: #e4f0f6;
                 color:#0079bf;
+            }
+
+            :first-child.gallery-nav-btn {
                 position: relative;
                 span{
                     vertical-align: text-bottom;

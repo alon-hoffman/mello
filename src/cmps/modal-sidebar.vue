@@ -16,7 +16,7 @@
         <div @click="openMiniModal('Attach from...')" class="fake-button add-option-div">
             <span class="icon sm attach"></span>Attachment
         </div>
-        <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
+        <div @click="updateImgAttachmentsColors" class="fake-button add-option-div">
             <span class="icon sm cover"></span>Cover
         </div>
         <div @click="toggleArchive" class="fake-button add-option-div">
@@ -38,9 +38,10 @@
                 <template v-if="(miniModalTitle === 'Dates')">
                     <!-- <div class="el-picker-panel__body"></div> -->
                     <section class="mini-modal-body date-section">
-                        <date-picker @click="dateOpen" @change="updateDate" locale="en" type="datetime" class="custom-input"
-                            label-class="icon-sm icon-clock" ref="date" v-model="newDate" placeholder="Enter due date"
-                            format="YYYY-MM-DD HH:mm:ss" color="#0079bf" value></date-picker>
+                        <date-picker @click="dateOpen" @change="updateDate" locale="en" type="datetime"
+                            class="custom-input" label-class="icon-sm icon-clock" ref="date" v-model="newDate"
+                            placeholder="Enter due date" format="YYYY-MM-DD HH:mm:ss" color="#0079bf"
+                            value></date-picker>
 
                         <!-- <input v-model="newDate" type="text" placeholder="Enter due date"> -->
                         <!-- <div @click="updateDate" class="fake-button save-date-btn">Save</div> -->
@@ -52,7 +53,8 @@
                     <section class="mini-modal-body">
                         <input v-model="filterMembersBy" type="text" name="" id="" placeholder="Search members">
                         <span class="mini-head">Board members</span>
-                        <label class="members-checked-box" v-for="member in getFilterMembers" @click="toggleMember(member)">
+                        <label class="members-checked-box" v-for="member in getFilterMembers"
+                            @click="toggleMember(member)">
                             <div class="members-checked-box-container clickable">
                                 <div class="user-and-img">
                                     <!-- <section class="img-container" :style="{ backgroundColor: getRandomColor }"> -->
@@ -97,7 +99,8 @@
                 <template v-if="(miniModalTitle === 'Edit label')">
                     <section class="mini-modal-body edit-label-section">
                         <div class="chosen-label-space">
-                            <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
+                            <div class="chosen-label"
+                                :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
                                 <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
                                 <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
                             </div>
@@ -124,7 +127,8 @@
                 <template v-if="(miniModalTitle === 'Create label')">
                     <section class="mini-modal-body edit-label-section">
                         <div class="chosen-label-space">
-                            <div class="chosen-label" :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
+                            <div class="chosen-label"
+                                :style="{ backgroundColor: getColorWithOpacity(chosenLabel.color) }">
                                 <div class="label-circle" :style="{ backgroundColor: chosenLabel.color }"></div>
                                 <span class="chosenLabel-title">{{ chosenLabel.title }}</span>
                             </div>
@@ -167,42 +171,43 @@
                             </label>
                             <section class="under-computer">
 
-                            <span class="mini-head">Attach a link</span>
-                            <input type="text" v-model="attachment.href" placeholder="Paste any link here" />
-                            <div @click="addAttachment" class="attach-btn fake-button">Attach</div>
-                        </section>
-                    </form>
-                </section>
-            </template>
-            <template v-if="(miniModalTitle === 'Cover')">
-                <section class="mini-modal-body">
-                    <div v-if="(card.coverColor || card.imgURL)" @click="removeCover"
-                        class="fake-button remove-cover-button">Remove cover</div>
-                    <span class="mini-head">Colors</span>
-                    <div class="first-colors-row">
-                        <button class="green-btn" value="#7BC86C" @click="setCover"></button>
-                        <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
-                        <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
-                        <button class="red-btn" value="#EF7564" @click="setCover"></button>
-                        <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
-                    </div>
-                    <div class="second-colors-row">
-                        <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
-                        <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
-                        <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
-                        <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
-                        <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
-                    </div>
-                    <span class="mini-head">Attachments</span>
-                    <div v-if="card.attachments?.length" class="attachment-imgs-container">
-                        <img class="attachment-img clickable" v-for="image in getImageAttachments" :src="image.href"
-                            @click="setCoverImg(image.href)" :style="{ backgroundImage: image.href }" alt="">
-                    </div>
-                    <label class="cover-img-label">
-                        <div class="fake-button cover-img-btn">Upload a cover image </div><input
-                            @input="uploadAndSetCoverImg" class="cover-img-input" type="file">
-                    </label>
-                    <span class="mini-head">Photos from unsplash</span>
+                                <span class="mini-head">Attach a link</span>
+                                <input type="text" v-model="attachment.href" placeholder="Paste any link here" />
+                                <div @click="addAttachment" class="attach-btn fake-button">Attach</div>
+                            </section>
+                        </form>
+                    </section>
+                </template>
+                <template v-if="(miniModalTitle === 'Cover')">
+                    <section class="mini-modal-body">
+                        <div v-if="(card.coverColor || card.imgURL)" @click="removeCover"
+                            class="fake-button remove-cover-button">Remove cover</div>
+                        <span class="mini-head">Colors</span>
+                        <div class="first-colors-row">
+                            <button class="green-btn" value="#7BC86C" @click="setCover"></button>
+                            <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
+                            <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
+                            <button class="red-btn" value="#EF7564" @click="setCover"></button>
+                            <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
+                        </div>
+                        <div class="second-colors-row">
+                            <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
+                            <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
+                            <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
+                            <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
+                            <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
+                        </div>
+                        <span class="mini-head">Attachments</span>
+                        <div v-if="card.attachments?.length" class="attachment-imgs-container">
+                            <img class="attachment-img clickable" v-for="(image, index) in getImageAttachments"
+                                :src="image.href" @click="setCoverImg(image.href)"
+                                :style="{ backgroundColor: imgAttachmentsColors[index] }" alt="">
+                        </div>
+                        <label class="cover-img-label">
+                            <div class="fake-button cover-img-btn">Upload a cover image </div><input
+                                @input="uploadAndSetCoverImg" class="cover-img-input" type="file">
+                        </label>
+                        <span class="mini-head">Photos from unsplash</span>
 
                     <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
                         class="search-unsplash-photos" v-model="searchPhoto">
@@ -264,7 +269,8 @@ export default {
             chosenLabel: null,
             unsplashPhotos: null,
             fac: new FastAverageColor(),
-            searchPhoto:null,
+            searchPhoto: null,
+            imgAttachmentsColors: []
         }
     },
     async created() {
@@ -273,12 +279,13 @@ export default {
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
-        // this.getAverageColor()
     },
     methods: {
         async openMiniModal(value) {
             this.miniModalTitle = value
+            // console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
+
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
                 this.unsplashPhotos.splice(9, 1)
             }
@@ -286,10 +293,6 @@ export default {
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
-        },
-        async printAverageColor() {
-            const color = await getAverageColor('./image.png');
-            console.log(color);
         },
         changeMiniModal(label) {
             this.chosenLabel = JSON.parse(JSON.stringify(label))
@@ -345,8 +348,8 @@ export default {
                 todos: [],
             }
             if (!this.card.checklists) this.card.checklists = []
-            const activity = {action: 'addDetail', card: this.card, detail: this.checklist}
-            this.$store.dispatch({ type: 'addActivity', activity})
+            const activity = { action: 'addDetail', card: this.card, detail: this.checklist }
+            this.$store.dispatch({ type: 'addActivity', activity })
             this.card.checklists.push(newChecklist)
             this.checklist = "Checklist"
             setTimeout(() => { this.$emit('closeMiniModal') }, 500)
@@ -359,13 +362,22 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(photoObject) {
-            console.log(`photo = `, photoObject)
+            // console.log(`photo = `, photoObject)
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
         },
-        async getAverageColor() {
-            const res = await this.fac.getColorAsync('https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg')
-            console.log(`res = `, res)
+        updateImgAttachmentsColors() {
+            this.openMiniModal('Cover')
+            if (!this.getImageAttachments?.length) return
+            this.imgAttachmentsColors = []
+            this.getImageAttachments.forEach((attachment) => {
+                this.getAverageColor(attachment.href)
+            })
+        },
+        async getAverageColor(imgUrl) {
+            let res = await this.fac.getColorAsync(imgUrl)
+            this.imgAttachmentsColors.push(res.hex)
+            return res.hex
         },
         async searchPhotosUnsplash() {
             this.unsplashPhotos = await unsplashPhotosService.getPhoto(this.searchPhoto)
@@ -415,7 +427,6 @@ export default {
         async uploadImgToCloud(ev) {
             // console.log(`ev = `, ev)
             const res = await uploadService.uploadImg(ev);
-            // console.log(`res = `, res)
             this.attachment.href = res.url;
             this.attachment.type = 'img';
             this.addAttachment()
@@ -423,7 +434,7 @@ export default {
         },
         async uploadAndSetCoverImg(ev) {
             const res = await uploadService.uploadImg(ev);
-            setCoverImg(res.secure_url)
+            this.setCoverImg(res.secure_url)
         },
         dateOpen() {
             this.isDatePickerOpen = true
@@ -463,7 +474,7 @@ export default {
                 return regex.test(label.title)
             })
         },
-        getUnsplashPhotos(){
+        getUnsplashPhotos() {
             return this.unsplashPhotos
         },
         isArchived(){

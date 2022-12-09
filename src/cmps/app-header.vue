@@ -8,7 +8,7 @@
         <img class="logo-img-home" src="https://res.cloudinary.com/mello123/image/upload/v1670406786/yd2qyxfpqsuosu76o82o.png" alt="">
       </router-link>
       <section class="right-home-header">
-        <router-link to="/login">
+        <router-link to="/auth">
           <button class="login-button">Log in</button>
         </router-link>
         <button @click="enterAsGuest" class="guest-button clickable">Enter as a guest</button>
@@ -37,7 +37,7 @@
         <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
       </div>
     </nav>
-    <section class="user-modal" v-click-outside="closeUserModal" v-if="isUserModalOpen">
+    <section class="user-modal" v-if="isUserModalOpen">
 <span class="mini-head">hello</span>
     </section>
     <section class="create-modal">
