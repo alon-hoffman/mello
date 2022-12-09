@@ -90,6 +90,17 @@
             padding-bottom: 30px;
             padding-top: 20px;
             border-bottom: 1px solid #5e6c8458;
+            color: $text-dark;
+            font-weight: 600;
+            &-item {
+                padding: 6px;
+                padding-inline-start: 11px;
+                gap: 11px;
+                border-radius: 4px;
+                &:hover {
+                    background-color: #e2e4e9;
+                }
+            }
             
         }
 
@@ -156,7 +167,6 @@
             padding: 5px;
             border-radius: 4px;
             position: relative;
-
             &:hover {
                 background-color: #e2e4e9;
             }
@@ -239,6 +249,7 @@
         }
 
         .change-background-text {
+            color: $text-dark;
             border-radius: 3px;
             display: block;
             font-weight: 600;

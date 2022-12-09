@@ -315,7 +315,7 @@ export default {
             this.updateCard(this.card)
         },
         addComment(){
-            const activity = {action: 'addComment', card: this.card, detail: {title: this.newComment}}
+            const activity = {action: 'addComment', card: this.card, detail: this.newComment}
             this.$store.dispatch({type: 'addActivity', activity})
             this.newComment = ''
         },

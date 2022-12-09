@@ -78,7 +78,7 @@ function activityNamer(action, board, groupId, detail) {
         todo: { before: ` completed ${detail} from`, after: `` },
         archiveItem: { before: ` archived` },
         retrieveItem: { before: ` sent`, after: ` to the board` },
-        addComment: { before: ` commented on`, after: `: ${detail.title}` },
+        addComment: { before: ` commented on`, after: `: ${detail}` },
     }
     return activityMap[action]
 }

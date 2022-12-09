@@ -109,6 +109,11 @@ export const boardStore = {
             state.lastActivity = activity
             state.currBoard.activities.unshift(activity)
         },
+        archiveItem({ currBoard }, { item }) {
+            console.log(item)
+            if (!currBoard.archivedItems) currBoard.archivedItems = []
+            currBoard.archivedItems.unshift(item)
+        },
     },
     actions: {
         async addBoard(context, { board }) {

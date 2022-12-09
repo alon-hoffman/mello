@@ -11,14 +11,9 @@
         </section>
         <section v-if="header === 'Menu'" class="mini-modal-content">
             <div class="menu-navigation">
-                <div class="about-this-board-container clickable">
-                    <span class="text-area">
-                        <span class="icon sm board mello-icon"></span>
-                        <div class="text-container">
-                            <span class="about-this-board-title mini-head">About this board</span>
-                            <div class="add-description-title">Add a description to your board</div>
-                        </div>
-                    </span>
+                <div class="menu-navigation-item flex align-center clickable" @click="toggleCurrentDisplay">
+                    <span class="icon lg" :class="oppositeDisplay"></span>
+                    <span>{{currDisplay === 'Activity' ? 'View items in archive' : 'Board activity'}}</span>
                 </div>
                 <div @click="changeModal('Change background')" class="change-background clickable">
                     <img v-if="currBoard.style.backgroundImage" class="change-background-img" :src="currBoard.style.backgroundImage">
@@ -29,22 +24,27 @@
             <section @click="archive" class="edit-block clickable">
                 <span class="icon lg archive"></span>
                 <span class="header flex justify-between">
-                    <span class="activity-title">Archive board</span>
+                    <span class="activity-title">Archive this board</span>
                     <!-- <button class="fake-button">needs to be unread activity</button> -->
                 </span> </section>
             <section  class="edit-block">
-                <span class="icon lg activity"></span>
+                <span class="icon lg" :class="currentDisplay"></span>
                 <span class="header flex justify-between">
-                    <span class="activity-title">Activity</span>
+                    <span class="activity-title">{{currDisplay}}</span>
                     <!-- <button class="fake-button">needs to be unread activity</button> -->
                 </span>
-                <ul class="content activity-list">
+                <ul class="content activity-list" v-if="currDisplay === 'Activity'">
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
                         <div class="member-avatar"></div>
                         <div class="flex column" v-if="activity.title">
                             <span><strong>{{activity.user}}</strong>{{ activity.title.before}} <span class="activity-link clickable" @click="goToCard(activity)">{{activity.card.title}}</span>{{activity.title.after}}</span>
                             <span class="time">{{timeSince(activity.addedAt)}}</span>
                         </div>
+                    </li>
+                </ul>
+                <ul class="content archive-list" v-if="currDisplay === 'Items in archive'">
+                    <li class="archive-list-item" v-for="item in currBoard.archivedItems">
+                        {{item.title}}
                     </li>
                 </ul>
             </section>
@@ -113,11 +113,11 @@ export default {
             colorList: ['#0079bf', '#d29034', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#00aecc', '#838c91',],
             searchPhoto:null,
             processChange:null,
-
+            currDisplay: 'Activities'
         }
     },
     created() {
-         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())       
+         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
     },
     methods: {
         timeSince(time){
@@ -164,15 +164,23 @@ export default {
         await this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         await this.$store.dispatch({ type: "loadBoards" });
         this.$router.push('/board/')
-        }
+        },
+        toggleCurrentDisplay(){
+            this.currDisplay = this.currDisplay === 'Activity' ? 'Items in archive' : 'Activity'  
+            console.log(this.currDisplay)
+        },
     },
     computed: {
         getUnsplashPhotos(){
             return this.unsplashPhotos
+        },
+        currentDisplay(){
+            return {activity: this.currDisplay === 'Activity', collection: this.currDisplay === 'Items in archive'}
+        },
+        oppositeDisplay(){
+            return {collection: this.currDisplay === 'Activity', activity: this.currDisplay === 'Items in archive'}
+
         }
-        //   cords(){
-        //     return {top:`0px`, right:`0px`}
-        //   }
     },
 
 
