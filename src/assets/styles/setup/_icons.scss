@@ -102,6 +102,12 @@
     &.attachment::before{
         content: '\E908';
     }
+    &.return::before{
+        content: '\E95B';
+    }
+    &.remove::before{
+        content: '\E95C';
+    }
     &.center{
         vertical-align: middle;
     }

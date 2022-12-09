@@ -5,6 +5,9 @@
         <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}">
             <span class="cover-btn icon lg cover flex align-center">Cover</span>
         </div>
+        <div class="archive-cover flex" v-if="card.isArchived">
+            <span class="icon lg archive"></span>This card is archived.
+        </div>
         <div class="modal-container">
             <header class="modal-header edit-block">
                 <span class="icon lg card"></span>
@@ -121,15 +124,12 @@
                             <h3>Activity</h3>
                             <button class="fake-button">Hide Details</button>
                         </span>
-                        <ul class="content">
-                            <li class="edit-block">
-                                <span class="icon lg user"></span>
-                                <div class="comment-box">
-                                    <textarea type="text" placeholder="Write a comment..."></textarea>
-                                    <footer class="comment-options"></footer>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="content comment-box">
+                            <textarea type="text" placeholder="Write a comment..." v-model="newComment" required>
+                            </textarea>
+                            <button class="modal-btn save-btn" @click="commentCard">Save</button>
+                                <!-- <footer class="comment-options"></footer> -->
+                            </div>
                     </section>
                 </section>
                 <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal"
@@ -161,7 +161,7 @@ export default {
                 isDone: false
             },
             boardMembers: null,
-            // currTodo: null
+            newComment: '',
         }
     },
     async created() {
@@ -209,7 +209,7 @@ export default {
             this.realTextArea = false
         },
         updateCard(currCard) {
-            console.log("🚀 ~ file: card-edit.vue:211 ~ updateCard ~ currCard", currCard)
+            console.log("🚀 ~ file: card-edit.vue:211 ~ updateCard ~ currCard")
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
             else this.$store.dispatch({ type: "saveCard", card: currCard })
             // else this.$store.dispatch({ type: "saveCard", card: this.card })
@@ -303,6 +303,10 @@ export default {
             // if(typeof newAttachments==="object") return
             this.card.attachments = newAttachments
             this.updateCard(this.card)
+        },
+        commentCard(){
+            const activity = {action: 'addComment', card: this.card, detail: {title: this.newComment}}
+            this.$store.dispatch({activirty})
         }
     },
     computed: {
@@ -351,13 +355,5 @@ export default {
         modalSidebar,
         attachmentDisplay
     },
-    //     watch:{
-    //         card:{
-    //             handler(newVal, oldVal){
-    //                 this.updateCard()
-    //             },
-    //             deep:true
-    //         }
-    // }
 }
 </script>

@@ -251,9 +251,11 @@ export const boardStore = {
                 title: boardService.activityNamer(action, state.currBoard, card.groupId, detail),
                 addedAt: Date.now(),
             }
+            if (!card.activities) card.activities = []
+            card.activities.unshift(activityToAdd)
+            console.log(card.activities)
             commit({ type: 'addActivity', activity: activityToAdd })
         },
     },
-
 }
 
