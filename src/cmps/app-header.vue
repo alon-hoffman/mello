@@ -36,14 +36,15 @@
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
 
-        <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
-        <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header"
+        <button><img class="circle-img-header" @click="modal = 'about'" src="../assets/icons/circle-question-regular.png"
+            alt=""></button>
+        <button class="open-user-modal-btn" @click="modal = 'user'"><img class="user-img-header"
             src="../assets/icons/user-solid.png" alt=""></button>
       </div>
-    </nav>  
-      <header-modal v-if="modal==='about'" v-click-outside="()=>modal=null"/>
-      <user-modal v-if="modal==='user'" v-click-outside="()=>modal=null"/>
-      <board-creator :modalCords="modalCords" v-if="modal==='create'" v-click-outside="()=>modal=null"/>
+    </nav>
+    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" />
+    <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
+    <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null" />
 
 
   </header>
@@ -66,30 +67,22 @@ export default {
       isUserModalOpen: false,
       headColor: '',
       fac: new FastAverageColor(),
-      isUserModalOpen:false,
-      modal:null,
-      modalCords:null
+      isUserModalOpen: false,
+      modal: null,
+      modalCords: null
       // placeholder
     }
   },
   async created() {
-    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-    const { boardId } = this.$route.params
-    socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
-    socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board) => {
-      this.$store.commit({ type: "updateBoard", board })
-    })
-    this.$store.commit({ type: 'setBoardById', id: boardId });
-    const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard || {}))
-    console.log(`board = `, board)
-    },
+   
+  },
   components: {
     headerModal,
     userModal,
     boardCreator
   },
   created() {
-   
+
   },
   methods: {
     toggleCreateModal() {
@@ -112,17 +105,28 @@ export default {
       let res = await this.fac.getColorAsync(imgUrl)
       return res.hex
     },
-    async getHeaderColor() { 
-        let board = this.$store.getters.getCurrBoard
-        if (board.style.backgroundColor) return utilService.LightenDarkenColor(board.style.backgroundColor, -40)
-        let boardHeaderColor = this.getAverageColor(board.style.backgroundImage)
-        return utilService.LightenDarkenColor(boardHeaderColor, 40)
+    async setHeaderColor() {
+      let board = this.$store.getters.getCurrBoard
+      if (board?.style.backgroundColor) this.headColor =board?.style.backgroundColor+'aa'
+      else{
+        let boardHeaderColor =await this.getAverageColor(board?.style.backgroundImage)
+        this.headColor =boardHeaderColor
+        //  this.blendHexColors(boardHeaderColor,'#f0f0f0',20 ) 
+      }
     },
-
-    openCreateModal(){
-      const  {y, x} = this.$refs.createBtn.getBoundingClientRect()
-      this.modalCords= {y, x}  
-      this.modal='create'
+   blendHexColors(c0, c1, p) {
+    var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
+    return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
+},
+    openCreateModal() {
+      const { y, x } = this.$refs.createBtn.getBoundingClientRect()
+      this.modalCords = { y, x }
+      this.modal = 'create'
+    },
+    getParams() {
+      if (this.$route.path.includes('board/'))
+        this.getHeaderColor()
+        return
     },
   },
   computed: {
@@ -142,13 +146,25 @@ export default {
           console.log(e);
         });
     },
-    getParams() {
-      if (this.params.includes('board/'))
-        this.getHeaderColor
+    getHeadColor() {
+      console.log(`this.headColor = `, this.headColor)
+      if (!this.headColor||this.headColor==="#026AA7") return "#026AA7"
+      else return this.headColor
     },
-    getHeadColor(){
-if(!this.headColor) return "#026AA7"
+  },
+  watch:{
+    $route (to, from){
+      this.headColor="#026AA7"
+      console.log(`foo = `)
+      setTimeout(()=>{
+
+        if (this.$route.path.includes('board/'))
+        this.setHeaderColor()
+      },500)
+       
     },
+        // this.show = false;
+    }
   }
-}
+
 </script>
