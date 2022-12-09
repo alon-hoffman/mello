@@ -26,7 +26,7 @@
         <router-link to="/board">
           <button class="boards-header-btn">Boards</button>
         </router-link>
-        <button class="create-board-btn" @click="toggleCreateModal">Create </button>
+        <button ref="createBtn" class="create-board-btn" @click="openCreateModal">Create </button>
       </div>
       <div class="right-header">
         <div class="search-boards">
@@ -35,13 +35,12 @@
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
-        <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
-        <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header"
-            src="../assets/icons/user-solid.png" alt=""></button>
+        <button @click="modal='about'"><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
+        <button class="open-user-modal-btn" @click="modal='user'"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
       </div>
     </nav>
     <section class="user-modal" v-if="isUserModalOpen">
-      <span class="mini-head">hello</span>
+<span class="mini-head">hello</span>
     </section>
     <section class="create-modal">
 
@@ -50,31 +49,17 @@
 </template>
 <script>
 import { FastAverageColor } from 'fast-average-color';
-import { utilService } from '../services/util.service';
-import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG, SOCKET_EMIT_BOARD_UPDATED, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service'
-import { takeWhile } from 'lodash';
 
 export default {
   data() {
     return {
       route: this.$route,
       isCreateModalOpen: false,
-      isUserModalOpen: false,
-      headColor: '',
-      fac: new FastAverageColor(),
+      isUserModalOpen:false,
       // placeholder
     }
   },
-  async created() {
-    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-    const { boardId } = this.$route.params
-    socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
-    socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board) => {
-      this.$store.commit({ type: "updateBoard", board })
-    })
-    this.$store.commit({ type: 'setBoardById', id: boardId });
-    const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard || {}))
-    console.log(`board = `, board)
+  created() {
   },
   methods: {
     toggleCreateModal() {
@@ -86,22 +71,14 @@ export default {
     enterAsGuest() {
       this.$router.push('/board')
     },
-    openUserModal() {
-      this.isUserModalOpen = true
+    openUserModal(){
+this.isUserModalOpen=true
     },
-    closeUserModal() {
-      this.isUserModalOpen = false
-    },
-    async getAverageColor(imgUrl) {
-      let res = await this.fac.getColorAsync(imgUrl)
-      return res.hex
-    },
-    async getHeaderColor() { 
-        let board = this.$store.getters.getCurrBoard
-        if (board.style.backgroundColor) return utilService.LightenDarkenColor(board.style.backgroundColor, -40)
-        let boardHeaderColor = this.getAverageColor(board.style.backgroundImage)
-        return utilService.LightenDarkenColor(boardHeaderColor, 40)
-    },
+    closeUserModal(){
+      this.isUserModalOpen=false
+    }
+
+
   },
   computed: {
     loggedInUser() {
@@ -119,13 +96,6 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-    getParams() {
-      if (this.params.includes('board/'))
-        this.getHeaderColor
-    },
-    getHeadColor(){
-if(!this.headColor) return "#026AA7"
     },
   }
 }
