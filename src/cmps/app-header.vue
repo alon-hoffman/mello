@@ -35,31 +35,61 @@
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
-        <button @click="modal='about'"><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
-        <button class="open-user-modal-btn" @click="modal='user'"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
-      </div>
-    </nav>
-    <section class="user-modal" v-if="isUserModalOpen">
-<span class="mini-head">hello</span>
-    </section>
-    <section class="create-modal">
 
-    </section>
+        <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
+        <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header"
+            src="../assets/icons/user-solid.png" alt=""></button>
+      </div>
+    </nav>  
+      <header-modal v-if="modal==='about'" v-click-outside="()=>modal=null"/>
+      <user-modal v-if="modal==='user'" v-click-outside="()=>modal=null"/>
+      <board-creator :modalCords="modalCords" v-if="modal==='create'" v-click-outside="()=>modal=null"/>
+
+
   </header>
 </template>
 <script>
 import { FastAverageColor } from 'fast-average-color';
+import { utilService } from '../services/util.service';
+import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG, SOCKET_EMIT_BOARD_UPDATED, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service'
+import { takeWhile } from 'lodash';
+import headerModal from './about-modal.vue'
+import userModal from './user-modal.vue'
+import boardCreator from './board-creator.vue'
+
 
 export default {
   data() {
     return {
       route: this.$route,
       isCreateModalOpen: false,
+      isUserModalOpen: false,
+      headColor: '',
+      fac: new FastAverageColor(),
       isUserModalOpen:false,
+      modal:null,
+      modalCords:null
       // placeholder
     }
   },
+  async created() {
+    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+    const { boardId } = this.$route.params
+    socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
+    socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board) => {
+      this.$store.commit({ type: "updateBoard", board })
+    })
+    this.$store.commit({ type: 'setBoardById', id: boardId });
+    const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard || {}))
+    console.log(`board = `, board)
+    },
+  components: {
+    headerModal,
+    userModal,
+    boardCreator
+  },
   created() {
+   
   },
   methods: {
     toggleCreateModal() {
@@ -71,14 +101,29 @@ export default {
     enterAsGuest() {
       this.$router.push('/board')
     },
-    openUserModal(){
-this.isUserModalOpen=true
+
+    openUserModal() {
+      this.isUserModalOpen = true
     },
-    closeUserModal(){
-      this.isUserModalOpen=false
-    }
+    closeUserModal() {
+      this.isUserModalOpen = false
+    },
+    async getAverageColor(imgUrl) {
+      let res = await this.fac.getColorAsync(imgUrl)
+      return res.hex
+    },
+    async getHeaderColor() { 
+        let board = this.$store.getters.getCurrBoard
+        if (board.style.backgroundColor) return utilService.LightenDarkenColor(board.style.backgroundColor, -40)
+        let boardHeaderColor = this.getAverageColor(board.style.backgroundImage)
+        return utilService.LightenDarkenColor(boardHeaderColor, 40)
+    },
 
-
+    openCreateModal(){
+      const  {y, x} = this.$refs.createBtn.getBoundingClientRect()
+      this.modalCords= {y, x}  
+      this.modal='create'
+    },
   },
   computed: {
     loggedInUser() {
@@ -96,6 +141,13 @@ this.isUserModalOpen=true
         .catch(e => {
           console.log(e);
         });
+    },
+    getParams() {
+      if (this.params.includes('board/'))
+        this.getHeaderColor
+    },
+    getHeadColor(){
+if(!this.headColor) return "#026AA7"
     },
   }
 }
