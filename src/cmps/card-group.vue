@@ -92,13 +92,9 @@ export default {
       this.newCard = { title: '', groupId: this.list.id }
       this.isCardEdited = false
     },
-    editNewCard(event){
+    editNewCard(){
       this.isCardEdited = true
       setTimeout(() => this.$refs["addCard"].scrollIntoView(), 0)
-      // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
-      // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
-      // this.$refs.addCard.scrollIntoView({block: "end"});
-      //  console.log( this.$refs.addCard)
     },
     addCard() {
       if(this.newTitle==="") return

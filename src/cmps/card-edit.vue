@@ -1,8 +1,10 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')">
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
-        <span class="icon lg close modal-close" @click="closeModal"></span>
-        <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}"></div>
+        <div class="icon lg close modal-close clickable" @click="closeModal"></div>
+        <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}">
+            <span class="cover-btn icon lg cover flex align-center">Cover</span>
+        </div>
         <div class="modal-container">
             <header class="modal-header edit-block">
                 <span class="icon lg card"></span>
