@@ -27,6 +27,11 @@
         align-items: center;
         margin-top: 8px;
         height: 32px;
+
+        &.delete{
+            color: #fff;
+            background-color: #b04632;
+        }
     }
  
      
@@ -128,7 +133,23 @@
 }
 
 .mini-modal-body {
-
+    padding-inline: 12px;
+    padding-bottom: 12px;
+    &.delete{
+        width: 304px;
+        & p{
+            margin-bottom: 16px;
+        }
+    }
+    & .delete-btn{
+        color: #fff;
+        background-color: #b04632;
+        width: 100%;
+        border-radius: 3px;
+        padding: 6px 12px;
+        font-size: 14px;
+        margin: 0;
+    }
     & .members-checked-box {
         display: flex;
 
@@ -157,8 +178,9 @@
         }
 
         .under-computer {
-            margin-bottom: 20px;
+            // margin-bottom: 20px;
             margin-top: 10px;
+            margin-inline-start: 11px;
             // padding: 0 12px 12px;
         }
 
@@ -562,14 +584,12 @@
 
         input:not(.checkbox) {
             height: 36px;
-            width: 280px;
             background-color: #fafbfc;
             box-shadow: inset 0 0 0 2px #dfe1e6;
             border-radius: 4px;
             color: #5e6c84;
             border: none;
             padding: 8px 12px;
-
             &:focus {
                 outline: 1px solid #0079bf;
             }
@@ -665,4 +685,6 @@
             align-items: center;
     
         }
-    }
+    
+    
+}

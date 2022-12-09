@@ -6,6 +6,7 @@
             "createdBy": {
                 "fullname": "Alon Hoffman"
             },
+            "archivedItems" : [],
             "style": {
                 "backgroundImage": "https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg",
                 "backgroundColor": "#B04632"
@@ -466,6 +467,7 @@
             "isStarred": false,
             "archivedAt": 1670417365365,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": null,
                 "backgroundImage": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
@@ -480,6 +482,7 @@
             "isStarred": false,
             "archivedAt": 1670433172839,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": null,
                 "backgroundImage": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
@@ -494,6 +497,7 @@
             "isStarred": false,
             "archivedAt": 1670433220226,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": null,
                 "backgroundImage": "https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
@@ -508,6 +512,7 @@
             "isStarred": false,
             "archivedAt": 1670433723004,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": "#0079bf"
             },
@@ -521,6 +526,7 @@
             "isStarred": false,
             "archivedAt": 1670433885945,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": "#0079bf"
             },
@@ -534,6 +540,7 @@
             "isStarred": false,
             "archivedAt": 1670433952198,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": "#0079bf"
             },
@@ -547,6 +554,7 @@
             "isStarred": false,
             "archivedAt": 1670434274415,
             "createdBy": {},
+            "archivedItems" : [],
             "style": {
                 "backgroundColor": "#0079bf"
             },

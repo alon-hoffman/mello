@@ -19,8 +19,11 @@
         <div @click="updateImgAttachmentsColors" class="fake-button add-option-div">
             <span class="icon sm cover"></span>Cover
         </div>
-        <div @click="$emit('removeCard', card.id)" class="fake-button add-option-div">
-            <span class="icon sm archive"></span>Archive
+        <div @click="toggleArchive" class="fake-button add-option-div">
+            <span class="icon sm" :class="isArchived"></span>{{card.isArchived ? 'Send To Board' : 'Archive'}}
+        </div>
+        <div @click="openMiniModal('Delete card?')" class="fake-button add-option-div delete" v-if="card.isArchived">
+            <span class="icon sm remove"></span>Delete
         </div>
         <Teleport to="body">
             <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
@@ -206,15 +209,23 @@
                         </label>
                         <span class="mini-head">Photos from unsplash</span>
 
-                        <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
-                            class="search-unsplash-photos" v-model="searchPhoto">
-                        <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                            <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
-                                :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
-                        </div>
-                    </section>
-                </template>
-            </custom-card>
+                    <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
+                        class="search-unsplash-photos" v-model="searchPhoto">
+                    <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
+                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
+                    </div>
+                </section>
+            </template>
+            <template v-if="miniModalTitle === 'Delete card?'">
+                <section class="mini-modal-body delete">
+                    <p>
+                        All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.
+                    </p>
+                    <button class="delete-btn" @click="$emit('removeCard', card.id)">Delete</button>
+                </section>
+            </template>
+        </custom-card>
         </Teleport>
     </section>
 </template>
@@ -412,9 +423,7 @@ export default {
 
             // this.card.dueDate.isCompleted = false
             setTimeout(() => { this.$emit('closeMiniModal') }, 1000)
-
         },
-
         async uploadImgToCloud(ev) {
             // console.log(`ev = `, ev)
             const res = await uploadService.uploadImg(ev);
@@ -433,6 +442,17 @@ export default {
         getColorWithOpacity(color) {
             color += '4F'
             return color
+        },
+        toggleArchive(){
+            this.card.isArchived = !this.card.isArchived
+            const activity = 
+            {
+                action: this.card.isArchived ? 'archiveItem' : 'retrieveItem',
+                card: this.card
+            }
+            this.$store.dispatch({type: 'addActivity', activity})
+            // if(this.card.isArchived) this.$store.dispatch({type: 'archiveItem', this.card})
+            // else this.$store.dispatch({type: 'retrieveItem', this.card})
         },
     },
     computed: {
@@ -456,6 +476,9 @@ export default {
         },
         getUnsplashPhotos() {
             return this.unsplashPhotos
+        },
+        isArchived(){
+            return {archive: !this.card.isArchived, return: this.card.isArchived}
         },
     },
     components: {
