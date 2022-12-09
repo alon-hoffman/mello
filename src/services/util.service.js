@@ -94,7 +94,7 @@ function timeSince(date) {
     let seconds = Math.floor((new Date() - date) / 1000);
     // 31536000 seconds per year
     let interval = seconds / 31536000;
-    if (interval <= 0) return 'Error - invalid time attribute'
+    if (interval <= 0) return 'Just now'
     if (interval > 1) {
         return Math.floor(interval) + ' years ago';
     }
