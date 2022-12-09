@@ -107,13 +107,17 @@ export default {
     },
     async setHeaderColor() {
       let board = this.$store.getters.getCurrBoard
-      if (board?.style.backgroundColor) this.headColor = utilService.LightenDarkenColor(board.style.backgroundColor, -2)
+      if (board?.style.backgroundColor) this.headColor =board?.style.backgroundColor+'aa'
       else{
-        let boardHeaderColor = this.getAverageColor(board.style.backgroundImage)
-        this.headColor = utilService.LightenDarkenColor(boardHeaderColor, 10)
+        let boardHeaderColor =await this.getAverageColor(board?.style.backgroundImage)
+        this.headColor =boardHeaderColor
+        //  this.blendHexColors(boardHeaderColor,'#f0f0f0',20 ) 
       }
     },
-    
+   blendHexColors(c0, c1, p) {
+    var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
+    return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
+},
     openCreateModal() {
       const { y, x } = this.$refs.createBtn.getBoundingClientRect()
       this.modalCords = { y, x }
@@ -144,19 +148,19 @@ export default {
     },
     getHeadColor() {
       console.log(`this.headColor = `, this.headColor)
-      if (!this.headColor) return "#026AA7"
+      if (!this.headColor||this.headColor==="#026AA7") return "#026AA7"
       else return this.headColor
     },
   },
   watch:{
     $route (to, from){
-      this.headColor=''
+      this.headColor="#026AA7"
       console.log(`foo = `)
       setTimeout(()=>{
 
         if (this.$route.path.includes('board/'))
         this.setHeaderColor()
-      },2000)
+      },500)
        
     },
         // this.show = false;
