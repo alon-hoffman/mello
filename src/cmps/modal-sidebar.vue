@@ -16,7 +16,7 @@
         <div @click="openMiniModal('Attach from...')" class="fake-button add-option-div">
             <span class="icon sm attach"></span>Attachment
         </div>
-        <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
+        <div @click="updateImgAttachmentsColors" class="fake-button add-option-div">
             <span class="icon sm cover"></span>Cover
         </div>
         <div @click="$emit('removeCard', card.id)" class="fake-button add-option-div">
@@ -196,11 +196,9 @@
                         </div>
                         <span class="mini-head">Attachments</span>
                         <div v-if="card.attachments?.length" class="attachment-imgs-container">
-                            <div v-for="image in getImageAttachments" class="attachment-img-container"
-                                :style="{ backgroundColor: getAverageColor(image.href) }">
-                                <img class="attachment-img clickable" :src="image.href" @click="setCoverImg(image.href)"
-                                    alt="">
-                            </div>
+                            <img class="attachment-img clickable" v-for="(image, index) in getImageAttachments"
+                                :src="image.href" @click="setCoverImg(image.href)"
+                                :style="{ backgroundColor: imgAttachmentsColors[index] }" alt="">
                         </div>
                         <label class="cover-img-label">
                             <div class="fake-button cover-img-btn">Upload a cover image </div><input
@@ -261,7 +259,7 @@ export default {
             unsplashPhotos: null,
             fac: new FastAverageColor(),
             searchPhoto: null,
-            imgAttachmentsColors: null
+            imgAttachmentsColors: []
         }
     },
     async created() {
@@ -270,22 +268,13 @@ export default {
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
-        if(this.card.attachments?.length){
-            // let currImageAttachments=this.getImageAttachments
-            // console.log(`currImageAttachments = `, currImageAttachments)
-            this.imgAttachmentsColors = this.getImageAttachments.map((attachment) => {
-                console.log(attachment.href)
-                return this.getAverageColor(attachment.href)
-            })
-        }
-        console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
-
-        // this.getAverageColor()
     },
     methods: {
         async openMiniModal(value) {
             this.miniModalTitle = value
+            console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
+
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
                 this.unsplashPhotos.splice(9, 1)
             }
@@ -366,11 +355,20 @@ export default {
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
         },
-       async getAverageColor(imgUrl) {
-            // console.log(`imgUrl = `, imgUrl)
-           let res= await this.fac.getColorAsync(imgUrl)
-                    console.log(`res.hex = `, res.hex)
-                    return res.hex
+        updateImgAttachmentsColors() {
+            this.openMiniModal('Cover')
+            if (!this.getImageAttachments?.length) return
+            console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
+            this.imgAttachmentsColors = []
+            console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
+            this.getImageAttachments.forEach((attachment) => {
+                this.getAverageColor(attachment.href)
+            })
+        },
+        async getAverageColor(imgUrl) {
+            let res = await this.fac.getColorAsync(imgUrl)
+            this.imgAttachmentsColors.push(res.hex)
+            return res.hex
         },
         async searchPhotosUnsplash() {
             this.unsplashPhotos = await unsplashPhotosService.getPhoto(this.searchPhoto)
@@ -422,7 +420,6 @@ export default {
         async uploadImgToCloud(ev) {
             // console.log(`ev = `, ev)
             const res = await uploadService.uploadImg(ev);
-            // console.log(`res = `, res)
             this.attachment.href = res.url;
             this.attachment.type = 'img';
             this.addAttachment()

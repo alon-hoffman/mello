@@ -480,12 +480,9 @@
             overflow-x: hidden;
             grid-template-columns: 1fr 1fr 1fr;
         }
-.attachment-img-container{
-    border-radius: 5px;
-    // background-color: #0079bf;
-}
         .attachment-img {
             margin: 0;
+            border-radius: 3px;
             // background-repeat: no-repeat;
             // background-position: center;
             box-shadow: none;
