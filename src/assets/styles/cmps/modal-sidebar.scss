@@ -471,21 +471,29 @@
         }
 
         .attachment-imgs-container {
-            display: flex;
-            flex-wrap: wrap;
-
+            // display: flex;
+            // flex-wrap: wrap;
+            display: grid;
+            gap: 8px;
+            padding: 4px;
+            margin: 0 -4px;
+            overflow-x: hidden;
+            grid-template-columns: 1fr 1fr 1fr;
         }
-
+.attachment-img-container{
+    border-radius: 5px;
+    // background-color: #0079bf;
+}
         .attachment-img {
             margin: 0;
-            border-radius: 3px;
-            background-repeat: no-repeat;
-            background-position: center;
+            // background-repeat: no-repeat;
+            // background-position: center;
             box-shadow: none;
+            object-fit: contain;
             height: 48px;
             width: 88px;
-            background-color: transparent;
-            background-size: contain;
+            // background-color: transparent;
+            // background-size: contain;
         }
 
         .check-img {
