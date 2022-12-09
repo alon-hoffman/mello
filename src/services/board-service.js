@@ -1,6 +1,7 @@
 
 import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
+import { userService } from '../services/user.service.js'
 
 const KEY = 'boards_db'
 const BOARD_URL = 'board/'
@@ -19,7 +20,10 @@ export const boardService = {
 
 }
 
-function query(filterBy) {
+function query(filterBy={}) {
+    const loggedInUser= userService.getLoggedinUser()
+    console.log(`loggedInUser = `, loggedInUser)
+    filterBy.user=loggedInUser
     return httpService.get(BOARD_URL, filterBy)
     // return storageService.query(KEY)
 }
