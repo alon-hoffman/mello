@@ -69,17 +69,17 @@ function findGroupById(groupId, board) {
 function activityNamer(action, board, groupId, detail) {
     const group = findGroupById(groupId, board)
     const activityMap = {
-        addCard: { before: `added`, after: ` to ${group.title}` },
-        removeCard: { before: `removed`, after: ` from ${group.title}` },
-        dateComplete: { before: `marked the due date on`, after: ` complete` },
-        dateIncomplete: { before: `marked the due date on`, after: ` incomplete` },
-        addDetail: { before: `added ${detail} to`, after: `` },
-        removeDetail: { before: `Removed ${detail} from`, after: `` },
-        todo: { before: `Completed ${detail} from`, after: `` },
-        archiveItem: { before: `Archived` },
-        retrieveItem: { before: `sent`, after: ` to the board` }
+        addCard: { before: ` added`, after: ` to ${group.title}` },
+        removeCard: { before: ` removed`, after: ` from ${group.title}` },
+        dateComplete: { before: ` marked the due date on`, after: ` complete` },
+        dateIncomplete: { before: ` marked the due date on`, after: ` incomplete` },
+        addDetail: { before: ` added ${detail} to`, after: `` },
+        removeDetail: { before: ` removed ${detail} from`, after: `` },
+        todo: { before: ` completed ${detail} from`, after: `` },
+        archiveItem: { before: ` archived` },
+        retrieveItem: { before: ` sent`, after: ` to the board` },
+        addComment: { before: ` commented on`, after: `: ${detail.title}` },
     }
-    console.log(activityMap[action].before + activityMap[action].after)
     return activityMap[action]
 }
 

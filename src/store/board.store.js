@@ -1,5 +1,6 @@
 import { boardService } from '../services/board-service.js'
 import { utilService } from '../services/util.service'
+import { userService } from '../services/user.service.js'
 import { socketService, SOCKET_EMIT_BOARD_UPDATED } from '../services/socket.service'
 
 
@@ -250,6 +251,7 @@ export const boardStore = {
                 },
                 title: boardService.activityNamer(action, state.currBoard, card.groupId, detail),
                 addedAt: Date.now(),
+                user: userService.getLoggedinUser()?.fullName || 'Guest'
             }
             if (!card.activities) card.activities = []
             card.activities.unshift(activityToAdd)

@@ -122,14 +122,23 @@
                         <span class="icon lg activity"></span>
                         <span class="header flex justify-between">
                             <h3>Activity</h3>
-                            <button class="fake-button">Hide Details</button>
+                            <button class="modal-btn hide-deets" @click="toggleHideDetails">{{isHideDetails ? 'Show Details' : 'Hide Details'}}</button>
                         </span>
+                        <div class="sub-icon member-avatar"></div>
                         <div class="content comment-box">
                             <textarea type="text" placeholder="Write a comment..." v-model="newComment" required>
                             </textarea>
-                            <button class="modal-btn save-btn" @click="commentCard">Save</button>
-                                <!-- <footer class="comment-options"></footer> -->
-                            </div>
+                            <button class="modal-btn save-btn" @click="addComment">Save</button>
+                        </div>
+                        <ul class="dynamic-content activity-list" v-if="!isHideDetails">
+                            <li class="activity-list-item flex" v-for="activity in card.activities">
+                                <div class="member-avatar"></div>
+                                <div class="flex column" v-if="activity.title">
+                                    <span><strong>{{activity.user}}</strong>{{ activity.title.before}} this card {{activity.title.after}}</span>
+                                    <span class="time">{{timeSince(activity.addedAt)}}</span>
+                                </div>
+                            </li>
+                        </ul>
                     </section>
                 </section>
                 <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal"
@@ -162,6 +171,7 @@ export default {
             },
             boardMembers: null,
             newComment: '',
+            isHideDetails: false,
         }
     },
     async created() {
@@ -304,10 +314,17 @@ export default {
             this.card.attachments = newAttachments
             this.updateCard(this.card)
         },
-        commentCard(){
+        addComment(){
             const activity = {action: 'addComment', card: this.card, detail: {title: this.newComment}}
-            this.$store.dispatch({activirty})
-        }
+            this.$store.dispatch({type: 'addActivity', activity})
+            this.newComment = ''
+        },
+        timeSince(time){
+            return utilService.timeSince(time)
+        },
+        toggleHideDetails(){
+            this.isHideDetails = !this.isHideDetails
+        },
     },
     computed: {
         isOn() {
