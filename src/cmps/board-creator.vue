@@ -41,12 +41,12 @@ export default{
     created(){
         this.newBoard = {
                 title: '',
-                backgroundColor: '#0079bf'
+                style:{backgroundColor: '#0079bf'}
             }
     },
     methods:{
         setBackgroundColor(clr){
-            this.newBoard.backgroundColor = clr
+            this.newBoard.style.backgroundColor = clr
         },
         saveBoard(){
             if (!this.newBoard.title) return
