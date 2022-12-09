@@ -10,10 +10,12 @@
         <span class="label">Background</span>
         <section class="background-selection">
             <ul class="custom-images-list">
-                <li><img src="https://res.cloudinary.com/mello123/image/upload/v1670411257/qq9xdubie5qrhpxuhq5m.png"/></li>
-                <li>jaskdj</li>
-                <li>img</li>
-                <li>img</li>
+                <li v-for="image in ['https://images.unsplash.com/photo-1635698054698-1eaf72c5a894?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+                'https://images.unsplash.com/photo-1668805585915-0a8b56aecfef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+                'https://images.unsplash.com/photo-1666457384021-fa422f678796?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1228&q=80',
+                'https://images.unsplash.com/photo-1668356352028-8a7e695e3bfd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80']"
+                @click="setCoverImg(image)"><img :src="image"/></li>
+                
             </ul>
             <ul class="color-list flex justify-between">
                 <li class="blue-btn clickable"  @click="setBackgroundColor('#0079BF')"></li>
@@ -51,13 +53,18 @@ export default{
     },
     computed:{
         cords(){
-             console.log(`${this.modalCords.y}px`)
+             console.log( "hi")
+        if(!this.modalCords) return ''
         return {top: `${this.modalCords.y+50}px`, left: `${this.modalCords.x}px`}
       },
     },
     methods:{
         setBackgroundColor(clr){
             this.newBoard.style.backgroundColor = clr
+        },
+        setCoverImg(url){
+            console.log("🚀 ~ file: board-creator.vue:65 ~ setCoverImg ~ url", url)
+            this.newBoard.style.backgroundImage = url
         },
         saveBoard(){
             if (!this.newBoard.title) return
