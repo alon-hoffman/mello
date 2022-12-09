@@ -136,6 +136,7 @@ export const boardStore = {
         // },
         async loadBoards(context) {
             // console.log(`loadBoards = `)
+            // console.log(`this.$store.$getters.loggedinUser = `, context.state.loggedinUser)
             try {
                 const boards = await boardService.query()
                 context.commit({ type: 'setBoards', boards })
