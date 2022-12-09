@@ -1,6 +1,6 @@
 
 <template>
-  <section ref="col" class="card-group">
+  <section ref="col" class="card-group" >
     <div class="title-container">
       <input class="group-title" type="text" v-model="title" />
       <svg @click="openListModal" class="clickable" width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
@@ -12,7 +12,7 @@
     </div>
 
     <Container group-name="col" @drop="(e) => onCardDrop(list.id, e)" :get-child-payload="getCardPayload(list.id)"
-      drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions">
+      drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions" :class="isEdit">
       <Draggable v-for="card in list.cards" :key="card.id">
         <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted"/>
         
@@ -94,6 +94,7 @@ export default {
     },
     editNewCard(event){
       this.isCardEdited = true
+      setTimeout(() => this.$refs["addCard"].scrollIntoView(), 0)
       // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
       // //  this.$refs.col.scroll.scrollTop= this.$refs.col.scrollHeight
       // this.$refs.addCard.scrollIntoView({block: "end"});
@@ -131,6 +132,11 @@ export default {
       const  {y, x} = this.$refs.col.getBoundingClientRect()
       this.$emit("openListModal",y, x, this.list)      
     }
+  },
+  computed: {
+    isEdit(){
+      return { undefined: true, 'group-list': true, edit: this.isCardEdited}
+    },
   },
   components: {
     cardPreview,

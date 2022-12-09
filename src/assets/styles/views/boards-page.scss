@@ -12,7 +12,7 @@
 }
 
 .gallery{
-    margin-top: 1.50em;
+    margin-top: 1.4em;
     color: #172b4d;
     &-sidebar{
         width: rem(272px);
@@ -24,9 +24,14 @@
             
             :first-child.gallery-nav-btn {
                 background-color: #e4f0f6;
+                color:#0079bf;
+                position: relative;
+                span{
+                    vertical-align: text-bottom;
+                }
             }
 
-            margin-top: 16px;
+            margin-top: 11px;
             & > button{
                 margin-bottom: 1px;
                 // letter-spacing: 0.5px;

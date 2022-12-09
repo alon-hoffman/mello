@@ -14,6 +14,9 @@
         overflow-x: hidden;
         margin: 0 4px;
         padding: 0 4px;
+        &.edit{
+            max-height: calc(100vh - 163px);
+        }
         &::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -54,12 +57,17 @@
     .group-title {
         font-size: rem(16px);
         background-color: unset;
-        color: $clr5;
+        color: #172b4d;
         border: none;
         margin-inline-start: rem(16px);
-        padding-top: rem(13px);
-        padding-bottom: rem(9px);
+        padding-top: rem(11px);
+        padding-bottom: rem(11px);
         font-weight: 600;
+
+        &:focus{
+            background-color: white;
+            outline:1px solid #0079bf
+        }
 
     }
 
