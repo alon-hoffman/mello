@@ -24,7 +24,7 @@
         <router-link to="/board">
           <button class="boards-header-btn">Boards</button>
         </router-link>
-        <button class="create-board-btn" @click="toggleCreateModal">Create </button>
+        <button ref="createBtn" class="create-board-btn" @click="openCreateModal">Create </button>
       </div>
       <div class="right-header">
         <div class="search-boards">
@@ -33,20 +33,23 @@
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
         </div>
         <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
-        <button><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
-        <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
+        <button @click="modal='about'"><img class="circle-img-header" src="../assets/icons/circle-question-regular.png" alt=""></button>
+        <button class="open-user-modal-btn" @click="modal='user'"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
       </div>
     </nav>
-    <section class="user-modal" v-if="isUserModalOpen">
-<span class="mini-head">hello</span>
-    </section>
-    <section class="create-modal">
+   
+    
+      <header-modal v-if="modal==='about'" v-click-outside="()=>modal=null"/>
+      <user-modal v-if="modal==='user'" v-click-outside="()=>modal=null"/>
+      <board-creator :modalCords="modalCords" v-if="modal==='create'" v-click-outside="()=>modal=null"/>
 
-    </section>
   </header>
 </template>
 <script>
 import { FastAverageColor } from 'fast-average-color';
+import headerModal from './about-modal.vue'
+import userModal from './user-modal.vue'
+import boardCreator from './board-creator.vue'
 
 export default {
   data() {
@@ -54,10 +57,17 @@ export default {
       route: this.$route,
       isCreateModalOpen: false,
       isUserModalOpen:false,
-      // placeholder
+      modal:null,
+      modalCords:null
     }
   },
+  components: {
+    headerModal,
+    userModal,
+    boardCreator
+  },
   created() {
+   
   },
   methods: {
     toggleCreateModal() {
@@ -69,14 +79,12 @@ export default {
     enterAsGuest(){
       this.$router.push('/board')
     },
-    openUserModal(){
-this.isUserModalOpen=true
-    },
-    closeUserModal(){
-      this.isUserModalOpen=false
+    openCreateModal(){
+      const  {y, x} = this.$refs.createBtn.getBoundingClientRect()
+      this.modalCords= {y, x}  
+      this.modal='create'
     }
-
-
+    
   },
   computed: {
     loggedInUser() {
@@ -95,6 +103,8 @@ this.isUserModalOpen=true
           console.log(e);
         });
     },
-  }
+   
+  },
+ 
 }
 </script>

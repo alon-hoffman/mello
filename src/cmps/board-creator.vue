@@ -1,5 +1,5 @@
 <template>
-    <article class="board-creator">
+    <article class="board-creator" :style="cords">
         <header>Create board
                 <span class="icon sm close clickable" @click="$emit('close')"></span>
 
@@ -10,8 +10,8 @@
         <span class="label">Background</span>
         <section class="background-selection">
             <ul class="custom-images-list">
-                <li>img</li>
-                <li>img</li>
+                <li><img src="https://res.cloudinary.com/mello123/image/upload/v1670411257/qq9xdubie5qrhpxuhq5m.png"/></li>
+                <li>jaskdj</li>
                 <li>img</li>
                 <li>img</li>
             </ul>
@@ -32,7 +32,11 @@
 </template>
 
 <script>
+ 
 export default{
+    props: {
+    modalCords: Object,
+  },
     data(){
         return{
             newBoard: null
@@ -42,7 +46,14 @@ export default{
         this.newBoard = {
                 title: '',
                 style:{backgroundColor: '#0079bf'}
-            }
+            },
+             console.log( this.modalCords)
+    },
+    computed:{
+        cords(){
+             console.log(`${this.modalCords.y}px`)
+        return {top: `${this.modalCords.y+50}px`, left: `${this.modalCords.x}px`}
+      },
     },
     methods:{
         setBackgroundColor(clr){
