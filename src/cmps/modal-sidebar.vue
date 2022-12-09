@@ -272,7 +272,7 @@ export default {
     methods: {
         async openMiniModal(value) {
             this.miniModalTitle = value
-            console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
+            // console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
 
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
@@ -351,16 +351,14 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(photoObject) {
-            console.log(`photo = `, photoObject)
+            // console.log(`photo = `, photoObject)
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
         },
         updateImgAttachmentsColors() {
             this.openMiniModal('Cover')
             if (!this.getImageAttachments?.length) return
-            console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             this.imgAttachmentsColors = []
-            console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             this.getImageAttachments.forEach((attachment) => {
                 this.getAverageColor(attachment.href)
             })
@@ -427,7 +425,7 @@ export default {
         },
         async uploadAndSetCoverImg(ev) {
             const res = await uploadService.uploadImg(ev);
-            setCoverImg(res.secure_url)
+            this.setCoverImg(res.secure_url)
         },
         dateOpen() {
             this.isDatePickerOpen = true
@@ -459,14 +457,6 @@ export default {
         getUnsplashPhotos() {
             return this.unsplashPhotos
         },
-        // getAverageColor() {
-        //     // const res = await this.fac.getColorAsync(imgUrl)
-        //     // // res.hex+=' '
-        //     // console.log(`res = `, String(res.hex)) 
-        //     // return String(res.hex)
-        //     return '#a89990'
-        // },
-
     },
     components: {
         customCard,

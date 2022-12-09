@@ -8,7 +8,7 @@
         <img class="logo-img-home" src="https://res.cloudinary.com/mello123/image/upload/v1670406786/yd2qyxfpqsuosu76o82o.png" alt="">
       </router-link>
       <section class="right-home-header">
-        <router-link to="/login">
+        <router-link to="/auth">
           <button class="login-button">Log in</button>
         </router-link>
         <button @click="enterAsGuest" class="guest-button clickable">Enter as a guest</button>
