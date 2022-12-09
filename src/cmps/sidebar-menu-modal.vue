@@ -26,7 +26,7 @@
                     <span class="change-background-text mini-head">Change background</span>
                 </div>
             </div>
-            <section @click="archive" class="edit-block">
+            <section @click="archive" class="edit-block clickable">
                 <span class="icon lg archive"></span>
                 <span class="header flex justify-between">
                     <span class="activity-title">Archive board</span>
@@ -159,8 +159,10 @@ export default {
                 this.$emit('editCard', activity.card.id)
             }
         },
-        archive(){
+        async archive(){
         this.currBoard.isArchived = true
+        await this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
+        await this.$store.dispatch({ type: "loadBoards" });
         this.$router.push('/board/')
         }
     },
