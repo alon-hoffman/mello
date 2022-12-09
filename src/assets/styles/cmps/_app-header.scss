@@ -24,7 +24,6 @@
     .right-home-header {
         display: flex;
         height: 60px
-        
     }
 
 
@@ -140,14 +139,17 @@
     .board-search-input {
         &:focus {
             border: 1px solid $blue;
+
             &::placeholder {
                 color: $clr3;
             }
+
             &+span {
                 color: black;
             }
         }
     }
+
     button {
         background-color: transparent;
         color: #fff;
@@ -218,6 +220,29 @@
         }
     }
 
+    .open-user-modal-btn {
+        position: relative;
+    }
+
+    // .user-modal {
+    //     position: fixed;
+    //     max-height: 861px;
+    //     background-color:#fff ;
+    //     padding: 12px 0;
+    //     width: 304px;
+    //     min-height: 250px;
+    // }
+    .mini-head {
+        font-size: 12px;
+        display: flex;
+        padding: 0 1px;
+        line-height: 16px;
+        color: #5e6c84;
+        font-weight: 600;
+        margin-top: 12px;
+        margin-bottom: 8px;
+    }
+
     .user-img-header {
         width: rem(20px);
     }
@@ -231,4 +256,3 @@
 
     }
 }
-
