@@ -21,7 +21,8 @@
                     </span>
                 </div>
                 <div @click="changeModal('Change background')" class="change-background clickable">
-                    <img class="change-background-img" :src="currBoard.style.backgroundImage">
+                    <img v-if="currBoard.style.backgroundImage" class="change-background-img" :src="currBoard.style.backgroundImage">
+                    <div class="change-background-img" :style="{ backgroundColor: currBoard.style.backgroundColor }"></div>
                     <span class="change-background-text mini-head">Change background</span>
                 </div>
             </div>

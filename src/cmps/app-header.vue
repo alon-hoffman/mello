@@ -37,7 +37,7 @@
         <button class="open-user-modal-btn" @click="openUserModal"><img class="user-img-header" src="../assets/icons/user-solid.png" alt=""></button>
       </div>
     </nav>
-    <section class="user-modal" v-click-outside="closeUserModal" v-if="isUserModalOpen">
+    <section class="user-modal" v-if="isUserModalOpen">
 <span class="mini-head">hello</span>
     </section>
     <section class="create-modal">
