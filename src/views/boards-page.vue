@@ -6,15 +6,15 @@
         <aside class="gallery-sidebar">
 
           <nav class="flex column">
-            <button ref="home-btn" @click="setArchive(false, $event)"  class="gallery-nav-btn" :class="{active:!archived}">
+            <button  @click="setArchive(false, $event)"  class="gallery-nav-btn" :class="{active:!archived}">
               <span class="icon sm board board-btn-page"></span>
               Boards
             </button>
-            <button  ref="archived-btn" @click="setArchive(true, $event)"  class="gallery-nav-btn" :class="{active:archived}">
+            <button  @click="setArchive(true, $event)"  class="gallery-nav-btn" :class="{active:archived}">
               <span class="icon sm archive"></span>
               Archive</button>
-            <button class="gallery-nav-btn">
-              <span class="icon sm pulse"></span>
+            <button @click="$router.push(to='/')" class="gallery-nav-btn">
+              <span  class="icon sm pulse"></span>
               Home</button>
           </nav>
           <div class="workspace-div justify-between">
