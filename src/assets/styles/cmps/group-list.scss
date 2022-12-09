@@ -5,7 +5,7 @@
     overflow-y: hidden;
     
     &.menu-modal-open{
-        margin-inline-end: 319px;
+        margin-inline-end: 339px;
     }
     &::-webkit-scrollbar {
         width: 12px;
@@ -14,11 +14,15 @@
     &::-webkit-scrollbar-track {
         background: rgba(20, 20, 20, 0.173); 
         border-radius: 10px;
+        width: 50px;
       }
       &::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.466); 
         border-radius: 10px;
       }
+      &::-webkit-scrollbar-button {
+        width: 30px;
+    }
     flex-grow: 1;
     ul{
         display: flex;

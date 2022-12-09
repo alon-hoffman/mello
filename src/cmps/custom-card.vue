@@ -20,7 +20,7 @@
   right: 100px;
   justify-content: space-between;
   background: white;
-  padding-inline: 2em;
+  /* padding-inline: 2em; */
   z-index: 10;
   box-shadow: #091e4240 0 8px 16px -4px, #091e4214 0 0 0 1px;
   border-radius: 5px;

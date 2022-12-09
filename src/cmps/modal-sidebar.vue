@@ -16,11 +16,14 @@
         <div @click="openMiniModal('Attach from...')" class="fake-button add-option-div">
             <span class="icon sm attach"></span>Attachment
         </div>
-        <div @click="openMiniModal('Cover')" class="fake-button add-option-div">
+        <div @click="updateImgAttachmentsColors" class="fake-button add-option-div">
             <span class="icon sm cover"></span>Cover
         </div>
-        <div @click="$emit('removeCard', card.id)" class="fake-button add-option-div">
-            <span class="icon sm archive"></span>Archive
+        <div @click="toggleArchive" class="fake-button add-option-div">
+            <span class="icon sm" :class="isArchived"></span>{{card.isArchived ? 'Send To Board' : 'Archive'}}
+        </div>
+        <div @click="openMiniModal('Delete card?')" class="fake-button add-option-div delete" v-if="card.isArchived">
+            <span class="icon sm remove"></span>Delete
         </div>
         <Teleport to="body">
             <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
@@ -196,11 +199,9 @@
                         </div>
                         <span class="mini-head">Attachments</span>
                         <div v-if="card.attachments?.length" class="attachment-imgs-container">
-                            <div v-for="image in getImageAttachments" class="attachment-img-container"
-                                :style="{ backgroundColor: getAverageColor(image.href) }">
-                                <img class="attachment-img clickable" :src="image.href" @click="setCoverImg(image.href)"
-                                    alt="">
-                            </div>
+                            <img class="attachment-img clickable" v-for="(image, index) in getImageAttachments"
+                                :src="image.href" @click="setCoverImg(image.href)"
+                                :style="{ backgroundColor: imgAttachmentsColors[index] }" alt="">
                         </div>
                         <label class="cover-img-label">
                             <div class="fake-button cover-img-btn">Upload a cover image </div><input
@@ -208,15 +209,23 @@
                         </label>
                         <span class="mini-head">Photos from unsplash</span>
 
-                        <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
-                            class="search-unsplash-photos" v-model="searchPhoto">
-                        <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                            <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
-                                :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
-                        </div>
-                    </section>
-                </template>
-            </custom-card>
+                    <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
+                        class="search-unsplash-photos" v-model="searchPhoto">
+                    <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
+                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
+                    </div>
+                </section>
+            </template>
+            <template v-if="miniModalTitle === 'Delete card?'">
+                <section class="mini-modal-body delete">
+                    <p>
+                        All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.
+                    </p>
+                    <button class="delete-btn" @click="$emit('removeCard', card.id)">Delete</button>
+                </section>
+            </template>
+        </custom-card>
         </Teleport>
     </section>
 </template>
@@ -261,7 +270,7 @@ export default {
             unsplashPhotos: null,
             fac: new FastAverageColor(),
             searchPhoto: null,
-            imgAttachmentsColors: null
+            imgAttachmentsColors: []
         }
     },
     async created() {
@@ -270,22 +279,13 @@ export default {
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
-        if(this.card.attachments?.length){
-            // let currImageAttachments=this.getImageAttachments
-            // console.log(`currImageAttachments = `, currImageAttachments)
-            this.imgAttachmentsColors = this.getImageAttachments.map((attachment) => {
-                console.log(attachment.href)
-                return this.getAverageColor(attachment.href)
-            })
-        }
-        console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
-
-        // this.getAverageColor()
     },
     methods: {
         async openMiniModal(value) {
             this.miniModalTitle = value
+            // console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
+
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
                 this.unsplashPhotos.splice(9, 1)
             }
@@ -362,15 +362,22 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(photoObject) {
-            console.log(`photo = `, photoObject)
+            // console.log(`photo = `, photoObject)
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
         },
-       async getAverageColor(imgUrl) {
-            // console.log(`imgUrl = `, imgUrl)
-           let res= await this.fac.getColorAsync(imgUrl)
-                    console.log(`res.hex = `, res.hex)
-                    return res.hex
+        updateImgAttachmentsColors() {
+            this.openMiniModal('Cover')
+            if (!this.getImageAttachments?.length) return
+            this.imgAttachmentsColors = []
+            this.getImageAttachments.forEach((attachment) => {
+                this.getAverageColor(attachment.href)
+            })
+        },
+        async getAverageColor(imgUrl) {
+            let res = await this.fac.getColorAsync(imgUrl)
+            this.imgAttachmentsColors.push(res.hex)
+            return res.hex
         },
         async searchPhotosUnsplash() {
             this.unsplashPhotos = await unsplashPhotosService.getPhoto(this.searchPhoto)
@@ -416,13 +423,10 @@ export default {
 
             // this.card.dueDate.isCompleted = false
             setTimeout(() => { this.$emit('closeMiniModal') }, 1000)
-
         },
-
         async uploadImgToCloud(ev) {
             // console.log(`ev = `, ev)
             const res = await uploadService.uploadImg(ev);
-            // console.log(`res = `, res)
             this.attachment.href = res.url;
             this.attachment.type = 'img';
             this.addAttachment()
@@ -430,7 +434,7 @@ export default {
         },
         async uploadAndSetCoverImg(ev) {
             const res = await uploadService.uploadImg(ev);
-            setCoverImg(res.secure_url)
+            this.setCoverImg(res.secure_url)
         },
         dateOpen() {
             this.isDatePickerOpen = true
@@ -438,6 +442,17 @@ export default {
         getColorWithOpacity(color) {
             color += '4F'
             return color
+        },
+        toggleArchive(){
+            this.card.isArchived = !this.card.isArchived
+            const activity = 
+            {
+                action: this.card.isArchived ? 'archiveItem' : 'retrieveItem',
+                card: this.card
+            }
+            this.$store.dispatch({type: 'addActivity', activity})
+            // if(this.card.isArchived) this.$store.dispatch({type: 'archiveItem', this.card})
+            // else this.$store.dispatch({type: 'retrieveItem', this.card})
         },
     },
     computed: {
@@ -462,14 +477,9 @@ export default {
         getUnsplashPhotos() {
             return this.unsplashPhotos
         },
-        // getAverageColor() {
-        //     // const res = await this.fac.getColorAsync(imgUrl)
-        //     // // res.hex+=' '
-        //     // console.log(`res = `, String(res.hex)) 
-        //     // return String(res.hex)
-        //     return '#a89990'
-        // },
-
+        isArchived(){
+            return {archive: !this.card.isArchived, return: this.card.isArchived}
+        },
     },
     components: {
         customCard,

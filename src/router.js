@@ -40,7 +40,7 @@ const routes = [
   //   component: boardApp
   // },
   {
-    path: '/login',
+    path: '/auth',
     name: 'loginSignup',
     component: loginSignup
   },

@@ -14,7 +14,7 @@
     <Container group-name="col" @drop="(e) => onCardDrop(list.id, e)" :get-child-payload="getCardPayload(list.id)"
       drag-class="card-ghost" drop-class="card-ghost-drop" :drop-placeholder="dropPlaceholderOptions" :class="isEdit">
       <Draggable v-for="card in list.cards" :key="card.id">
-        <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted"/>
+        <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted" v-if="!card.isArchived"/>
         
       </Draggable>
       <div ref="addCard" @keyup.enter="addCard" class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">

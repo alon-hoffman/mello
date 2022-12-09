@@ -20,10 +20,10 @@ export const boardService = {
 
 }
 
-function query(filterBy={}) {
-    const loggedInUser= userService.getLoggedinUser()
+function query(filterBy = {}) {
+    const loggedInUser = userService.getLoggedinUser()
     console.log(`loggedInUser = `, loggedInUser)
-    filterBy.user=loggedInUser
+    filterBy.user = loggedInUser
     return httpService.get(BOARD_URL, filterBy)
     // return storageService.query(KEY)
 }
@@ -69,14 +69,17 @@ function findGroupById(groupId, board) {
 function activityNamer(action, board, groupId, detail) {
     const group = findGroupById(groupId, board)
     const activityMap = {
-        addCard: { before: `Added`, after: ` to ${group.title}` },
-        removeCard: { before: `Removed`, after: ` from ${group.title}` },
+        addCard: { before: `added`, after: ` to ${group.title}` },
+        removeCard: { before: `removed`, after: ` from ${group.title}` },
         dateComplete: { before: `marked the due date on`, after: ` complete` },
         dateIncomplete: { before: `marked the due date on`, after: ` incomplete` },
-        addDetail: { before: `Added ${detail} to`, after: `` },
+        addDetail: { before: `added ${detail} to`, after: `` },
         removeDetail: { before: `Removed ${detail} from`, after: `` },
         todo: { before: `Completed ${detail} from`, after: `` },
+        archiveItem: { before: `Archived` },
+        retrieveItem: { before: `sent`, after: ` to the board` }
     }
+    console.log(activityMap[action].before + activityMap[action].after)
     return activityMap[action]
 }
 
