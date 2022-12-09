@@ -4,7 +4,7 @@
     <div class="board-header">
       <div class="board-header-left">
         <input ref="title" v-if="reactiveTitle" class="board-details-title" type="text" v-model="reactiveTitle" :style="{width:`${reactiveTitle.length*9.82}px`}" @keyup.enter="updateTitle"   @blur="updateTitle">
-        <button @click="toggleStar" class="star-board-details-btn">
+        <button @click="toggleStar" class="star-board-details-btn" title="Click to star or unstar this board. Starred boards show up at the top of your board list">
           <span v-if="!board.isStarred" class="icon sm star-empty"></span>
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
@@ -14,11 +14,13 @@
           <span class="icon sm filter"></span> Filter
         </button>
         <span class="separator-line">|</span>
-        <div class="member-list"><img src="" alt="" /></div>
-        
-        <button class="add-user-btn" title="Click to star or unstar this board. Starred boards show up at the top of your board list">
-          <span class="icon sm share"></span> Share
-        </button>
+        <div class="members-and-share-container">
+          <div class="member-list"><img class="member-avatar-header" v-for="member in getMembersBoard" :src="member.imgUrl" alt="" /></div>
+          
+          <button class="add-user-btn">
+            <span class="icon sm share"></span> Share
+          </button>
+        </div>
         <span class="separator-line">|</span>
         <button v-if="!isSidebarMenuModal" @click="openSidebarMenuModal" class="more-btn clickable">
           <svg width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
@@ -112,6 +114,9 @@ export default {
       const {keyword, members, labels} = this.filterBy
       if (!keyword && !members.length && !labels.length) return false
       return true
+    },
+    getMembersBoard(){
+      return this.$store.getters.getMembersOfBoard
     },
     board(){
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))

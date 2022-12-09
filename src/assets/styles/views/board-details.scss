@@ -15,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     height: 48px;
-    padding: 8px 4px 8px 7px;
+    padding: 8px 4px 4px 7px;
     margin-bottom: 2px;
 
     >* {
@@ -37,6 +37,7 @@
         }
         .separator-line{
             color: rgba(255, 255, 255, 0.514);
+            margin: 0 10px;
         }
         .add-user-btn{
             color: black;
@@ -58,6 +59,22 @@
         }
         .add-user-img{
             width: 17px;
+        }
+        .members-and-share-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .member-list{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 5px;
+        }
+        .member-avatar-header{
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
         }
         .filter-btn{
             font-size: 14px;
