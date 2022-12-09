@@ -36,7 +36,7 @@ export const boardStore = {
             return boards
         },
         getCurrBoard(state) { return state.currBoard },
-        getMembersOfBoard(state) { return state.currBoard.members },
+        getMembersOfBoard(state) { return state.currBoard?.members },
         getLabelsOfBoard(state) { return state.currBoard.labels },
         getCard(state) {
             return state.currCard
