@@ -8,8 +8,8 @@
             transition duration-100 ease-in z-50
             transform rotate-6 scale-110"
         :drop-placeholder="upperDropPlaceholderOptions">
-        <Draggable v-for="list in lists" :key="list.id">
-          <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" :lists="lists" @editCard="editCard"  @toggleIsCompleted="toggleIsCompleted"
+        <Draggable v-for="list in lists" :key="list.id" >
+          <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" v-if="!list.isArchived" :lists="lists" @editCard="editCard"  @toggleIsCompleted="toggleIsCompleted"
             @addCard="addCard" @openListModal="openListModal"  />
         </Draggable>
         <button v-if="!isNewListEdit" class="add-line-btn clickable" @click="openEditArea">Add another
