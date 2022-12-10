@@ -44,7 +44,8 @@
     </nav>
     <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" />
     <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
-    <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null" />
+    <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null"
+      @saveBoard="saveBoard" />
 
 
   </header>
@@ -122,6 +123,11 @@ export default {
       const { y, x } = this.$refs.createBtn.getBoundingClientRect()
       this.modalCords = { y, x }
       this.modal = 'create'
+    },
+    async saveBoard(board) {
+    await  this.$store.dispatch({ type: "addBoard", board })
+      const newBoard= this.$store.getters.boards[this.$store.getters.boards.length - 1]
+      this.$router.push('/board/' + newBoard._id)
     },
     getParams() {
       if (this.$route.path.includes('board/'))
