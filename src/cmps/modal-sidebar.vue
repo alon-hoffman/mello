@@ -451,9 +451,9 @@ export default {
                 card: this.card
             }
             this.$store.dispatch({type: 'addActivity', activity})
-            this.card.type = 'card'
+            debugger
             if(this.card.isArchived) this.$store.commit({type: 'archiveItem', item :this.card})
-            else this.$store.dispatch({type: 'retrieveItem', item: this.card })
+            else this.$store.commit({type: 'retrieveItem', item: this.card })
         },
     },
     computed: {

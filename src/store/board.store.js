@@ -110,9 +110,17 @@ export const boardStore = {
             state.currBoard.activities.unshift(activity)
         },
         archiveItem({ currBoard }, { item }) {
-            console.log(item)
-            if (!currBoard.archivedItems) currBoard.archivedItems = []
-            currBoard.archivedItems.unshift(item)
+            currBoard.archivedItems[item.type].unshift(item)
+        },
+        retrieveItem({ currBoard }, { item }) {
+            const idx = currBoard.archivedItems[item.type].findIndex(i => i.id === item.id)
+            currBoard.archivedItems[item.type].splice(idx, 1)
+        },
+        removeCardActivities({ currBoard }, { cardId }) {
+            currBoard.activities = currBoard.activities.filter(activity => activity.card.id !== cardId)
+        },
+        archiveList({ currBoard }, { group }) {
+            group.isArchived = group.isArchived ? false : true
         },
     },
     actions: {
@@ -161,6 +169,12 @@ export const boardStore = {
                 throw err
             }
         },
+        async archiveList({ state, commit, dispatch }, { groupId }) {
+            const groupTitle = boardService.findGroupById(groupId, state.currBoard).title
+            commit({ type: 'archiveList', group: { id: groupId, title: groupTitle } })
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            dispatch({ type: "updateBoard", board })
+        },
         async removeList({ dispatch, state }, { groupId }) {
             // console.log(`removeList = `)
             const board = JSON.parse(JSON.stringify(state.currBoard))
@@ -182,7 +196,7 @@ export const boardStore = {
         },
         addCard({ dispatch, commit, state }, { card }) {
             card.id = utilService.makeId()
-
+            card.type = 'card'
             let board = JSON.parse(JSON.stringify(state.currBoard))
             const group = boardService.findGroupById(card.groupId, board)
             group.cards.push(card)
@@ -196,6 +210,7 @@ export const boardStore = {
         async addList({ dispatch, state }, { list }) {
             // console.log(`addList = `)
             list.id = utilService.makeId()
+            list.type = 'list'
             const board = JSON.parse(JSON.stringify(state.currBoard))
             board.groups.push(list)
             dispatch({ type: "updateBoard", board })
@@ -210,7 +225,7 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async removeCard({ dispatch, state, commit }, { cardId }) {
-            // console.log(`removeCard = `)
+            commit({ type: 'removeCardActivities', cardId })
             const board = JSON.parse(JSON.stringify(state.currBoard))
             let cardIdx = 0
             let groupIdx = -1
@@ -260,9 +275,8 @@ export const boardStore = {
             }
             if (!card.activities) card.activities = []
             card.activities.unshift(activityToAdd)
-            console.log(card.activities)
             commit({ type: 'addActivity', activity: activityToAdd })
-        },
+        }
     },
 }
 

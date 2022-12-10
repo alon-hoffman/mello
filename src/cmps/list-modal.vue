@@ -5,7 +5,8 @@
         <span class=""></span></button></span> </header>
         <buttons class="flex column">
         <button class="clickable" @click="duplicateList" >Copy List...</button>
-        <button class="clickable" @click="deleteList" >Archive List...</button>
+        <button class="clickable" @click="$emit('archiveList', list.id)" >Archive List...</button>
+        <button class="clickable" @click="deleteList" >Delete List...</button>
       </buttons>
     </section>
     

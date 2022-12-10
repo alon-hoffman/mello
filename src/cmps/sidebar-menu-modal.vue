@@ -25,13 +25,12 @@
                 <span class="icon lg archive"></span>
                 <span class="header flex justify-between">
                     <span class="activity-title">Archive this board</span>
-                    <!-- <button class="fake-button">needs to be unread activity</button> -->
                 </span> </section>
             <section  class="edit-block">
                 <span class="icon lg" :class="currentDisplay"></span>
                 <span class="header flex justify-between">
                     <span class="activity-title">{{currDisplay}}</span>
-                    <!-- <button class="fake-button">needs to be unread activity</button> -->
+                    <button class="modal-btn" v-if="currDisplay === 'Items in archive'" @click="switchArchiveList">{{oppositeArchiveList}}</button>
                 </span>
                 <ul class="content activity-list" v-if="currDisplay === 'Activity'">
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
@@ -43,8 +42,29 @@
                     </li>
                 </ul>
                 <ul class="content archive-list" v-if="currDisplay === 'Items in archive'">
-                    <li class="archive-list-item" v-for="item in currBoard.archivedItems">
-                        {{item.title}}
+                    <li class="archive-list-item" v-for="card in currBoard.archivedItems.card">
+                        <section class="card-preview">
+                            <img v-if="card.imgURL" :src="card.imgURL" alt="">
+                            <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
+                            <div v-if="card.labels?.length" class="labels-container flex">
+                            <div v-for="label in card.labels" :style="{ 'background-color': labelColor(label) }" class="label-preview"></div>
+                            </div>
+                            <h1>{{ card.title }} </h1>
+                            <div class="icons-container flex  align-center justify-between">
+                            <div class="left-icons flex  align-center">
+                                <span><span v-if="card.description" class="icon description"></span></span>
+                                <span v-if="card.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
+                                    <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
+                                <span v-if="card.attachments?.length" class="attachments">
+                                <span class="icon sm attachment"></span>{{card.attachments.length}}</span>
+                            </div>
+                            <div class="flex">
+                            <div v-if="card.members" class="members flex align-center" v-for="member in card.members">
+                                <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)">
+                            </div>
+                                </div>
+                            </div>
+                        </section>
                     </li>
                 </ul>
             </section>
@@ -113,7 +133,8 @@ export default {
             colorList: ['#0079bf', '#d29034', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#00aecc', '#838c91',],
             searchPhoto:null,
             processChange:null,
-            currDisplay: 'Activities'
+            currDisplay: 'Activities',
+            currArchivedList: 'card'
         }
     },
     created() {
@@ -167,8 +188,27 @@ export default {
         },
         toggleCurrentDisplay(){
             this.currDisplay = this.currDisplay === 'Activity' ? 'Items in archive' : 'Activity'  
-            console.log(this.currDisplay)
         },
+        checklistCompletion(card){
+        var doneTodos=0
+        var todos=0
+         card.checklists.forEach(checklist => {
+          checklist.todos.forEach(todo =>{
+            if(todo.isDone) doneTodos++
+            todos++
+          })
+         });
+         const todoState = {number:`${doneTodos}/${todos}`, class:"notDone"}
+         if (doneTodos===todos) todoState.class = "preview-done"
+         return todoState
+        },
+        labelColor(labelId){
+            return this.currBoard.labels.find(label => label.id == labelId).color
+        },
+        switchArchiveList(){
+            this.currArchivedList = this.currArchivedList === 'card' ? 'list' : 'card'
+            console.log(this.currArchivedList)
+        }
     },
     computed: {
         getUnsplashPhotos(){
@@ -180,7 +220,11 @@ export default {
         oppositeDisplay(){
             return {collection: this.currDisplay === 'Activity', activity: this.currDisplay === 'Items in archive'}
 
-        }
+        },
+        oppositeArchiveList(){
+            return this.currArchivedList === 'card' ? 'Switch to lists' : 'Switch to cards'
+        },
+
     },
 
 
