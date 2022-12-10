@@ -136,18 +136,7 @@ export default {
     params() {
       return this.$route.path
     },
-    // avgColor() {
-    //   const fac = new FastAverageColor();
-    //   fac.getColorAsync(this.$store.getters.getBoardImg)
-    //     .then(color => {
-    //       // console.log(color)
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // },
     getHeadColor() {
-      // console.log(`this.headColor = `, this.headColor)
       if (!this.headColor||this.headColor==="#026AA7") return "#026AA7"
       else return this.headColor
     },
@@ -155,6 +144,7 @@ export default {
   watch:{
     $route (to, from){
       this.headColor="#026AA7"
+      if(this.modal) this.modal=null
       // console.log(`foo = `)
       setTimeout(()=>{
 
