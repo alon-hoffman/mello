@@ -49,10 +49,6 @@ export default{
     created(){
         this.newBoard=boardService.getEmptyBoard()
         this.getPhotosUnsplash()
-        // this.newBoard = {
-        //         title: '',
-        //         style:{backgroundColor: '#0079bf'}
-        //     },
              console.log( this.modalCords)
     },
     computed:{

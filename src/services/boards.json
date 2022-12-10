@@ -136,12 +136,14 @@
                             "groupId": "g102",
                             "id": "c101",
                             "title": "Make Logo",
+                            "coverColor" : "#e6f4f4",
                             "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670495294/r2yqvkxqo0eyrskpymvk.png"
                         },
                         {
                             "id": "c1534",
                             "groupId": "g102",
                             "title": "Look for taco truck",
+                            "coverColor" : "#5a535e",
                             "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670495259/algyt4rtwmknt4c8v1jt.jpg",
                             "labels": [
                                 "l102"
@@ -230,6 +232,7 @@
                             "groupId": "NNj1PW",
                             "id": "u6Jp71",
                             "title": "Convince mom to cook in the truck",
+                            "coverColor": "#c47f69",
                             "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670498796/o1j4x7qujdriarasws1q.jpg",
                             "createdBy": {
                                 "_id": "u102",

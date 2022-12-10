@@ -3,7 +3,7 @@
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <div class="icon lg close modal-close clickable" @click="closeModal"></div>
         <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}">
-            <span class="cover-btn icon lg cover flex align-center">Cover</span>
+            <span class="cover-btn icon lg cover flex align-center" @click="openCoversModal">Cover</span>
         </div>
         <div class="archive-cover flex" v-if="card.isArchived">
             <span class="icon lg archive"></span>This card is archived.
@@ -23,7 +23,7 @@
                                 <div class="member-avatar" v-for="member in card.members">
                                     <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
                                 </div>
-                                <div class="member-avatar add clickable"></div>
+                                <div ref="Members" class="member-avatar add clickable" @click="openMiniModalLocal('Members')"></div>
                             </div>
                         </div>
                         <div class="detail-item" v-if="card.labels?.length">
@@ -34,7 +34,7 @@
                                         <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
                                         <span class="chosenLabel-title">{{ label.title }}</span>
                                     </div>
-                                <button class="label-avatar flex align-center add clickable" @click="openMiniModalLocal('labels')"></button>
+                                <button ref="Labels" class="label-avatar flex align-center add clickable" @click="openMiniModalLocal('Labels')"></button>
                             </div>
                         </div>
                         <div class="detail-item" v-if="card.dueDate">
@@ -42,7 +42,7 @@
                             <div class="detail-item-content flex align-center">
                                 <button class="checkbox" :class="isCompleted"
                                     @click="toggleDueDate"></button>
-                                <div class="date-display">{{ formattedDueDate }} <span
+                                <div ref="Dates" class="date-display" @click="openMiniModalLocal('Dates')">{{ formattedDueDate }} <span
                                         :class="isCompleted">complete</span></div>
                             </div>
                         </div>
@@ -135,9 +135,11 @@
                         </ul>
                     </section>
                 </section>
-                <modal-sidebar :card="getCurrCard" 
+                <modal-sidebar ref="modalSidebar"
+                               :card="getCurrCard" 
                                :isMiniModalOpen="isMiniModalOpen"
                                :miniModalTitle="miniModalTitle"
+                               :modalCords ="modalCords"
                                @closeMiniModal="closeMiniModal"
                                @updateCard="updateCard" 
                                @updateLabels="updateLabels" 
@@ -171,7 +173,7 @@ export default {
             boardMembers: null,
             newComment: '',
             isHideDetails: false,
-            modalChords: null,
+            modalCords: null,
             miniModalTitle: null
         }
     },
@@ -246,6 +248,7 @@ export default {
         closeMiniModal() {
             setTimeout(() => {
                 this.isMiniModalOpen = false
+                this.modalCords = null
             }, 0)
         },
         toggleDueDate(){
@@ -328,15 +331,17 @@ export default {
         toggleHideDetails(){
             this.isHideDetails = !this.isHideDetails
         },
-        setModalChords() {
-            const { y, x } = this.$refs.createBtn.getBoundingClientRect()
+        setModalCords(title) {
+            const { y, x } = this.$refs[title].getBoundingClientRect()
             this.modalCords = { y, x }
         },
         openMiniModalLocal(title){
-            this.setModalChords()
-            console.log(this.modalCords, title)
-            // this.openMiniModal(title)
-        }
+            this.setModalCords(title)
+            this.$refs.modalSidebar.openMiniModal(title)
+        },
+        openCoversModal(){
+            this.$refs.modalSidebar.updateImgAttachmentsColors()
+        },
     },
     computed: {
         isOn() {

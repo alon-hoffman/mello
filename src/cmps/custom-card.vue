@@ -1,5 +1,5 @@
 <template>
-  <article class="custom-card flex column gap-1 items-center">
+  <article class="custom-card flex column gap-1 items-center" :style="cords">
     <header>
       <slot name="header"></slot>
     </header>
@@ -12,6 +12,23 @@
     </footer>
   </article>
 </template>
+<script>
+
+export default{
+  props: {
+    modalCords: Object
+  },
+  created(){
+    console.log(this.modalCords)
+  },
+  computed:{
+    cords(){
+        if(!this.modalCords) return ''
+        return {top: `min(100vh - 600px,${this.modalCords.y+50}px)`, left: `min(98vw - 50px, ${this.modalCords.x}px)`}
+      },
+  }
+}
+</script>
 
 <style scoped>
 .custom-card {
@@ -20,7 +37,7 @@
   right: 100px;
   justify-content: space-between;
   background: white;
-  /* padding-inline: 2em; */
+  width: max-content;
   z-index: 10;
   box-shadow: #091e4240 0 8px 16px -4px, #091e4214 0 0 0 1px;
   border-radius: 5px;

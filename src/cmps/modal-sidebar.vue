@@ -26,7 +26,7 @@
             <span class="icon sm remove"></span>Delete
         </div>
         <Teleport to="body">
-            <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
+            <custom-card class="option-custom-card" v-click-outside="closeMiniModal" :modalCords="modalCords" v-if="isMiniModalOpen">
                 <template #header>
                     <section class="mini-modal-header">
                         <span> {{ miniModalTitle }} </span>
@@ -245,6 +245,7 @@ import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
 export default {
     props: {
         card: Object,
+        modalCords: Object,
         isMiniModalOpen: Boolean,
         miniModalTitle: String,
     },
@@ -279,9 +280,6 @@ export default {
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
-    // nake logo https://res.cloudinary.com/mello123/image/upload/v1670495294/r2yqvkxqo0eyrskpymvk.png
-    // look for taco truck                             "https://res.cloudinary.com/mello123/image/upload/v1670495259/algyt4rtwmknt4c8v1jt.jpg
-
     },
     methods: {
         async openMiniModal(value) {
