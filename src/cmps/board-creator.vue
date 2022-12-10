@@ -1,20 +1,25 @@
 <template>
     <article class="board-creator" :style="cords">
         <header>Create board
-                <span class="icon sm close clickable" @click="$emit('close')"></span>
+            <span class="icon sm close clickable" @click="$emit('close')"></span>
 
         </header>
-        <div v-if="newBoard.style.backgroundColor||!newBoard.style.backgroundImageThumb" class="preview-display flex align-center justify-center" :style="{'background' : newBoard.style.backgroundColor}">
-            <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg" alt="board example">
+        <div v-if="newBoard.style.backgroundColor || !newBoard.style.backgroundImageThumb"
+            class="preview-display flex align-center justify-center"
+            :style="{ 'background': newBoard.style.backgroundColor }">
+            <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg"
+                alt="board example">
         </div>
-        <div v-else-if="newBoard.style.backgroundImageThumb" class="preview-display flex align-center justify-center" :style="{'background-image' : getNewBoardBackgroundUrl}">
-            <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg" alt="board example">
+        <div v-else-if="newBoard.style.backgroundImageThumb" class="preview-display flex align-center justify-center"
+            :style="{ 'background-image': getNewBoardBackgroundUrl }">
+            <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg"
+                alt="board example">
         </div>
         <span class="label">Background</span>
         <section class="background-selection">
-            <ul class="custom-images-list">      
+            <ul class="custom-images-list">
                 <li v-for="photoObject in getUnsplashPhotos"><img @click="setCoverImg(photoObject.urls)"
-                            :src="photoObject.urls.thumb" class="clickable"> </li>       
+                        :src="photoObject.urls.thumb" class="clickable"> </li>
             </ul>
             <ul class="color-list flex justify-between">
                 <li class="blue-btn clickable" @click="setBackgroundColor('#0079BF')"></li>
@@ -33,49 +38,57 @@
 </template>
 
 <script>
- import { boardService } from '../services/board-service.js'
- import { uploadService } from '../services/upload.service.js';
+import { boardService } from '../services/board-service.js'
+import { uploadService } from '../services/upload.service.js';
+import { FastAverageColor } from 'fast-average-color';
 import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
-export default{
+export default {
     props: {
-    modalCords: Object,
-  },
-    data(){
-        return{
+        modalCords: Object,
+    },
+    data() {
+        return {
             newBoard: null,
-            unsplashPhotos:null,
+            unsplashPhotos: null,
+            fac: new FastAverageColor(),
         }
     },
-    created(){
-        this.newBoard=boardService.getEmptyBoard()
+    created() {
+        this.newBoard = boardService.getEmptyBoard()
         this.getPhotosUnsplash()
-             console.log( this.modalCords)
+        console.log(this.modalCords)
     },
-    computed:{
-        cords(){
-        if(!this.modalCords) return ''
-        return {top: `${this.modalCords.y+50}px`, left: `${this.modalCords.x}px`}
-      },
-      getUnsplashPhotos(){
+    computed: {
+        cords() {
+            if (!this.modalCords) return ''
+            return { top: `${this.modalCords.y + 50}px`, left: `${this.modalCords.x}px` }
+        },
+        getUnsplashPhotos() {
             return this.unsplashPhotos
         },
-        getNewBoardBackgroundUrl(){
-          return `url("${this.newBoard.style.backgroundImageThumb}")`  
+        getNewBoardBackgroundUrl() {
+            return `url("${this.newBoard.style.backgroundImageThumb}")`
         },
     },
-    methods:{
-        setBackgroundColor(clr){
+    methods: {
+        setBackgroundColor(clr) {
             this.newBoard.style.backgroundColor = clr
             if (this.newBoard.style.backgroundImage) {
-                this.newBoard.style.backgroundImage=''
-                this.newBoard.style.backgroundImageThumb=''
+                this.newBoard.style.backgroundImage = ''
+                this.newBoard.style.backgroundImageThumb = ''
             }
         },
-        // setCoverImg(url){
-        //     console.log("🚀 ~ file: board-creator.vue:65 ~ setCoverImg ~ url", url)
-        //     this.newBoard.style.backgroundImage = url
-        // },
-        saveBoard(){
+        async getAverageColor(imgUrl) {
+            try {
+                let res = await this.fac.getColorAsync(imgUrl)
+                console.log(`res.hex = `, res.hex)
+                return res.hex
+            }
+            catch (err) {
+                console.log(`err = `, err)
+            }
+        },
+        saveBoard() {
             if (!this.newBoard.title) return
             console.log(`this.newBoard = `, this.newBoard)
             this.$emit('saveBoard', this.newBoard)
@@ -86,15 +99,17 @@ export default{
             this.setCoverImg(res.secure_url)
             // console.log(`res = `, res)
         },
-        setCoverImg(url) {
+       async setCoverImg(url) {
             // console.log(`url = `, url)
+            this.newBoard.style.averageImgColor= await this.getAverageColor(url)
             if (this.newBoard.style.backgroundColor) this.newBoard.style.backgroundColor = null
             this.newBoard.style.backgroundImage = url.full
-            this.newBoard.style.backgroundImageThumb=url.thumb
+            this.newBoard.style.backgroundImageThumb = url.thumb
+
         },
-        async getPhotosUnsplash(){
+        async getPhotosUnsplash() {
             this.unsplashPhotos = await unsplashPhotosService.getPhoto()
-            this.unsplashPhotos =this.unsplashPhotos.slice(0,4)
+            this.unsplashPhotos = this.unsplashPhotos.slice(0, 4)
         },
     }
 }

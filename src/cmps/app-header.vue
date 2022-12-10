@@ -17,30 +17,32 @@
     </nav>
   </header>
   <header v-click-slash="focusInput" v-if="params.includes('board')" class="boards-page">
-    <nav :style="{ backgroundColor: getHeadColor }">
-      <div class="left-header">
-        <router-link to="/" class="home-logo-page">
-          <img class="logo-img-board"
-            src="https://res.cloudinary.com/mello123/image/upload/v1670406801/dmvdzqf6o9tnxxnohnb0.png" alt="">
-        </router-link>
-        <router-link to="/board">
-          <button class="boards-header-btn">Boards</button>
-        </router-link>
-        <button ref="createBtn" class="create-board-btn" @click="openCreateModal">Create </button>
-      </div>
-      <div class="right-header">
-        <div class="search-boards">
-          <input ref="search" type="text" placeholder="Search" class="board-search-input"
-            style="font-family:Arial, FontAwesome">
-          <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+    <nav v-if="params.includes('board/')" :style="{ backgroundColor: getHeadColor }">
+      <nav v-if="!params.includes('board/')" :style="{ backgroundColor: '#026AA7' }">
+        <div class="left-header">
+          <router-link to="/" class="home-logo-page">
+            <img class="logo-img-board"
+              src="https://res.cloudinary.com/mello123/image/upload/v1670406801/dmvdzqf6o9tnxxnohnb0.png" alt="">
+          </router-link>
+          <router-link to="/board">
+            <button class="boards-header-btn">Boards</button>
+          </router-link>
+          <button ref="createBtn" class="create-board-btn" @click="openCreateModal">Create </button>
         </div>
-        <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
+        <div class="right-header">
+          <div class="search-boards">
+            <input ref="search" type="text" placeholder="Search" class="board-search-input"
+              style="font-family:Arial, FontAwesome">
+            <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+          </div>
+          <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
 
-        <button><img class="circle-img-header" @click="modal = 'about'" src="../assets/icons/circle-question-regular.png"
-            alt=""></button>
-        <button class="open-user-modal-btn" @click="modal = 'user'"><img class="user-img-header"
-            src="../assets/icons/user-solid.png" alt=""></button>
-      </div>
+          <button><img class="circle-img-header" @click="modal = 'about'"
+              src="../assets/icons/circle-question-regular.png" alt=""></button>
+          <button class="open-user-modal-btn" @click="modal = 'user'"><img class="user-img-header"
+              src="../assets/icons/user-solid.png" alt=""></button>
+        </div>
+      </nav>
     </nav>
     <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" />
     <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
@@ -74,8 +76,7 @@ export default {
       // placeholder
     }
   },
-  async created() {
-   
+  created() {
   },
   components: {
     headerModal,
@@ -103,36 +104,28 @@ export default {
       this.isUserModalOpen = false
     },
     async getAverageColor(imgUrl) {
-      let res = await this.fac.getColorAsync(imgUrl)
-      return res.hex
-    },
-    async setHeaderColor() {
-      let board = this.$store.getters.getCurrBoard
-      if (board?.style.backgroundColor) this.headColor =board?.style.backgroundColor+'aa'
-      else{
-        let boardHeaderColor =await this.getAverageColor(board?.style.backgroundImage)
-        this.headColor =boardHeaderColor
-        //  this.blendHexColors(boardHeaderColor,'#f0f0f0',20 ) 
+      try {
+        let res = await this.fac.getColorAsync(imgUrl)
+        return res.hex
+      }
+      catch (err) {
+        console.log(`err = `, err)
       }
     },
-   blendHexColors(c0, c1, p) {
-    var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
-    return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
-},
     openCreateModal() {
       const { y, x } = this.$refs.createBtn.getBoundingClientRect()
       this.modalCords = { y, x }
       this.modal = 'create'
     },
     async saveBoard(board) {
-    await  this.$store.dispatch({ type: "addBoard", board })
-      const newBoard= this.$store.getters.boards[this.$store.getters.boards.length - 1]
+      await this.$store.dispatch({ type: "addBoard", board })
+      const newBoard = this.$store.getters.boards[this.$store.getters.boards.length - 1]
       this.$router.push('/board/' + newBoard._id)
     },
     getParams() {
       if (this.$route.path.includes('board/'))
         this.getHeaderColor()
-        return
+      return
     },
   },
   computed: {
@@ -142,25 +135,26 @@ export default {
     params() {
       return this.$route.path
     },
-    getHeadColor() {
-      if (!this.headColor||this.headColor==="#026AA7") return "#026AA7"
-      else return this.headColor
+    board() {
+
+      return this.$store.getters.getCurrBoard
+    },
+    async getHeadColor() {
+      if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor
+      return this.board?.style.backgroundColor + 'aa'
     },
   },
-  watch:{
-    $route (to, from){
-      this.headColor="#026AA7"
-      if(this.modal) this.modal=null
-      // console.log(`foo = `)
-      setTimeout(()=>{
-
-        if (this.$route.path.includes('board/'))
-        this.setHeaderColor()
-      },500)
-       
-    },
-        // this.show = false;
-    }
+  watch: {
+    // $route :{
+    //   handler(to, from){
+    //     this.headColor="#026AA7"
+    //     if(this.modal) this.modal=null
+    //     if (this.$route.path.includes('board/'))
+    //     this.setHeaderColor()  
+    //   },
+    //   deep:true
+    // }
   }
+}
 
 </script>
