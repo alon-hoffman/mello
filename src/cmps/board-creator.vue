@@ -4,7 +4,10 @@
                 <span class="icon sm close clickable" @click="$emit('close')"></span>
 
         </header>
-        <div class="preview-display flex align-center justify-center" :style="{'background-color' : newBoard.backgroundColor}">
+        <div v-if="newBoard.style.backgroundColor||!newBoard.style.backgroundImageThumb" class="preview-display flex align-center justify-center" :style="{'background' : newBoard.style.backgroundColor}">
+            <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg" alt="board example">
+        </div>
+        <div v-else-if="newBoard.style.backgroundImageThumb" class="preview-display flex align-center justify-center" :style="{'background-image' : getNewBoardBackgroundUrl}">
             <img src="https://a.trellocdn.com/prgb/dist/images/board-preview-skeleton.14cda5dc635d1f13bc48.svg" alt="board example">
         </div>
         <span class="label">Background</span>
@@ -14,11 +17,11 @@
                             :src="photoObject.urls.thumb" class="clickable"> </li>       
             </ul>
             <ul class="color-list flex justify-between">
-                <li class="blue-btn clickable"  @click="setBackgroundColor('#0079BF')"></li>
-                <li class="yellow-btn clickable"  @click="setBackgroundColor('#D29034')"></li>
-                <li class="green-btn clickable"  @click="setBackgroundColor('#519839')"></li>
-                <li class="red-btn clickable"  @click="setBackgroundColor('#B04632')"></li>
-                <li class="purple-btn clickable"  @click="setBackgroundColor('#89609e')"></li>
+                <li class="blue-btn clickable" @click="setBackgroundColor('#0079BF')"></li>
+                <li class="yellow-btn clickable" @click="setBackgroundColor('#D29034')"></li>
+                <li class="green-btn clickable" @click="setBackgroundColor('#519839')"></li>
+                <li class="red-btn clickable" @click="setBackgroundColor('#B04632')"></li>
+                <li class="purple-btn clickable" @click="setBackgroundColor('#89609e')"></li>
                 <li class="more-btn clickable"></li>
 
             </ul>
@@ -54,12 +57,15 @@ export default{
     },
     computed:{
         cords(){
-             console.log( "hi")
+            //  console.log( "hi")
         if(!this.modalCords) return ''
         return {top: `${this.modalCords.y+50}px`, left: `${this.modalCords.x}px`}
       },
       getUnsplashPhotos(){
             return this.unsplashPhotos
+        },
+        getNewBoardBackgroundUrl(){
+          return `url("${this.newBoard.style.backgroundImageThumb}")`  
         },
     },
     methods:{

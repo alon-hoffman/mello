@@ -111,6 +111,7 @@
                         <div class="colors-palette">
                             <div class="color-box-container" v-for="color in possibleColors">
                                 <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                :class="{'chosen-element':(color===chosenLabel.color)}"
                                     :style="{ backgroundColor: color }">
                                 </div>
                             </div>
@@ -184,18 +185,18 @@
                             class="fake-button remove-cover-button">Remove cover</div>
                         <span class="mini-head">Colors</span>
                         <div class="first-colors-row">
-                            <button class="green-btn" value="#7BC86C" @click="setCover"></button>
-                            <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
-                            <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
-                            <button class="red-btn" value="#EF7564" @click="setCover"></button>
-                            <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
+                            <button class="green-btn" :class="{'chosen-element':(card.coverColor==='#7BC86C')}" value="#7BC86C" @click="setCover"></button>
+                            <button class="yellow-btn" :class="{'chosen-element':(card.coverColor==='#F5DD29')}" value="#F5DD29" @click="setCover"></button>
+                            <button class="orange-btn" :class="{'chosen-element':(card.coverColor==='#FFAF3F')}" value="#FFAF3F" @click="setCover"></button>
+                            <button class="red-btn" :class="{'chosen-element':(card.coverColor==='#EF7564')}" value="#EF7564" @click="setCover"></button>
+                            <button class="purple-btn" :class="{'chosen-element':(card.coverColor==='#CD8DE5')}" value="#CD8DE5" @click="setCover"></button>
                         </div>
                         <div class="second-colors-row">
-                            <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
-                            <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
-                            <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
-                            <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
-                            <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
+                            <button class="blue-btn" :class="{'chosen-element':(card.coverColor==='#5BA4CF')}" value="#5BA4CF" @click="setCover"></button>
+                            <button class="bright-blue-btn" :class="{'chosen-element':(card.coverColor==='#29CCE5')}" value="#29CCE5" @click="setCover"></button>
+                            <button class="bright-green-btn" :class="{'chosen-element':(card.coverColor==='#6DECA9')}" value="#6DECA9" @click="setCover"></button>
+                            <button class="pink-btn" :class="{'chosen-element':(card.coverColor==='#FF8ED4')}" value="#FF8ED4" @click="setCover"></button>
+                            <button class="dark-blue-btn" :class="{'chosen-element':(card.coverColor==='#172B4D')}" value="#172B4D" @click="setCover"></button>
                         </div>
                         <span class="mini-head">Attachments</span>
                         <div v-if="card.attachments?.length" class="attachment-imgs-container">
