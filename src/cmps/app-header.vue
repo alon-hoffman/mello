@@ -17,8 +17,7 @@
     </nav>
   </header>
   <header v-click-slash="focusInput" v-if="params.includes('board')" class="boards-page">
-    <nav v-if="params.includes('board/')" :style="{ backgroundColor: getHeadColor }">
-      <nav v-if="!params.includes('board')" :style="{ backgroundColor: '#026AA7' }">
+    <nav :style="{ backgroundColor: getHeadColor }">
         <div class="left-header">
           <router-link to="/" class="home-logo-page">
             <img class="logo-img-board"
@@ -43,7 +42,6 @@
               src="../assets/icons/user-solid.png" alt=""></button>
         </div>
       </nav>
-    </nav>
     <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" />
     <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
     <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null"
@@ -140,8 +138,11 @@ export default {
       return this.$store.getters.getCurrBoard
     },
     async getHeadColor() {
-      if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor
-      return this.board?.style.backgroundColor + 'aa'
+      if(this.params.includes('board/')){
+        if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor
+        return this.board?.style.backgroundColor + 'aa'
+      }
+      else return '#026AA7'
     },
   },
   watch: {
