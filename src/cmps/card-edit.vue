@@ -103,7 +103,7 @@
                             <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"
                                 v-click-outside="() => closeAddTodo(checklist)">Add an item</button>
                             <section v-else class="add-todo flex wrap">
-                                <textarea placeholer="Add an item" v-model="newTodo.title" @keyup.enter="saveTodo(checklist)"></textarea>
+                                <textarea placeholer="Add an item" v-model="newTodo.title" @keyup.enter="saveTodo(checklist)" v-click-outside="() => closeAddTodo(checklist)"></textarea>
                                 <div class="add-todo-options flex">
                                     <button class="modal-btn add-todo-btn" @click="saveTodo(checklist)">Add</button>
                                     <button class="modal-btn" @click="closeAddTodo(checklist)">Cancel</button>
@@ -144,7 +144,7 @@
                                @updateCard="updateCard" 
                                @updateLabels="updateLabels" 
                                @removeCard="removeCard"
-                               @openMiniModal="openMiniModal" @sideModalChange="changeCard" />
+                               @openMiniModal="openMiniModal" />
             </div>
         </div>
     </article>
@@ -163,14 +163,14 @@ export default {
     emits: ['toggleEdit', 'updateCard', 'updateLabels'],
     data() {
         return {
-            card: null,
+            // card: null,
             realTextArea: false,
             isMiniModalOpen: false,
             newTodo: {
                 title: '',
                 isDone: false
             },
-            boardMembers: null,
+            // boardMembers: null,
             newComment: '',
             isHideDetails: false,
             modalCords: null,
@@ -182,21 +182,8 @@ export default {
         const { boardId } = this.$route.params
         this.$store.commit({ type: 'setBoardById', id: boardId });
         socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
-        
         this.realTextArea = false
-        const { id } = this.$route.params
-        const board = this.$store.getters.getCurrBoard
-        board.groups.forEach(group => {
-            group.cards.forEach(card => {
-                
-                if (card.id === id) {
-                    this.card = JSON.parse(JSON.stringify(card))
-                    // setCurrCard(state, { cardId })
-                    return
-                }
-            })
-        })
-        this.boardMembers = this.$store.getters.getMembersOfBoard
+        // this.boardMembers = this.$store.getters.getMembersOfBoard
     },
     methods: {
         checkCloseModal() {
@@ -209,7 +196,6 @@ export default {
             }
         },
         closeModal() {
-            // this.updateCard()
             const url = this.$route.path
             const route = url.substring(0, url.indexOf('card'))
             this.$router.push(route)
@@ -224,14 +210,11 @@ export default {
         updateCard(currCard) {
             console.log("🚀 ~ file: card-edit.vue:211 ~ updateCard ~ currCard")
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
-            else this.$store.dispatch({ type: "saveCard", card: currCard })
+            // else this.$store.dispatch({ type: "saveCard", card: currCard })
             // else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
         updateLabels(labels) {
             this.$store.commit({ type: "updateLabels", labels })
-        },
-        changeCard(card) {
-            this.card = card
         },
         removeCard(cardId) {
             const card = {title: this.card.title, groupId: this.card.groupId}
@@ -256,6 +239,7 @@ export default {
             const action = this.card.dueDate ? 'dateComplete' : 'dateIncomplete'
             const activity = { action, card:this.card }
             this.$store.dispatch({type: 'addActivity', activity})
+            this.updateCard(this.card)
         },
         memberInitials(member) {
             const fullName = member.fullname.split(' ');
@@ -267,6 +251,7 @@ export default {
             this.$store.dispatch({ type: 'addActivity', activity})
             const checklistIdx = this.card.checklists.findIndex(c => c.id === checklist.id)
             this.card.checklists.splice(checklistIdx, 1)
+            this.updateCard(this.card)
         },
         toggleTodo(todo){
             todo.isDone = !todo.isDone
@@ -274,30 +259,38 @@ export default {
                 const activity = { action: 'todo', card: this.card, detail: todo.title}
                 this.$store.dispatch({ type: 'addActivity', activity})
             }
+            this.updateCard(this.card)
         },
         openAddTodo(checklist) {
             checklist.newTodo = true;
+            console.log(checklist.newTodo)
+            this.updateCard(this.card)
         },
         closeAddTodo(checklist) {
             this.newTodo = { title: '' }
             checklist.newTodo = false;
+            this.updateCard(this.card)
         },
         saveTodo(checklist) {
             if(!this.newTodo.title) return
             this.newTodo.id = utilService.makeId()
             checklist.todos.push(this.newTodo)
             this.newTodo = { title: ''}
+            this.updateCard(this.card)
         },
         closeEditMode(todo) {
             todo.editMode = false
+            this.updateCard(this.card)
         },
         openEditMode(todo) {
             todo.editMode = true
+            this.updateCard(this.card)
         },
         removeTodo(checklist, todo) {
             todo.editMode = false
             const todoIdx = checklist.todos.findIndex(t => t.id == todo.id)
             checklist.todos.splice(todoIdx, 1)
+            this.updateCard(this.card)
         },
         isDone(isDone) {
             return { checked: isDone }
@@ -324,6 +317,7 @@ export default {
             const activity = {action: 'addComment', card: this.card, detail: this.newComment}
             this.$store.dispatch({type: 'addActivity', activity})
             this.newComment = ''
+            this.updateCard(this.card)
         },
         timeSince(time){
             return utilService.timeSince(time)
@@ -334,6 +328,7 @@ export default {
         setModalCords(title) {
             const { y, x } = this.$refs[title].getBoundingClientRect()
             this.modalCords = { y, x }
+            this.updateCard(this.card)
         },
         openMiniModalLocal(title){
             this.setModalCords(title)
@@ -377,7 +372,25 @@ export default {
         isCompleted() {
             return { checked: this.card.dueDate.isCompleted }
         },
-
+        boardMembers(){
+            return this.$store.getters.getMembersOfBoard
+        },
+        card(){
+            const { id } = this.$route.params
+            const board = this.$store.getters.getCurrBoard
+            let card
+            if(board){
+                 board.groups.find(group => {
+                    return group.cards.find(c => {
+                        if (c.id === id) {
+                            card = c
+                            return true
+                        }
+                    })
+                })
+                return JSON.parse(JSON.stringify(card))
+            }
+        },
     },
     unmounted() {
         this.realTextArea = false

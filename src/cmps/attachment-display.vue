@@ -39,9 +39,6 @@ export default {
       isEdited: false
     }
   },
-  created(){
-console.log(this.attachments)
-  },
   computed: {
 
   },

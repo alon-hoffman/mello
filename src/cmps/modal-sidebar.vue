@@ -283,8 +283,6 @@ export default {
     },
     methods: {
         async openMiniModal(value) {
-            // this.miniModalTitle = value
-            // console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
 
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
@@ -294,18 +292,21 @@ export default {
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
+            // "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670495494/m1eqbxy10jmm4ukliduo.jpg",
+            // learn taco recipe
         },
         changeMiniModal(label) {
             this.chosenLabel = JSON.parse(JSON.stringify(label))
-            this.miniModalTitle = 'Edit label'
+            // this.miniModalTitle = 'Edit label'
+            this.$emit('openMiniModal', 'Edit label')
+
         },
         openCreateLabelModal() {
             this.chosenLabel = {
                 color: "#7bc86c",
                 title: ""
             },
-                this.miniModalTitle = 'Create label'
-
+                this.$emit('openMiniModal', 'Create label')
         },
         closeMiniModal() {
             this.$emit('closeMiniModal')
@@ -322,6 +323,8 @@ export default {
                 else this.card.members.push(member)
             }
             else this.card.members = [member]
+            this.updateCard()
+
         },
         toggleLabels(label) {
             if (this.card.labels?.length) {
@@ -330,6 +333,8 @@ export default {
                 else this.card.labels.push(label.id)
             }
             else this.card.labels = [label.id]
+            this.updateCard()
+
         },
         checkIfInMemberList(member) {
             if (!this.card.members) return
@@ -354,23 +359,32 @@ export default {
             this.card.checklists.push(newChecklist)
             this.checklist = "Checklist"
             setTimeout(() => { this.$emit('closeMiniModal') }, 500)
+            this.updateCard()
         },
         setLabelBGC(selectedColor) {
             this.chosenLabel.color = selectedColor
+            this.updateCard()
+
         },
         setCover(e) {
             if (this.card.imgURL) this.card.imgURL = null
             this.card.coverColor = e.target.value
+            this.updateCard()
+
         },
         setCoverImg(photoObject) {
             // photoObject.
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
+            this.updateCard()
+
         },
         async setCoverImgFromAttachments(photoUrl) {
            const color= await this.getAverageColor(photoUrl)
            this.card.coverColor = color
            this.card.imgURL = photoUrl
+           this.updateCard()
+
         },
         updateImgAttachmentsColors() {
             this.openMiniModal('Cover')
@@ -395,6 +409,7 @@ export default {
             else {
                 this.card.imgURL = null
             }
+            this.updateCard()
         },
         addAttachment() {
             if (this.attachment.href && !this.attachment.type) this.attachment.type = 'link';
@@ -408,20 +423,24 @@ export default {
                 type: '',
                 file: null,
             }
+            this.updateCard()
         },
         updateChosenLabel(action) {
             const labelIdx = this.boardLabels.findIndex((label) => label.id === this.chosenLabel.id)
             if (action === 'save') this.boardLabels.splice(labelIdx, 1, this.chosenLabel)
             else this.boardLabels.splice(labelIdx, 1)
             this.$emit('updateLabels', this.boardLabels)
-            this.miniModalTitle = 'Labels'
-            // this.closeMiniModal()
+            // this.miniModalTitle = 'Labels'
+            this.$emit('openMiniModal', 'Labels')
+
         },
         addChosenLabel() {
             this.chosenLabel.id = utilService.makeId()
             this.boardLabels.push(this.chosenLabel)
             this.$emit('updateLabels', this.boardLabels)
-            this.miniModalTitle = 'Labels'
+            // this.miniModalTitle = 'Labels'
+            this.$emit('openMiniModal', 'Labels')
+
         },
         updateDate() {
             const time = +new Date(this.newDate).getTime()
@@ -429,6 +448,7 @@ export default {
 
             // this.card.dueDate.isCompleted = false
             setTimeout(() => { this.$emit('closeMiniModal') }, 1000)
+            this.updateCard()
         },
         async uploadImgToCloud(ev) {
             // console.log(`ev = `, ev)
@@ -459,6 +479,7 @@ export default {
             this.$store.dispatch({type: 'addActivity', activity})
             if(this.card.isArchived) this.$store.commit({type: 'archiveItem', item :this.card})
             else this.$store.commit({type: 'retrieveItem', item: this.card })
+            this.updateCard(this.card)
         },
     },
     computed: {
@@ -491,21 +512,5 @@ export default {
         customCard,
         DatePicker,
     },
-    watch: {
-        card: {
-            handler(newVal, oldVal) {
-                // console.log(`this.card = `, this.card)
-                this.$emit("updateCard", this.card)
-            },
-            deep: true
-        },
-        // newDate: {
-        //     handler(newVal, oldVal) {
-        //         console.log("change")
-        //         this.$emit("sideModalChange", this.card)
-        //     },
-        //     deep: true
-        // }
-    }
 }
 </script>
