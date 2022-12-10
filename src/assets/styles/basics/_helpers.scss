@@ -43,6 +43,10 @@
         height: 0;
     }   
 }
+.chosen-element{
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px  #0079BF;
+    filter: none;
+}
 
 .clickable:hover{
     cursor: pointer;
