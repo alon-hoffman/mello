@@ -373,6 +373,7 @@ export default {
 
         },
        async setCoverImg(photoObject) {
+        // console.log(`photoObject = `, photoObject)
             if(photoObject.color){
                 // photoObject.
                 this.card.coverColor = photoObject.color
