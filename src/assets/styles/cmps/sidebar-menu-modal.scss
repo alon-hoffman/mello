@@ -454,5 +454,19 @@
 .archive-list-item{
     .group-preview{
         
+        .modal-btn{
+            background-color: #091e420a;
+            line-height: 0;
+            transition-duration: 85ms;
+            transition-timing-function: ease;
+            &:hover {
+                background-color: #091e4214;
+            }
+
+            &:active {
+                background-color: #e4f0f6;
+                color: #0079bf;
+            }
+        }
     }
 }

@@ -111,17 +111,16 @@ export const boardStore = {
         },
         archiveItem({ currBoard }, { item }) {
             currBoard.archivedItems[item.type].unshift(item)
+            item.isArchived = true
         },
         retrieveItem({ currBoard }, { item }) {
             const idx = currBoard.archivedItems[item.type].findIndex(i => i.id === item.id)
-            item.isArchived = false
             currBoard.archivedItems[item.type].splice(idx, 1)
+            const itemAtBoard = currBoard.groups.find(i => i.id === item.id)
+            itemAtBoard.isArchived = false
         },
         removeCardActivities({ currBoard }, { cardId }) {
             currBoard.activities = currBoard.activities.filter(activity => activity.card.id !== cardId)
-        },
-        archiveList({ currBoard }, { group }) {
-            group.isArchived = group.isArchived ? false : true
         },
     },
     actions: {
@@ -171,8 +170,8 @@ export const boardStore = {
             }
         },
         async archiveList({ state, commit, dispatch }, { groupId }) {
-            const groupTitle = boardService.findGroupById(groupId, state.currBoard).title
-            commit({ type: 'archiveItem', item: { id: groupId, title: groupTitle, type: 'list' } })
+            const group = boardService.findGroupById(groupId, state.currBoard)
+            commit({ type: 'archiveItem', item: group })
             const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })
         },
@@ -268,7 +267,7 @@ export const boardStore = {
                     id: card?.id,
                     title: card?.title
                 },
-                title: boardService.activityNamer(action, state.currBoard, card?.groupId, detail),
+                title: boardService.activityNamer(action, state.currBoard, card, detail),
                 addedAt: Date.now(),
                 user: userService.getLoggedinUser()?.fullName || 'Guest'
             }
@@ -276,9 +275,9 @@ export const boardStore = {
             card.activities.unshift(activityToAdd)
             commit({ type: 'addActivity', activity: activityToAdd })
         },
-        retrieveItem({ commit, dispatch }, { item }) {
+        retrieveItem({ commit, dispatch, state }, { item }) {
             commit({ type: 'retrieveItem', item })
-            const board = JSON.parse(JSON.stringify(board))
+            const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: 'updateBoard', board })
         }
     },

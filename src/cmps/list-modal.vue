@@ -31,11 +31,12 @@
     },
     methods: {
       deleteList(){
-         this.$emit('deleteList', this.list.id)
+        this.$emit('deleteList', this.list.id)
+        this.closeTitleModal()
       },
       duplicateList(){
-         console.log( "duplicateList")
-         this.$emit('duplicateList', this.list)
+        this.$emit('duplicateList', this.list)
+        this.closeTitleModal()
       },
       closeTitleModal(){
         this.$emit('closeTitleModal')
@@ -43,6 +44,7 @@
       archiveList(){
         this.$store.dispatch({ type: "addActivity", activity: {action: 'archiveItem' , card: {}, detail: this.list.title} })
         this.$emit('archiveList', this.list.id)
+        this.closeTitleModal()
       },
     }
   

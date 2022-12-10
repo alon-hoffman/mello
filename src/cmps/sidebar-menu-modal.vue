@@ -36,13 +36,13 @@
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
                         <div class="member-avatar"></div>
                         <div class="flex column" v-if="activity.title">
-                            <span><strong>{{activity.user}}</strong>{{ activity.title.before}} <span class="activity-link clickable" @click="goToCard(activity)">{{activity.card.title}}</span>{{activity.title.after}}</span>
+                            <span><strong>{{activity.user}}</strong>{{ activity.title.before}} <span class="activity-link clickable" @click="goToCard(activity.card)">{{activity.card.title}}</span>{{activity.title.after}}</span>
                             <span class="time">{{timeSince(activity.addedAt)}}</span>
                         </div>
                     </li>
                 </ul>
                 <ul class="content archive-list" v-if="currDisplay === 'Items in archive'">
-                    <li class="archive-list-item" v-if="currArchivedList === 'card'" v-for="card in currBoard.archivedItems.card">
+                    <li class="archive-list-item" v-if="currArchivedList === 'card'" v-for="card in currBoard.archivedItems.card" @click="goToCard(card)">
                         <section class="card-preview">
                             <img v-if="card.imgURL" :src="card.imgURL" alt="">
                             <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
@@ -69,7 +69,7 @@
                     <li class="archive-list-item" v-if="currArchivedList === 'list'" v-for="list in currBoard.archivedItems.list">
                         <section class="group-preview flex align-center justify-between">
                             <span>{{list.title}}</span>
-                            <button class="modal-btn" @click="retrieveList">Send to Board<span class="icon lg return"></span></button>
+                            <button class="modal-btn" @click="retrieveItem(list)">Send to Board<span class="icon lg return"></span></button>
                         </section>
                     </li>
                 </ul>
@@ -139,7 +139,7 @@ export default {
             colorList: ['#0079bf', '#d29034', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#00aecc', '#838c91',],
             searchPhoto:null,
             processChange:null,
-            currDisplay: 'Activities',
+            currDisplay: 'Activity',
             currArchivedList: 'card'
         }
     },
@@ -181,10 +181,10 @@ export default {
             this.setCoverImg(res.secure_url)
             // console.log(`res = `, res)
         },
-        goToCard(activity){
-            if (activity.card?.id) {
+        goToCard(card){
+            if (card?.id) {
                 this.closeSidebarMenuModal()
-                this.$emit('editCard', activity.card.id)
+                this.$emit('editCard', card.id)
             }
         },
         async archive(){
@@ -194,7 +194,7 @@ export default {
         this.$router.push('/board/')
         },
         toggleCurrentDisplay(){
-            this.currDisplay = this.currDisplay === 'Activity' ? 'Items in archive' : 'Activity'  
+            this.currDisplay = this.currDisplay === 'Activity' ? `Items in archive` : 'Activity'  
         },
         checklistCompletion(card){
         var doneTodos=0
@@ -216,9 +216,8 @@ export default {
             this.currArchivedList = this.currArchivedList === 'card' ? 'list' : 'card'
             console.log(this.currArchivedList)
         },
-        retrieveList(list){
-            list.isArchived = false
-            this.$store.dispatch({ type: 'retrieveItem', item: list.item })
+        retrieveItem(item){
+            this.$store.dispatch({ type: 'retrieveItem', item })
         },
     },
     computed: {
