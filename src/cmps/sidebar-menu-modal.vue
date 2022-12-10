@@ -131,7 +131,7 @@
 import { utilService } from '../services/util.service';
 import { uploadService } from '../services/upload.service.js';
 import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
-
+import { FastAverageColor } from 'fast-average-color';
 export default {
     emits: ['closeSidebarMenuModal'],
     props: {
@@ -146,7 +146,8 @@ export default {
             searchPhoto:null,
             processChange:null,
             currDisplay: 'Activity',
-            currArchivedList: 'card'
+            currArchivedList: 'card',
+            fac: new FastAverageColor(),
         }
     },
     created() {
@@ -176,8 +177,19 @@ export default {
             this.currBoard.style.backgroundColor = color
             this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         },
-        setCoverImg(url) {
+        async getAverageColor(imgUrl) {
+            try {
+                let res = await this.fac.getColorAsync(imgUrl)
+                console.log(`res.hex = `, res.hex)
+                return res.hex
+            }
+            catch (err) {
+                console.log(`err = `, err)
+            }
+        },
+       async setCoverImg(url) {
             console.log(`url = `, url)
+            this.newBoard.style.averageImgColor= await this.getAverageColor(url)
             if (this.currBoard.style.backgroundColor) this.currBoard.style.backgroundColor = null
             this.currBoard.style.backgroundImage = url.full
             this.currBoard.style.backgroundImageThumb=url.thumb
