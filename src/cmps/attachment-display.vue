@@ -75,8 +75,6 @@ export default {
             return (date + ' at ' + hours)
         }
   }
-
-
 }
 </script>
   
