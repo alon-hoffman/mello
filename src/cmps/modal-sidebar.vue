@@ -373,15 +373,15 @@ export default {
 
         },
        async setCoverImg(photoObject) {
-        // console.log(`photoObject = `, photoObject)
             if(photoObject.color){
                 // photoObject.
                 this.card.coverColor = photoObject.color
                 this.card.imgURL = photoObject.urls.thumb
             }
-            else 
-            this.card.coverColor= await this.getAverageColor(photoObject)
-            this.card.imgURL = photoObject
+            else {
+                this.card.coverColor= await this.getAverageColor(photoObject)
+                this.card.imgURL = photoObject
+            }
             this.updateCard()
 
         },
@@ -499,6 +499,7 @@ export default {
             return utilService.getRandomColor()
         },
         getImageAttachments() {
+
             if(!this.card.attachments) return
             return this.card.attachments.filter((attachment) => attachment.type === "img")
         },
