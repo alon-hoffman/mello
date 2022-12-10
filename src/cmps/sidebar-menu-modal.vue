@@ -16,7 +16,8 @@
                     <span>{{currDisplay === 'Activity' ? 'View items in archive' : 'Board activity'}}</span>
                 </div>
                 <div @click="changeModal('Change background')" class="change-background clickable">
-                    <img v-if="currBoard.style.backgroundImage" class="change-background-img" :src="currBoard.style.backgroundImage">
+                    <img v-if="currBoard.style.backgroundImageThumb" class="change-background-img" :src="currBoard.style.backgroundImageThumb">
+                    <img v-else-if="currBoard.style.backgroundImage" class="change-background-img" :src="currBoard.style.backgroundImage">
                     <div class="change-background-img" :style="{ backgroundColor: currBoard.style.backgroundColor }"></div>
                     <span class="change-background-text mini-head">Change background</span>
                 </div>
@@ -114,7 +115,7 @@
                         style="font-family:Arial, FontAwesome" v-model="searchPhoto">
                         <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
                 </div>
-                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject.urls.full)"
+                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject.urls)"
                             :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
         </section>
@@ -171,8 +172,10 @@ export default {
             this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         },
         setCoverImg(url) {
+            console.log(`url = `, url)
             if (this.currBoard.style.backgroundColor) this.currBoard.style.backgroundColor = null
-            this.currBoard.style.backgroundImage = url
+            this.currBoard.style.backgroundImage = url.full
+            this.currBoard.style.backgroundImageThumb=url.thumb
             this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         },
         async uploadImgToCloud(ev) {

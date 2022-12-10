@@ -83,12 +83,12 @@ export default {
        { computed: this.boards, title: 'All Boards',icon:'' }]
     },
     boards() {
-      console.log(`this.$store.getters.boards = `, this.$store.getters.boards)
+      // console.log(`this.$store.getters.boards = `, this.$store.getters.boards)
       return this.$store.getters.boards?.filter(board => !board.isArchived);
     },
     favoriteBoards() {
       const boards = this.$store.getters.boards
-      console.log(`boards = `, boards)
+      // console.log(`boards = `, boards)
       return boards.filter(board => board.isStarred).filter(board => !board.isArchived)
     },
     lastViewed() {
@@ -118,6 +118,7 @@ export default {
     chosenBackground(style) {
       // console.log(`foo = `)
       const { backgroundColor, backgroundImage } = style
+      if(style.backgroundImageThumb) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImageThumb})`, 'background-size': 'cover' }
       if (backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover' }
       return { 'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}` }
     },
