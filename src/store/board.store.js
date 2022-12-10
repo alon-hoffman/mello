@@ -114,6 +114,7 @@ export const boardStore = {
         },
         retrieveItem({ currBoard }, { item }) {
             const idx = currBoard.archivedItems[item.type].findIndex(i => i.id === item.id)
+            item.isArchived = false
             currBoard.archivedItems[item.type].splice(idx, 1)
         },
         removeCardActivities({ currBoard }, { cardId }) {
@@ -171,12 +172,11 @@ export const boardStore = {
         },
         async archiveList({ state, commit, dispatch }, { groupId }) {
             const groupTitle = boardService.findGroupById(groupId, state.currBoard).title
-            commit({ type: 'archiveList', group: { id: groupId, title: groupTitle } })
+            commit({ type: 'archiveItem', item: { id: groupId, title: groupTitle, type: 'list' } })
             const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })
         },
         async removeList({ dispatch, state }, { groupId }) {
-            // console.log(`removeList = `)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             const Idx = board.groups.findIndex(group => group.id === groupId)
             board.groups.splice(Idx, 1)
@@ -208,7 +208,6 @@ export const boardStore = {
             }
         },
         async addList({ dispatch, state }, { list }) {
-            // console.log(`addList = `)
             list.id = utilService.makeId()
             list.type = 'list'
             const board = JSON.parse(JSON.stringify(state.currBoard))
@@ -266,16 +265,21 @@ export const boardStore = {
             const activityToAdd = {
                 id: utilService.makeId(),
                 card: {
-                    id: card.id,
-                    title: card.title
+                    id: card?.id,
+                    title: card?.title
                 },
-                title: boardService.activityNamer(action, state.currBoard, card.groupId, detail),
+                title: boardService.activityNamer(action, state.currBoard, card?.groupId, detail),
                 addedAt: Date.now(),
                 user: userService.getLoggedinUser()?.fullName || 'Guest'
             }
             if (!card.activities) card.activities = []
             card.activities.unshift(activityToAdd)
             commit({ type: 'addActivity', activity: activityToAdd })
+        },
+        retrieveItem({ commit, dispatch }, { item }) {
+            commit({ type: 'retrieveItem', item })
+            const board = JSON.parse(JSON.stringify(board))
+            dispatch({ type: 'updateBoard', board })
         }
     },
 }

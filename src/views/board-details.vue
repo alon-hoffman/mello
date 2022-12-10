@@ -197,7 +197,6 @@ export default {
       this.$store.commit({ type: "updateLabels",labels });
     },
     saveList(list) {
-      // this.board.groups.push({ title })
       this.$store.dispatch({ type: "addList", list });
     },
     openListModal(y, x, list){

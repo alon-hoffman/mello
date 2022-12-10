@@ -17,6 +17,7 @@
             <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>&nbsp
           </div>
         </div>
+        <div class="list-space">:)</div>
       </Container>
     </ul>
 

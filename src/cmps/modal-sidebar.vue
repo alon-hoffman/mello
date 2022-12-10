@@ -258,7 +258,6 @@ export default {
             currMember: null,
             isDatePickerOpen: false,
             newDate: this.card.dueDate,
-            // date: '2020-10-10',
             attachment: {
                 href: '',
                 file: null,
@@ -275,7 +274,6 @@ export default {
     },
     async created() {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-        // console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
@@ -451,7 +449,6 @@ export default {
                 card: this.card
             }
             this.$store.dispatch({type: 'addActivity', activity})
-            debugger
             if(this.card.isArchived) this.$store.commit({type: 'archiveItem', item :this.card})
             else this.$store.commit({type: 'retrieveItem', item: this.card })
         },

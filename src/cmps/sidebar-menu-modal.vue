@@ -42,28 +42,34 @@
                     </li>
                 </ul>
                 <ul class="content archive-list" v-if="currDisplay === 'Items in archive'">
-                    <li class="archive-list-item" v-for="card in currBoard.archivedItems.card">
+                    <li class="archive-list-item" v-if="currArchivedList === 'card'" v-for="card in currBoard.archivedItems.card">
                         <section class="card-preview">
                             <img v-if="card.imgURL" :src="card.imgURL" alt="">
                             <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
                             <div v-if="card.labels?.length" class="labels-container flex">
-                            <div v-for="label in card.labels" :style="{ 'background-color': labelColor(label) }" class="label-preview"></div>
+                                <div v-for="label in card.labels" :style="{ 'background-color': labelColor(label) }" class="label-preview"></div>
                             </div>
                             <h1>{{ card.title }} </h1>
                             <div class="icons-container flex  align-center justify-between">
-                            <div class="left-icons flex  align-center">
-                                <span><span v-if="card.description" class="icon description"></span></span>
-                                <span v-if="card.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
-                                    <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
-                                <span v-if="card.attachments?.length" class="attachments">
-                                <span class="icon sm attachment"></span>{{card.attachments.length}}</span>
-                            </div>
-                            <div class="flex">
-                            <div v-if="card.members" class="members flex align-center" v-for="member in card.members">
-                                <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)">
-                            </div>
+                                <div class="left-icons flex  align-center">
+                                    <span><span v-if="card.description" class="icon description"></span></span>
+                                    <span v-if="card.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
+                                        <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
+                                    <span v-if="card.attachments?.length" class="attachments">
+                                    <span class="icon sm attachment"></span>{{card.attachments.length}}</span>
+                                </div>
+                                <div class="flex">
+                                    <div v-if="card.members" class="members flex align-center" v-for="member in card.members">
+                                        <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)">
+                                    </div>
                                 </div>
                             </div>
+                        </section>
+                    </li>
+                    <li class="archive-list-item" v-if="currArchivedList === 'list'" v-for="list in currBoard.archivedItems.list">
+                        <section class="group-preview flex align-center justify-between">
+                            <span>{{list.title}}</span>
+                            <button class="modal-btn" @click="retrieveList">Send to Board<span class="icon lg return"></span></button>
                         </section>
                     </li>
                 </ul>
@@ -139,6 +145,7 @@ export default {
     },
     created() {
          this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
+         console.log(this.currBoard.archivedItems.list)
     },
     methods: {
         timeSince(time){
@@ -208,7 +215,11 @@ export default {
         switchArchiveList(){
             this.currArchivedList = this.currArchivedList === 'card' ? 'list' : 'card'
             console.log(this.currArchivedList)
-        }
+        },
+        retrieveList(list){
+            list.isArchived = false
+            this.$store.dispatch({ type: 'retrieveItem', item: list.item })
+        },
     },
     computed: {
         getUnsplashPhotos(){
