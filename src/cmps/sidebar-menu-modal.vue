@@ -70,7 +70,12 @@
                     <li class="archive-list-item" v-if="currArchivedList === 'list'" v-for="list in currBoard.archivedItems.list">
                         <section class="group-preview flex align-center justify-between">
                             <span>{{list.title}}</span>
-                            <button class="modal-btn" @click="retrieveItem(list)">Send to Board<span class="icon lg return"></span></button>
+                            <button class="modal-btn flex align-center" @click="retrieveItem(list)"><span class="icon lg return"></span><span>Send to Board</span></button>
+                        </section>
+                    </li>
+                    <li class="archive-list-item" v-if="!currBoard.archivedItems[currArchivedList].length">
+                        <section class="group-preview flex justify-center">
+                            <span>No {{currArchivedList}}s currently archived</span>
                         </section>
                     </li>
                 </ul>

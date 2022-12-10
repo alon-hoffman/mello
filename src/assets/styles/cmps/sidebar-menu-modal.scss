@@ -453,12 +453,13 @@
 
 .archive-list-item{
     .group-preview{
-        
+        border-bottom: 1px solid #091e4221;
         .modal-btn{
             background-color: #091e420a;
             line-height: 0;
             transition-duration: 85ms;
             transition-timing-function: ease;
+            gap: 6px;
             &:hover {
                 background-color: #091e4214;
             }
@@ -466,6 +467,9 @@
             &:active {
                 background-color: #e4f0f6;
                 color: #0079bf;
+            }
+            & .icon{
+            font-size: 16px;
             }
         }
     }
