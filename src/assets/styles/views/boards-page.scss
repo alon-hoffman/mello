@@ -96,7 +96,7 @@
            
                 
                 & .board-preview-options{
-                    transform: translateX(-100%);
+                    right:10%;
                     opacity: 1;
                 }
             }
@@ -113,22 +113,39 @@
                 &-options{
                     height: max-content;
                     position: absolute;
-                    bottom: 0;
+                    bottom: 20%;
                     right: -10%;
                     opacity: 0;
                     transition: 0.1s;
+                    text-align: right;
                     & > span{
                         font-size: 14px;
                         color: #fff;
                         transition: 0.1s;
+                        width:50px;
+                        text-align:end;
                         &:hover{
                             font-size: 19.2px;
                         }
                     }
                 }
+                .star-container{
+                    height: max-content;
+                    position: absolute;
+                    bottom: 20%;
+                    right: 10%;
+                    text-align: right;
+
+                    span{
+                        font-size: 19.2px;
+                        color: $yellow;
+                    }
+                }
             }
 
             .fake-board-preview{
+                justify-content: center;
+                background-color: #091e420a;
                 background-color: #091e420a;
                 border-radius: 3px;
                 color: $clr4;

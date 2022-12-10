@@ -95,11 +95,7 @@ export const boardStore = {
 
         },
         updateLabels(state, { labels }) {
-            const newLabels = JSON.parse(JSON.stringify(labels))
-            state.currBoard.labels = newLabels
-            const idx = state.boards.findIndex(c => c.id === state.currBoard._id)
-            state.boards.splice(idx, 1, state.currBoard)
-            boardService.save(state.currBoard)
+            state.currBoard.labels = labels
         },
         updateGroup(state, { group }) {
             const groupIdx = state.currBoard.groups.findIndex(currGroup => currGroup.id === group.id)
@@ -110,20 +106,26 @@ export const boardStore = {
             state.currBoard.activities.unshift(activity)
         },
         archiveItem({ currBoard }, { item }) {
+            if (!item.type) item.type = item.cards ? 'list' : 'card'
             currBoard.archivedItems[item.type].unshift(item)
             item.isArchived = true
         },
         retrieveItem({ currBoard }, { item }) {
             const idx = currBoard.archivedItems[item.type].findIndex(i => i.id === item.id)
             currBoard.archivedItems[item.type].splice(idx, 1)
-            const itemAtBoard = currBoard.groups.find(i => i.id === item.id)
-            itemAtBoard.isArchived = false
+            item.isArchived = false
         },
         removeCardActivities({ currBoard }, { cardId }) {
             currBoard.activities = currBoard.activities.filter(activity => activity.card.id !== cardId)
         },
     },
     actions: {
+        updateLabels({ commit, state, dispatch }, { labels }) {
+            const newLabels = JSON.parse(JSON.stringify(labels))
+            const board = JSON.parse(JSON.stringify(state.currBoard))
+            commit({ type: 'updateLabels', newLabels })
+            dispatch({ type: "updateBoard", board })
+        },
         async addBoard(context, { board }) {
             try {
                 board = await boardService.save(board)

@@ -35,8 +35,11 @@
                   <router-link :style="{ 'text-decoration': 'none' }" :to="('/board/' + board._id)">
                     <div class="board-preview" :style="chosenBackground(board.style)">
                       {{ board.title }}
-                      <div class="board-preview-options">
-                        <span class="icon sm star-empty" @click="toggleStarred(board._id)"></span>
+                      <div v-if="!board.isStarred" class="board-preview-options"  @click.stop="toggleStarred(board)">
+                        <span class="icon sm star-empty"></span>
+                      </div>
+                      <div v-else class="star-container"  @click.stop="toggleStarred(board)">
+                        <span class="icon sm star-full"></span>
                       </div>
                     </div>
                   </router-link>
@@ -101,8 +104,9 @@ export default {
     }
   },
   methods: {
-    toggleStarred(boardId) {
-      // this.$store.commit({ type: 'toggleStarred', boardId });
+    toggleStarred(board) {
+      board.isStarred = !board.isStarred
+      this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
     },
     closeCreator() {
       this.boardCreateMode = false
