@@ -22,7 +22,7 @@ export const boardService = {
 
 function query(filterBy = {}) {
     const loggedInUser = userService.getLoggedinUser()
-    console.log(`loggedInUser = `, loggedInUser)
+    // console.log(`loggedInUser = `, loggedInUser)
     filterBy.user = loggedInUser
     return httpService.get(BOARD_URL, filterBy)
     // return storageService.query(KEY)
@@ -44,21 +44,24 @@ function save(board) {
     // if (board._id) return storageService.put(KEY, board)
     // return storageService.post(KEY, board)
 }
-function getEmptyBoard(newBoard) {
+function getEmptyBoard() {
     return {
-        "_id": utilService.makeId(),
-        "title": newBoard.title,
+        "title": '',
         "isStarred": false,
-        "archivedAt": Date.now(),
+        "createdAt": Date.now(),
         "createdBy": {},
         "style": {
-            backgroundColor: newBoard.backgroundColor,
-            backgroundImage: newBoard.backgroundImg
+            backgroundColor: '',
+            backgroundImage:''
         },
         "labels": [],
         "members": [],
         "groups": [],
         "activities": [],
+        "archivedItems":{
+            "card":[],
+            "list":[]
+        }
     }
 }
 

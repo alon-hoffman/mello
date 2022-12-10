@@ -34,7 +34,7 @@
 </template>
 
 <script>
- 
+ import { boardService } from '../services/board-service.js'
 export default{
     props: {
     modalCords: Object,
@@ -45,10 +45,11 @@ export default{
         }
     },
     created(){
-        this.newBoard = {
-                title: '',
-                style:{backgroundColor: '#0079bf'}
-            },
+        this.newBoard=boardService.getEmptyBoard()
+        // this.newBoard = {
+        //         title: '',
+        //         style:{backgroundColor: '#0079bf'}
+        //     },
              console.log( this.modalCords)
     },
     computed:{
@@ -68,6 +69,7 @@ export default{
         },
         saveBoard(){
             if (!this.newBoard.title) return
+            console.log(`this.newBoard = `, this.newBoard)
             this.$emit('saveBoard', this.newBoard)
         }
     }

@@ -20,7 +20,7 @@
             <span class="icon sm cover"></span>Cover
         </div>
         <div @click="toggleArchive" class="fake-button add-option-div">
-            <span class="icon sm" :class="isArchived"></span>{{card.isArchived ? 'Send To Board' : 'Archive'}}
+            <span class="icon sm" :class="isArchived"></span>{{ card.isArchived ? 'Send To Board' : 'Archive' }}
         </div>
         <div @click="openMiniModal('Delete card?')" class="fake-button add-option-div delete" v-if="card.isArchived">
             <span class="icon sm remove"></span>Delete
@@ -200,7 +200,7 @@
                         <span class="mini-head">Attachments</span>
                         <div v-if="card.attachments?.length" class="attachment-imgs-container">
                             <img class="attachment-img clickable" v-for="(image, index) in getImageAttachments"
-                                :src="image.href" @click="setCoverImg(image.href)"
+                                :src="image.href" @click="setCoverImgFromAttachments(image.href)"
                                 :style="{ backgroundColor: imgAttachmentsColors[index] }" alt="">
                         </div>
                         <label class="cover-img-label">
@@ -209,23 +209,24 @@
                         </label>
                         <span class="mini-head">Photos from unsplash</span>
 
-                    <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
-                        class="search-unsplash-photos" v-model="searchPhoto">
-                    <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
-                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
-                    </div>
-                </section>
-            </template>
-            <template v-if="miniModalTitle === 'Delete card?'">
-                <section class="mini-modal-body delete">
-                    <p>
-                        All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.
-                    </p>
-                    <button class="delete-btn" @click="$emit('removeCard', card.id)">Delete</button>
-                </section>
-            </template>
-        </custom-card>
+                        <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
+                            class="search-unsplash-photos" v-model="searchPhoto">
+                        <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                            <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
+                                :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
+                        </div>
+                    </section>
+                </template>
+                <template v-if="miniModalTitle === 'Delete card?'">
+                    <section class="mini-modal-body delete">
+                        <p>
+                            All actions will be removed from the activity feed and you won’t be able to re-open the
+                            card. There is no undo.
+                        </p>
+                        <button class="delete-btn" @click="$emit('removeCard', card.id)">Delete</button>
+                    </section>
+                </template>
+            </custom-card>
         </Teleport>
     </section>
 </template>
@@ -360,9 +361,14 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(photoObject) {
-            // console.log(`photo = `, photoObject)
+            // photoObject.
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
+        },
+        async setCoverImgFromAttachments(photoUrl) {
+           const color= await this.getAverageColor(photoUrl)
+           this.card.coverColor = color
+           this.card.imgURL = photoUrl
         },
         updateImgAttachmentsColors() {
             this.openMiniModal('Cover')
@@ -441,9 +447,9 @@ export default {
             color += '4F'
             return color
         },
-        toggleArchive(){
+        toggleArchive() {
             this.card.isArchived = !this.card.isArchived
-            const activity = 
+            const activity =
             {
                 action: this.card.isArchived ? 'archiveItem' : 'retrieveItem',
                 card: this.card
@@ -475,8 +481,8 @@ export default {
         getUnsplashPhotos() {
             return this.unsplashPhotos
         },
-        isArchived(){
-            return {archive: !this.card.isArchived, return: this.card.isArchived}
+        isArchived() {
+            return { archive: !this.card.isArchived, return: this.card.isArchived }
         },
     },
     components: {
