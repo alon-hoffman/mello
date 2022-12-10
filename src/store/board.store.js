@@ -272,7 +272,7 @@ export const boardStore = {
                 },
                 title: boardService.activityNamer(action, state.currBoard, card, detail),
                 addedAt: Date.now(),
-                user: userService.getLoggedinUser()?.fullName || 'Guest'
+                user: userService.getLoggedinUser()?.fullname || 'Guest'
             }
             if (!card.activities) card.activities = []
             card.activities.unshift(activityToAdd)
