@@ -199,7 +199,7 @@
                             <button class="dark-blue-btn" :class="{'chosen-element':(card.coverColor==='#172B4D')}" value="#172B4D" @click="setCover"></button>
                         </div>
                         <span class="mini-head">Attachments</span>
-                        <div v-if="card.attachments?.length" class="attachment-imgs-container">
+                        <div v-if="card?.attachments?.length" class="attachment-imgs-container">
                             <img class="attachment-img clickable" v-for="(image, index) in getImageAttachments"
                                 :src="image.href" @click="setCoverImgFromAttachments(image.href)"
                                 :style="{ backgroundColor: imgAttachmentsColors[index] }" alt="">
@@ -372,10 +372,15 @@ export default {
             this.updateCard()
 
         },
-        setCoverImg(photoObject) {
-            // photoObject.
-            this.card.coverColor = photoObject.color
-            this.card.imgURL = photoObject.urls.thumb
+       async setCoverImg(photoObject) {
+            if(photoObject.color){
+                // photoObject.
+                this.card.coverColor = photoObject.color
+                this.card.imgURL = photoObject.urls.thumb
+            }
+            else 
+            this.card.coverColor= await this.getAverageColor(photoObject)
+            this.card.imgURL = photoObject
             this.updateCard()
 
         },
@@ -493,6 +498,7 @@ export default {
             return utilService.getRandomColor()
         },
         getImageAttachments() {
+            if(!this.card.attachments) return
             return this.card.attachments.filter((attachment) => attachment.type === "img")
         },
         labelsForDisplay() {
