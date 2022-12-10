@@ -117,8 +117,8 @@ export default {
     },
     chosenBackground(style) {
       // console.log(`foo = `)
-      const { backgroundColor, backgroundImage } = style
-      if(style.backgroundImageThumb) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImageThumb})`, 'background-size': 'cover' }
+      const { backgroundColor, backgroundImageThumb } = style
+      if(backgroundImageThumb) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImageThumb})`, 'background-size': 'cover' }
       return { 'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}` }
     },
     setArchive(bool, ev){

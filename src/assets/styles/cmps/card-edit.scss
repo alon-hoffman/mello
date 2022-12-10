@@ -312,7 +312,8 @@
             cursor: pointer;
         }
 
-        &:focus {
+        &:focus,
+        &:valid {
             outline: none;
             padding: 8px 12px 74px 12px;
 

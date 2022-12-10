@@ -54,7 +54,6 @@ export default{
     },
     computed:{
         cords(){
-             console.log( "hi")
         if(!this.modalCords) return ''
         return {top: `${this.modalCords.y+50}px`, left: `${this.modalCords.x}px`}
       },
