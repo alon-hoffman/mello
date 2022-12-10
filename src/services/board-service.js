@@ -22,7 +22,7 @@ export const boardService = {
 
 function query(filterBy = {}) {
     const loggedInUser = userService.getLoggedinUser()
-    console.log(`loggedInUser = `, loggedInUser)
+    // console.log(`loggedInUser = `, loggedInUser)
     filterBy.user = loggedInUser
     return httpService.get(BOARD_URL, filterBy)
     // return storageService.query(KEY)
