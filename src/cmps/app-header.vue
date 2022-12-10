@@ -137,9 +137,9 @@ export default {
 
       return this.$store.getters.getCurrBoard
     },
-    async getHeadColor() {
-      if(this.params.includes('board/')){
-        if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor
+     getHeadColor() {
+      if(this.$route.path.includes('board/')){
+        if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor    
         return this.board?.style.backgroundColor + 'aa'
       }
       else return '#026AA7'
