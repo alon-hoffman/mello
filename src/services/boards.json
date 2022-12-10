@@ -8,7 +8,8 @@
             },
             "archivedItems" : {"card": [], "list": []},
             "style": {
-                "backgroundImage": "https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg"
+                "backgroundImage": "https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg",
+                "backgroundImageThumb":""
             },
             "labels": [
                 {
@@ -283,7 +284,8 @@
             "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": null,
-                "backgroundImage": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
+                "backgroundImage": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80",
+                "backgroundImageThumb": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80&w=200"
             },
             "labels": [],
             "members": [],
@@ -298,7 +300,8 @@
             "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": null,
-                "backgroundImage": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
+                "backgroundImage": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80",
+                "backgroundImageThumb": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80&w=200"
             },
             "labels": [],
             "members": [],
@@ -313,7 +316,8 @@
             "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": null,
-                "backgroundImage": "https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
+                "backgroundImage": "https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80",
+                "backgroundImageThumb":"https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80&w=200"
             },
             "labels": [],
             "members": [],

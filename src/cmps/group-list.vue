@@ -3,6 +3,10 @@
     <ul class="clean-list">
 
       <Container orientation="horizontal" class="list-containers" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
+      drag-class="bg-primary dark:bg-primary 
+            border-2 border-primary-hover text-white 
+            transition duration-100 ease-in z-50
+            transform rotate-6 scale-110"
         :drop-placeholder="upperDropPlaceholderOptions">
         <Draggable v-for="list in lists" :key="list.id" >
           <card-group class="column-drag-handle" @edit="$emit('edit')" :list="list" v-if="!list.isArchived" :lists="lists" @editCard="editCard"  @toggleIsCompleted="toggleIsCompleted"
