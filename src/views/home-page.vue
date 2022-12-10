@@ -10,7 +10,7 @@
             <p>Keep everything in the same place - even if your team isn't.</p>
           </div>
         </div>
-        <button @click="enterAsGuest" class="guest-button">See demo</button>
+        <button @click="enterAsGuest" class="guest-button">Start demo</button>
         <img class="trello-board-img" alt="img"
           src="https://res.cloudinary.com/mello123/image/upload/v1670406778/przlb3phmyfo3iizxymw.png">
       </div>

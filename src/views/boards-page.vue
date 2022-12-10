@@ -70,7 +70,9 @@ export default {
     }
   },
   async created() {
-    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" })
+    // if (!this.$store.getters.boards)
+    //need to watch out may be too big to send request every time
+     await this.$store.dispatch({ type: "loadBoards" })
   },
   computed: {
     boardGroups(){
@@ -81,6 +83,7 @@ export default {
        { computed: this.boards, title: 'All Boards',icon:'' }]
     },
     boards() {
+      // console.log(`this.$store.getters.boards = `, this.$store.getters.boards)
       return this.$store.getters.boards?.filter(board => !board.isArchived);
     },
     favoriteBoards() {
@@ -113,9 +116,9 @@ export default {
 
     },
     chosenBackground(style) {
-      // console.log(`foo = `)
       const { backgroundColor, backgroundImage } = style
-      if (backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`, 'background-size': 'cover' }
+      if(style.backgroundImageThumb) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImageThumb})`, 'background-size': 'cover' }
+      if(style.backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImage})`, 'background-size': 'cover' }
       return { 'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}` }
     },
     setArchive(bool, ev){

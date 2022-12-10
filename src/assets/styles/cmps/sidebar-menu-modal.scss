@@ -2,7 +2,7 @@
     width: 339px;
     height: calc(100vh - 44px);
     top:0;
-    top: calc(50vh - 46px);
+    top: calc(50vh - 48px);
 
     // bottom: calc(100vh - 44px);
     // bottom: 5px;
@@ -90,6 +90,17 @@
             padding-bottom: 30px;
             padding-top: 20px;
             border-bottom: 1px solid #5e6c8458;
+            color: $text-dark;
+            font-weight: 600;
+            &-item {
+                padding: 6px;
+                padding-inline-start: 11px;
+                gap: 11px;
+                border-radius: 4px;
+                &:hover {
+                    background-color: #e2e4e9;
+                }
+            }
             
         }
 
@@ -156,7 +167,6 @@
             padding: 5px;
             border-radius: 4px;
             position: relative;
-
             &:hover {
                 background-color: #e2e4e9;
             }
@@ -239,6 +249,7 @@
         }
 
         .change-background-text {
+            color: $text-dark;
             border-radius: 3px;
             display: block;
             font-weight: 600;
@@ -307,6 +318,18 @@
         & .content {
             list-style: none;
             padding: 0;
+        }
+        & .header .modal-btn{
+            background-color: #091e420a;
+            line-height: 0;
+            &:hover {
+                background-color: #091e4214;
+            }
+
+            &:active {
+                background-color: #e4f0f6;
+                color: #0079bf;
+            }
         }
     }
 
@@ -426,4 +449,28 @@
         }
     }
 
+}
+
+.archive-list-item{
+    .group-preview{
+        border-bottom: 1px solid #091e4221;
+        .modal-btn{
+            background-color: #091e420a;
+            line-height: 0;
+            transition-duration: 85ms;
+            transition-timing-function: ease;
+            gap: 6px;
+            &:hover {
+                background-color: #091e4214;
+            }
+
+            &:active {
+                background-color: #e4f0f6;
+                color: #0079bf;
+            }
+            & .icon{
+            font-size: 16px;
+            }
+        }
+    }
 }

@@ -108,6 +108,9 @@
     &.remove::before{
         content: '\E95C';
     }
+    &.collection::before{
+        content: '\E91D'
+    }    
     &.center{
         vertical-align: middle;
     }

@@ -11,17 +11,13 @@
         </section>
         <section v-if="header === 'Menu'" class="mini-modal-content">
             <div class="menu-navigation">
-                <div class="about-this-board-container clickable">
-                    <span class="text-area">
-                        <span class="icon sm board mello-icon"></span>
-                        <div class="text-container">
-                            <span class="about-this-board-title mini-head">About this board</span>
-                            <div class="add-description-title">Add a description to your board</div>
-                        </div>
-                    </span>
+                <div class="menu-navigation-item flex align-center clickable" @click="toggleCurrentDisplay">
+                    <span class="icon lg" :class="oppositeDisplay"></span>
+                    <span>{{currDisplay === 'Activity' ? 'View items in archive' : 'Board activity'}}</span>
                 </div>
                 <div @click="changeModal('Change background')" class="change-background clickable">
-                    <img v-if="currBoard.style.backgroundImage" class="change-background-img" :src="currBoard.style.backgroundImage">
+                    <img v-if="currBoard.style.backgroundImageThumb" class="change-background-img" :src="currBoard.style.backgroundImageThumb">
+                    <img v-else-if="currBoard.style.backgroundImage" class="change-background-img" :src="currBoard.style.backgroundImage">
                     <div class="change-background-img" :style="{ backgroundColor: currBoard.style.backgroundColor }"></div>
                     <span class="change-background-text mini-head">Change background</span>
                 </div>
@@ -29,22 +25,58 @@
             <section @click="archive" class="edit-block clickable">
                 <span class="icon lg archive"></span>
                 <span class="header flex justify-between">
-                    <span class="activity-title">Archive board</span>
-                    <!-- <button class="fake-button">needs to be unread activity</button> -->
+                    <span class="activity-title">Archive this board</span>
                 </span> </section>
             <section  class="edit-block">
-                <span class="icon lg activity"></span>
+                <span class="icon lg" :class="currentDisplay"></span>
                 <span class="header flex justify-between">
-                    <span class="activity-title">Activity</span>
-                    <!-- <button class="fake-button">needs to be unread activity</button> -->
+                    <span class="activity-title">{{currDisplay}}</span>
+                    <button class="modal-btn" v-if="currDisplay === 'Items in archive'" @click="switchArchiveList">{{oppositeArchiveList}}</button>
                 </span>
-                <ul class="content activity-list">
+                <ul class="content activity-list" v-if="currDisplay === 'Activity'">
                     <li v-for="activity in currBoard.activities" class="activity-list-item flex">
                         <div class="member-avatar"></div>
                         <div class="flex column" v-if="activity.title">
-                            <span><strong>{{activity.user}}</strong>{{ activity.title.before}} <span class="activity-link clickable" @click="goToCard(activity)">{{activity.card.title}}</span>{{activity.title.after}}</span>
+                            <span><strong>{{activity.user}}</strong>{{ activity.title.before}} <span class="activity-link clickable" @click="goToCard(activity.card)">{{activity.card.title}}</span>{{activity.title.after}}</span>
                             <span class="time">{{timeSince(activity.addedAt)}}</span>
                         </div>
+                    </li>
+                </ul>
+                <ul class="content archive-list" v-if="currDisplay === 'Items in archive'">
+                    <li class="archive-list-item" v-if="currArchivedList === 'card'" v-for="card in currBoard.archivedItems.card" @click="goToCard(card)">
+                        <section class="card-preview">
+                            <img v-if="card.imgURL" :src="card.imgURL" alt="">
+                            <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
+                            <div v-if="card.labels?.length" class="labels-container flex">
+                                <div v-for="label in card.labels" :style="{ 'background-color': labelColor(label) }" class="label-preview"></div>
+                            </div>
+                            <h1>{{ card.title }} </h1>
+                            <div class="icons-container flex  align-center justify-between">
+                                <div class="left-icons flex  align-center">
+                                    <span><span v-if="card.description" class="icon description"></span></span>
+                                    <span v-if="card.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
+                                        <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
+                                    <span v-if="card.attachments?.length" class="attachments">
+                                    <span class="icon sm attachment"></span>{{card.attachments.length}}</span>
+                                </div>
+                                <div class="flex">
+                                    <div v-if="card.members" class="members flex align-center" v-for="member in card.members">
+                                        <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)">
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </li>
+                    <li class="archive-list-item" v-if="currArchivedList === 'list'" v-for="list in currBoard.archivedItems.list">
+                        <section class="group-preview flex align-center justify-between">
+                            <span>{{list.title}}</span>
+                            <button class="modal-btn flex align-center" @click="retrieveItem(list)"><span class="icon lg return"></span><span>Send to Board</span></button>
+                        </section>
+                    </li>
+                    <li class="archive-list-item" v-if="!currBoard.archivedItems[currArchivedList].length">
+                        <section class="group-preview flex justify-center">
+                            <span>No {{currArchivedList}}s currently archived</span>
+                        </section>
                     </li>
                 </ul>
             </section>
@@ -88,7 +120,7 @@
                         style="font-family:Arial, FontAwesome" v-model="searchPhoto">
                         <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
                 </div>
-                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject.urls.full)"
+                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject.urls)"
                             :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
                     </div>
         </section>
@@ -113,11 +145,13 @@ export default {
             colorList: ['#0079bf', '#d29034', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#00aecc', '#838c91',],
             searchPhoto:null,
             processChange:null,
-
+            currDisplay: 'Activity',
+            currArchivedList: 'card'
         }
     },
     created() {
-         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())       
+         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
+         console.log(this.currBoard.archivedItems.list)
     },
     methods: {
         timeSince(time){
@@ -143,8 +177,10 @@ export default {
             this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         },
         setCoverImg(url) {
+            console.log(`url = `, url)
             if (this.currBoard.style.backgroundColor) this.currBoard.style.backgroundColor = null
-            this.currBoard.style.backgroundImage = url
+            this.currBoard.style.backgroundImage = url.full
+            this.currBoard.style.backgroundImageThumb=url.thumb
             this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         },
         async uploadImgToCloud(ev) {
@@ -153,10 +189,10 @@ export default {
             this.setCoverImg(res.secure_url)
             // console.log(`res = `, res)
         },
-        goToCard(activity){
-            if (activity.card?.id) {
+        goToCard(card){
+            if (card?.id) {
                 this.closeSidebarMenuModal()
-                this.$emit('editCard', activity.card.id)
+                this.$emit('editCard', card.id)
             }
         },
         async archive(){
@@ -164,15 +200,49 @@ export default {
         await this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         await this.$store.dispatch({ type: "loadBoards" });
         this.$router.push('/board/')
-        }
+        },
+        toggleCurrentDisplay(){
+            this.currDisplay = this.currDisplay === 'Activity' ? `Items in archive` : 'Activity'  
+        },
+        checklistCompletion(card){
+        var doneTodos=0
+        var todos=0
+         card.checklists.forEach(checklist => {
+          checklist.todos.forEach(todo =>{
+            if(todo.isDone) doneTodos++
+            todos++
+          })
+         });
+         const todoState = {number:`${doneTodos}/${todos}`, class:"notDone"}
+         if (doneTodos===todos) todoState.class = "preview-done"
+         return todoState
+        },
+        labelColor(labelId){
+            return this.currBoard.labels.find(label => label.id == labelId).color
+        },
+        switchArchiveList(){
+            this.currArchivedList = this.currArchivedList === 'card' ? 'list' : 'card'
+            console.log(this.currArchivedList)
+        },
+        retrieveItem(item){
+            this.$store.dispatch({ type: 'retrieveItem', item })
+        },
     },
     computed: {
         getUnsplashPhotos(){
             return this.unsplashPhotos
-        }
-        //   cords(){
-        //     return {top:`0px`, right:`0px`}
-        //   }
+        },
+        currentDisplay(){
+            return {activity: this.currDisplay === 'Activity', collection: this.currDisplay === 'Items in archive'}
+        },
+        oppositeDisplay(){
+            return {collection: this.currDisplay === 'Activity', activity: this.currDisplay === 'Items in archive'}
+
+        },
+        oppositeArchiveList(){
+            return this.currArchivedList === 'card' ? 'Switch to lists' : 'Switch to cards'
+        },
+
     },
 
 

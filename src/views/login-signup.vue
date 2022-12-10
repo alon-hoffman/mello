@@ -70,7 +70,8 @@ export default {
         return
       }
       try {
-      await this.$store.dispatch({ type: 'login', cred: this.credentials });
+      const res= await this.$store.dispatch({ type: 'login', cred: this.credentials });
+      // console.log(`res = `, res)
       this.$router.push('/board')
       }
      catch (err) {

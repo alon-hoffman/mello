@@ -22,7 +22,7 @@ export const boardService = {
 
 function query(filterBy = {}) {
     const loggedInUser = userService.getLoggedinUser()
-    console.log(`loggedInUser = `, loggedInUser)
+    // console.log(`loggedInUser = `, loggedInUser)
     filterBy.user = loggedInUser
     return httpService.get(BOARD_URL, filterBy)
     // return storageService.query(KEY)
@@ -44,21 +44,24 @@ function save(board) {
     // if (board._id) return storageService.put(KEY, board)
     // return storageService.post(KEY, board)
 }
-function getEmptyBoard(newBoard) {
+function getEmptyBoard() {
     return {
-        "_id": utilService.makeId(),
-        "title": newBoard.title,
+        "title": '',
         "isStarred": false,
-        "archivedAt": Date.now(),
+        "createdAt": Date.now(),
         "createdBy": {},
         "style": {
-            backgroundColor: newBoard.backgroundColor,
-            backgroundImage: newBoard.backgroundImg
+            backgroundColor: '',
+            backgroundImage: ''
         },
         "labels": [],
         "members": [],
         "groups": [],
         "activities": [],
+        "archivedItems": {
+            "card": [],
+            "list": []
+        }
     }
 }
 
@@ -66,8 +69,8 @@ function findGroupById(groupId, board) {
     return board.groups.find(group => group.id === groupId)
 }
 
-function activityNamer(action, board, groupId, detail) {
-    const group = findGroupById(groupId, board)
+function activityNamer(action, board, card, detail) {
+    const group = card.groupId ? findGroupById(card.groupId, board) : {}
     const activityMap = {
         addCard: { before: ` added`, after: ` to ${group.title}` },
         removeCard: { before: ` removed`, after: ` from ${group.title}` },
@@ -76,9 +79,10 @@ function activityNamer(action, board, groupId, detail) {
         addDetail: { before: ` added ${detail} to`, after: `` },
         removeDetail: { before: ` removed ${detail} from`, after: `` },
         todo: { before: ` completed ${detail} from`, after: `` },
-        archiveItem: { before: ` archived` },
-        retrieveItem: { before: ` sent`, after: ` to the board` },
-        addComment: { before: ` commented on`, after: `: ${detail.title}` },
+        archiveItem: { before: ` archived ${card ? detail : ''}` },
+        retrieveItem: { before: ` sent ${card ? detail : ''}`, after: ` to the board` },
+        addComment: { before: ` commented on`, after: `: ${detail}` },
+        removeList: { before: ` removed list ${group.title}`, after: `` },
     }
     return activityMap[action]
 }

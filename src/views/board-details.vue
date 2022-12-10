@@ -42,7 +42,10 @@
                 v-if="board.groups" :lists="board.groups" />
 
     <listModal v-if="listModalOpen" :list="list"
-                :listModalCords="listModalCords" @deleteList="deleteList" @duplicateList="duplicateList"
+                :listModalCords="listModalCords" 
+                @archiveList="archiveList"
+                @deleteList="deleteList" 
+                @duplicateList="duplicateList"
                 @closeTitleModal="(listModalOpen=false)"/>
 
     <filter-menu v-if="isFilterMenu"
@@ -194,7 +197,6 @@ export default {
       this.$store.commit({ type: "updateLabels",labels });
     },
     saveList(list) {
-      // this.board.groups.push({ title })
       this.$store.dispatch({ type: "addList", list });
     },
     openListModal(y, x, list){
@@ -203,7 +205,11 @@ export default {
       this.list=list
       this.listModalOpen=true
     },
+    archiveList(groupId){
+      this.$store.dispatch({ type: "archiveList", groupId})
+    },
     deleteList(groupId){
+      this.$store.dispatch({ type: 'addActivity' , activity: {action: 'removeList', card: {groupId}}})
       this.$store.dispatch({ type: "removeList", groupId });
     },
     openSidebarMenuModal(){

@@ -3,7 +3,7 @@
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <div class="icon lg close modal-close clickable" @click="closeModal"></div>
         <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}">
-            <span class="cover-btn icon lg cover flex align-center">Cover</span>
+            <span class="cover-btn icon lg cover flex align-center" @click="openCoversModal">Cover</span>
         </div>
         <div class="archive-cover flex" v-if="card.isArchived">
             <span class="icon lg archive"></span>This card is archived.
@@ -23,7 +23,7 @@
                                 <div class="member-avatar" v-for="member in card.members">
                                     <img class="member-img" :src="member.imgUrl" :alt="memberInitials(member)">
                                 </div>
-                                <div class="member-avatar add clickable"></div>
+                                <div ref="Members" class="member-avatar add clickable" @click="openMiniModalLocal('Members')"></div>
                             </div>
                         </div>
                         <div class="detail-item" v-if="card.labels?.length">
@@ -34,13 +34,7 @@
                                         <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
                                         <span class="chosenLabel-title">{{ label.title }}</span>
                                     </div>
-                               
-                                <!-- <button class="label-avatar flex align-center clickable" v-for="label in labelsDisplay"
-                                    :style="{ 'background-color': label.color }">
-                                    <div class="bullet"></div>
-                                    {{ label.title }}
-                                </button> -->
-                                <button class="label-avatar flex align-center add clickable"></button>
+                                <button ref="Labels" class="label-avatar flex align-center add clickable" @click="openMiniModalLocal('Labels')"></button>
                             </div>
                         </div>
                         <div class="detail-item" v-if="card.dueDate">
@@ -48,7 +42,7 @@
                             <div class="detail-item-content flex align-center">
                                 <button class="checkbox" :class="isCompleted"
                                     @click="toggleDueDate"></button>
-                                <div class="date-display">{{ formattedDueDate }} <span
+                                <div ref="Dates" class="date-display" @click="openMiniModalLocal('Dates')">{{ formattedDueDate }} <span
                                         :class="isCompleted">complete</span></div>
                             </div>
                         </div>
@@ -128,7 +122,7 @@
                         <div class="content comment-box">
                             <textarea type="text" placeholder="Write a comment..." v-model="newComment" required>
                             </textarea>
-                            <button class="modal-btn save-btn" @click="addComment">Save</button>
+                            <button class="modal-btn save-btn" @click.stop="addComment">Save</button>
                         </div>
                         <ul class="dynamic-content activity-list" v-if="!isHideDetails">
                             <li class="activity-list-item flex" v-for="activity in card.activities">
@@ -141,9 +135,16 @@
                         </ul>
                     </section>
                 </section>
-                <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal"
-                    @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard"
-                    @openMiniModal="openMiniModal" @sideModalChange="changeCard" />
+                <modal-sidebar ref="modalSidebar"
+                               :card="getCurrCard" 
+                               :isMiniModalOpen="isMiniModalOpen"
+                               :miniModalTitle="miniModalTitle"
+                               :modalCords ="modalCords"
+                               @closeMiniModal="closeMiniModal"
+                               @updateCard="updateCard" 
+                               @updateLabels="updateLabels" 
+                               @removeCard="removeCard"
+                               @openMiniModal="openMiniModal" @sideModalChange="changeCard" />
             </div>
         </div>
     </article>
@@ -172,6 +173,8 @@ export default {
             boardMembers: null,
             newComment: '',
             isHideDetails: false,
+            modalCords: null,
+            miniModalTitle: null
         }
     },
     async created() {
@@ -233,16 +236,19 @@ export default {
         removeCard(cardId) {
             const card = {title: this.card.title, groupId: this.card.groupId}
             const activity = {card,  action: 'removeCard'}
+            this.$store.commit({type: 'retrieveItem', item: this.card })
             this.$store.dispatch({ type: 'addActivity', activity})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
         },
-        openMiniModal() {
+        openMiniModal(title) {
+            this.miniModalTitle = title
             this.isMiniModalOpen = true
         },
         closeMiniModal() {
             setTimeout(() => {
                 this.isMiniModalOpen = false
+                this.modalCords = null
             }, 0)
         },
         toggleDueDate(){
@@ -315,7 +321,7 @@ export default {
             this.updateCard(this.card)
         },
         addComment(){
-            const activity = {action: 'addComment', card: this.card, detail: {title: this.newComment}}
+            const activity = {action: 'addComment', card: this.card, detail: this.newComment}
             this.$store.dispatch({type: 'addActivity', activity})
             this.newComment = ''
         },
@@ -324,6 +330,17 @@ export default {
         },
         toggleHideDetails(){
             this.isHideDetails = !this.isHideDetails
+        },
+        setModalCords(title) {
+            const { y, x } = this.$refs[title].getBoundingClientRect()
+            this.modalCords = { y, x }
+        },
+        openMiniModalLocal(title){
+            this.setModalCords(title)
+            this.$refs.modalSidebar.openMiniModal(title)
+        },
+        openCoversModal(){
+            this.$refs.modalSidebar.updateImgAttachmentsColors()
         },
     },
     computed: {
@@ -360,9 +377,6 @@ export default {
         isCompleted() {
             return { checked: this.card.dueDate.isCompleted }
         },
-      
-
-
 
     },
     unmounted() {

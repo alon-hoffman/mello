@@ -20,13 +20,13 @@
             <span class="icon sm cover"></span>Cover
         </div>
         <div @click="toggleArchive" class="fake-button add-option-div">
-            <span class="icon sm" :class="isArchived"></span>{{card.isArchived ? 'Send To Board' : 'Archive'}}
+            <span class="icon sm" :class="isArchived"></span>{{ card.isArchived ? 'Send To Board' : 'Archive' }}
         </div>
         <div @click="openMiniModal('Delete card?')" class="fake-button add-option-div delete" v-if="card.isArchived">
             <span class="icon sm remove"></span>Delete
         </div>
         <Teleport to="body">
-            <custom-card class="option-custom-card" v-click-outside="closeMiniModal" v-if="isMiniModalOpen">
+            <custom-card class="option-custom-card" v-click-outside="closeMiniModal" :modalCords="modalCords" v-if="isMiniModalOpen">
                 <template #header>
                     <section class="mini-modal-header">
                         <span> {{ miniModalTitle }} </span>
@@ -111,6 +111,7 @@
                         <div class="colors-palette">
                             <div class="color-box-container" v-for="color in possibleColors">
                                 <div @click="setLabelBGC(color)" value="color" class="color-box"
+                                :class="{'chosen-element':(color===chosenLabel.color)}"
                                     :style="{ backgroundColor: color }">
                                 </div>
                             </div>
@@ -184,23 +185,23 @@
                             class="fake-button remove-cover-button">Remove cover</div>
                         <span class="mini-head">Colors</span>
                         <div class="first-colors-row">
-                            <button class="green-btn" value="#7BC86C" @click="setCover"></button>
-                            <button class="yellow-btn" value="#F5DD29" @click="setCover"></button>
-                            <button class="orange-btn" value="#FFAF3F" @click="setCover"></button>
-                            <button class="red-btn" value="#EF7564" @click="setCover"></button>
-                            <button class="purple-btn" value="#CD8DE5" @click="setCover"></button>
+                            <button class="green-btn" :class="{'chosen-element':(card.coverColor==='#7BC86C')}" value="#7BC86C" @click="setCover"></button>
+                            <button class="yellow-btn" :class="{'chosen-element':(card.coverColor==='#F5DD29')}" value="#F5DD29" @click="setCover"></button>
+                            <button class="orange-btn" :class="{'chosen-element':(card.coverColor==='#FFAF3F')}" value="#FFAF3F" @click="setCover"></button>
+                            <button class="red-btn" :class="{'chosen-element':(card.coverColor==='#EF7564')}" value="#EF7564" @click="setCover"></button>
+                            <button class="purple-btn" :class="{'chosen-element':(card.coverColor==='#CD8DE5')}" value="#CD8DE5" @click="setCover"></button>
                         </div>
                         <div class="second-colors-row">
-                            <button class="blue-btn" value="#5BA4CF" @click="setCover"></button>
-                            <button class="bright-blue-btn" value="#29CCE5" @click="setCover"></button>
-                            <button class="bright-green-btn" value="#6DECA9" @click="setCover"></button>
-                            <button class="pink-btn" value="#FF8ED4" @click="setCover"></button>
-                            <button class="dark-blue-btn" value="#172B4D" @click="setCover"></button>
+                            <button class="blue-btn" :class="{'chosen-element':(card.coverColor==='#5BA4CF')}" value="#5BA4CF" @click="setCover"></button>
+                            <button class="bright-blue-btn" :class="{'chosen-element':(card.coverColor==='#29CCE5')}" value="#29CCE5" @click="setCover"></button>
+                            <button class="bright-green-btn" :class="{'chosen-element':(card.coverColor==='#6DECA9')}" value="#6DECA9" @click="setCover"></button>
+                            <button class="pink-btn" :class="{'chosen-element':(card.coverColor==='#FF8ED4')}" value="#FF8ED4" @click="setCover"></button>
+                            <button class="dark-blue-btn" :class="{'chosen-element':(card.coverColor==='#172B4D')}" value="#172B4D" @click="setCover"></button>
                         </div>
                         <span class="mini-head">Attachments</span>
                         <div v-if="card.attachments?.length" class="attachment-imgs-container">
                             <img class="attachment-img clickable" v-for="(image, index) in getImageAttachments"
-                                :src="image.href" @click="setCoverImg(image.href)"
+                                :src="image.href" @click="setCoverImgFromAttachments(image.href)"
                                 :style="{ backgroundColor: imgAttachmentsColors[index] }" alt="">
                         </div>
                         <label class="cover-img-label">
@@ -209,23 +210,24 @@
                         </label>
                         <span class="mini-head">Photos from unsplash</span>
 
-                    <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
-                        class="search-unsplash-photos" v-model="searchPhoto">
-                    <div class="unsplash-photos-container" v-if="unsplashPhotos">
-                        <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
-                            :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
-                    </div>
-                </section>
-            </template>
-            <template v-if="miniModalTitle === 'Delete card?'">
-                <section class="mini-modal-body delete">
-                    <p>
-                        All actions will be removed from the activity feed and you won’t be able to re-open the card. There is no undo.
-                    </p>
-                    <button class="delete-btn" @click="$emit('removeCard', card.id)">Delete</button>
-                </section>
-            </template>
-        </custom-card>
+                        <input @input="processChange" ref="search" type="text" placeholder="Search for photos"
+                            class="search-unsplash-photos" v-model="searchPhoto">
+                        <div class="unsplash-photos-container" v-if="unsplashPhotos">
+                            <img v-for="photoObject in getUnsplashPhotos" @click="setCoverImg(photoObject)"
+                                :src="photoObject.urls.thumb" class="unsplashPhoto clickable">
+                        </div>
+                    </section>
+                </template>
+                <template v-if="miniModalTitle === 'Delete card?'">
+                    <section class="mini-modal-body delete">
+                        <p>
+                            All actions will be removed from the activity feed and you won’t be able to re-open the
+                            card. There is no undo.
+                        </p>
+                        <button class="delete-btn" @click="$emit('removeCard', card.id)">Delete</button>
+                    </section>
+                </template>
+            </custom-card>
         </Teleport>
     </section>
 </template>
@@ -243,13 +245,14 @@ import { unsplashPhotosService } from '../services/unsplash-photos.service.js';
 export default {
     props: {
         card: Object,
+        modalCords: Object,
         isMiniModalOpen: Boolean,
+        miniModalTitle: String,
     },
     emits: ['updateCard', 'updateLabels', 'sideModalChange', 'openMiniModal', 'closeMiniModal', 'removeCard'],
     data() {
         return {
 
-            miniModalTitle: null,
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "Checklist",
@@ -258,7 +261,6 @@ export default {
             currMember: null,
             isDatePickerOpen: false,
             newDate: this.card.dueDate,
-            // date: '2020-10-10',
             attachment: {
                 href: '',
                 file: null,
@@ -275,21 +277,20 @@ export default {
     },
     async created() {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-        // console.log(this.card)
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
     },
     methods: {
         async openMiniModal(value) {
-            this.miniModalTitle = value
+            // this.miniModalTitle = value
             // console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
 
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
                 this.unsplashPhotos.splice(9, 1)
             }
-            this.$emit('openMiniModal')
+            this.$emit('openMiniModal', value)
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)
@@ -362,9 +363,14 @@ export default {
             this.card.coverColor = e.target.value
         },
         setCoverImg(photoObject) {
-            // console.log(`photo = `, photoObject)
+            // photoObject.
             this.card.coverColor = photoObject.color
             this.card.imgURL = photoObject.urls.thumb
+        },
+        async setCoverImgFromAttachments(photoUrl) {
+           const color= await this.getAverageColor(photoUrl)
+           this.card.coverColor = color
+           this.card.imgURL = photoUrl
         },
         updateImgAttachmentsColors() {
             this.openMiniModal('Cover')
@@ -443,16 +449,16 @@ export default {
             color += '4F'
             return color
         },
-        toggleArchive(){
+        toggleArchive() {
             this.card.isArchived = !this.card.isArchived
-            const activity = 
+            const activity =
             {
                 action: this.card.isArchived ? 'archiveItem' : 'retrieveItem',
                 card: this.card
             }
             this.$store.dispatch({type: 'addActivity', activity})
-            // if(this.card.isArchived) this.$store.dispatch({type: 'archiveItem', this.card})
-            // else this.$store.dispatch({type: 'retrieveItem', this.card})
+            if(this.card.isArchived) this.$store.commit({type: 'archiveItem', item :this.card})
+            else this.$store.commit({type: 'retrieveItem', item: this.card })
         },
     },
     computed: {
@@ -477,8 +483,8 @@ export default {
         getUnsplashPhotos() {
             return this.unsplashPhotos
         },
-        isArchived(){
-            return {archive: !this.card.isArchived, return: this.card.isArchived}
+        isArchived() {
+            return { archive: !this.card.isArchived, return: this.card.isArchived }
         },
     },
     components: {

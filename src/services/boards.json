@@ -6,9 +6,10 @@
             "createdBy": {
                 "fullname": "Alon Hoffman"
             },
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
-                "backgroundImage": "https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg"
+                "backgroundImage": "https://res.cloudinary.com/mello123/image/upload/v1670498844/il6mzooofhqofj5u2fur.jpg",
+                "backgroundImageThumb":""
             },
             "labels": [
                 {
@@ -135,12 +136,14 @@
                             "groupId": "g102",
                             "id": "c101",
                             "title": "Make Logo",
+                            "coverColor" : "#e6f4f4",
                             "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670495294/r2yqvkxqo0eyrskpymvk.png"
                         },
                         {
                             "id": "c1534",
                             "groupId": "g102",
                             "title": "Look for taco truck",
+                            "coverColor" : "#5a535e",
                             "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670495259/algyt4rtwmknt4c8v1jt.jpg",
                             "labels": [
                                 "l102"
@@ -167,46 +170,6 @@
                             ]
                         },
                         {
-                            "title": "sfsdf",
-                            "groupId": "g102",
-                            "id": "64an1x"
-                        },
-                        {
-                            "title": "sdvsdv\n",
-                            "groupId": "g102",
-                            "id": "8DqDoC"
-                        },
-                        {
-                            "title": "sdfsdc\n",
-                            "groupId": "g102",
-                            "id": "RL4aBI"
-                        },
-                        {
-                            "title": "sdfsfd\n",
-                            "groupId": "g102",
-                            "id": "x6VF4J"
-                        },
-                        {
-                            "title": "sdfsdfs\n",
-                            "groupId": "g102",
-                            "id": "O9MiB3"
-                        },
-                        {
-                            "title": "xcvv",
-                            "groupId": "g102",
-                            "id": "6qQpD6"
-                        },
-                        {
-                            "title": "sdfsdf\n",
-                            "groupId": "g102",
-                            "id": "mwVZPU"
-                        },
-                        {
-                            "title": "sdfsdfs\n",
-                            "groupId": "g102",
-                            "id": "UYN1eo"
-                        },
-                        {
                             "title": "sdfsdfja:Lszkcnlzkzczxczxcxzczxczxczxkzzzzzz",
                             "groupId": "g102",
                             "id": "KdD8kt",
@@ -219,28 +182,8 @@
                                 "time": 1670423957000,
                                 "isCompleted": false
                             }
-                        },
-                        {
-                            "title": "asdasdad",
-                            "groupId": "g102",
-                            "id": "M5M088"
-                        },
-                        {
-                            "title": "awewqda\n",
-                            "groupId": "g102",
-                            "id": "1UDLky"
-                        },
-                        {
-                            "title": "asdasda\n",
-                            "groupId": "g102",
-                            "id": "BXf8Xf"
-                        },
-                        {
-                            "title": "asdadasdsa\n",
-                            "groupId": "g102",
-                            "id": "3OUAeh"
                         }
-                    ]
+                     ]
                 },
                 {
                     "id": "g123",
@@ -255,88 +198,8 @@
                                 "l102",
                                 "l104"
                             ]
-                        },
-                        {
-                            "title": "",
-                            "groupId": "g123",
-                            "id": "Foysjq"
-                        },
-                        {
-                            "title": "qweewq",
-                            "groupId": "g123",
-                            "id": "dHF3Dz"
-                        },
-                        {
-                            "title": "",
-                            "groupId": "g123",
-                            "id": "vnorAu"
-                        },
-                        {
-                            "title": "zdvxdf",
-                            "groupId": "g123",
-                            "id": "UDv5ey"
-                        },
-                        {
-                            "title": "xdvxcv",
-                            "groupId": "g123",
-                            "id": "xklLe5"
-                        },
-                        {
-                            "title": "sdfsdf",
-                            "groupId": "g123",
-                            "id": "wQ6wvX"
-                        },
-                        {
-                            "title": "sdfsdf\n",
-                            "groupId": "g123",
-                            "id": "5y3Ndc"
-                        },
-                        {
-                            "title": "sdfsdf\n",
-                            "groupId": "g123",
-                            "id": "cclyYg"
-                        },
-                        {
-                            "title": "sdfsdf\n",
-                            "groupId": "g123",
-                            "id": "awAjQ2"
-                        },
-                        {
-                            "title": "sdfsf\n",
-                            "groupId": "g123",
-                            "id": "bBFz2a"
-                        },
-                        {
-                            "title": "sdfsdf\n",
-                            "groupId": "g123",
-                            "id": "8v8Edt"
-                        },
-                        {
-                            "title": "sffsdf\n",
-                            "groupId": "g123",
-                            "id": "2fvWhy"
-                        },
-                        {
-                            "title": "sfdsdf\n",
-                            "groupId": "g123",
-                            "id": "zu9hUP"
-                        },
-                        {
-                            "title": "sdfsdf\n",
-                            "groupId": "g123",
-                            "id": "rNlvuA"
-                        },
-                        {
-                            "title": "cghgcghv\n",
-                            "groupId": "g123",
-                            "id": "jqN5qH"
-                        },
-                        {
-                            "title": "",
-                            "groupId": "g123",
-                            "id": "5eWwTf"
                         }
-                    ]
+                       ]
                 },
                 {
                     "id": "NNj1PW",
@@ -369,6 +232,7 @@
                             "groupId": "NNj1PW",
                             "id": "u6Jp71",
                             "title": "Convince mom to cook in the truck",
+                            "coverColor": "#c47f69",
                             "imgURL": "https://res.cloudinary.com/mello123/image/upload/v1670498796/o1j4x7qujdriarasws1q.jpg",
                             "createdBy": {
                                 "_id": "u102",
@@ -403,29 +267,6 @@
                     "title": "Done",
                     "archivedAt": 1589984468418,
                     "cards": [
-                        {
-                            "title": "Sasdx",
-                            "groupId": "ssvx3",
-                            "id": "fkFDR7"
-                        },
-                        {
-                            "title": "asdcasd\n",
-                            "groupId": "ssvx3",
-                            "id": "pFeYG2"
-                        },
-                        {
-                            "title": "asdasd\n",
-                            "groupId": "ssvx3",
-                            "id": "aEvTOg"
-                        },
-                        {
-                            "title": "assdasd\n",
-                            "groupId": "ssvx3",
-                            "id": "NFI13Y",
-                            "attachments": [
-                                "undefined file"
-                            ]
-                        }
                     ]
                 },
                 {
@@ -433,29 +274,6 @@
                     "title": "Done",
                     "archivedAt": 1589984468418,
                     "cards": [
-                        {
-                            "title": "Sasdx",
-                            "groupId": "ssvx3",
-                            "id": "ASA3wR"
-                        },
-                        {
-                            "title": "asdcasd\n",
-                            "groupId": "ssvx3",
-                            "id": "irEVrb"
-                        },
-                        {
-                            "title": "asdasd\n",
-                            "groupId": "ssvx3",
-                            "id": "arY5uz"
-                        },
-                        {
-                            "title": "assdasd\n",
-                            "groupId": "ssvx3",
-                            "id": "0yq25L",
-                            "attachments": [
-                                "undefined file"
-                            ]
-                        }
                     ]
                 }
             ],
@@ -466,10 +284,11 @@
             "isStarred": false,
             "archivedAt": 1670417365365,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": null,
-                "backgroundImage": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
+                "backgroundImage": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80",
+                "backgroundImageThumb": "https://images.unsplash.com/photo-1619878796466-b7982b1d9263?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHwxfHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80&w=200"
             },
             "labels": [],
             "members": [],
@@ -481,10 +300,11 @@
             "isStarred": false,
             "archivedAt": 1670433172839,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": null,
-                "backgroundImage": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
+                "backgroundImage": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80",
+                "backgroundImageThumb": "https://images.unsplash.com/photo-1618082976772-d6e3f7baf51f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw3fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80&w=200"
             },
             "labels": [],
             "members": [],
@@ -496,10 +316,11 @@
             "isStarred": false,
             "archivedAt": 1670433220226,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": null,
-                "backgroundImage": "https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNDMzMTE2&ixlib=rb-4.0.3&q=80"
+                "backgroundImage": "https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80",
+                "backgroundImageThumb":"https://images.unsplash.com/photo-1606163777752-d74530c911bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzODcxMTR8MHwxfHNlYXJjaHw1fHxsb2NhdGlvbnN8ZW58MHx8fHwxNjcwNjEwODg2&ixlib=rb-4.0.3&q=80&w=200"
             },
             "labels": [],
             "members": [],
@@ -511,7 +332,7 @@
             "isStarred": false,
             "archivedAt": 1670433723004,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": "#0079bf"
             },
@@ -525,7 +346,7 @@
             "isStarred": false,
             "archivedAt": 1670433885945,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": "#0079bf"
             },
@@ -539,7 +360,7 @@
             "isStarred": false,
             "archivedAt": 1670433952198,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": "#0079bf"
             },
@@ -553,7 +374,7 @@
             "isStarred": false,
             "archivedAt": 1670434274415,
             "createdBy": {},
-            "archivedItems" : [],
+            "archivedItems" : {"card": [], "list": []},
             "style": {
                 "backgroundColor": "#0079bf"
             },
