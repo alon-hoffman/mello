@@ -246,12 +246,12 @@ export default {
     props: {
         card: Object,
         isMiniModalOpen: Boolean,
+        miniModalTitle: String,
     },
     emits: ['updateCard', 'updateLabels', 'sideModalChange', 'openMiniModal', 'closeMiniModal', 'removeCard'],
     data() {
         return {
 
-            miniModalTitle: null,
             filterMembersBy: '',
             filterLabelsBy: '',
             checklist: "Checklist",
@@ -279,17 +279,20 @@ export default {
         this.boardMembers = this.$store.getters.getMembersOfBoard
         this.boardLabels = JSON.parse(JSON.stringify(this.$store.getters.getLabelsOfBoard))
         this.processChange = utilService.debounce(() => this.searchPhotosUnsplash())
+    // nake logo https://res.cloudinary.com/mello123/image/upload/v1670495294/r2yqvkxqo0eyrskpymvk.png
+    // look for taco truck                             "https://res.cloudinary.com/mello123/image/upload/v1670495259/algyt4rtwmknt4c8v1jt.jpg
+
     },
     methods: {
         async openMiniModal(value) {
-            this.miniModalTitle = value
+            // this.miniModalTitle = value
             // console.log(`this.imgAttachmentsColors = `, this.imgAttachmentsColors)
             if (value === 'Cover') {
 
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
                 this.unsplashPhotos.splice(9, 1)
             }
-            this.$emit('openMiniModal')
+            this.$emit('openMiniModal', value)
             setTimeout(() => {
                 if (value === 'Dates') this.$refs.date.focus()
             }, 0)

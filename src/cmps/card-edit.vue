@@ -34,13 +34,7 @@
                                         <div class="label-circle" :style="{ backgroundColor: label.color }"></div>
                                         <span class="chosenLabel-title">{{ label.title }}</span>
                                     </div>
-                               
-                                <!-- <button class="label-avatar flex align-center clickable" v-for="label in labelsDisplay"
-                                    :style="{ 'background-color': label.color }">
-                                    <div class="bullet"></div>
-                                    {{ label.title }}
-                                </button> -->
-                                <button class="label-avatar flex align-center add clickable"></button>
+                                <button class="label-avatar flex align-center add clickable" @click="openMiniModalLocal('labels')"></button>
                             </div>
                         </div>
                         <div class="detail-item" v-if="card.dueDate">
@@ -128,7 +122,7 @@
                         <div class="content comment-box">
                             <textarea type="text" placeholder="Write a comment..." v-model="newComment" required>
                             </textarea>
-                            <button class="modal-btn save-btn" @click="addComment">Save</button>
+                            <button class="modal-btn save-btn" @click.stop="addComment">Save</button>
                         </div>
                         <ul class="dynamic-content activity-list" v-if="!isHideDetails">
                             <li class="activity-list-item flex" v-for="activity in card.activities">
@@ -141,9 +135,14 @@
                         </ul>
                     </section>
                 </section>
-                <modal-sidebar :card="getCurrCard" :isMiniModalOpen="isMiniModalOpen" @closeMiniModal="closeMiniModal"
-                    @updateCard="updateCard" @updateLabels="updateLabels" @removeCard="removeCard"
-                    @openMiniModal="openMiniModal" @sideModalChange="changeCard" />
+                <modal-sidebar :card="getCurrCard" 
+                               :isMiniModalOpen="isMiniModalOpen"
+                               :miniModalTitle="miniModalTitle"
+                               @closeMiniModal="closeMiniModal"
+                               @updateCard="updateCard" 
+                               @updateLabels="updateLabels" 
+                               @removeCard="removeCard"
+                               @openMiniModal="openMiniModal" @sideModalChange="changeCard" />
             </div>
         </div>
     </article>
@@ -172,6 +171,8 @@ export default {
             boardMembers: null,
             newComment: '',
             isHideDetails: false,
+            modalChords: null,
+            miniModalTitle: null
         }
     },
     async created() {
@@ -238,7 +239,8 @@ export default {
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
         },
-        openMiniModal() {
+        openMiniModal(title) {
+            this.miniModalTitle = title
             this.isMiniModalOpen = true
         },
         closeMiniModal() {
@@ -326,6 +328,15 @@ export default {
         toggleHideDetails(){
             this.isHideDetails = !this.isHideDetails
         },
+        setModalChords() {
+            const { y, x } = this.$refs.createBtn.getBoundingClientRect()
+            this.modalCords = { y, x }
+        },
+        openMiniModalLocal(title){
+            this.setModalChords()
+            console.log(this.modalCords, title)
+            // this.openMiniModal(title)
+        }
     },
     computed: {
         isOn() {
@@ -361,9 +372,6 @@ export default {
         isCompleted() {
             return { checked: this.card.dueDate.isCompleted }
         },
-      
-
-
 
     },
     unmounted() {
