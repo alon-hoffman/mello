@@ -145,7 +145,7 @@ export const boardStore = {
 
 
             } catch (err) {
-                commit({ type: 'updateBoard', board:oldBoard })
+                commit({ type: 'updateBoard', board: oldBoard })
                 console.log('boardStore: Error in updateBoard', err)
                 throw err
             }
@@ -258,7 +258,6 @@ export const boardStore = {
             dispatch({ type: "updateBoard", board })
         },
         async saveLists({ dispatch, state }, { lists }) {
-            // console.log(`saveLists = `)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             board.groups = lists
             dispatch({ type: "updateBoard", board })

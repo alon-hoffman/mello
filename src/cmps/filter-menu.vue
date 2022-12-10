@@ -13,7 +13,7 @@
             <section class="filter-block flex column" v-if="board.members">
                 <div class="filter-block-header">Members</div>
                 <ul class="filter-list">
-                    <li class="filter-list-item flex">
+                    <li class="filter-list-item flex align-center">
                         <button class="checkbox" :class="noMembers" @click="clearCategory('members')"></button>
                         <span>No members</span>
                     </li>
