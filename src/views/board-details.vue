@@ -157,7 +157,7 @@ export default {
     chosenBackground(){
       if(this.board.style){
         const {backgroundColor, backgroundImage} = this.board.style
-        if(backgroundImage) return {'background': `url(${backgroundImage})`, 'background-size': 'cover'}
+        if(backgroundImage) return {'background': `url(${backgroundImage})`, 'background-size': '100% 100%','background-repeat': 'no-repeat'}
         return {'background': backgroundColor}
       }
       },
