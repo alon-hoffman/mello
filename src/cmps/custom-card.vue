@@ -19,7 +19,7 @@ export default{
     modalCords: Object
   },
   created(){
-    console.log(this.modalCords)
+    // console.log(this.modalCords)
   },
   computed:{
     cords(){
