@@ -388,8 +388,8 @@ export default {
                         }
                     })
                 })
-                return JSON.parse(JSON.stringify(card))
             }
+            if(card) return JSON.parse(JSON.stringify(card))
         },
         isDarkCover(){
             // if (utilService.isDarkskColor(card))
