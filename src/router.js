@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import homePage from './views/home-page.vue'
+import boardChart from './views/board-chart.vue'
 // import carApp from './views/car-app.vue'
 import boardsPage from './views/boards-page.vue'
 import boardDetails from './views/board-details.vue'
@@ -26,7 +27,11 @@ const routes = [
         name: 'card-edit',
         component: cardEdit,
       },
-
+      {
+        path: 'chart',
+        name: 'board-chart',
+        component: boardChart
+      }
     ]
   },
   {

@@ -1,0 +1,13 @@
+.board-chart{
+    position: relative;
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f4f5f7;
+    width: 768px;
+    border-radius: 3px;
+    color: $text-dark;
+    z-index: 1;
+    overflow: visible;
+    margin-bottom: 100px;
+}

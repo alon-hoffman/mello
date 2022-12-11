@@ -61,6 +61,7 @@
 }
 
 .boards-page {
+    display:flex;
     .logo-img-board {
         width: rem(90px);
     }
@@ -70,6 +71,7 @@
     }
 
     nav {
+        flex-grow:1;
         padding: 4px 6px;
         height: 44px;
         background-color: #026AA7;
