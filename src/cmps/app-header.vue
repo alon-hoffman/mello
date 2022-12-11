@@ -18,6 +18,8 @@
   </header>
   <header v-click-slash="focusInput" v-if="params.includes('board')" class="boards-page">
     <nav :style="{ backgroundColor: getHeadColor }">
+
+
       <div class="left-header">
         <router-link to="/" class="home-logo-page">
           <img class="logo-img-board"
