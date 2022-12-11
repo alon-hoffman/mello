@@ -126,9 +126,9 @@
                         </div>
                         <ul class="dynamic-content activity-list" v-if="!isHideDetails">
                             <li class="activity-list-item flex" v-for="activity in card.activities">
-                                <div class="member-avatar"></div>
+                                <div class="member-avatar" :style="{'background-image' : activity.user.imgURL}"></div>
                                 <div class="flex column" v-if="activity.title">
-                                    <span><strong>{{activity.user}}</strong>{{ activity.title.before}} this card {{activity.title.after}}</span>
+                                    <span><strong>{{activity.user.fullname}}</strong>{{ activity.title.before}} this card {{activity.title.after}}</span>
                                     <span class="time">{{timeSince(activity.addedAt)}}</span>
                                 </div>
                             </li>

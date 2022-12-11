@@ -284,7 +284,6 @@ export default {
     methods: {
         async openMiniModal(value) {
             if (value === 'Cover') {
-
                 this.unsplashPhotos = await unsplashPhotosService.getPhoto()
                 this.unsplashPhotos.splice(9, 1)
             }

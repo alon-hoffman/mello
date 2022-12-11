@@ -24,7 +24,7 @@ export default{
   computed:{
     cords(){
         if(!this.modalCords) return ''
-        return {top: `min(100vh - 600px,${this.modalCords.y+50}px)`, left: `min(98vw - 50px, ${this.modalCords.x}px)`}
+        return {top: `min(100vh - 50px,${this.modalCords.y+50}px)`, left: `min(60vw, ${this.modalCords.x}px)`}
       },
   }
 }
@@ -33,8 +33,9 @@ export default{
 <style scoped>
 .custom-card {
   position: fixed;
-  top: 60px;
-  right: 100px;
+  /* top: 60px; */
+  top: min(60px, calc(100vh - 500px));
+  right: min(400px, calc(80vw - 340px));
   justify-content: space-between;
   background: white;
   width: max-content;
