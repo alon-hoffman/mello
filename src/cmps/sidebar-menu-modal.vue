@@ -188,12 +188,20 @@ export default {
             }
         },
        async setCoverImg(url) {
-            console.log(`url = `, url)
-            this.newBoard.style.averageImgColor= await this.getAverageColor(url)
+        if(!url.full){
+            this.currBoard.style.averageImgColor= await this.getAverageColor(url)
             if (this.currBoard.style.backgroundColor) this.currBoard.style.backgroundColor = null
-            this.currBoard.style.backgroundImage = url.full
-            this.currBoard.style.backgroundImageThumb=url.thumb
-            this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
+                this.currBoard.style.backgroundImage = url
+                this.currBoard.style.backgroundImageThumb=url
+                this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
+        } 
+          else {
+              this.currBoard.style.averageImgColor= await this.getAverageColor(url.full)
+                if (this.currBoard.style.backgroundColor) this.currBoard.style.backgroundColor = null
+                this.currBoard.style.backgroundImage = url.full
+                this.currBoard.style.backgroundImageThumb=url.thumb
+                this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
+          } 
         },
         async uploadImgToCloud(ev) {
             // console.log(`ev = `, ev)

@@ -1,7 +1,7 @@
 <template>
     <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')">
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
-        <div class="icon lg close modal-close clickable" @click="closeModal"></div>
+        <div class="icon lg close modal-close clickable" @click="closeModal" :style="isDarkCover"></div>
         <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}">
             <span class="cover-btn icon lg cover flex align-center" @click="openCoversModal">Cover</span>
         </div>
@@ -11,7 +11,7 @@
         <div class="modal-container">
             <header class="modal-header edit-block">
                 <span class="icon lg card"></span>
-                <input v-if="card" class="header" type="text" v-model="card.title">
+                <input v-if="card" class="header" type="text" v-model="card.title" @change="updateCard(card)">
                 <p class="content">in list <span class="move-card-link">{{ groupTitle }}</span></p>
             </header>
             <div class="modal-content flex">
@@ -388,8 +388,11 @@ export default {
                         }
                     })
                 })
-                return JSON.parse(JSON.stringify(card))
             }
+            if(card) return JSON.parse(JSON.stringify(card))
+        },
+        isDarkCover(){
+            // if (utilService.isDarkskColor(card))
         },
     },
     unmounted() {
