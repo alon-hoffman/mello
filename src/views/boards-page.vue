@@ -121,8 +121,8 @@ export default {
     },
     chosenBackground(style) {
       const { backgroundColor, backgroundImage } = style
-      if(style.backgroundImageThumb) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImageThumb})`, 'background-size': 'cover' }
-      if(style.backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${style.backgroundImage})`, 'background-size': 'cover' }
+      if(style.backgroundImageThumb) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${style.backgroundImageThumb})`, 'background-size': 'cover' }
+      if(style.backgroundImage) return { 'background': `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${style.backgroundImage})`, 'background-size': 'cover' }
       return { 'background': `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), ${backgroundColor}` }
     },
     setArchive(bool, ev){

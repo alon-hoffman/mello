@@ -1,3 +1,4 @@
+// board.store.js
 addActivity({ commit, state }, { activity }) {
     const { card, action, detail } = activity
     const activityToAdd = {
@@ -6,16 +7,17 @@ addActivity({ commit, state }, { activity }) {
             id: card?.id,
             title: card?.title
         },
-        title: boardService.activityNamer(action, state.currBoard, card, detail),
+        title: boardService.getActivityTitle(action, state.currBoard, card, detail),
         addedAt: Date.now(),
         user: userService.getLoggedinUser()?.fullname || 'Guest'
     }
     if (!card.activities) card.activities = []
     card.activities.unshift(activityToAdd)
     commit({ type: 'addActivity', activity: activityToAdd })
-},
+}
 
-function activityNamer(action, board, card, detail) {
+// board.service.js
+function getActivityTitle(action, board, card, detail) {
     const group = card.groupId ? findGroupById(card.groupId, board) : {}
     const activityMap = {
         addCard: { before: ` added`, after: ` to ${group.title}` },
@@ -33,6 +35,7 @@ function activityNamer(action, board, card, detail) {
     return activityMap[action]
 }
 
+// board.store.js
 removeActivity({ currBoard }, { activityId }){
     const activityIdx = currBoard.activities.findIndex(activity => activity.id === activityId)
     currBoard.activities.splice(activityIdx, 1)
