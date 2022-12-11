@@ -1,6 +1,6 @@
 
 <template>
-  <section ref="col" class="card-group" >
+  <section ref="col" class="card-group column-drag-handle" >
     <div class="title-container">
       <input class="group-title" type="text" v-model="title" />
       <svg @click="openListModal" class="clickable" width="24" height="24" role="presentation" focusable="false" viewBox="0 0 24 24"
@@ -12,19 +12,9 @@
     </div>
 
     <Container group-name="col" @drop="(e) => onCardDrop(list.id, e)" :get-child-payload="getCardPayload(list.id)"
-      drag-class="bg-primary dark:bg-primary 
-            border-2 border-primary-hover text-white 
-            transition duration-100 ease-in z-50
-            transform rotate-6 scale-110"
-          drop-class="transition duration-100 
-            ease-in z-50 transform 
-            -rotate-2 scale-90"
-            :drop-placeholder="{ className: 
-            `bg-primary bg-opacity-20  
-            border-dotted border-2 
-            border-primary rounded-lg mx-4 my-2`, 
-          animationDuration: '200', 
-          showOnTop: true }" :class="isEdit">
+      drag-class="card-ghost"
+          drop-class="card-ghost-drop"
+            :drop-placeholder="dropPlaceholderOptions" :class="isEdit">
       <Draggable v-for="card in list.cards" :key="card.id">
         <card-preview :card="card" @click="$emit('editCard', card.id)" class="clickable" @toggleIsCompleted="toggleIsCompleted" v-if="!card.isArchived"/>
         
@@ -44,12 +34,12 @@
           </svg>
         </div>
       </div>
+      
+      
     </Container>
-
-
-    <button v-if="!isCardEdited" class="add-card clickable" @click="editNewCard">
-      <span class="icon add sm"></span> Add a card
-    </button>
+      <button v-if="!isCardEdited" class="add-card clickable" @click="editNewCard">
+        <span class="icon add sm"></span> Add a card
+      </button>
     <!-- <div @keyup.enter="addCard"  class="add-card-section"   v-click-outside="closeNewCard" v-if="isCardEdited">
       <textarea v-model="newTitle" placeholder="Enter a title for this card..." ></textarea>
       <div class="buttons">
@@ -84,16 +74,16 @@ export default {
       isCardEdited: false,
       check: true,
       newTitle:'',
-      // upperDropPlaceholderOptions: {
-      //   className: 'cards-drop-preview',
-      //   animationDuration: '150',
-      //   showOnTop: true
-      // },
-      // dropPlaceholderOptions: {
-      //   className: 'drop-preview',
-      //   animationDuration: '150',
-      //   showOnTop: true
-      // },
+      upperDropPlaceholderOptions: {
+        className: 'cards-drop-preview',
+        animationDuration: '150',
+        showOnTop: true
+      },
+      dropPlaceholderOptions: {
+        className: 'drop-preview',
+        animationDuration: '150',
+        showOnTop: true
+      },
       dragLists:null,
       counter:1
     }

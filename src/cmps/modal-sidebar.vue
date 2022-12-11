@@ -486,6 +486,9 @@ export default {
             else this.$store.commit({type: 'retrieveItem', item: this.card })
             this.updateCard(this.card)
         },
+        isIncluded(id){
+            return {checked: this.boardLabels.includes(id)}
+        },
     },
     computed: {
         getFilterMembers() {
@@ -514,6 +517,7 @@ export default {
         isArchived() {
             return { archive: !this.card.isArchived, return: this.card.isArchived }
         },
+        
     },
     components: {
         customCard,
