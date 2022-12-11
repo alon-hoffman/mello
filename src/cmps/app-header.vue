@@ -40,7 +40,7 @@
             src="../assets/icons/circle-question-regular.png" alt=""></button>
         <button class="open-user-modal-btn" @click="modal = 'user'">
           <img v-if="user?.imgUrl" class="user-img-header" :src="getUserImg" alt="../assets/icons/user-solid.png">
-          <span v-else-if="user">{{ userInitials }}</span>
+          <span v-else-if="user" class="userInitials">{{ userInitials }}</span>
           <img v-else class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
         </button>
       </div>
@@ -74,7 +74,7 @@ export default {
       isUserModalOpen: false,
       modal: null,
       modalCords: null,
-      user: this.$store.getters.loggedinUser
+      
       // placeholder
     }
   },
@@ -157,6 +157,9 @@ export default {
       const userInitials = this.user.fullname.split(' ');
       const initials = userInitials.shift().charAt(0) + userInitials.pop().charAt(0);
       return initials.toUpperCase();
+    },
+    user(){
+return this.$store.getters.loggedinUser
     },
   },
   watch: {
