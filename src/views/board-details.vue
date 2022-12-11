@@ -17,7 +17,7 @@
         <div class="members-and-share-container">
           <div class="member-list"><img class="member-avatar-header" v-for="member in getMembersBoard" :src="member.imgUrl" alt="" /></div>
           
-          <button class="add-user-btn">
+          <button class="add-user-btn ">
             <span class="icon sm share"></span> Share
           </button>
         </div>
@@ -102,11 +102,11 @@ export default {
             socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board)=>{ 
               this.$store.commit({ type: "updateBoard", board })
     })
-            this.$store.commit({ type: 'setBoardById',  id:boardId });
-            const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
-            this.reactiveTitle= board.title
-            board.lastViewed= Date.now()
-            this.updateBoard(board)
+              this.$store.commit({ type: 'setBoardById',  id:boardId });
+              const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+              this.reactiveTitle= board.title
+              board.lastViewed= Date.now()
+            // this.updateBoard(board)
           },
   computed: {
     isScreen() {

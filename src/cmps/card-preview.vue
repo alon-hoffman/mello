@@ -10,10 +10,10 @@
     <div class="icons-container flex  align-center justify-between">
       <div class="left-icons flex  align-center">
         <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted" />
-        <span><span v-if="dynamicCard.description" class="icon description"></span></span>
+        <span v-if="dynamicCard.description" class="icon description"></span>
 
-        <span v-if="dynamicCard.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
-          <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></span>
+        <div v-if="dynamicCard.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
+          <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></div>
 
         <span v-if="dynamicCard.attachments?.length" class="attachments">
           <span class="icon sm attachment"></span>{{dynamicCard.attachments.length}}</span>

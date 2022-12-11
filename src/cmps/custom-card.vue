@@ -75,4 +75,13 @@ export default{
         background: rgba(255, 255, 255, 0.171); 
         border-radius: 10px;
 }
+
+
+@media (max-width: 500px){
+  .custom-card{
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+}
 </style>

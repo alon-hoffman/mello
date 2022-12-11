@@ -45,8 +45,9 @@
     margin-bottom: 100px;
 
     &-header {
-        & input {
-            background-color: transparent;
+         input {
+            background-color: green;
+            // background-color: transparent;
             border: none;
             background: #0000;
             border-radius: 3px;
@@ -399,7 +400,7 @@
 .modal-close {
     position: absolute;
     top: 4px;
-    left: 723px;
+    right: 4px;
     font-size: 20px;
     color: #42526e;
     border-radius: 100%;
@@ -823,3 +824,19 @@
     }
 }
 
+
+@media (max-width: 500px){
+    .modal{
+       width:95%;
+       
+       .modal-container{
+        .modal-content{
+            flex-direction: column;
+            width:100%;
+            .edit-blocks{
+                width:100%;
+            }
+        } 
+       }
+    }
+}

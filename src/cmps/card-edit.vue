@@ -156,7 +156,7 @@ import modalSidebar from './modal-sidebar.vue';
 import attachmentDisplay from './attachment-display.vue';
 import { utilService } from '../services/util.service';
 import { userService } from '../services/user.service';
-import { socketService, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service';
+// import { socketService, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service';
 export default {
     props: {
         isScreen: Boolean
@@ -184,7 +184,7 @@ export default {
         if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
         const { boardId } = this.$route.params
         this.$store.commit({ type: 'setBoardById', id: boardId });
-        socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
+        // socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
         this.realTextArea = false
         // this.boardMembers = this.$store.getters.getMembersOfBoard
     },
