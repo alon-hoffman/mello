@@ -45,7 +45,7 @@
         </button>
       </div>
     </nav>
-    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" />
+    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" @closeUserModal="closeUserModal"/>
     <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
     <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null"
       @saveBoard="saveBoard" />
@@ -103,7 +103,7 @@ export default {
       this.isUserModalOpen = true
     },
     closeUserModal() {
-      this.isUserModalOpen = false
+      this.modal = null
     },
     async getAverageColor(imgUrl) {
       try {
