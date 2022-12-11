@@ -273,6 +273,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-size: contain;
 }
 
 }
@@ -461,6 +462,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-size: contain;
 
             &.add {
                 background-color: #091e420a;
