@@ -64,7 +64,7 @@
                                     {{ member.fullname }}
                                 </div>
                                 <img class="check-img" v-if="checkIfInMemberList(member)"
-                                    src="../assets/icons/gray-check.svg">
+                                    src="https://res.cloudinary.com/mello123/image/upload/v1670768099/pkjhgenz250tcjpl8kzw.png">
                             </div>
                         </label>
                     </section>
@@ -78,9 +78,9 @@
                                 <label class="clickable labels-checked-box">
                                     <div class=" label-container">
                                         <img @click="toggleLabels(label)" class="checked-img"
-                                            v-if="checkIfInLabelList(label)" src="../assets/icons/checkbox-try.svg">
+                                            v-if="checkIfInLabelList(label)" src="https://res.cloudinary.com/mello123/image/upload/v1670767955/uj8ldtbjqjianjvgexcq.png">
                                         <img @click="toggleLabels(label)" class="box-img" v-else
-                                            src="../assets/icons/gray-square.svg" alt="">
+                                            src="https://res.cloudinary.com/mello123/image/upload/v1670768011/r1u5oygdifx7hj5ddprk.png" alt="">
                                         <div class="label-color-container" @click="toggleLabels(label)"
                                             :style="{ backgroundColor: getColorWithOpacity(label.color) }">
                                             <!-- {{label.title}} -->
