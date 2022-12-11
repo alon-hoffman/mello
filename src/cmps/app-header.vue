@@ -26,7 +26,7 @@
           <router-link to="/board">
             <button class="boards-header-btn">Boards</button>
           </router-link>
-          <button ref="createBtn" class="create-board-btn" @click="openCreateModal">Create </button>
+          <button ref="createBtn" class="create-board-btn secondary-btn" @click="openCreateModal">Create </button>
         </div>
         <div class="right-header">
           <div class="search-boards">
@@ -34,11 +34,11 @@
               style="font-family:Arial, FontAwesome">
             <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
           </div>
-          <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
+          <!-- <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button> -->
 
-          <button><img class="circle-img-header" @click="modal = 'about'"
+          <button class="secondary-btn"><img class="circle-img-header " @click="modal = 'about'"
               src="../assets/icons/circle-question-regular.png" alt=""></button>
-          <button class="open-user-modal-btn" @click="modal = 'user'"><img class="user-img-header"
+          <button class="open-user-modal-btn secondary-btn" @click="modal = 'user'"><img class="user-img-header"
               src="../assets/icons/user-solid.png" alt=""></button>
         </div>
       </nav>
