@@ -7,12 +7,12 @@
       <div v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview"></div>
     </div>
     <h1>{{ card.title }}</h1>
-    <div class="icons-container flex  align-center justify-between">
+    <div class="icons-container flex align-center justify-between">
       <div class="left-icons flex  align-center">
-        <dateDisplay v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted" />
+        <dateDisplay class="icon" v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted" />
         <span v-if="dynamicCard.description" class="icon description"></span>
 
-        <div v-if="dynamicCard.checklists?.length" class="flex align-center check-list" :class="checklistCompletion.class">
+        <div class="icon flex align-center check-list" v-if="dynamicCard.checklists?.length" :class="checklistCompletion.class">
           <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></div>
 
         <span v-if="dynamicCard.attachments?.length" class="attachments">
@@ -73,6 +73,9 @@
          const todoState = {number:`${doneTodos}/${todos}`, class:"notDone"}
          if (doneTodos===todos) todoState.class = "preview-done"
          return todoState
+      },
+      icons(){
+
       }
     },
       created(){
