@@ -179,6 +179,8 @@
 
         .under-computer {
             // margin-bottom: 20px;
+            display: flex;
+    flex-direction: column;
             margin-top: 10px;
             margin-inline-start: 11px;
             // padding: 0 12px 12px;
@@ -584,6 +586,7 @@
 
         input:not(.checkbox) {
             height: 36px;
+            width: 280px;
             background-color: #fafbfc;
             box-shadow: inset 0 0 0 2px #dfe1e6;
             border-radius: 4px;
