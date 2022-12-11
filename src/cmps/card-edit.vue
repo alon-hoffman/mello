@@ -82,15 +82,15 @@
 
                         <ul class="dynamic-content todo-list flex column">
                             <li class="todo-item-container flex clickable" v-for="todo in checklist.todos"
-                                @click="openEditMode(todo)" v-click-outside="() => closeEditMode(todo)">
+                                @click="setCurrTodo(todo)">
                                 <div class="todo-item edit-block">
                                     <button class="icon checkbox" :class="isDone(todo.isDone)"
                                         @click.stop="toggleTodo(todo)"></button>
-                                    <span v-if="!todo.editMode" class="header" :class="isDone(todo.isDone)">{{ todo.title }}</span>
+                                    <span v-if="todo.id !== currTodo" class="header" :class="isDone(todo.isDone)">{{ todo.title }}</span>
                                     <textarea v-else class="header edit-mode" v-model="todo.title"></textarea>
-                                    <div v-if="todo.editMode" class="content edit-todo">
+                                    <div v-if="todo.id === currTodo" class="content edit-todo">
                                         <button class="modal-btn add-todo-btn"
-                                        @click.stop="closeEditMode(todo)">Save</button>
+                                        @click.stop="clearCurrTodo">Save</button>
                                         <span class="icon lg close" @click.stop="removeTodo(checklist, todo)"></span>
                                     </div>
                                 </div>
@@ -100,13 +100,13 @@
                                         <span class="icon sm more"></span>
                                     </div> -->
                             </li>
-                            <button v-if="!checklist.newTodo" class="modal-btn" @click="openAddTodo(checklist)"
-                                v-click-outside="() => closeAddTodo(checklist)">Add an item</button>
-                            <section v-else class="add-todo flex wrap">
-                                <textarea placeholer="Add an item" v-model="newTodo.title" @keyup.enter="saveTodo(checklist)" v-click-outside="() => closeAddTodo(checklist)"></textarea>
+                            <button v-if="currChecklist !== checklist.id" class="modal-btn" @click="currChecklist = checklist.id">
+                                Add an item </button>
+                            <section v-else class="add-todo flex wrap" v-click-outside="clearCurrChecklist">
+                                <textarea placeholer="Add an item" v-model="newTodo.title" @keyup.enter="saveTodo(checklist)"></textarea>
                                 <div class="add-todo-options flex">
                                     <button class="modal-btn add-todo-btn" @click="saveTodo(checklist)">Add</button>
-                                    <button class="modal-btn" @click="closeAddTodo(checklist)">Cancel</button>
+                                    <button class="modal-btn" @click="clearCurrChecklist">Cancel</button>
                                 </div>
                             </section>
                         </ul>
@@ -175,7 +175,9 @@ export default {
             newComment: '',
             isHideDetails: false,
             modalCords: null,
-            miniModalTitle: null
+            miniModalTitle: null,
+            currChecklist: null,
+            currTodo: null
         }
     },
     async created() {
@@ -209,10 +211,7 @@ export default {
             this.realTextArea = false
         },
         updateCard(currCard) {
-            console.log("🚀 ~ file: card-edit.vue:211 ~ updateCard ~ currCard")
             if(currCard)this.$store.dispatch({ type: "saveCard", card: currCard })
-            // else this.$store.dispatch({ type: "saveCard", card: currCard })
-            // else this.$store.dispatch({ type: "saveCard", card: this.card })
         },
         updateLabels(labels) {
             this.$store.commit({ type: "updateLabels", labels })
@@ -262,15 +261,14 @@ export default {
             }
             this.updateCard(this.card)
         },
-        openAddTodo(checklist) {
-            checklist.newTodo = true;
-            console.log(checklist.newTodo)
-            this.updateCard(this.card)
+        openAddTodo(checklistId) {
+            console.log('openAddTodo')
+            this.clearCurrTodo()
+            this.currChecklist = checklistId
         },
-        closeAddTodo(checklist) {
+        closeAddTodo() {
             this.newTodo = { title: '' }
-            checklist.newTodo = false;
-            this.updateCard(this.card)
+            this.currChecklist = null
         },
         saveTodo(checklist) {
             if(!this.newTodo.title) return
@@ -279,13 +277,11 @@ export default {
             this.newTodo = { title: ''}
             this.updateCard(this.card)
         },
-        closeEditMode(todo) {
-            todo.editMode = false
-            this.updateCard(this.card)
-        },
-        openEditMode(todo) {
-            todo.editMode = true
-            this.updateCard(this.card)
+        setCurrTodo(todo) {
+            console.log(this.currTodo)
+            this.currChecklist = null
+            this.currTodo = todo.id
+            console.log(this.currTodo)
         },
         removeTodo(checklist, todo) {
             todo.editMode = false
@@ -337,6 +333,13 @@ export default {
         },
         openCoversModal(){
             this.$refs.modalSidebar.updateImgAttachmentsColors()
+        },
+        clearCurrChecklist(){
+            this.currChecklist = null
+        },
+        clearCurrTodo(){
+            console.log(this.clearCurrTodo)
+            this.currTodo = null
         },
     },
     computed: {
