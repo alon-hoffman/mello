@@ -18,31 +18,36 @@
   </header>
   <header v-click-slash="focusInput" v-if="params.includes('board')" class="boards-page">
     <nav :style="{ backgroundColor: getHeadColor }">
-        <div class="left-header">
-          <router-link to="/" class="home-logo-page">
-            <img class="logo-img-board"
-              src="https://res.cloudinary.com/mello123/image/upload/v1670406801/dmvdzqf6o9tnxxnohnb0.png" alt="">
-          </router-link>
-          <router-link to="/board">
-            <button class="boards-header-btn">Boards</button>
-          </router-link>
-          <button ref="createBtn" class="create-board-btn secondary-btn" @click="openCreateModal">Create </button>
-        </div>
-        <div class="right-header">
-          <div class="search-boards">
-            <input ref="search" type="text" placeholder="Search" class="board-search-input"
-              style="font-family:Arial, FontAwesome">
-            <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
-          </div>
-          <!-- <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button> -->
 
-          <button class="secondary-btn"><img class="circle-img-header " @click="modal = 'about'"
-              src="../assets/icons/circle-question-regular.png" alt=""></button>
-          <button class="open-user-modal-btn secondary-btn" @click="modal = 'user'"><img class="user-img-header"
-              src="../assets/icons/user-solid.png" alt=""></button>
+
+      <div class="left-header">
+        <router-link to="/" class="home-logo-page">
+          <img class="logo-img-board"
+            src="https://res.cloudinary.com/mello123/image/upload/v1670406801/dmvdzqf6o9tnxxnohnb0.png" alt="">
+        </router-link>
+        <router-link to="/board">
+          <button class="boards-header-btn">Boards</button>
+        </router-link>
+        <button ref="createBtn" class="create-board-btn" @click="openCreateModal">Create </button>
+      </div>
+      <div class="right-header">
+        <div class="search-boards">
+          <input ref="search" type="text" placeholder="Search" class="board-search-input"
+            style="font-family:Arial, FontAwesome">
+          <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
         </div>
-      </nav>
-    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" />
+        <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button>
+
+        <button><img class="circle-img-header" @click="modal = 'about'"
+            src="../assets/icons/circle-question-regular.png" alt=""></button>
+        <button class="open-user-modal-btn" @click="modal = 'user'">
+          <img v-if="user?.imgUrl" class="user-img-header" :src="getUserImg" alt="../assets/icons/user-solid.png">
+          <span v-else-if="user" class="userInitials">{{ userInitials }}</span>
+          <img v-else class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
+        </button>
+      </div>
+    </nav>
+    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" @closeUserModal="closeUserModal"/>
     <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
     <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null"
       @saveBoard="saveBoard" />
@@ -70,7 +75,8 @@ export default {
       fac: new FastAverageColor(),
       isUserModalOpen: false,
       modal: null,
-      modalCords: null
+      modalCords: null,
+      
       // placeholder
     }
   },
@@ -99,7 +105,7 @@ export default {
       this.isUserModalOpen = true
     },
     closeUserModal() {
-      this.isUserModalOpen = false
+      this.modal = null
     },
     async getAverageColor(imgUrl) {
       try {
@@ -137,12 +143,25 @@ export default {
 
       return this.$store.getters.getCurrBoard
     },
-     getHeadColor() {
-      if(this.$route.path.includes('board/')){
-        if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor    
+    getHeadColor() {
+      if (this.$route.path.includes('board/')) {
+        if (this.board?.style?.backgroundImage) return this.board?.style?.averageImgColor
         return this.board?.style.backgroundColor + 'aa'
       }
       else return '#026AA7'
+    },
+    getUserImg() {
+      const user = this.$store.getters.loggedinUser
+       return user.imgUrl
+      
+    },
+    userInitials() {
+      const userInitials = this.user.fullname.split(' ');
+      const initials = userInitials.shift().charAt(0) + userInitials.pop().charAt(0);
+      return initials.toUpperCase();
+    },
+    user(){
+return this.$store.getters.loggedinUser
     },
   },
   watch: {

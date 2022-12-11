@@ -2,13 +2,16 @@
     <section class="user-modal">
 <p v-if="user">Account</p>
 <div v-if="user" class="user-description flex align-center">
-    <img :src="user.imgUrl"/>
+    <img  v-if="user.imgUrl" :src="user.imgUrl"/>
+    <span class="anonymousUser-img-container" v-else>
+      <img class="anonymousUser-img" src="../assets/icons/user-solid.png"/>
+    </span>
     <div class="user-info">
         <h1>{{user.fullname}}</h1>
         <small>{{user.email}}</small>
     </div>
 </div>
-<button v-if="user" @click="logOut">Log out</button>
+<button v-if="user" class="user-log-out-btn" @click="logOut">Log out</button>
 <span v-else>Need To log in to see details</span>
     </section>
     
@@ -34,7 +37,11 @@
       logOut(){
         this.$store.dispatch({ type: "logout" });
         this.$router.push('/')
+        this.closeUserModal()
         // console.log( "log out")
+      },
+      closeUserModal(){
+        this.$emit("closeUserModal")
       }
     },
     computed: {
