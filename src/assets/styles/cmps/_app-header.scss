@@ -226,6 +226,9 @@
 
     .open-user-modal-btn {
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     // .user-modal {
@@ -248,7 +251,13 @@
     }
 
     .user-img-header {
-        width: rem(20px);
+        width: 30px;
+        height: 24px;
+        border-radius: 50%;
+    }
+    .anonymousUser-img{
+        width:  20px;
+        height: 20px; ;
     }
 
     .bell-img-header {
