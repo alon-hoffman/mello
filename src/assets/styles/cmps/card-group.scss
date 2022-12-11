@@ -176,10 +176,10 @@
     background-color: yellow;
 }
 
-.card-scene {
-    padding: 50px;
-    /* background-color: #fff; */
-}
+// .card-scene {
+//     padding: 50px;
+//     /* background-color: #fff; */
+// }
 
 .column-drag-handle {
     cursor: pointer;
@@ -216,15 +216,16 @@
 }
 
 .drop-preview {
-  background-color: rgba(150, 150, 200, 0.1);
+  background-color: rgba(150, 150, 200, 0.1) ;
   border: 1px dashed #abc;
-  margin: 5px;
+  margin-right: -246px;
+
 }
 
 .cards-drop-preview {
   background-color: rgba(72, 72, 127, 0.1);
   border: 1px dashed #abc;
-  margin-left: 10px;
+//   margin-bottom: 100%;
 }
 
 
