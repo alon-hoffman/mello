@@ -30,7 +30,7 @@
         </router-link>
         <button ref="createBtn" class="create-board-btn secondary-btn" @click="openCreateModal">Create </button>
       </div>
-      <div class="right-header">
+      <div class="right-header align-center">
         <div class="search-boards">
           <input ref="search" type="text" placeholder="Search" class="board-search-input"
             style="font-family:Arial, FontAwesome">
@@ -38,12 +38,12 @@
         </div>
         <!-- <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button> -->
 
-        <button class="secondary-btn"><img class="circle-img-header" @click="modal = 'about'"
-            src="../assets/icons/circle-question-regular.png" alt=""></button>
-        <button class=" secondary-btn" @click="modal = 'user'">
-          <img v-if="user?.imgUrl" class="user-img-header" :src="getUserImg" alt="../assets/icons/user-solid.png">
-          <span v-else-if="user" class="userInitials">{{ userInitials }}</span>
-          <img v-else class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
+        <!-- <button class="secondary-btn"><img class="circle-img-header" @click="modal = 'about'"
+            src="../assets/icons/circle-question-regular.png" alt=""></button> -->
+        <button class=" secondary-btn profile-icon" @click="modal = 'user'" :style="{'background-image' : `url(${user.imgUrl})`}">
+          <span v-if="user && !user.imgUrl" class="userInitials">{{ userInitials }}</span>
+          <!-- <img v-if="user?.imgUrl" class="user-img-header" :src="getUserImg" alt="../assets/icons/user-solid.png"> -->
+          <img v-if="!user" class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
         </button>
       </div>
     </nav>
