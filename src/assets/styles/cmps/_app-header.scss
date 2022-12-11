@@ -280,9 +280,19 @@
         width: rem(20px);
 
     }
+    .profile-icon{
+        color: #fff;
+        // background-color: #026AA7;
+        background-size: cover;
+        border-radius: 50%;
+        font-size:16px;
+        font-weight: 600;
+    }
 }
 
-@media (max-width: 800px){
+
+
+@media (max-width: 500px){
     .secondary-btn{
        display:none;
     }

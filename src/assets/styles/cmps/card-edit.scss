@@ -13,17 +13,18 @@
         height: 12px;
       }
     &::-webkit-scrollbar-track {
-        background: rgba(105, 105, 105, 0.719); 
+        background: #696969b7; 
         border-radius: 10px;
       }
     &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.733); 
+        background: #ffffffbb; 
         border-radius: 10px;
 }
 }
 
 .edit-blocks {
     width: 576px;
+    padding-inline-end: 8px;
 }
 
 .modal-container {
@@ -44,8 +45,9 @@
     margin-bottom: 100px;
 
     &-header {
-        & input {
-            background-color: transparent;
+         input {
+            background-color: green;
+            // background-color: transparent;
             border: none;
             background: #0000;
             border-radius: 3px;
@@ -398,7 +400,7 @@
 .modal-close {
     position: absolute;
     top: 4px;
-    left: 723px;
+    right: 4px;
     font-size: 20px;
     color: #42526e;
     border-radius: 100%;
@@ -734,12 +736,18 @@
             }
 
         }
+        & + .modal-btn{
+            margin-inline-start: 35px;
+        }
     }
 }
 
 .checklist-options {
-    margin-block: -6px;
-    margin-inline: -3px;
+
+
+    > .modal-btn{
+        margin: 0;
+    }
 }
 
 .modal-btn {
@@ -752,7 +760,6 @@
     transition-timing-function: ease;
     font-size: 14px;
     width: max-content;
-
     &:hover {
         background-color: #091e4214;
     }
@@ -774,6 +781,7 @@
         outline: 0;
         border: 0;
         padding: 8px 12px;
+        resize: none;
     }
 
     &-btn.modal-btn{
@@ -816,3 +824,19 @@
     }
 }
 
+
+@media (max-width: 500px){
+    .modal{
+       width:95%;
+       
+       .modal-container{
+        .modal-content{
+            flex-direction: column;
+            width:100%;
+            .edit-blocks{
+                width:100%;
+            }
+        } 
+       }
+    }
+}

@@ -14,8 +14,8 @@
 
     // padding: rem(5px) rem(10px) rem(5px) rem(10px);
     h1 {
-        margin: 0 rem(10px) rem(10px) rem(10px) !important;
-        padding-top: 5px;
+        margin: 0 rem(10px) 0 rem(10px) ;
+        padding-block: rem(4px);
         font-weight: unset;
         font-size: rem(16px);
     }
@@ -68,14 +68,20 @@
     }
 
     .icons-container {
-        margin: rem(-6px) 0 rem(1px) rem(12px);
+        margin: 0 0 rem(1px) rem(12px);
     }
 
     .left-icons {
         gap: rem(6px);
-        padding-bottom: 7px;
+        
+        .icon{
+            padding-bottom: 7px;
+        }
         .checklist-check{
             letter-spacing: 0;
+            .number{
+                font-family: icon;
+            }
         }
     }
 
@@ -126,7 +132,7 @@
         font-size: rem(14px);
     }
     .check-list{
-        padding: rem(2px) rem(2px);
+        // padding: rem(2px) rem(2px);
         .number{
             padding-inline-start: rem(5px);
             padding-inline-end:rem(2px); 

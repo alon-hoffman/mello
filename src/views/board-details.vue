@@ -17,7 +17,7 @@
         <div class="members-and-share-container">
           <div class="member-list"><img class="member-avatar-header" v-for="member in getMembersBoard" :src="member.imgUrl" alt="" /></div>
           
-          <button class="add-user-btn">
+          <button class="add-user-btn ">
             <span class="icon sm share"></span> Share
           </button>
         </div>
