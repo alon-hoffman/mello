@@ -77,8 +77,10 @@
         .icon{
             padding-bottom: 7px;
         }
-        .checklist-check{
+        .checklist{
             letter-spacing: 0;
+            width:200px;
+            align-self: baseline;
             .number{
                 font-family: icon;
             }
