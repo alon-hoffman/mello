@@ -30,7 +30,7 @@ export const boardStore = {
         boards: null,
         currBoard: null,
         currCard: null,
-        lastActivity: null,
+        lastActivityId: '',
     },
     getters: {
         boards({ boards }) {
@@ -102,8 +102,11 @@ export const boardStore = {
             state.currBoard.groups.splice(groupIdx, 1, group)
         },
         addActivity(state, { activity }) {
-            state.lastActivity = activity
+            state.lastActivityId = activity.id
             state.currBoard.activities.unshift(activity)
+        },
+        removeLastActivity({ lastActivityId, currBoard }) {
+
         },
         archiveItem({ currBoard }, { item }) {
             if (!item.type) item.type = item.cards ? 'list' : 'card'
@@ -117,6 +120,10 @@ export const boardStore = {
         },
         removeCardActivities({ currBoard }, { cardId }) {
             currBoard.activities = currBoard.activities.filter(activity => activity.card.id !== cardId)
+        },
+        removeActivity({ currBoard }, { activityId }) {
+            const activityIdx = currBoard.activities.findIndex(activity => activity.id === activityId)
+            currBoard.activities.splice(activityIdx, 1)
         },
     },
     actions: {
@@ -136,6 +143,7 @@ export const boardStore = {
             }
         },
         async updateBoard({ commit, state }, { board }) {
+            const activityId = state.lastActivityId.slice()
             try {
                 var oldBoard = JSON.parse(JSON.stringify(state.currBoard))
                 board.lastUpdate = Date.now()
@@ -146,6 +154,7 @@ export const boardStore = {
 
             } catch (err) {
                 commit({ type: 'updateBoard', board: oldBoard })
+                commit({ type: 'removeActivity', activityId })
                 console.log('boardStore: Error in updateBoard', err)
                 throw err
             }
@@ -272,7 +281,7 @@ export const boardStore = {
                 },
                 title: boardService.activityNamer(action, state.currBoard, card, detail),
                 addedAt: Date.now(),
-                user: userService.getLoggedinUser()?.fullname || 'Guest'
+                user: userService.getLoggedinUser() || { fullname: 'Guest' },
             }
             if (!card.activities) card.activities = []
             card.activities.unshift(activityToAdd)
