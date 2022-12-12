@@ -9,7 +9,7 @@
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
         <span class="separator-line">|</span>
-        <button class="dashboard-btn">
+        <button class="dashboard-btn" @click="toggleScreen">
           <span class="icon sm dashboard flex align-center"></span>
           <span>View charts</span>
         </button>
@@ -71,8 +71,9 @@ import groupList from "../cmps/group-list.vue"
 import cardEdit from "../cmps/card-edit.vue"
 import listModal from "../cmps/list-modal.vue"
 import sidebarMenuModal from "../cmps/sidebar-menu-modal.vue"
-import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG,SOCKET_EMIT_BOARD_UPDATED, SOCKET_EMIT_SET_TOPIC} from '../services/socket.service'
 import filterMenu from "../cmps/filter-menu.vue"
+import dashBoard from "../cmps/dashboard.vue"
+import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG,SOCKET_EMIT_BOARD_UPDATED, SOCKET_EMIT_SET_TOPIC} from '../services/socket.service'
 
 export default {
   components: {
@@ -82,6 +83,7 @@ export default {
     listModal,
     sidebarMenuModal,
     filterMenu,
+    dashBoard
   },
   data(){
     return{
@@ -235,7 +237,6 @@ export default {
     },
     toggleZoom(){
       this.$store.commit({ type: "toggleZoom" })
-
     }
   },
 };
