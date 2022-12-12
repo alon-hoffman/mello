@@ -47,7 +47,7 @@
                 @toggleIsCompleted="updateCard"
                 @openListModal="openListModal"
                 :isSidebarMenuModal="isSidebarMenuModal"
-                v-if="board.groups" :lists="board.groups" />
+                v-if="board.groups" :lists="lists" />
 
     <listModal v-if="listModalOpen" :list="list"
                 :listModalCords="listModalCords" 
@@ -124,6 +124,9 @@ export default {
       const {keyword, members, labels} = this.filterBy
       if (!keyword && !members.length && !labels.length) return false
       return true
+    },
+    lists(){
+      return this.board.groups.filter(group=> !group.isArchived)
     },
     getMembersBoard(){
       return this.$store.getters.getMembersOfBoard
