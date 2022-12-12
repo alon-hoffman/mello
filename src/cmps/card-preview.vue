@@ -7,7 +7,7 @@
       <div @click.stop="toggleLabeAreShown" v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview" :class="{'active':labelsAreShown}">
         <span v-if="labelsAreShown">{{label.title}}</span></div>
     </div>
-    <h1>{{ card.title }}</h1>
+    <h1 class="preview-title">{{ card.title }}</h1>
     <div class="icons-container flex align-center justify-between">
       <div class="left-icons flex  align-center">
         <dateDisplay class="icon" v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted" />

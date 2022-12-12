@@ -45,12 +45,12 @@
                 <ul class="content archive-list" v-if="currDisplay === 'Items in archive'">
                     <li class="archive-list-item" v-if="currArchivedList === 'card'" v-for="card in currBoard.archivedItems.card" @click="goToCard(card)">
                         <section class="card-preview">
-                            <img v-if="card.imgURL" :src="card.imgURL" alt="">
+                            <img v-if="card.imgURL" class="preview-image" :src="card.imgURL" alt="">
                             <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
                             <div v-if="card.labels?.length" class="labels-container flex">
                                 <div v-for="label in card.labels" :style="{ 'background-color': labelColor(label) }" class="label-preview"></div>
                             </div>
-                            <h1>{{ card.title }} </h1>
+                            <h1 class="preview-title">{{ card.title }} </h1>
                             <div class="icons-container flex  align-center justify-between">
                                 <div class="left-icons flex  align-center">
                                     <span><span v-if="card.description" class="icon description"></span></span>
