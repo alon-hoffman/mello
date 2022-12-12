@@ -4,7 +4,8 @@
     <img v-if="card.imgURL" :src="cardUrl">
     <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
     <div v-if="dynamicCard.labels?.length" class="labels-container flex">
-      <div v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview"></div>
+      <div @click.stop="toggleLabeAreShown" v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview" :class="{'active':labelsAreShown}">
+        <span v-if="labelsAreShown">{{label.title}}</span></div>
     </div>
     <h1>{{ card.title }}</h1>
     <div class="icons-container flex align-center justify-between">
@@ -33,6 +34,7 @@
   
   <script>
   import dateDisplay from "../cmps/date-display.vue"
+  import { utilService } from "../services/util.service"
   export default {
     props:{
     card:Object,
@@ -54,9 +56,14 @@
       labels(){
         return this.card.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
-         if(idx>-1)  return {color:this.boardLabels[idx].color,title:this.boardLabels[idx].title}
+         const labelInfo= this.boardLabels[idx]
+         const color = this.labelsAreShown? utilService.LightenDarkenColor(labelInfo.color, 50): labelInfo.color
+         if(idx>-1)  return {color,title:labelInfo.title}
          return "red"
         })
+      },
+      labelsAreShown(){
+        return this.$store.getters.getLabeAreShown
       },
       dynamicCard(){
         return this.card
@@ -96,6 +103,9 @@
     toggleIsCompleted(isCompleted) {
       this.card.isCompleted = isCompleted;
       this.$emit("toggleIsCompleted", this.card)
+    },
+    toggleLabeAreShown(){
+      this.$store.commit({ type: "toggleLabeAreShown" })
     }
   }
 

@@ -296,4 +296,9 @@
     .secondary-btn{
        display:none;
     }
+    .search-boards {
+        &:focus-within {
+            width: rem(200px);
+        }
+}
 }
