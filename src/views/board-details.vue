@@ -240,6 +240,7 @@ export default {
       this.filterBy = filter
     },
     toggleZoom(){
+      console.log('hi')
       this.$store.commit({ type: "toggleZoom" })
     }
   },

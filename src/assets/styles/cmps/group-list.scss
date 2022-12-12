@@ -8,8 +8,8 @@
         margin-inline-end: 339px;
     }
     &::-webkit-scrollbar {
-        width: 12px;
         height: 12px;
+        width:80%;
       }
     &::-webkit-scrollbar-track {
         background: rgba(20, 20, 20, 0.173); 
@@ -115,10 +115,27 @@
     .group-list{
         transition: all .5s ease;
        & .zoomed{
-        zoom:50%
+        zoom:75%
        }
+       &::-webkit-scrollbar {
+        height: 2px;
+        width:80%;
+      }
+      &::-webkit-scrollbar-track {
+        background:none; 
+        border-radius: 0;
+        width: 2px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background:black; 
+        border-radius: 0;
+      }
+      &::-webkit-scrollbar-button {
+        width: 30px;
+    }
     }
     .zoomed{
         zoom:75%
        }
+   
 }
