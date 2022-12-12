@@ -13,7 +13,7 @@
         <dateDisplay class="icon" v-if="dynamicCard.dueDate" :date="card.dueDate" @toggleIsCompleted="toggleIsCompleted" />
         <span v-if="dynamicCard.description" class="icon description"></span>
 
-        <div class=" flex align-center check-list" v-if="dynamicCard.checklists?.length" :class="checklistCompletion.class" style="align-self: baseline"> 
+        <div class=" flex align-center check-list" v-if="checklistCompletion" :class="checklistCompletion.class" style="align-self: baseline"> 
           <span class="icon sm checklist-check"></span><span class="number">{{checklistCompletion.number}}</span></div>
 
         <span v-if="dynamicCard.attachments?.length" class="attachments">
@@ -70,7 +70,8 @@
       checklistCompletion(){
         var doneTodos=0
         var todos=0
-         this.card.checklists.forEach(checklist => {
+        if(!this.card.checklists) return false
+         this.card.checklists?.forEach(checklist => {
           checklist.todos.forEach(todo =>{
             if(todo.isDone) doneTodos++
             todos++
@@ -78,6 +79,7 @@
          });
          const todoState = {number:`${doneTodos}/${todos}`, class:"notDone"}
          if (doneTodos===todos) todoState.class = "preview-done"
+         if (!todos) return false
          return todoState
       },
       icons(){

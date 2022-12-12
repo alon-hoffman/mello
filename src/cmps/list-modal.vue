@@ -26,7 +26,7 @@
     },
     computed: {
       cords(){
-        return {top: `${this.listModalCords.y+41}px`, left: `${this.listModalCords.x+230}px`}
+        return {top: `${this.listModalCords.y+41}px`, left: `${this.listModalCords.x}px`}
       },
     },
     methods: {

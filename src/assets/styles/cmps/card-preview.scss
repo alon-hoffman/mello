@@ -100,6 +100,10 @@
                 font-family: icon;
             }
         }
+        .attachments{
+            letter-spacing: 0;
+            margin-bottom: 7px;
+        }
     }
 
 
@@ -149,12 +153,10 @@
         font-size: rem(14px);
     }
     .check-list{
-        // padding: rem(2px) rem(2px);
+        margin-bottom: 7px;
         .number{
             padding-inline-start: rem(5px);
             padding-inline-end:rem(2px); 
         }
     }
-    attachments{
-        letter-spacing: 0;
-    }
+   
