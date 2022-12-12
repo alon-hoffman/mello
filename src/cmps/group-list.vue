@@ -13,7 +13,7 @@
         <div v-else @submit.prevent="addList" class="add-list-section" v-click-outside="closeEdit">
           <input type="text" v-model="newTitle" ref="newTitle" placeholder="Enter list title..." />
           <div class="buttons">
-            <button @click="addList" @keyup.enter="addCard" class="clickable add-list">Add list</button>
+            <button @click="addList" class="clickable add-list">Add list</button>
             <button @click="isNewListEdit = false" class="icon ex clickable close-modal"></button>&nbsp
           </div>
         </div>
@@ -67,6 +67,7 @@ export default {
   created() { },
   methods: {
     addList() {
+      console.log('hi')
       this.$emit('saveList', { title: this.newTitle, cards: [] })
     },
     addCard(card) {
