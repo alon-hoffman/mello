@@ -5,6 +5,13 @@
     display:flex;
     overflow: hidden;
     flex-direction: column;
+    .zoom{
+        background-color: unset;
+        visibility:hidden;
+        svg{
+            color:white;
+        }
+    }
 }
 
 .board-header {
@@ -161,10 +168,18 @@
 }
 
 
-@media (max-width: 500px){
+@media (max-width: 420px){
     .board-header{
     .add-user-btn.secondary-btn{
        display:none;
+    }
+}
+.board-details{
+    .zoom{
+        visibility:visible;
+        position:fixed;
+        bottom: 10%;
+        right: 10%;
     }
 }
 }

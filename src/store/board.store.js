@@ -31,6 +31,7 @@ export const boardStore = {
         currBoard: null,
         currCard: null,
         lastActivityId: '',
+        isZoom: false,
     },
     getters: {
         boards({ boards }) {
@@ -39,9 +40,9 @@ export const boardStore = {
         getCurrBoard(state) { return state.currBoard },
         getMembersOfBoard(state) { return state.currBoard?.members },
         getLabelsOfBoard(state) { return state.currBoard.labels },
-        getCard(state) {
-            return state.currCard
-        },
+        getCard(state) { return state.currCard },
+        getZoom(state) { return state.isZoom },
+
         // getGroupTitle(state) {
         //     return boardService.findGroupById(state.currCard.groupId, state.currBoard).title
         // },
@@ -125,6 +126,11 @@ export const boardStore = {
             const activityIdx = currBoard.activities.findIndex(activity => activity.id === activityId)
             currBoard.activities.splice(activityIdx, 1)
         },
+        toggleZoom(state) {
+            state.isZoom = !state.isZoom
+            console.log("🚀 ~ file: board.store.js:131 ~ toggleZoom ~ state.isZoom", state.isZoom)
+
+        }
     },
     actions: {
         updateLabels({ commit, state, dispatch }, { labels }) {
