@@ -9,9 +9,9 @@
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
         <span class="separator-line">|</span>
-        <button class="dashboard-btn" @click="toggleScreen">
-          <span class="icon sm dashboard flex align-center"></span>
-          <span>View charts</span>
+        <button class="dashboard-btn flex align-center" @click="toggleScreen">
+          <span class="icon sm dashboard "></span>
+          <span>Charts</span>
         </button>
       </div>
       <div class="board-header-right">
@@ -22,7 +22,7 @@
         <div class="members-and-share-container">
           <div class="member-list"><img class="member-avatar-header" v-for="member in getMembersBoard" :src="member.imgUrl" alt="" /></div>
           
-          <button class="add-user-btn ">
+          <button class="add-user-btn secondary-btn">
             <span class="icon sm share"></span> Share
           </button>
         </div>
@@ -63,6 +63,7 @@
                  @updateFilter="updateFilter"
                  @close="closeFilter"
                  />
+    <dash-board />
   </section>
 </template>
 
@@ -242,6 +243,9 @@ export default {
     toggleZoom(){
       console.log('hi')
       this.$store.commit({ type: "toggleZoom" })
+    },
+    toggleScreen(){
+      this.$store.commit({ type: "toggleScreen" })
     }
   },
 };

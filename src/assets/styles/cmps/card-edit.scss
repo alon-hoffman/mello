@@ -1,25 +1,29 @@
 .modal-screen {
     transition: 0.2s;
-    opacity: 1;
     position: fixed;
+    opacity: 0;
     inset: 0;
     z-index: 1;
     background-color: #000000a3;
-    // max-height: max-content;
+    pointer-events: none;
     min-height: 100vh;
     overflow-y: scroll;
     &::-webkit-scrollbar {
         width: 12px;
         height: 12px;
-      }
+    }
     &::-webkit-scrollbar-track {
         background: #696969b7; 
         border-radius: 10px;
-      }
+    }
     &::-webkit-scrollbar-thumb {
         background: #ffffffbb; 
         border-radius: 10px;
-}
+    }
+    &.on{
+     opacity: 1;
+     pointer-events: all;
+    }
 }
 
 .edit-blocks {
