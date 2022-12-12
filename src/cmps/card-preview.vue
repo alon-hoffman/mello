@@ -1,7 +1,7 @@
 <template>
   <section v-if="card" class="card-preview">
 
-    <img v-if="card.imgURL" :src="cardUrl">
+    <img v-if="card.imgURL" :src="cardUrl" class="preview-image">
     <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
     <div v-if="dynamicCard.labels?.length" class="labels-container flex">
       <div @click.stop="toggleLabeAreShown" v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview" :class="{'active':labelsAreShown}">
@@ -19,10 +19,9 @@
         <span v-if="dynamicCard.attachments?.length" class="attachments">
           <span class="icon sm attachment"></span>{{dynamicCard.attachments.length}}</span>
       </div>
-      <div class="flex">
-      <div v-if="dynamicCard.members" class="members flex align-center" v-for="member in card.members">
-          <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)">
-      </div>
+      <div class="members flex align-center">
+      <img class="member-img member-avatar" :src="member.imgUrl" :alt="memberInitials(member)" v-if="dynamicCard.members" v-for="member in card.members">
+
     </div>
     </div>
   </section>
