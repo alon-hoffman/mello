@@ -110,6 +110,9 @@
     }
     &.collection::before{
         content: '\E91D'
+    }
+    &.dashboard::before{
+        content: '\E943';
     }    
     &.center{
         vertical-align: middle;
