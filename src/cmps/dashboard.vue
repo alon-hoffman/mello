@@ -1,11 +1,11 @@
 <template>
         <div class="modal-screen" :class="isOn" @click="toggleScreen">
             <article class="dashboard-modal">
-                <section class="daily-progress">
+                <section class="daily-progress" @click="lastWorkweek">
                     <Bar class="demo-chart"
                          id="my-chart-id"
-                         :options="chartOptions"
-                         :data="chartData"
+                         :options="dailyProgressOptions"
+                         :data="dailyProgressData"
                          :style="{'margin': 'auto'}"
                          />
                 </section>
@@ -28,12 +28,16 @@ export default{
     components: { Bar },
     data() {
         return {
-        chartData: {
-            labels: [ 'January', 'February', 'March' ],
-            datasets: [ { data: [40, 20, 12] } ]
-        },
-        chartOptions: {
-            responsive: true
+            includeSaturday: true,
+            includeSunday: true,
+        // dailyProgressData: {
+        //     labels: this.workweek,
+        //     datasets: [ { data: [40, 20, 12] } ]
+        // },
+        dailyProgressOptions: {
+            responsive: true,
+            
+            plugins: { legend: { display: false, }, },
         }
         }
     },
@@ -41,19 +45,31 @@ export default{
         toggleScreen(){
             this.$store.commit({ type: 'toggleScreen' })
         },
+        isDayToSkip(time){
+            return (this.includeSaturday && time.getDay() === 6) || (this.includeSunday && time.getDay() === 0)
+        },
     },
     computed:{
         isOn() {
           return {on: this.$store.getters.isScreen}
         },
-        recentDays(){
-            let time = Date.now()
-            const options = { weekday: 'long', day: 'numeric', month: 'numeric' }
+        lastWorkweek(){
+            let time = new Date()
+            const options = { weekday: 'short', day: 'numeric', month: 'numeric' }
             const workweek = []
             for (let i = 0; i < 7; i++){
-                workweek.push(time.toLocaleString(undefined, options))
+                if(this.isDayToSkip(time)) i--              
+                else workweek.unshift(time.toLocaleString(undefined, options))
+                time = new Date(time - 86400000)
             }
+            return workweek
         },
+        dailyProgressData(){
+            return {
+                labels: this.lastWorkweek,
+                datasets: [ { data: [40, 20, 12] } ]
+            }
+        }
     }
 }
 </script>
