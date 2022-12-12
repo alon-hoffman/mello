@@ -228,5 +228,12 @@
 //   margin-bottom: 100%;
 }
 
+@media (max-width: 500px){
+    .card-group{
+        .undefined{
+            max-height: calc(100vh - 240px);
+    }
+}
+}
 
   
