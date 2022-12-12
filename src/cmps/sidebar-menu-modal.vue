@@ -247,6 +247,11 @@ export default {
         retrieveItem(item){
             this.$store.dispatch({ type: 'retrieveItem', item })
         },
+        memberInitials(member) {
+            const fullName = member.fullname.split(' ');
+            const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
+            return initials.toUpperCase();
+        },
     },
     computed: {
         getUnsplashPhotos(){

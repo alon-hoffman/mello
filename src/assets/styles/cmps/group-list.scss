@@ -31,6 +31,7 @@
         justify-content: flex-start;
         margin:0;
         padding:0 0 0 20px;
+        transition: 0.2s;
     }
     .list-containers{
         display: flex !important;
@@ -115,7 +116,10 @@
     .group-list{
         transition: all .5s ease;
        & .zoomed{
-        zoom:75%
+        // zoom:75%;
+        & > ul {
+            transform: scale(0.75);
+        }
        }
        &::-webkit-scrollbar {
         height: 2px;
@@ -135,7 +139,10 @@
     }
     }
     .zoomed{
-        zoom:75%
+        // zoom:75%;
+        & > ul {
+            transform: scale(0.75);
+        }
        }
    
 }
