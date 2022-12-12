@@ -156,7 +156,7 @@
             margin-inline-start: 5px;
             background-color: #ffffffe6;
             color: $text-dark;
-
+            line-height: 22px;
             &:hover{
                 color: #091e42;
                 background-color: rgba(255, 255, 255, 0.8);
@@ -171,18 +171,18 @@
 }
 
 
-@media (max-width: 420px){
+@media (max-width: 600px){
     .board-header{
-    .add-user-btn.secondary-btn{
-       display:none;
+        .add-user-btn.secondary-btn{
+        display:none;
+        }
     }
-}
-.board-details{
-    .zoom{
-        visibility:visible;
-        position:fixed;
-        bottom: 50px;
-        right: 50px;
+    .board-details{
+        .zoom{
+            visibility:visible;
+            position:fixed;
+            bottom: 50px;
+            right: 50px;
+        }
     }
-}
 }

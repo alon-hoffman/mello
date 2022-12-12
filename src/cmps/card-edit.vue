@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-screen" :class="isOn" @click="$emit('toggleEdit')">
+    <div class="modal-screen on" :class="isOn" @click="$emit('toggleEdit')">
     <article v-if="card" v-click-outside-big-modal="checkCloseModal" class="modal" :class="isOn">
         <div class="icon lg close modal-close clickable" @click="closeModal" :style="isDarkCover"></div>
         <div class="card-cover" v-if="card.coverColor" :style="{ 'background-color': card.coverColor , 'background-image' : `url(${card.imgURL})`}">

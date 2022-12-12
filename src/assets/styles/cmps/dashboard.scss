@@ -1,0 +1,36 @@
+.dashboard-modal{
+    position: relative;
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    // margin: auto;
+    max-width: 784px;
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+        "daily-progress daily-progress"
+        "overall-done tasks-per-member"
+        "tasks-per-label info";
+    .daily-progress{
+        grid-area: daily-progress;
+        background-color: #fff;
+    }
+    .overall-done{
+        grid-area: overall-done;
+        background-color: brown;
+    }
+    .tasks-per-member{
+        grid-area: tasks-per-member;
+        background-color: yellow;
+    }
+    .tasks-per-label{
+        grid-area: tasks-per-label;
+        background-color: greenyellow;
+    }
+    .info{
+        grid-area: info;
+        background-color: magenta;;
+    }
+}
