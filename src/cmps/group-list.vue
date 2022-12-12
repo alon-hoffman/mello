@@ -1,5 +1,5 @@
 <template>
-  <section v-if="lists" class="group-list" :class="{'menu-modal-open':isSidebarMenuModal}">
+  <section v-if="lists" class="group-list" :class="{'menu-modal-open':isSidebarMenuModal,zoomed:isZoom}">
     <ul class="clean-list">
 
       <Container orientation="horizontal" class="list-containers" @drop="onColumnDrop($event)" drag-handle-selector=".column-drag-handle"
@@ -59,7 +59,11 @@ export default {
     Container,
     Draggable,
   },
-  computed: {},
+  computed: {
+    isZoom(){
+      return this.$store.getters.getZoom
+    }
+  },
   created() { },
   methods: {
     addList() {
