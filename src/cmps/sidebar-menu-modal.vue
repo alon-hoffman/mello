@@ -216,7 +216,8 @@ export default {
             }
         },
         async archive(){
-        this.currBoard.isArchived = true
+        if(this.currBoard.isArchived = true) this.currBoard.isArchived = false
+        else this.currBoard.isArchived = true
         await this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         await this.$store.dispatch({ type: "loadBoards" });
         this.$router.push('/board/')
