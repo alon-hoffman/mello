@@ -116,10 +116,10 @@
     .group-list{
         transition: all .5s ease;
        & .zoomed{
-        zoom:75%;
-        // & > ul {
-        //     transform: scale(0.75);
-        // }
+        // zoom:75%;
+        & > ul {
+            transform: scale(0.75) translateY(20%);
+        }
        }
        &::-webkit-scrollbar {
         height: 2px;
@@ -139,10 +139,10 @@
     }
     }
     .zoomed{
-        zoom:75%;
-        // & > ul {
-        //     transform: scale(0.75);
-        // }
+        // zoom:75%;
+        & > ul {
+            transform: scale(0.75) translate(-16.5%, -16.5%);
+        }
        }
    
 }

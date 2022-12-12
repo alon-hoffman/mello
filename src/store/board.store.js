@@ -119,7 +119,13 @@ export const boardStore = {
         retrieveItem({ currBoard }, { item }) {
             const idx = currBoard.archivedItems[item.type].findIndex(i => i.id === item.id)
             currBoard.archivedItems[item.type].splice(idx, 1)
-            item.isArchived = false
+            if (item.type === 'list') {
+                const list = currBoard.groups.find(group => group.id === item.id)
+                list.isArchived = false
+            } else {
+                item.isArchived = false
+            }
+
         },
         removeCardActivities({ currBoard }, { cardId }) {
             currBoard.activities = currBoard.activities.filter(activity => activity.card.id !== cardId)
@@ -133,7 +139,14 @@ export const boardStore = {
         },
         toggleLabeAreShown(state) {
             state.labeAreShown = !state.labeAreShown
-            console.log("🚀 ~ file: board.store.js:136 ~ toggleLabeAreShown ~ state.labeAreShown", state.labeAreShown)
+        },
+        removeList({ currBoard }, { groupId }) {
+            const Idx = currBoard.groups.findIndex(group => group.id === groupId)
+            currBoard.groups.splice(Idx, 1)
+        },
+        removeListCardsInArchive({ currBoard }, { groupId }) {
+            const { archivedItems } = currBoard
+            archivedItems.card = archivedItems.card.filter(c => c.groupId !== groupId)
         }
     },
     actions: {
@@ -198,10 +211,12 @@ export const boardStore = {
             const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })
         },
-        async removeList({ dispatch, state }, { groupId }) {
+        async removeList({ dispatch, state, commit }, { groupId }) {
+            const group = boardService.findGroupById(groupId, state.currBoard)
+            group.cards.forEach(card => commit({ type: 'removeCardActivities', cardId: card.id }))
+            commit({ type: 'removeListCardsInArchive', groupId })
+            commit({ type: 'removeList', groupId })
             const board = JSON.parse(JSON.stringify(state.currBoard))
-            const Idx = board.groups.findIndex(group => group.id === groupId)
-            board.groups.splice(Idx, 1)
             dispatch({ type: "updateBoard", board })
         },
         async duplicateList({ dispatch, state }, { list }) {
@@ -294,11 +309,13 @@ export const boardStore = {
                 user: userService.getLoggedinUser() || { fullname: 'Guest' },
             }
             if (!card.activities) card.activities = []
-            card.activities.unshift(activityToAdd)
+            if (card.id) card.activities.unshift(activityToAdd)
             commit({ type: 'addActivity', activity: activityToAdd })
         },
         retrieveItem({ commit, dispatch, state }, { item }) {
+            console.log(item)
             commit({ type: 'retrieveItem', item })
+            console.log(item)
             const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: 'updateBoard', board })
         }

@@ -1,12 +1,15 @@
 // board.store.js
 addActivity({ commit, state }, { activity }) {
     const { card, action, detail } = activity
+    // Insert the activity into a template
     const activityToAdd = {
         id: utilService.makeId(),
         card: {
             id: card?.id,
             title: card?.title
         },
+        // this service function chooses the displayed text and divides it
+        // judging by the parameters sent
         title: boardService.getActivityTitle(action, state.currBoard, card, detail),
         addedAt: Date.now(),
         user: userService.getLoggedinUser()?.fullname || 'Guest'

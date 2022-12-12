@@ -246,6 +246,7 @@ export default {
             console.log(this.currArchivedList)
         },
         retrieveItem(item){
+            console.log(item)
             this.$store.dispatch({ type: 'retrieveItem', item })
         },
         memberInitials(member) {
