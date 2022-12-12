@@ -8,6 +8,11 @@
           <span v-if="!board.isStarred" class="icon sm star-empty"></span>
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
+        <span class="separator-line">|</span>
+        <button class="dashboard-btn">
+          <span class="icon sm dashboard flex align-center"></span>
+          <span>View charts</span>
+        </button>
       </div>
       <div class="board-header-right">
         <button class="filter-btn" :class="filterOpen" @click="openFilter">
@@ -111,9 +116,6 @@ export default {
             // this.updateBoard(board)
           },
   computed: {
-    isScreen() {
-      return this.$store.getters.isScreen;
-    },
     isFilter(){
       if(!this.filterBy) return false
       const {keyword, members, labels} = this.filterBy
