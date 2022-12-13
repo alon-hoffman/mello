@@ -80,7 +80,7 @@ function activityNamer(action, board, card, detail) {
         addDetail: { before: ` added ${detail} to`, after: `` },
         removeDetail: { before: ` removed ${detail} from`, after: `` },
         todo: { before: ` completed ${detail} from`, after: `` },
-        archiveItem: { before: ` archived ${card ? detail : ''}` },
+        archiveItem: { before: ` archived ${card ? '' : detail}` },
         retrieveItem: { before: ` sent ${card ? '' : detail}`, after: ` to the board` },
         addComment: { before: ` commented on`, after: `: ${detail}` },
         removeList: { before: ` removed list ${group.title}`, after: `` },

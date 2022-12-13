@@ -219,7 +219,7 @@ export default {
         removeCard(cardId) {
             const card = {title: this.card.title, groupId: this.card.groupId}
             const activity = {card,  action: 'removeCard'}
-            this.$store.commit({type: 'retrieveItem', item: this.card })
+            if (this.card.isArchived) this.$store.dispatch({type: 'retrieveItem', item: this.card })
             this.$store.dispatch({ type: 'addActivity', activity})
             this.$store.dispatch({ type: "removeCard", cardId });
             this.closeModal()
