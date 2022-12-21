@@ -1,6 +1,6 @@
 <template>
-  <section class="home text-center">
-    <div class="ctsbPE">
+  <section class="home text-center ">
+    <div class="ctsbPE flex column">
       <div class="oFuOf">
         <div class="iPePOS">
           <div>

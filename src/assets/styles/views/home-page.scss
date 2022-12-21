@@ -85,7 +85,17 @@
     .trello-board-img{
         text-align: center;
         margin-bottom: 40px;
+        max-width: 80vw;
     }
-    
+}
 
+@media (max-width: 1200px){
+    .home {
+
+        background: 
+        url(https://images.ctfassets.net/rz1oowkt5gyp/6QeCRDk331YxhjdhUY5ZfR/0f0c9cc5c6f29c493e65c4aa88b9eafd/wave--big-swing-hero.svg) left bottom -0.5px / 100% 29% no-repeat scroll padding-box border-box, 
+        url(https://images.ctfassets.net/rz1oowkt5gyp/5NNPHxU4uE3URY8gHqBqsH/aac2280249309f6ebfcc16db45a795ad/white_moire.png) center center / 90% no-repeat scroll padding-box border-box, 
+        linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+      
+    }
 }
