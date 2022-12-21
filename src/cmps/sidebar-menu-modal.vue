@@ -22,10 +22,18 @@
                     <span class="change-background-text mini-head">Change background</span>
                 </div>
             </div>
-            <section @click="archive" class="edit-block clickable">
+            <section @click="canArchive=true" class="edit-block clickable">
                 <span class="icon lg archive"></span>
-                <span class="header flex justify-between">
-                    <span class="activity-title">Archive this board</span>
+                <span class="header">
+                    <span v-if="!canArchive" class="activity-title">Archive this board</span>
+                    <template v-else>
+                    <span  class="activity-title">Are you sure?</span>
+                    <div class="flex break"></div>
+                    <div class="flex justify-between">
+                        <span @click="canArchive=false">No</span>
+                    <span @click="archive">Yes</span>
+                     </div>
+                </template>
                 </span> </section>
             <section  class="edit-block">
                 <span class="icon lg" :class="currentDisplay"></span>
@@ -148,6 +156,7 @@ export default {
             currDisplay: 'Activity',
             currArchivedList: 'card',
             fac: new FastAverageColor(),
+            canArchive:false,
         }
     },
     created() {
