@@ -4,8 +4,8 @@
     <img v-if="card.imgURL" :src="cardUrl" class="preview-image">
     <div v-else-if="card.coverColor" class="card-preview-cover" :style="{ 'background-color': card.coverColor }"></div>
     <div v-if="dynamicCard.labels?.length" class="labels-container flex">
-      <div @click.stop="toggleLabeAreShown" v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview" :class="{'active':labelsAreShown}">
-        <span v-if="labelsAreShown">{{label.title}}</span></div>
+      <div @click.stop="toggleLabeAreShown" v-for="label in labels" :style="{ 'background-color': label.color }" class="label-preview flex align-center" :class="{'active':labelsAreShown}">
+       <div v-if="labelsAreShown" class="dot" :style="{'background-color': label.dotColor}" ></div> <span >&nbsp{{label.title}}</span></div>
     </div>
     <h1 class="preview-title">{{ card.title }}</h1>
     <div class="icons-container flex align-center justify-between">
@@ -56,9 +56,9 @@
         return this.card.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
          const labelInfo= this.boardLabels[idx]
+         const dotColor= labelInfo.color
          const color = this.labelsAreShown? utilService.LightenDarkenColor(labelInfo.color, 50): labelInfo.color
-         if(idx>-1)  return {color,title:labelInfo.title}
-         return "red"
+         return {color,title:labelInfo.title, dotColor}
         })
       },
       labelsAreShown(){

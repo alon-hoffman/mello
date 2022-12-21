@@ -63,19 +63,34 @@
             cursor: pointer;
             height: em(10px);
             border-radius: 5px;
-            transition: all 0.5s 0s ease, all 0.5s 0s ease;
+            transition: all 0.2s 0s ease, all 0.2s 0s ease;
+            // transition: transform 0.5s ease-in;
             span{
-                font-size: 0px;
+            // transition: all 0.5s 0s ease, all 0.5s 0s ease;
+            font-size: 0px;
+            color:black;
+            }
+            &:not(.active) span{
+            transition-delay: 0s;
             }
             &.active{
+                border-radius: 3px;
                 font-weight: 400;
                 max-width: 100%;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                padding-bottom: 20px;
-                padding-inline: 4PX;
+                // padding-bottom: 20px;
+                height:12px;
+                padding-inline-start: 4px;
+                padding-inline-end: 6px;
                 span{
-                    font-size: 12px;
+                    transition-delay: 0.2s;
+                    font-size: 11px;
+                }
+                .dot{
+                    height: 7px;
+                    width: 7px;
+                    border-radius: 50%;
                 }
             }
             }
