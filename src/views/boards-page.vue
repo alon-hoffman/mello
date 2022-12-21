@@ -5,7 +5,7 @@
       <article class="gallery flex">
         <aside class="gallery-sidebar">
 
-          <nav class="flex column">
+          <nav class="flex">
             <button  @click="setArchive(false, $event)"  class="gallery-nav-btn" :class="{active:!archived}">
               <span class="icon sm board board-btn-page"></span>
               Boards
@@ -17,10 +17,7 @@
               <span  class="icon sm pulse"></span>
               Home</button>
           </nav>
-          <div class="workspace-div justify-between">
-            Workspaces
-            <!-- <img src="../assets/icons/add.svg" alt=""> -->
-          </div>
+          
         </aside>
 
         <section  class="boards-showcase-container">

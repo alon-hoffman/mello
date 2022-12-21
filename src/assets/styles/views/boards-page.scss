@@ -1,9 +1,14 @@
+
+
 .gallery-container{
     background-color: #fbfbff;
-    height: 95vh;
+    min-height: 95vh;
     justify-content: center;
     .main-container-boards{
         width: 1097px;
+        nav{
+            flex-direction: column;
+        }
     }
     .workspace-div{
         padding: 5px 10px;
@@ -171,8 +176,22 @@
 
 
 @media (max-width: 600px) {
-    .gallery-sidebar{
-        display: none;
+    .gallery-container{
+    .main-container-boards{
+    nav{
+        flex-direction: row;
+         }
+        }
+    }
+    .gallery{
+        flex-direction: column;
+        align-items: center;
+    }
+    .gallery-list.boards-showcase-container{
+        grid-gap: 8px;
+    // grid-template-columns: repeat(auto-fill, minmax(80px, 194px) ) ;
+    grid-template-columns: 1fr 1fr;
+    padding-inline: 12px;
     }
 }
 
