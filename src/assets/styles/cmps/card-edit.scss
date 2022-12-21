@@ -437,6 +437,9 @@
 .detail-item {
     margin-bottom: 8px;
     margin-inline-start: 8px;
+    display:flex;
+    flex-wrap: wrap;
+    max-width: 532px;
 
     &-header {
         color: #5e6c84;
@@ -453,6 +456,7 @@
 
     &-content {
         gap: 4px;
+        flex-wrap: wrap;
         .member-img{
             width: 32px;
             height: 32px;
