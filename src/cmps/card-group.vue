@@ -110,13 +110,19 @@ export default {
       const list = Object.assign({}, this.list)
       list.cards = boardService.applyDrag(list.cards, dropResult)
       this.$store.dispatch({ type: "saveList", list })
+      
     },
     onCardDrop(columnId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
         const column = this.lists.filter((l) => l.id === columnId)[0]
         const list = JSON.parse(JSON.stringify(column))
         list.cards = boardService.applyDrag(list.cards, dropResult)
-          this.$store.dispatch({ type: "saveList", list })
+        this.$store.dispatch({ type: "saveList", list })
+      }
+      const elBody=document.querySelector("body")
+      if(elBody.className) {
+        elBody.classList.remove("smooth-dnd-disable-touch-action")
+        elBody.classList.remove("smooth-dnd-no-user-select")
       }
     },
     getCardPayload(columnId) {

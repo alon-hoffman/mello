@@ -83,6 +83,11 @@ export default {
       let lists = JSON.parse(JSON.stringify(this.lists))
       lists = boardService.applyDrag(lists, dropResult)
       this.$store.dispatch({ type: "saveLists", lists })
+      const elBody=document.querySelector("body")
+      if(elBody.className) {
+        elBody.classList.remove("smooth-dnd-disable-touch-action")
+        elBody.classList.remove("smooth-dnd-no-user-select")
+      }
       // this.list = scene
     },
      openEditArea(){

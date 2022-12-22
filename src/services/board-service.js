@@ -2,6 +2,7 @@
 import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
 import { userService } from '../services/user.service.js'
+import { storageService } from './async-storage.service.js'
 
 
 const KEY = 'boards_db'
@@ -40,10 +41,15 @@ function remove(boardId) {
 }
 
 function save(board) {
-    if (board._id) return httpService.put(BOARD_URL + board._id, board)
-    return httpService.post(BOARD_URL, board)
-    // if (board._id) return storageService.put(KEY, board)
-    // return storageService.post(KEY, board)
+    // const loggedInUser = userService.getLoggedinUser()
+    // if(loggedInUser){
+        if (board._id) return httpService.put(BOARD_URL + board._id, board)
+        return httpService.post(BOARD_URL, board)
+    // } 
+    // else{
+    //     if (board._id) return storageService.put(KEY, board)
+    //     return storageService.post(KEY, board)
+    // }
 }
 function getEmptyBoard() {
     return {
