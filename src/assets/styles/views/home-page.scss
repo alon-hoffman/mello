@@ -4,64 +4,96 @@
     background-blend-mode: normal, normal, normal, normal, normal;
     color: rgb(255, 255, 255);
     height: 100vh;
-
+    
     .ctsbPE {
         
-        @media (min-width: 1200px) {
-            max-width: 1140px;
-        }
-
-        @media (min-width: 992px) {
-            max-width: 960px;
-        }
-
-        @media (min-width: 768px) {
-            max-width: 720px;
-        }
-        
-        @media (min-width: 576px) {
-            max-width: 540px;
-        }
         margin-left: auto;
         margin-right: auto;
         padding-left: 1rem;
         padding-right: 1rem;
-        width: 100%;
+        max-width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        @media (max-width: 1200px) {
+            max-width: 1140px;
+        }
+        
+        @media (max-width: 992px) {
+            max-width: 960px;
+        }
+        
+        @media (max-width: 768px) {
+            max-width: 720px;
+        }
+
+        @media (max-width: 576px) {
+            max-width: 540px;
+        }
+        @media (max-width: 540px) {
+            max-width: 450px;
+        }
+        @media (max-width: 450px) {
+            max-width: 300px;
+        }
     }
     
-    .oFuOf {
-        // -webkit-box-align: stretch;
-        // align-items: stretch;
-        // -webkit-box-pack: start;
-        // justify-content: flex-start;
-        // display: flex;
-        // flex-wrap: wrap;
-        // margin-left: -1rem;
-        // margin-right: -1rem;
-    }
-
     .iPePOS {
         padding: 6rem 1rem 1rem;
         position: relative;
         scroll-margin-top: 72px;
         text-align: center;
         width: 100%;
-.h1-container{
-    width: rem(727px);
-    margin: 0 auto;
 
-}
-.main-home-page-title {
+        .h1-container {
+            max-width: 700px;
+            margin: 0 auto;
+            @media (max-width: 1200px) {
+                max-width: 600px;
+            }
+            
+            @media (max-width: 992px) {
+                max-width: 500px;
+            }
+            
+            @media (max-width: 768px) {
+                max-width: 500px;
+            }
+    
+            @media (max-width: 576px) {
+                max-width: 400px;
+            }
+           
+        }
+        
+        .main-home-page-title {
             font-size: 48px;
             text-align: center;
             line-height: 1.25;
             font-weight: 500;
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family:'Segoe UI',
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
             margin-bottom: 30px;
+            @media (max-width: 992px) {
+                font-size: 48px;
+            }
+
+            @media (max-width: 768px) {
+                font-size: 44px;
+            }
+
+            @media (max-width: 576px) {
+                font-size: 36px;
+            }
+
+            @media (max-width: 300px) {
+                font-size: 30px;
+            }
+
         }
 
         p {
@@ -70,6 +102,7 @@
         }
 
     }
+
     .guest-button {
         height: 49px;
         width: 164px;
@@ -82,20 +115,21 @@
         text-align: center;
         margin-bottom: 45px;
     }
-    .trello-board-img{
+
+    .trello-board-img {
         text-align: center;
         margin-bottom: 40px;
         max-width: 80vw;
     }
 }
 
-@media (max-width: 1200px){
+@media (max-width: 1200px) {
     .home {
 
-        background: 
-        url(https://images.ctfassets.net/rz1oowkt5gyp/6QeCRDk331YxhjdhUY5ZfR/0f0c9cc5c6f29c493e65c4aa88b9eafd/wave--big-swing-hero.svg) left bottom -0.5px / 100% 29% no-repeat scroll padding-box border-box, 
-        url(https://images.ctfassets.net/rz1oowkt5gyp/5NNPHxU4uE3URY8gHqBqsH/aac2280249309f6ebfcc16db45a795ad/white_moire.png) center center / 90% no-repeat scroll padding-box border-box, 
-        linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
-      
+        background:
+            url(https://images.ctfassets.net/rz1oowkt5gyp/6QeCRDk331YxhjdhUY5ZfR/0f0c9cc5c6f29c493e65c4aa88b9eafd/wave--big-swing-hero.svg) left bottom -0.5px / 100% 29% no-repeat scroll padding-box border-box,
+            url(https://images.ctfassets.net/rz1oowkt5gyp/5NNPHxU4uE3URY8gHqBqsH/aac2280249309f6ebfcc16db45a795ad/white_moire.png) center center / 90% no-repeat scroll padding-box border-box,
+            linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+
     }
 }

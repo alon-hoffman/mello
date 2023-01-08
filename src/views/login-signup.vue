@@ -26,16 +26,19 @@
         <input type="text" v-model="signupInfo.fullname" placeholder="Full name" />
         <input type="password" v-model="signupInfo.password" placeholder="Password" />
         <label>
-          <div class="fake-button">
+          <div class="fake-button upload-avatar">
             Upload avatar image
-            <input  type="file" @change="uploadImgToCloud" hidden>
+            <input type="file" @change="uploadImgToCloud" hidden>
+          </div>
+          <div v-if="signupInfo.imgUrl" class="user-signup-img">
+            <img :src="signupInfo.imgUrl" alt="">
           </div>
         </label>
-        
+
         <button class="login-signup-btn">Signup</button>
       </form>
       <div class="change-login-signup-container">
-        <span class="change-login-signup-btn" @click="changeShowLogin">Click to Log in</span>
+        <button class="change-login-signup-btn" @click="changeShowLogin">Click to Log in</button>
       </div>
     </section>
   </section>
@@ -49,7 +52,7 @@ export default {
   name: 'login-signup',
   data() {
     return {
-      msg:'',
+      msg: '',
       showLogin: false,
       credentials: {
         email: '',
@@ -59,7 +62,7 @@ export default {
         fullname: '',
         email: '',
         password: '',
-        imgUrl:''
+        imgUrl: ''
       }
     }
   },
@@ -70,18 +73,18 @@ export default {
         return
       }
       try {
-      const res= await this.$store.dispatch({ type: 'login', cred: this.credentials });
-      // console.log(`res = `, res)
-      this.$router.push('/board')
+        const res = await this.$store.dispatch({ type: 'login', cred: this.credentials });
+        // console.log(`res = `, res)
+        this.$router.push('/board')
       }
-     catch (err) {
+      catch (err) {
         console.log(err)
         this.msg = 'Failed to login'
       }
     },
     changeShowLogin() {
       this.showLogin = !this.showLogin
-       this.msg =''
+      this.msg = ''
       setTimeout(() => {
         this.$refs.email.focus()
       }, 0)
@@ -95,9 +98,9 @@ export default {
       this.$router.push('/board')
     },
     async uploadImgToCloud(ev) {
-            const res = await uploadService.uploadImg(ev);
-            this.signupInfo.imgUrl=res.url
-        },
+      const res = await uploadService.uploadImg(ev);
+      this.signupInfo.imgUrl = res.url
+    },
   },
   mounted() {
     setTimeout(() => {
