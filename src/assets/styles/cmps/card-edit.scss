@@ -210,7 +210,7 @@
             font-weight: 600;
             color: $text-dark;
             font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
+            width: 100%;
             &:focus {
                 background-color: #fff;
                 box-shadow: inset 0 0 0 2px #0079bf;
@@ -248,17 +248,26 @@
             border-radius: 3em;
             height: 8px;
             position: relative;
+            &::-webkit-progress-value {
+                background-color: #5ba4cf;
+                border-radius: 3em 0 0 3em;
+            }
+            &.done::-webkit-progress-value {
+                background-color: #61bd4f;
+                border-radius: 3em;
+            }
+
         }
 
-        .progress-bar::-webkit-progress-value {
-            background-color: #5ba4cf;
-            border-radius: 3em 0 0 3em;
-        }
+        // .progress-bar::-webkit-progress-value {
+        //     background-color: #5ba4cf;
+        //     border-radius: 3em 0 0 3em;
+        // }
 
-        & .progress-bar.done::-webkit-progress-value {
-            background-color: #61bd4f;
-            border-radius: 3em;
-        }
+        // & .progress-bar.done::-webkit-progress-value {
+        //     background-color: #61bd4f;
+        //     border-radius: 3em;
+        // }
     }
 
     & .dynamic-content {
