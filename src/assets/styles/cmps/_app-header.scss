@@ -124,7 +124,8 @@
         border: 1px solid rgba(23, 43, 77, 0.16);
 
         &:focus-within {
-            width: rem(890px);
+            // width: rem(890px);
+            flex: 1;
         }
     }
 
@@ -143,11 +144,14 @@
 .right-header {
     display: flex;
     gap: 5px;
+    &:focus-within{
+        flex: 1;
+    }
 
     .board-search-input {
         &:focus {
             border: 1px solid $blue;
-
+            // flex: 1;
             &::placeholder {
                 color: $clr3;
             }
@@ -300,7 +304,8 @@
     }
     .search-boards {
         &:focus-within {
-            width: rem(200px);
+            // width: rem(200px);
+            flex: 1;
         }
 }
 }
