@@ -31,14 +31,14 @@
     },
     created() {
       this.user=this.$store.getters.loggedinUser
-      // console.log(`this.user = `, this.user)
     },
     methods: {
       logOut(){
-        this.$store.dispatch({ type: "logout" });
-        this.$router.push('/')
+        setTimeout(()=>{
+          this.$store.dispatch({ type: "logout" });
+          this.$router.push('/')
+        },100)
         this.closeUserModal()
-        // console.log( "log out")
       },
       closeUserModal(){
         this.$emit("closeUserModal")
