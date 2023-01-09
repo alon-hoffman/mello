@@ -465,7 +465,16 @@ export default {
         },
         async uploadAndSetCoverImg(ev) {
             const res = await uploadService.uploadImg(ev);
-            this.setCoverImg(res.secure_url)
+            //Adding with 'w_auto' makes it that smaller devices will show a smaller image file
+            const parts = res.secure_url.split("/");
+              // Find the index of the "upload" part of the URL
+            const uploadIndex = parts.indexOf("upload");
+
+            // Insert the 'w_auto' transformation parameter after the "upload" part
+            parts.splice(uploadIndex + 1, 0, "w_auto");
+            const imageUrl=parts.join("/")
+            console.log("🚀 ~ file: modal-sidebar.vue:476 ~ uploadAndSetCoverImg ~ imageUrl", imageUrl)
+            this.setCoverImg(imageUrl)
         },
         dateOpen() {
             this.isDatePickerOpen = true
