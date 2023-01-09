@@ -64,7 +64,7 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
-            const boardIdx = state.boards.find(b => b._id === board._id)
+            const boardIdx = state.boards.findIndex(b => b._id === board._id)
             state.boards.splice(boardIdx, 1, board)
             state.currBoard = board
 
@@ -170,11 +170,9 @@ export const boardStore = {
             try {
                 var oldBoard = JSON.parse(JSON.stringify(state.currBoard))
                 board.lastUpdate = Date.now()
-                boardService.save(board)
-                await commit({ type: 'updateBoard', board })
+                await boardService.save(board)
+                commit({ type: 'updateBoard', board })
                 socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
-
-
             } catch (err) {
                 commit({ type: 'updateBoard', board: oldBoard })
                 commit({ type: 'removeActivity', activityId })
