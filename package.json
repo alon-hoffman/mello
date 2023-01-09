@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "chart.js": "^4.0.1",
+    "dotenv": "^16.0.3",
     "element-plus": "^2.2.25",
     "fast-average-color": "^9.1.1",
     "fast-average-color-node": "^2.4.0",
@@ -20,6 +21,7 @@
     "unsplash-js": "^7.0.15",
     "vue": "^3.2.37",
     "vue-chartjs": "^5.0.1",
+    "vue-google-login": "^2.0.5",
     "vue-router": "^4.1.2",
     "vue3-google-login": "^2.0.12",
     "vue3-persian-datetime-picker": "^1.2.2",
