@@ -67,8 +67,8 @@ export default {
   created() { },
   methods: {
     addList() {
-      console.log('hi')
       this.$emit('saveList', { title: this.newTitle, cards: [] })
+      this.newTitle=''
     },
     addCard(card) {
       this.$emit("addCard", card)
