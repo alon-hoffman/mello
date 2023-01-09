@@ -33,7 +33,7 @@
       <div class="right-header align-center">
         <div class="search-boards">
           <input ref="search" type="text" placeholder="Search" class="board-search-input"
-            style="font-family:Arial, FontAwesome">
+            style="font-family:Arial, FontAwesome" @input="updateSearch">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
           <ul class="board-menu" v-if="boards">
             <div class="board-menu-header">RECENT BOARDS</div>
@@ -174,13 +174,13 @@ export default {
       return this.$store.getters.loggedinUser
     },
     boards(){
-      return this.$store.getters.boards
+      return JSON.parse(JSON.stringify(this.$store.getters.boards))
     },
     lastViewed() {
-      // const boards = this.$store.getters.boards.filter(board => !board.isArchived);
+      // const boards = this.boards.filter(board => !board.isArchived);
       const boards = this.boards
-      const filteredBoards = boards.filter(board => board.lastViewed)
-      return filteredBoards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
+      // const filteredBoards = boards.filter(board => board.lastViewed)
+      return boards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
     },
   },
   watch: {

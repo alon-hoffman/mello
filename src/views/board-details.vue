@@ -182,6 +182,7 @@ export default {
   methods: {
     async setBoard(){
       if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+      console.log(this.$store.getters.boards)
       const { boardId } = this.$route.params
       socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
       socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board)=>{ 
@@ -191,7 +192,7 @@ export default {
       const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
       this.reactiveTitle= board.title
       board.lastViewed= Date.now()
-      // this.updateBoard(board)
+      this.updateBoard()
     },
     toggleEdit(cardId) {
       this.$store.commit({ type: "setCurrCard",cardId} );
