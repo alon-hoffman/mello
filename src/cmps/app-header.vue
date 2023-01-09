@@ -33,11 +33,11 @@
       <div class="right-header align-center">
         <div class="search-boards">
           <input ref="search" type="text" placeholder="Search" class="board-search-input"
-            style="font-family:Arial, FontAwesome" @input="updateSearch">
+            style="font-family:Arial, FontAwesome" v-model="searchFilter">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
           <ul class="board-menu" v-if="boards">
-            <div class="board-menu-header">RECENT BOARDS</div>
-            <button v-for="board in lastViewed" class="board-menu-item flex align-center" @click="selectBoard(board._id)">
+            <div class="board-menu-header">{{searchFilter ? 'BOARDS' : 'RECENT BOARDS'}}</div>
+            <button v-for="board in boardSearchList" class="board-menu-item flex align-center" @click="selectBoard(board._id)">
               <img v-if="board.style.backgroundImageThumb" class="board-thumbnail" :src="board.style.backgroundImageThumb">
               <img v-else-if="board.style.backgroundImage" class="board-thumbnail" :src="board.style.backgroundImage">
               <div class="flex column">
@@ -85,8 +85,7 @@ export default {
       isUserModalOpen: false,
       modal: null,
       modalCords: null,
-
-      // placeholder
+      searchFilter: '',
     }
   },
   components: {
@@ -138,7 +137,7 @@ export default {
       return
     },
     selectBoard(id){
-      // this.$refs.search.blur()
+      this.searchFilter = ''
       this.$router.push(`/board/${id}`)
       },
   },
@@ -177,10 +176,15 @@ export default {
       return JSON.parse(JSON.stringify(this.$store.getters.boards))
     },
     lastViewed() {
-      // const boards = this.boards.filter(board => !board.isArchived);
       const boards = this.boards
-      // const filteredBoards = boards.filter(board => board.lastViewed)
-      return boards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
+      return boards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 5);
+    },
+    searchBoards(){
+        const regex = new RegExp(this.searchFilter, 'i')
+        return this.boards.filter(board => regex.test(board.title)).slice(0,5)
+    },
+    boardSearchList(){
+      return this.searchFilter ? this.searchBoards : this.lastViewed
     },
   },
   watch: {
