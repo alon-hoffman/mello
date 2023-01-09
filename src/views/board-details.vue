@@ -8,11 +8,11 @@
           <span v-if="!board.isStarred" class="icon sm star-empty"></span>
           <span v-else class="icon sm star-full" style="color:yellow" ></span>
         </button>
-        <span class="separator-line">|</span>
-        <button class="dashboard-btn flex align-center" @click="toggleScreen">
+        <!-- <span class="separator-line">|</span> -->
+        <!-- <button class="dashboard-btn flex align-center" @click="toggleScreen">
           <span class="icon sm dashboard "></span>
           <span>Charts</span>
-        </button>
+        </button> -->
       </div>
       <div class="board-header-right">
         <button class="filter-btn" :class="filterOpen" @click="openFilter">
@@ -106,17 +106,7 @@ export default {
             }
           },
           async created() {
-            if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
-            const { boardId } = this.$route.params
-            socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
-            socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board)=>{ 
-              this.$store.commit({ type: "updateBoard", board })
-    })
-              this.$store.commit({ type: 'setBoardById',  id:boardId });
-              const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
-              this.reactiveTitle= board.title
-              board.lastViewed= Date.now()
-            // this.updateBoard(board)
+            await this.setBoard()
           },
   computed: {
     isFilter(){
@@ -179,6 +169,19 @@ export default {
       }
   },
   methods: {
+    async setBoard(){
+      if(!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" });
+      const { boardId } = this.$route.params
+      socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
+      socketService.on(SOCKET_EMIT_BOARD_UPDATED, (board)=>{ 
+        this.$store.commit({ type: "updateBoard", board })
+      })
+      this.$store.commit({ type: 'setBoardById',  id:boardId });
+      const board = JSON.parse(JSON.stringify(this.$store.getters.getCurrBoard||{}))
+      this.reactiveTitle = board.title
+      board.lastViewed = Date.now()
+      this.updateBoard()
+    },
     toggleEdit(cardId) {
       this.$store.commit({ type: "setCurrCard",cardId} );
       const id= this.$store.getters.getCurrBoard._id
@@ -244,12 +247,16 @@ export default {
       this.filterBy = filter
     },
     toggleZoom(){
-      console.log('hi')
       this.$store.commit({ type: "toggleZoom" })
     },
     toggleScreen(){
       this.$store.commit({ type: "toggleScreen" })
     }
   },
+  watch: {
+    $route(){
+      this.setBoard()
+    }
+  }
 };
 </script>

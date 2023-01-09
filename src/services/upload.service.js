@@ -16,6 +16,7 @@ console.log(`foo = `, ev.target.files[0])
   })
     .then(res => res.json())
     .then(res => {
+      console.log("🚀 ~ file: upload.service.js:23 ~ uploadImg ~ res", res)
       return res
     })
     .catch(err => console.error(err))

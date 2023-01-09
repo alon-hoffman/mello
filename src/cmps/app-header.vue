@@ -33,8 +33,19 @@
       <div class="right-header align-center">
         <div class="search-boards">
           <input ref="search" type="text" placeholder="Search" class="board-search-input"
-            style="font-family:Arial, FontAwesome">
+            style="font-family:Arial, FontAwesome" v-model="searchFilter">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+          <ul class="board-menu" v-if="boards">
+            <div class="board-menu-header">{{searchFilter ? 'BOARDS' : 'RECENT BOARDS'}}</div>
+            <button v-for="board in boardSearchList" class="board-menu-item flex align-center" @click="selectBoard(board._id)">
+              <img v-if="board.style.backgroundImageThumb" class="board-thumbnail" :src="board.style.backgroundImageThumb">
+              <img v-else-if="board.style.backgroundImage" class="board-thumbnail" :src="board.style.backgroundImage">
+              <div class="flex column">
+                <span>{{board.title}}</span>
+                <span class="residence">{{Object.keys(board.createdBy).length ? board.createdBy.fullname + "'s" : 'Mello'}} workplace</span>
+              </div>
+            </button>
+          </ul>
         </div>
         <button v-if="user" class=" secondary-btn profile-icon" @click="modal = 'user'"
           :style="{ 'background-image': `url(${user?.imgUrl})` }">
@@ -74,19 +85,13 @@ export default {
       isUserModalOpen: false,
       modal: null,
       modalCords: null,
-
-      // placeholder
+      searchFilter: '',
     }
-  },
-  created() {
   },
   components: {
     headerModal,
     userModal,
     boardCreator
-  },
-  created() {
-
   },
   methods: {
     toggleCreateModal() {
@@ -94,6 +99,7 @@ export default {
     },
     focusInput() {
       this.$refs.search.focus()
+
     },
     enterAsGuest() {
       this.$router.push('/board')
@@ -130,6 +136,10 @@ export default {
         this.getHeaderColor()
       return
     },
+    selectBoard(id){
+      this.searchFilter = ''
+      this.$router.push(`/board/${id}`)
+      },
   },
   computed: {
     loggedInUser() {
@@ -159,8 +169,22 @@ export default {
       const initials = userInitials.shift().charAt(0) + userInitials.pop().charAt(0);
       return initials.toUpperCase();
     },
-    user() {
+    user(){
       return this.$store.getters.loggedinUser
+    },
+    boards(){
+      return JSON.parse(JSON.stringify(this.$store.getters.boards))
+    },
+    lastViewed() {
+      const boards = this.boards
+      return boards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 5);
+    },
+    searchBoards(){
+        const regex = new RegExp(this.searchFilter, 'i')
+        return this.boards.filter(board => regex.test(board.title)).slice(0,5)
+    },
+    boardSearchList(){
+      return this.searchFilter ? this.searchBoards : this.lastViewed
     },
   },
   watch: {

@@ -25,15 +25,8 @@
             <section @click="canArchive=true" class="edit-block clickable">
                 <span class="icon lg archive"></span>
                 <span class="header">
-                    <span v-if="!canArchive" class="activity-title">Archive this board</span>
-                    <template v-else>
-                    <span  class="activity-title">Are you sure?</span>
-                    <div class="flex break"></div>
-                    <div class="flex justify-between">
-                        <span @click="canArchive=false">No</span>
-                    <span @click="archive">Yes</span>
-                     </div>
-                </template>
+                    <span v-if="!currBoard.isArchived" @click="archive" class="activity-title">Archive this board</span>
+                    <span v-else @click="archive" class="activity-title">Un-Archive this board</span>
                 </span> </section>
             <section  class="edit-block">
                 <span class="icon lg" :class="currentDisplay"></span>
@@ -225,8 +218,8 @@ export default {
             }
         },
         async archive(){
-        if(this.currBoard.isArchived = true) this.currBoard.isArchived = false
-        else this.currBoard.isArchived = true
+            this.currBoard.isArchived =! this.currBoard.isArchived
+            console.log("🚀 ~ file: sidebar-menu-modal.vue:222 ~ archive ~ this.currBoard.isArchived", this.currBoard.isArchived)
         await this.$store.dispatch({ type: "updateBoard", board:this.currBoard })
         await this.$store.dispatch({ type: "loadBoards" });
         this.$router.push('/board/')

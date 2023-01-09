@@ -475,3 +475,10 @@
         }
     }
 }
+
+@media (max-width: 650px){
+.sidebar-menu-modal{
+    position: fixed;
+    top: 44px;
+}
+}
