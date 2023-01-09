@@ -1,7 +1,7 @@
 <template>
   <header v-if="params === '/'" class="home-page-header">
     <nav>
-      <router-link to="/" class="home-logo-page">
+      <router-link to="/" class="home-logo-page" @click="modal = ''">
         <!-- <img class="logo-img-home"
           src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
           alt=""> -->
@@ -47,19 +47,17 @@
             </button>
           </ul>
         </div>
-        <!-- <button><img class="bell-img-header" src="../assets/icons/bell-regular.png" alt=""></button> -->
-
-        <!-- <button class="secondary-btn"><img class="circle-img-header" @click="modal = 'about'"
-            src="../assets/icons/circle-question-regular.png" alt=""></button> -->
-        <button class=" secondary-btn profile-icon" @click="modal = 'user'" :style="{'background-image' : `url(${user.imgUrl})`}">
-          <span v-if="user && !user.imgUrl" class="userInitials">{{ userInitials }}</span>
-          <!-- <img v-if="user?.imgUrl" class="user-img-header" :src="getUserImg" alt="../assets/icons/user-solid.png"> -->
-          <img v-if="!user" class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
+        <button v-if="user" class=" secondary-btn profile-icon" @click="modal = 'user'"
+          :style="{ 'background-image': `url(${user?.imgUrl})` }">
+          <span v-if="user && !user?.imgUrl" class="userInitials">{{ userInitials }}</span>
+        </button>
+        <button v-else class=" secondary-btn profile-icon" @click="modal = 'user'">
+          <img class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
         </button>
       </div>
     </nav>
-    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" @closeUserModal="closeUserModal"/>
-    <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" />
+    <header-modal v-if="modal === 'about'" v-click-outside="() => modal = null" @closeUserModal="closeUserModal" />
+    <user-modal v-if="modal === 'user'" v-click-outside="() => modal = null" @closeUserModal="closeUserModal"/>
     <board-creator :modalCords="modalCords" v-if="modal === 'create'" v-click-outside="() => modal = null"
       @saveBoard="saveBoard" />
 
@@ -87,7 +85,7 @@ export default {
       isUserModalOpen: false,
       modal: null,
       modalCords: null,
-      
+
       // placeholder
     }
   },
@@ -113,6 +111,7 @@ export default {
     },
     closeUserModal() {
       this.modal = null
+      console.log(`this.modal = `, this.modal)
     },
     async getAverageColor(imgUrl) {
       try {
@@ -163,8 +162,8 @@ export default {
     },
     getUserImg() {
       const user = this.$store.getters.loggedinUser
-       return user.imgUrl
-      
+      return user.imgUrl
+
     },
     userInitials() {
       const userInitials = this.user.fullname.split(' ');
