@@ -17,7 +17,8 @@ import { userService } from './services/user.service'
 
 export default {
 
-  created() {
+  async created() {
+    await this.$store.dispatch({ type: "loadBoards" })
     const user = userService.getLoggedinUser()
     if (user)  store.commit({type: 'setLoggedinUser', user})
   },

@@ -70,9 +70,8 @@ export default {
     }
   },
   async created() {
-    // if (!this.$store.getters.boards)
+    if (!this.$store.getters.boards) await this.$store.dispatch({ type: "loadBoards" })
     //need to watch out may be too big to send request every time
-     await this.$store.dispatch({ type: "loadBoards" })
   },
   computed: {
     boardGroups(){

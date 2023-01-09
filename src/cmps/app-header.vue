@@ -35,6 +35,17 @@
           <input ref="search" type="text" placeholder="Search" class="board-search-input"
             style="font-family:Arial, FontAwesome">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
+          <ul class="board-menu" v-if="boards">
+            <div class="board-menu-header">RECENT BOARDS</div>
+            <button v-for="board in lastViewed" class="board-menu-item flex align-center" @click="selectBoard(board._id)">
+              <img v-if="board.style.backgroundImageThumb" class="board-thumbnail" :src="board.style.backgroundImageThumb">
+              <img v-else-if="board.style.backgroundImage" class="board-thumbnail" :src="board.style.backgroundImage">
+              <div class="flex column">
+                <span>{{board.title}}</span>
+                <span class="residence">{{Object.keys(board.createdBy).length ? board.createdBy.fullname + "'s" : 'Mello'}} workplace</span>
+              </div>
+            </button>
+          </ul>
         </div>
         <button v-if="user" class=" secondary-btn profile-icon" @click="modal = 'user'"
           :style="{ 'background-image': `url(${user?.imgUrl})` }">
@@ -78,15 +89,10 @@ export default {
       // placeholder
     }
   },
-  created() {
-  },
   components: {
     headerModal,
     userModal,
     boardCreator
-  },
-  created() {
-
   },
   methods: {
     toggleCreateModal() {
@@ -94,6 +100,7 @@ export default {
     },
     focusInput() {
       this.$refs.search.focus()
+
     },
     enterAsGuest() {
       this.$router.push('/board')
@@ -130,6 +137,10 @@ export default {
         this.getHeaderColor()
       return
     },
+    selectBoard(id){
+      // this.$refs.search.blur()
+      this.$router.push(`/board/${id}`)
+      },
   },
   computed: {
     loggedInUser() {
@@ -159,8 +170,17 @@ export default {
       const initials = userInitials.shift().charAt(0) + userInitials.pop().charAt(0);
       return initials.toUpperCase();
     },
-    user() {
+    user(){
       return this.$store.getters.loggedinUser
+    },
+    boards(){
+      return this.$store.getters.boards
+    },
+    lastViewed() {
+      // const boards = this.$store.getters.boards.filter(board => !board.isArchived);
+      const boards = this.boards
+      const filteredBoards = boards.filter(board => board.lastViewed)
+      return filteredBoards.sort((board1, board2) => board2.lastViewed - board1.lastViewed).slice(0, 4);
     },
   },
   watch: {
