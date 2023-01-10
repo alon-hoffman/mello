@@ -17,6 +17,10 @@
       <div class="change-login-signup-container">
         <button class="change-login-signup-btn" @click="changeShowLogin">Click to Sign up </button>
       </div>
+      <!-- here google -->
+      <!-- <GoogleLogin :callback="callback"/> -->
+      <!-- <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin>
+      <GoogleLogin :params="params" :logoutButton=true>Logout</GoogleLogin> -->
     </section>
     <section v-else class="login-signup-section">
       <h2 class="login-signup-title">Sign up for your account</h2>
@@ -48,6 +52,8 @@
 <script>
 import { userService } from '../services/user.service.js'
 import { uploadService } from '../services/upload.service.js'
+// import GoogleLogin from "vue-google-login";
+
 export default {
   name: 'login-signup',
   data() {
@@ -63,7 +69,12 @@ export default {
         email: '',
         password: '',
         imgUrl: ''
-      }
+      },
+      callback : (response) => {
+  // This callback will be triggered when the user selects or login to
+  // his Google account from the popup
+  console.log("Handle the response", response)
+}
     }
   },
   methods: {
@@ -81,6 +92,15 @@ export default {
         console.log(err)
         this.msg = 'Failed to login'
       }
+    },
+    onSuccess(googleUser) {
+      console.log(googleUser);
+
+      // This only gets the user information: id, name, imageUrl and email
+      console.log(googleUser.getBasicProfile());
+    },
+    onFailure(err) {
+      console.log("failed", err);
     },
     changeShowLogin() {
       this.showLogin = !this.showLogin
@@ -106,6 +126,9 @@ export default {
     setTimeout(() => {
       this.$refs.email.focus()
     }, 0)
+  },
+  components: {
+ 
   }
 
 }
