@@ -1,6 +1,7 @@
 <template>
   <header v-if="params === '/'" class="home-page-header">
     <nav>
+      <div class="left-home-header">
       <router-link to="/" class="home-logo-page" @click="modal = ''">
         <!-- <img class="logo-img-home"
           src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
@@ -8,7 +9,14 @@
         <img class="logo-img-home"
           src="https://res.cloudinary.com/mello123/image/upload/v1670406786/yd2qyxfpqsuosu76o82o.png" alt="">
       </router-link>
-      <section class="right-home-header">
+      <div class="hamburger" @click="isOpen=! isOpen" :class="{open: isOpen}">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+</div>
+      <section class="right-home-header" :class="{open: isOpen}">
+        
         <router-link to="/auth">
           <button class="login-button">Log in</button>
         </router-link>
@@ -86,6 +94,7 @@ export default {
       modal: null,
       modalCords: null,
       searchFilter: '',
+      isOpen:false
     }
   },
   components: {
