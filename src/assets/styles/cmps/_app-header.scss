@@ -29,7 +29,7 @@
     .right-home-header {
         display: flex;
         height: 60px;
-        
+        padding-inline-end: 10px;
     }
 
 
@@ -167,7 +167,7 @@
                 &:hover{
                     background-color: #f5f5f5;
                 }
-                img{
+                .board-thumbnail{
                     width: 32px;
                     height: 32px;
                     border-radius: 3px;
@@ -184,7 +184,9 @@
                     border-bottom-right-radius: 3px;
                 }
             }
-            
+            &.show-search{
+                display: block;
+            }
         }
     }
 
@@ -363,12 +365,17 @@
     .secondary-btn{
        display:none;
     }
-    .search-boards {
-        &:focus-within {
-            // width: rem(200px);
-            flex: 1;
-        }
+    .boards-page .search-boards {
+            width: rem(40px);
+            background-color: unset;
+            border: unset;
 }
+.board-search-input.show-search{
+    display: block;
+}
+.left-header.show-search, .profile-icon.show-search{
+    display: none;
+} 
 .home-page-header{
 nav{
 .right-home-header{

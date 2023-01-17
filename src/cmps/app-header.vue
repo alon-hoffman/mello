@@ -3,9 +3,7 @@
     <nav>
       <div class="left-home-header">
       <router-link to="/" class="home-logo-page" @click="modal = ''">
-        <!-- <img class="logo-img-home"
-          src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
-          alt=""> -->
+        
         <img class="logo-img-home"
           src="https://res.cloudinary.com/mello123/image/upload/v1670406786/yd2qyxfpqsuosu76o82o.png" alt="">
       </router-link>
@@ -28,7 +26,7 @@
     <nav :style="{ backgroundColor: getHeadColor }">
 
 
-      <div class="left-header">
+      <div class="left-header" :class="{'show-search': searchOn}">
         <router-link to="/" class="home-logo-page">
           <img class="logo-img-board"
             src="https://res.cloudinary.com/mello123/image/upload/v1670406801/dmvdzqf6o9tnxxnohnb0.png" alt="">
@@ -39,15 +37,17 @@
         <button ref="createBtn" class="create-board-btn secondary-btn" @click="openCreateModal">Create </button>
       </div>
       <div class="right-header align-center">
-        <div class="search-boards">
-          <input ref="search" type="text" placeholder="Search" class="board-search-input"
-            style="font-family:Arial, FontAwesome" v-model="searchFilter">
+        <div class="search-boards" @click="startSearch">
+          <input ref="search" type="text" placeholder="Search" class="board-search-input secondary-btn"
+          :class="{'show-search': searchOn}" style="font-family:Arial, FontAwesome" v-model="searchFilter"
+          @blur="searchOn=false">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
           <ul class="board-menu" v-if="boards">
             <div class="board-menu-header">{{searchFilter ? 'BOARDS' : 'RECENT BOARDS'}}</div>
             <button v-for="board in boardSearchList" class="board-menu-item flex align-center" @click="selectBoard(board._id)">
               <img v-if="board.style.backgroundImageThumb" class="board-thumbnail" :src="board.style.backgroundImageThumb">
               <img v-else-if="board.style.backgroundImage" class="board-thumbnail" :src="board.style.backgroundImage">
+              <div v-else class="board-thumbnail" :style="{backgroundColor: board.style.backgroundColor}"></div>
               <div class="flex column">
                 <span>{{board.title}}</span>
                 <span class="residence">{{Object.keys(board.createdBy).length ? board.createdBy.fullname + "'s" : 'Mello'}} workplace</span>
@@ -55,12 +55,12 @@
             </button>
           </ul>
         </div>
-        <button v-if="user" class=" secondary-btn profile-icon" @click="modal = 'user'"
-          :style="{ 'background-image': `url(${user?.imgUrl})` }">
+        <button v-if="user" class="profile-icon" @click="modal = 'user'"
+          :style="{ 'background-image': `url(${user?.imgUrl})` }" :class="{'show-search': searchOn}">
           <span v-if="user && !user?.imgUrl" class="userInitials">{{ userInitials }}</span>
         </button>
-        <button v-else class=" secondary-btn profile-icon" @click="modal = 'user'">
-          <img class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="">
+        <button v-else class="profile-icon" @click="modal = 'user'" :class="{'show-search': searchOn}">
+          <img class="anonymousUser-img" src="../assets/icons/user-solid.png" alt="" >
         </button>
       </div>
     </nav>
@@ -94,7 +94,8 @@ export default {
       modal: null,
       modalCords: null,
       searchFilter: '',
-      isOpen:false
+      isOpen:false,
+      searchOn:false
     }
   },
   components: {
@@ -108,7 +109,6 @@ export default {
     },
     focusInput() {
       this.$refs.search.focus()
-
     },
     enterAsGuest() {
       this.$router.push('/board')
@@ -149,6 +149,10 @@ export default {
       this.searchFilter = ''
       this.$router.push(`/board/${id}`)
       },
+      startSearch(){
+        this.searchOn= true
+        setTimeout(()=>this.focusInput(),1)
+      }
   },
   computed: {
     loggedInUser() {
@@ -196,17 +200,6 @@ export default {
       return this.searchFilter ? this.searchBoards : this.lastViewed
     },
   },
-  watch: {
-    // $route :{
-    //   handler(to, from){
-    //     this.headColor="#026AA7"
-    //     if(this.modal) this.modal=null
-    //     if (this.$route.path.includes('board/'))
-    //     this.setHeaderColor()  
-    //   },
-    //   deep:true
-    // }
-  }
 }
 
 </script>
