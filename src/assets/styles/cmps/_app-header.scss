@@ -370,6 +370,24 @@
             background-color: unset;
             border: unset;
 }
+.home-page-header{
+    .right-home-header{
+    padding: 0;
+    a{
+        border-block: 1px solid black;
+    }
+    .login-button{
+        padding:0;
+    }
+    &>*{
+        padding-block:10px;
+        margin-inline:10px;
+    }
+    .guest-button{
+        margin-block:10px;
+    }
+    }
+}
 .board-search-input.show-search{
     display: block;
 }
