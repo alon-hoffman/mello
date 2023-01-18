@@ -133,3 +133,10 @@
 
     }
 }
+
+@media (max-width: 452px){
+    .home{
+    background:
+    center center/90% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0%/auto repeat scroll padding-box border-box rgb(82, 67, 170);
+    }
+}
