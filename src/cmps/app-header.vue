@@ -40,7 +40,7 @@
         <div class="search-boards" @click="startSearch">
           <input ref="search" type="text" placeholder="Search" class="board-search-input secondary-btn"
           :class="{'show-search': searchOn}" style="font-family:Arial, FontAwesome" v-model="searchFilter"
-          @blur="searchOn=false">
+          @blur="endSearch">
           <span class="magnifying-glass" style="font-family:Arial, FontAwesome">&#xF002;</span>
           <ul class="board-menu" v-if="boards">
             <div class="board-menu-header">{{searchFilter ? 'BOARDS' : 'RECENT BOARDS'}}</div>
@@ -148,10 +148,17 @@ export default {
     selectBoard(id){
       this.searchFilter = ''
       this.$router.push(`/board/${id}`)
+
       },
       startSearch(){
         this.searchOn= true
         setTimeout(()=>this.focusInput(),1)
+      },
+      endSearch(){
+        setTimeout(()=>{
+          this.searchOn=false
+          this.$refs.search.blur()
+        }, 200)
       }
   },
   computed: {
