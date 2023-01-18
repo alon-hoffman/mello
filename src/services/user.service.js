@@ -68,9 +68,10 @@ async function login(userCred) {
 async function signup(userCred) {
     // userCred.score = 10000;
     // const user = await storageService.post('user', userCred)
-    const user = await httpService.post('auth/signup', userCred)
-    // socketService.login(user._id)
-    return setLoggedinUser(user)
+
+        const user = await httpService.post('auth/signup', userCred)
+        // socketService.login(user._id)
+        return setLoggedinUser(user)
 }
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)

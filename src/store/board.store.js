@@ -33,6 +33,8 @@ export const boardStore = {
         lastActivityId: '',
         isZoom: false,
         labeAreShown: false,
+        oldBoard:null,
+        temporaryVariable:null
     },
     getters: {
         boards({ boards }) {
@@ -64,10 +66,21 @@ export const boardStore = {
             state.boards.push(board)
         },
         updateBoard(state, { board }) {
+            // console.log(`state.boards = `, state.boards)
+            // console.log(`board = `, board)
             const boardIdx = state.boards.findIndex(b => b._id === board._id)
             state.boards.splice(boardIdx, 1, board)
             state.currBoard = board
 
+        },
+        updateOldBoard(state) {
+            state.oldBoard=JSON.parse(JSON.stringify(state.currBoard))
+        },
+        resetTemporaryVariable(state) {
+            state.temporaryVariable=null
+        },
+        updateTemporaryVariable(state) {
+            state.temporaryVariable=1
         },
         removeBoard(state, { boardId }) {
             state.boards = state.boards.filter(board => board._id !== boardId)
@@ -76,7 +89,7 @@ export const boardStore = {
             // const board = JSON.parse(JSON.stringify(state.boards))[0];
             const board = state.boards.find(b => b._id === id)
             state.currBoard = board
-
+            state.oldBoard=JSON.parse(JSON.stringify(board))
         },
         setCurrCard(state, { cardId }) {
             state.currBoard.groups.forEach(group => {
@@ -168,16 +181,16 @@ export const boardStore = {
         async updateBoard({ commit, state }, { board }) {
             const activityId = state.lastActivityId.slice()
             try {
-                var oldBoard = JSON.parse(JSON.stringify(state.currBoard))
+                // var oldBoard = JSON.parse(JSON.stringify(state.currBoard))
                 board.lastUpdate = Date.now()
                 await boardService.save(board)
                 commit({ type: 'updateBoard', board })
                 socketService.emit(SOCKET_EMIT_BOARD_UPDATED, board)
             } catch (err) {
-                commit({ type: 'updateBoard', board: oldBoard })
+                commit({ type: 'updateBoard', board: state.oldBoard })
                 commit({ type: 'removeActivity', activityId })
                 console.log('boardStore: Error in updateBoard', err)
-                throw err
+                // throw err
             }
         },
         // async updateBoardSocket(){
@@ -190,7 +203,7 @@ export const boardStore = {
                 context.commit({ type: 'setBoards', boards })
             } catch (err) {
                 console.log('boardStore: Error in loadBoards', err)
-                throw err
+                // throw err
             }
         },
         async removeBoard(context, { boardId }) {
@@ -239,7 +252,7 @@ export const boardStore = {
                 dispatch({ type: "updateBoard", board })
             } catch (err) {
                 console.log('Error, could not Add or update list')
-                throw err
+                // throw err
             }
         },
         async addList({ dispatch, state }, { list }) {
@@ -277,19 +290,31 @@ export const boardStore = {
             })
             dispatch({ type: "updateBoard", board })
         },
+
+
         async saveList({ commit, dispatch, state }, { list }) {
+            if(!state.temporaryVariable){
+                commit({ type: 'updateTemporaryVariable'})
+                commit({ type: 'updateOldBoard'})
+            }
+            console.log(`state.oldBoard = `, state.oldBoard)
             // console.log(`saveList = `, list)
             list.cards.forEach((card) => {
                 if (card.groupId !== list.id) card.groupId = list.id
             })
             // const group = state.currBoard.groups.find(group => group.id === list.id)
             // console.log(`saveList = `,group)
-
+            
             commit({ type: 'updateGroup', group: list })
             const board = JSON.parse(JSON.stringify(state.currBoard))
             dispatch({ type: "updateBoard", board })
+            setTimeout(()=>{
+
+                commit({ type: 'resetTemporaryVariable'})
+            },10)
         },
-        async saveLists({ dispatch, state }, { lists }) {
+        async saveLists({commit, dispatch, state }, { lists }) {
+            commit({ type: 'updateOldBoard'})
             const board = JSON.parse(JSON.stringify(state.currBoard))
             board.groups = lists
             dispatch({ type: "updateBoard", board })

@@ -199,6 +199,7 @@ export default {
       this.updateBoard(board)
     },
     updateBoard(board = this.board){
+      console.log("board",board)
       this.$store.dispatch({type: 'updateBoard', board})
     },
     addCard(card){
