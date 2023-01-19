@@ -10,14 +10,8 @@
     background-color: #fff;
     // padding: 0 10px;
     @media (max-width: 905px) {
-        padding-inline-end: 0;
+        padding-inline-end:0;
     }
-    @media (max-width: 600px) {
-       nav{
-        height: 60px;
-       }
-    }
-
     .guest-button {
 
         height: 100%;
@@ -34,10 +28,11 @@
     }
     .right-home-header {
         display: flex;
-        height: 60px
+        height: 60px;
+        padding-inline-end: 10px;
     }
- 
-    
+
+
     .logo-img-home {
         width: rem(135px);
         // height: 50px;
@@ -72,8 +67,7 @@
 }
 
 .boards-page {
-    display: flex;
-
+    display:flex;
     .logo-img-board {
         width: rem(90px);
     }
@@ -83,7 +77,7 @@
     }
 
     nav {
-        flex-grow: 1;
+        flex-grow:1;
         padding: 4px 6px;
         height: 44px;
         background-color: #026AA7;
@@ -113,7 +107,7 @@
         cursor: pointer;
 
         &:hover {
-
+            
             background-color: #ffffff3b;
         }
     }
@@ -137,13 +131,11 @@
         &:focus-within {
             // width: rem(890px);
             flex: 1;
-
-            .board-menu {
+            .board-menu{
                 display: block;
             }
         }
-
-        .board-menu {
+        .board-menu{
             // !uncomment when done
             display: none;
             position: absolute;
@@ -157,15 +149,13 @@
             background-color: #fff;
             border-radius: 3px;
             color: #172b4d;
-
-            &-header {
+            &-header{
                 padding: 1em;
                 color: #5e6c84;
                 font-weight: 600;
                 font-size: 14px;
             }
-
-            &-item {
+            &-item{
                 cursor: pointer;
                 margin: 0;
                 width: 100%;
@@ -174,31 +164,29 @@
                 padding: 0.5em 1em;
                 gap: 0.5em;
                 transition: 0.085s;
-
-                &:hover {
+                &:hover{
                     background-color: #f5f5f5;
                 }
-                img{
+                .board-thumbnail{
                     width: 32px;
                     height: 32px;
                     border-radius: 3px;
                 }
-
-                span {
+                span{
                     font-size: 16px;
                 }
-
-                .residence {
+                .residence{
                     font-size: 12px;
                     color: #5e6c84;
                 }
-
-                &:last-child {
+                &:last-child{
                     border-bottom-left-radius: 3px;
                     border-bottom-right-radius: 3px;
                 }
             }
-            
+            &.show-search{
+                display: block;
+            }
         }
     }
 
@@ -217,15 +205,13 @@
 .right-header {
     display: flex;
     gap: 5px;
-
-    &:focus-within {
+    &:focus-within{
         flex: 1;
     }
 
     .board-search-input {
         &:focus {
             border: 1px solid $blue;
-
             // flex: 1;
             &::placeholder {
                 color: $clr3;
@@ -235,7 +221,7 @@
                 color: black;
             }
         }
-
+       
     }
 
     button {
@@ -283,7 +269,6 @@
                 position: relative;
                 top: 3px;
             }
-
             width: 100%;
             background-color: #fff;
             border: none;
@@ -299,8 +284,8 @@
             //     color: black;
             //     border-radius: 3px;
             //     border: 2px solid #388bff;
-
-
+                
+              
             // }
 
             .magnifying-glass {
@@ -341,8 +326,7 @@
         height: 24px;
         border-radius: 50%;
     }
-
-    .userInitials {
+    .userInitials{
         background-color: #b5b5b67e;
         display: flex;
         align-items: center;
@@ -350,13 +334,11 @@
         border-radius: 50%;
         width: 24px;
         height: 24px;
-
+        
     }
-
-    .anonymousUser-img {
-        width: 20px;
-        height: 20px;
-        ;
+    .anonymousUser-img{
+        width:  20px;
+        height: 20px; ;
     }
 
     .bell-img-header {
@@ -367,28 +349,75 @@
         width: rem(20px);
 
     }
-
-    .profile-icon {
+    .profile-icon{
         color: #fff;
         width: 28px;
         background-size: cover;
         border-radius: 50%;
-        font-size: 16px;
+        font-size:16px;
         font-weight: 600;
     }
 }
 
 
 
-@media (max-width: 500px) {
-    .secondary-btn {
-        display: none;
+@media (max-width: 500px){
+    .secondary-btn{
+       display:none;
     }
-    .search-boards {
-        &:focus-within {
-            // width: rem(200px);
-            flex: 1;
-        }
+    .boards-page .search-boards {
+            width: rem(40px);
+            background-color: unset;
+            border: unset;
+}
+.home-page-header{
+    .right-home-header{
+    padding: 0;
+    a{
+        border-block: 1px solid black;
+    }
+    .login-button{
+        padding:0;
+    }
+    &>*{
+        padding-block:10px;
+        margin-inline:10px;
+    }
+    .guest-button{
+        margin-block:10px;
+    }
+    }
+}
+.board-search-input.show-search{
+    display: block;
+}
+.left-header.show-search, .profile-icon.show-search{
+    display: none;
+} 
+.home-page-header{
+nav{
+.right-home-header{
+    z-index: 2;
+    overflow: hidden;
+    // max-height: 0;
+    display:none;
+    &.open{
+        display: flex;
+        flex-direction: column;
+        position:fixed;
+        top:60px;
+        width:100vw;
+        background-color: white;
+        height:unset;
+    }
+}
+.left-home-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    width: 100%;
+}
 }
 }
 
@@ -474,3 +503,4 @@
     top: 39px;
     left: 8px;
   }
+}
