@@ -473,7 +473,6 @@ export default {
             // Insert the 'w_auto' transformation parameter after the "upload" part
             parts.splice(uploadIndex + 1, 0, "w_auto");
             const imageUrl=parts.join("/")
-            console.log("🚀 ~ file: modal-sidebar.vue:476 ~ uploadAndSetCoverImg ~ imageUrl", imageUrl)
             this.setCoverImg(imageUrl)
         },
         dateOpen() {

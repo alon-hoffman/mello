@@ -24,6 +24,7 @@ export default{
   computed:{
     cords(){
         if(!this.modalCords) return ''
+        if (window.innerWidth < 500) return {top: `min(100vh - 50px,${this.modalCords.y+50}px)`}
         return {top: `min(100vh - 50px,${this.modalCords.y+50}px)`, left: `min(60vw, ${this.modalCords.x}px)`}
       },
   }
