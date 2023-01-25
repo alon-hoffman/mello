@@ -24,11 +24,12 @@
         }
     }
     input{
-        border: none;
-  display: inline;
+    border: none;
+    background-color: unset;
   font-family: inherit;
   font-size: inherit;
-  padding: none;
+  padding-top:9px;
+  padding-bottom:10px;
   width: auto;
   height:1rem;
   &:focus{
