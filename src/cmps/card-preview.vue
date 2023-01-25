@@ -53,6 +53,7 @@
         return this.card.imgURL
       },
       labels(){
+        this.updateLabels()
         return this.card.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
          const labelInfo= this.boardLabels[idx]
@@ -87,7 +88,7 @@
       }
     },
       created(){
-        this.boardLabels= this.$store.getters.getCurrBoard.labels
+        this.updateLabels()
         this.newLabels= this.card?.labels?.map(label=>{
          const idx= this.boardLabels.findIndex(boardLabel=> boardLabel.id=== label)
          if(idx>-1)  return {color:this.boardLabels[idx].color}
@@ -107,6 +108,9 @@
     },
     toggleLabeAreShown(){
       this.$store.commit({ type: "toggleLabeAreShown" })
+    },
+    updateLabels(){
+      this.boardLabels= this.$store.getters.getCurrBoard.labels
     }
   }
 
